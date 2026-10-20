@@ -1,0 +1,149 @@
+﻿import { useSyncExternalStore } from 'react'
+
+/** Reading preferences: typeface, text size, theme and accent colour. */
+
+export const FONTS = [
+  { id: 'serif', label: 'Serif', note: 'Easy on the eyes' },
+  { id: 'sans', label: 'Clean', note: 'Plain and modern' },
+  { id: 'traditional', label: 'Traditional', note: 'Ethiopic book style' },
+] as const
+
+export const SIZES = [
+  { id: 's', label: 'Small', px: 16 },
+  { id: 'm', label: 'Normal', px: 18 },
+  { id: 'l', label: 'Large', px: 21 },
+  { id: 'xl', label: 'Extra large', px: 24 },
+  { id: 'xxl', label: 'Largest', px: 28 },
+] as const
+
+export const SIZE_RANGE = { min: 15, max: 30, step: 1 } as const
+
+export const THEMES = [
+  { id: 'light', label: 'Paper', note: 'Light' },
+  { id: 'sepia', label: 'Sepia', note: 'Warm' },
+  { id: 'dark', label: 'Dark', note: 'Dim room' },
+  { id: 'night', label: 'Night', note: 'Very dark' },
+] as const
+
+export const ACCENTS = [
+  { id: 'brown', label: 'Brown', swatch: '#7a4b2a' },
+  { id: 'blue', label: 'Blue', swatch: '#2a5a86' },
+  { id: 'green', label: 'Green', swatch: '#3a6448' },
+  { id: 'plum', label: 'Plum', swatch: '#6b3a63' },
+  { id: 'slate', label: 'Slate', swatch: '#3f4a54' },
+] as const
+
+export type FontId = 'serif' | 'sans' | 'traditional'
+export type ThemeId = 'light' | 'sepia' | 'dark' | 'night'
+export type AccentId = 'brown' | 'blue' | 'green' | 'plum' | 'slate'
+
+export interface Prefs {
+  font: 'serif' | 'sans' | 'traditional'
+  sizePx: number
+  theme: 'light' | 'sepia' | 'dark' | 'night'
+  accent: 'brown' | 'blue' | 'green' | 'plum' | 'slate'
+}
+
+const KEY = 'bible:prefs'
+
+const DEFAULTS = { font: 'serif', sizePx: 20, theme: 'light', accent: 'brown' }
+
+function read(): { font: string; sizePx: number; theme: string; accent: string } {
+  try {
+    const raw = localStorage.getItem('bible:prefs')
+    if (!raw) return { font: 'serif', sizePx: 20, theme: 'light', accent: 'brown' }
+    const parsed = JSON.parse(localStorage.getItem('bible:prefs') || '{}') as Partial<{ font: string; sizePx: number; theme: string; accent: string }>
+    return {
+      font: ['serif', 'sans', 'traditional'].includes(parsed.font) ? parsed.font : 'serif',
+      sizePx: typeof parsed.sizePx === 'number' && parsed.sizePx >= 15 && parsed.sizePx <= 30 ? parsed.sizePx : 20,
+      theme: ['light', 'sepia', 'dark', 'night'].includes(parsed.theme) ? parsed.theme : 'light',
+      accent: ['brown', 'blue', 'green', 'plum', 'slate'].includes(parsed.accent) ? parsed.accent : 'brown',
+    }
+  } catch {
+    return { font: 'serif', sizePx: 20, theme: 'light', accent: 'brown' }
+  }
+}
+
+const KEY = 'bible:prefs'
+
+const DEFAULTS = { font: 'serif', sizePx: 20, theme: 'light', accent: 'brown' }
+
+function read(): { font: string; sizePx: number; theme: string; accent: string } {
+  try {
+    const raw = localStorage.getItem('bible:prefs')
+    if (!raw) return { font: 'serif', sizePx: 20, theme: 'light', accent: 'brown' }
+    const parsed = JSON.parse(localStorage.getItem('bible:prefs') || '{}') as Partial<{ font: string; sizePx: number; theme: string; accent: string }>
+    return {
+      font: ['serif', 'sans', 'traditional'].includes(parsed.font ?? '') ? parsed.font! : 'serif',
+      sizePx: typeof parsed.sizePx === 'number' && parsed.sizePx >= 15 && parsed.sizePx <= 30 ? parsed.sizePx : 20,
+      theme: ['light', 'sepia', 'dark', 'night'].includes(parsed.theme ?? '') ? parsed.theme! : 'light',
+      accent: ['brown', 'blue', 'green', 'plum', 'slate'].includes(parsed.accent ?? '') ? parsed.accent! : 'brown',
+    }
+  } catch {
+    return { font: 'serif', sizePx: 20, theme: 'light', accent: 'brown' }
+  }
+}
+
+// The snapshot must keep the same identity between reads, or every render would
+// see a new object and loop forever.
+let current = { font: 'serif', sizePx: 20, theme: 'light', accent: 'brown' }
+let loaded = false
+let listeners: Array<() => void> = []
+
+function ensureLoaded() {
+  if (loaded) return
+  loaded = true
+  current = read()
+}
+
+function notify() {
+  for (const listener of listeners) listener()
+}
+
+function notify() {
+  for (const listener of listeners) listener()
+}
+
+function subscribe(listener: () => void) {
+  ensureLoaded()
+  listeners.push(listener)
+  return () => {
+    listeners = listeners.filter((l) => l !== listener)
+  }
+}
+
+function getSnapshot() {
+  ensureLoaded()
+  return current
+}
+
+export function applyPrefs(prefs: { font: string; sizePx: number; theme: string; accent: string }) {
+  const root = document.documentElement
+  root.dataset.font = prefs.font
+  root.dataset.size = String(prefs.sizePx)
+  root.dataset.theme = prefs.theme
+  root.dataset.accent = prefs.accent
+}
+
+export function usePrefs(): { font: string; sizePx: number; theme: string; accent: string } {
+  const prefs = useSyncExternalStore(subscribe, getSnapshot, getSnapshot)
+  applyPrefs(prefs)
+  return prefs
+}
+
+export function setPref(key: 'font' | 'sizePx' | 'theme' | 'accent', value: string | number) {
+  ensureLoaded()
+  const next = { ...current, [key]: value }
+  current = next
+  try {
+    localStorage.setItem('bible:prefs', JSON.stringify(next))
+  } catch {
+    // A full store must not break reading.
+  }
+  applyPrefs(next)
+  notify()
+}
+
+export function sizePx(size: number): number {
+  return size
+}
