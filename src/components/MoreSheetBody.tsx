@@ -221,7 +221,7 @@ export default function MoreSheetBody({
                 >
                   {item.id === 'light'
                     ? (isEn ? '🌿 Sage Green' : '🌿 አረንጓዴ')
-                    : (isEn ? '🖤 Luxury Black' : '🖤 ጥቁር')}
+                    : (isEn ? '🖤 Soft Black' : '🖤 ጥቁር')}
                 </button>
               ))}
             </div>

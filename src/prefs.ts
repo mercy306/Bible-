@@ -24,7 +24,7 @@ export const PARAGRAPH_RANGE = { min: 4, max: 20, step: 2 } as const
 
 export const THEMES = [
   { id: 'light', label: 'Green', note: 'Sage Green' },
-  { id: 'bw', label: 'Olive', note: 'Rich Olive Green' },
+  { id: 'bw', label: 'Black', note: 'Soft Black' },
 ] as const
 
 export const ACCENTS = [

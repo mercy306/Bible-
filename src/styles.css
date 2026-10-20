@@ -23,14 +23,14 @@
 
 :root[data-theme='bw'],
 :root[data-theme='dark'] {
-  --bg: #2B3A25;
-  --panel: #0D100D;
-  --panel-2: #141814;
-  --panel-sage: #1A201A;
+  --bg: #141715;
+  --panel: #1C201D;
+  --panel-2: #242925;
+  --panel-sage: #2A302B;
   --ink: #F5F8F0;
-  --ink-soft: #C2D4B2;
-  --line: rgba(180, 208, 148, 0.22);
-  --highlight: rgba(13, 16, 13, 0.35);
+  --ink-soft: #BCCBB0;
+  --line: rgba(180, 208, 148, 0.16);
+  --highlight: rgba(255, 255, 255, 0.05);
   --forest: #9EB67A;
   --sage: #7F9962;
   --terracotta: #9EB67A;
@@ -39,7 +39,7 @@
   --accent-soft: rgba(158, 182, 122, 0.2);
   --accent-ink: #0D100D;
   --primary-blue: #9EB67A;
-  --sand: #161D16;
+  --sand: #181D19;
   --reader-size: 20px;
   color-scheme: dark;
 }
@@ -7692,21 +7692,21 @@ body {
   stroke: #3D5E43 !important;
 }
 
-/* --- 2. OLIVE CANVAS & JET BLACK CARDS THEME (Two-Tone Olive & Black Harmony) --- */
+/* --- 2. SOFT GRAPHITE BLACK THEME (Not too dark, eye-friendly matte black) --- */
 :root[data-theme='bw'] body,
 :root[data-theme='dark'] body {
-  background: #24311F !important;
+  background: #0F1210 !important;
 }
 
 :root[data-theme='bw'] .app,
 :root[data-theme='dark'] .app {
-  background: #2B3A25 !important;
+  background: #141715 !important;
   box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .mountainHero,
 :root[data-theme='dark'] .mountainHero {
-  background: #0D100D !important;
+  background: #0F1210 !important;
   box-shadow: none !important;
   border-bottom: 1px solid rgba(180, 208, 148, 0.1) !important;
 }
@@ -7718,7 +7718,7 @@ body {
 
 :root[data-theme='bw'] .mountainHero__overlay,
 :root[data-theme='dark'] .mountainHero__overlay {
-  background: linear-gradient(180deg, rgba(13, 16, 13, 0.3) 0%, rgba(13, 16, 13, 0.75) 55%, #2B3A25 100%) !important;
+  background: linear-gradient(180deg, rgba(15, 18, 16, 0.3) 0%, rgba(15, 18, 16, 0.75) 55%, #141715 100%) !important;
 }
 
 :root[data-theme='bw'] .homeScreen__greeting,
@@ -7729,17 +7729,17 @@ body {
 
 :root[data-theme='bw'] .homeScreen__quote,
 :root[data-theme='dark'] .homeScreen__quote {
-  background: rgba(13, 16, 13, 0.82) !important;
+  background: rgba(28, 32, 29, 0.85) !important;
   border: 1px solid rgba(180, 208, 148, 0.16) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
   color: #F5F8F0 !important;
 }
 
 :root[data-theme='bw'] .homeScreen__quote:hover,
 :root[data-theme='dark'] .homeScreen__quote:hover {
-  background: rgba(20, 24, 20, 0.9) !important;
+  background: rgba(35, 40, 36, 0.92) !important;
   border-color: rgba(180, 208, 148, 0.28) !important;
 }
 
@@ -7753,7 +7753,7 @@ body {
 
 :root[data-theme='bw'] .topbar__actionBtn,
 :root[data-theme='dark'] .topbar__actionBtn {
-  background: #141814 !important;
+  background: #1C201D !important;
   border: 1px solid rgba(180, 208, 148, 0.14) !important;
   box-shadow: none !important;
   color: #F5F8F0 !important;
@@ -7761,7 +7761,7 @@ body {
 
 :root[data-theme='bw'] .topbar__actionBtn:hover,
 :root[data-theme='dark'] .topbar__actionBtn:hover {
-  background: #1B221B !important;
+  background: #242925 !important;
   border-color: #9EB67A !important;
   color: #9EB67A !important;
 }
@@ -7781,17 +7781,18 @@ body {
   text-shadow: none !important;
 }
 
-/* Home Screen Cards in Deep Black & Cream */
+/* Home Screen Cards in Soft Graphite Black */
 :root[data-theme='bw'] .homeScreen__keepCard,
 :root[data-theme='dark'] .homeScreen__keepCard {
-  background: #0D100D !important;
-  border: 1px solid rgba(180, 208, 148, 0.12) !important;
+  background: #1C201D !important;
+  border: 1px solid rgba(180, 208, 148, 0.14) !important;
   box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .homeScreen__keepCard:hover,
 :root[data-theme='dark'] .homeScreen__keepCard:hover {
-  border-color: rgba(180, 208, 148, 0.25) !important;
+  background: #222723 !important;
+  border-color: rgba(180, 208, 148, 0.28) !important;
 }
 
 :root[data-theme='bw'] .homeScreen__keepLabel,
@@ -7818,22 +7819,22 @@ body {
 
 :root[data-theme='bw'] .homeScreen__recentItem,
 :root[data-theme='dark'] .homeScreen__recentItem {
-  background: #0D100D !important;
-  border: 1px solid rgba(180, 208, 148, 0.1) !important;
+  background: #1C201D !important;
+  border: 1px solid rgba(180, 208, 148, 0.12) !important;
   box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .homeScreen__recentItem:hover,
 :root[data-theme='dark'] .homeScreen__recentItem:hover {
-  background: #121612 !important;
-  border-color: rgba(180, 208, 148, 0.25) !important;
+  background: #222723 !important;
+  border-color: rgba(180, 208, 148, 0.28) !important;
 }
 
 :root[data-theme='bw'] .homeScreen__recentIcon,
 :root[data-theme='dark'] .homeScreen__recentIcon {
-  background: rgba(180, 208, 148, 0.08) !important;
+  background: rgba(180, 208, 148, 0.1) !important;
   color: #9EB67A !important;
-  border: 1px solid rgba(180, 208, 148, 0.15) !important;
+  border: 1px solid rgba(180, 208, 148, 0.18) !important;
 }
 
 :root[data-theme='bw'] .homeScreen__recentTitle,
@@ -7847,11 +7848,11 @@ body {
   font-weight: 500 !important;
 }
 
-/* Bottom Bar in Deep Black & Cream */
+/* Bottom Bar in Soft Black */
 :root[data-theme='bw'] .botbar,
 :root[data-theme='dark'] .botbar {
-  background: rgba(13, 16, 13, 0.96) !important;
-  border-top: 1px solid rgba(180, 208, 148, 0.1) !important;
+  background: rgba(20, 23, 21, 0.95) !important;
+  border-top: 1px solid rgba(180, 208, 148, 0.12) !important;
   box-shadow: none !important;
 }
 
@@ -7936,24 +7937,24 @@ body {
   background: #F5EFEB !important;
 }
 
-/* Daily Verse Screen in Deep Black & Cream */
+/* Daily Verse Screen in Soft Graphite Black */
 :root[data-theme='bw'] .dailyScreen,
 :root[data-theme='dark'] .dailyScreen {
-  background: #2B3A25 !important;
+  background: #141715 !important;
 }
 
 :root[data-theme='bw'] .dailyScreen__card,
 :root[data-theme='dark'] .dailyScreen__card {
-  background: #0D100D !important;
-  border: 1px solid rgba(180, 208, 148, 0.12) !important;
+  background: #1C201D !important;
+  border: 1px solid rgba(180, 208, 148, 0.14) !important;
   box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .dailyScreen__amharicBanner,
 :root[data-theme='dark'] .dailyScreen__amharicBanner {
-  background: rgba(180, 208, 148, 0.08) !important;
+  background: rgba(180, 208, 148, 0.1) !important;
   color: #9EB67A !important;
-  border: 1px solid rgba(180, 208, 148, 0.15) !important;
+  border: 1px solid rgba(180, 208, 148, 0.18) !important;
 }
 
 :root[data-theme='bw'] .dailyScreen__quote,
@@ -7969,15 +7970,15 @@ body {
 
 :root[data-theme='bw'] .dailyScreen__saveBtn,
 :root[data-theme='dark'] .dailyScreen__saveBtn {
-  background: #121612 !important;
+  background: #222723 !important;
   color: #F5F8F0 !important;
-  border: 1px solid rgba(180, 208, 148, 0.12) !important;
+  border: 1px solid rgba(180, 208, 148, 0.14) !important;
   box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .dailyScreen__saveBtn:hover,
 :root[data-theme='dark'] .dailyScreen__saveBtn:hover {
-  background: #1B221B !important;
+  background: #282F29 !important;
   border-color: #9EB67A !important;
   color: #9EB67A !important;
 }
@@ -8005,17 +8006,17 @@ body {
   background: #F5EFEB !important;
 }
 
-/* Saved Screen in Deep Black & Cream */
+/* Saved Screen in Soft Graphite Black */
 :root[data-theme='bw'] .savedScreen,
 :root[data-theme='dark'] .savedScreen {
-  background: #2B3A25 !important;
+  background: #141715 !important;
 }
 
 :root[data-theme='bw'] .savedScreen__header,
 :root[data-theme='dark'] .savedScreen__header {
-  background: #0D100D !important;
+  background: #1C201D !important;
   color: #F5F8F0 !important;
-  border-bottom: 1px solid rgba(180, 208, 148, 0.1) !important;
+  border-bottom: 1px solid rgba(180, 208, 148, 0.12) !important;
   box-shadow: none !important;
 }
 
@@ -8031,17 +8032,17 @@ body {
 
 :root[data-theme='bw'] .savedScreen__tab,
 :root[data-theme='dark'] .savedScreen__tab {
-  background: #121612 !important;
+  background: #222723 !important;
   color: #9AA0AF !important;
-  border: 1px solid rgba(180, 208, 148, 0.1) !important;
+  border: 1px solid rgba(180, 208, 148, 0.12) !important;
   box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .savedScreen__tab:hover,
 :root[data-theme='dark'] .savedScreen__tab:hover {
   color: #F5F8F0 !important;
-  background: #1B221B !important;
-  border-color: rgba(180, 208, 148, 0.22) !important;
+  background: #282F29 !important;
+  border-color: rgba(180, 208, 148, 0.28) !important;
 }
 
 :root[data-theme='bw'] .savedScreen__tab.is-active,
@@ -8055,22 +8056,22 @@ body {
 
 :root[data-theme='bw'] .savedScreen__card,
 :root[data-theme='dark'] .savedScreen__card {
-  background: #0D100D !important;
-  border: 1px solid rgba(180, 208, 148, 0.1) !important;
+  background: #1C201D !important;
+  border: 1px solid rgba(180, 208, 148, 0.12) !important;
   box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .savedScreen__card:hover,
 :root[data-theme='dark'] .savedScreen__card:hover {
-  background: #1C1E26 !important;
-  border-color: rgba(180, 208, 148, 0.22) !important;
+  background: #242A25 !important;
+  border-color: rgba(180, 208, 148, 0.28) !important;
 }
 
 :root[data-theme='bw'] .savedScreen__icon,
 :root[data-theme='dark'] .savedScreen__icon {
-  background: rgba(180, 208, 148, 0.08) !important;
+  background: rgba(180, 208, 148, 0.1) !important;
   color: #9EB67A !important;
-  border: 1px solid rgba(180, 208, 148, 0.15) !important;
+  border: 1px solid rgba(180, 208, 148, 0.18) !important;
 }
 
 :root[data-theme='bw'] .savedScreen__ref,
@@ -8089,12 +8090,12 @@ body {
   color: #8A8E9C !important;
 }
 
-/* Verse Action Sheet in Deep Black & Cream */
+/* Verse Action Sheet in Soft Graphite Black */
 :root[data-theme='bw'] .actionSheet__panel,
 :root[data-theme='dark'] .actionSheet__panel {
-  background: #0D100D !important;
-  border-top: 1px solid rgba(180, 208, 148, 0.14) !important;
-  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.7) !important;
+  background: #1C201D !important;
+  border-top: 1px solid rgba(180, 208, 148, 0.16) !important;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5) !important;
   color: #F5F8F0 !important;
 }
 
@@ -8192,7 +8193,7 @@ body {
    ========================================================================== */
 :root[data-theme='bw'] .sheet,
 :root[data-theme='dark'] .sheet {
-  background: #0D100D !important;
+  background: #1C201D !important;
   border: 1px solid rgba(180, 208, 148, 0.14) !important;
   color: #F5F8F0 !important;
 }
@@ -8209,7 +8210,7 @@ body {
 
 :root[data-theme='bw'] .sheet__close,
 :root[data-theme='dark'] .sheet__close {
-  background: #121612 !important;
+  background: #222723 !important;
   border: 1px solid rgba(180, 208, 148, 0.14) !important;
   color: #F5F8F0 !important;
   box-shadow: none !important;
@@ -8217,7 +8218,7 @@ body {
 
 :root[data-theme='bw'] .sheet__close:hover,
 :root[data-theme='dark'] .sheet__close:hover {
-  background: #1B221B !important;
+  background: #282F29 !important;
   border-color: #9EB67A !important;
   color: #9EB67A !important;
 }
@@ -8230,7 +8231,7 @@ body {
 
 :root[data-theme='bw'] .recent__row,
 :root[data-theme='dark'] .recent__row {
-  background: #1A1C25 !important;
+  background: #222723 !important;
   border: 1px solid rgba(180, 208, 148, 0.12) !important;
   color: #F5F8F0 !important;
   box-shadow: none !important;
@@ -8238,7 +8239,7 @@ body {
 
 :root[data-theme='bw'] .recent__row:hover,
 :root[data-theme='dark'] .recent__row:hover {
-  background: #222430 !important;
+  background: #282F29 !important;
   border-color: #9EB67A !important;
   transform: translateY(-1px);
 }
