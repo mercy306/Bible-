@@ -71,7 +71,7 @@ const KEY = 'bible:prefs'
 const DEFAULTS: Prefs = {
   font: 'serif',
   sizePx: 20,
-  theme: 'light',
+  theme: 'bw',
   accent: 'brown',
   customColor: '',
   language: 'both',

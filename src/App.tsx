@@ -23,7 +23,7 @@ import SavedView from './components/SavedView'
 import Reader from './components/Reader'
 import Sheet from './components/Sheet'
 import TopBar from './components/TopBar'
-import LaunchScreen from './components/LaunchScreen'
+
 
 const LAST_PLACE = 'bible:last-place'
 
@@ -63,7 +63,7 @@ export default function App() {
   const [compare, setCompare] = useState<'off' | 'am54'>('off')
   const [memorize, setMemorize] = useState(false)
   const [wordLookup, setWordLookup] = useState(false)
-  const [showLaunch, setShowLaunch] = useState(true)
+
 
   const prefs = usePrefs()
   const bookmarks = useBookmarks()
@@ -270,7 +270,7 @@ export default function App() {
 
   return (
     <div className="app" style={{ ['--reader-size' as string]: `${prefs.sizePx}px` }}>
-      {showLaunch && <LaunchScreen onFinish={() => setShowLaunch(false)} />}
+
       {showTopBar && (
         <TopBar
           book={route.book}

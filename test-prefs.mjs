@@ -73,8 +73,8 @@ check(
   setPref('font', 'serif')
   const saved = JSON.parse(store.get('bible:prefs'))
   check(
-    'fresh install uses serif/20/light/brown',
-    saved.font === 'serif' && saved.sizePx === 20 && saved.theme === 'light' && saved.accent === 'brown',
+    'fresh install uses serif/20/bw/brown',
+    saved.font === 'serif' && saved.sizePx === 20 && saved.theme === 'bw' && saved.accent === 'brown',
     JSON.stringify(saved),
   )
   check(
@@ -83,7 +83,7 @@ check(
     JSON.stringify(saved),
   )
   applyPrefs(saved)
-  check('prefs land on the root element', attributes.font === 'serif' && attributes.size === '20' && attributes.theme === 'light' && attributes.accent === 'brown', JSON.stringify(attributes))
+  check('prefs land on the root element', attributes.font === 'serif' && attributes.size === '20' && attributes.theme === 'bw' && attributes.accent === 'brown', JSON.stringify(attributes))
   check('verse numbers are on by default', attributes.numbers === 'on', attributes.numbers)
 }
 
