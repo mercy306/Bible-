@@ -1,12 +1,13 @@
 import type { LanguageMode } from '../prefs'
 import type { Route } from '../route'
 
-type Section = 'read' | 'daily' | 'bookmarks' | 'more'
+type Section = 'home' | 'read' | 'daily' | 'bookmarks' | 'more'
 
 interface Props {
   view: Route['view']
   moreOpen?: boolean
   language?: LanguageMode
+  onHome: () => void
   onBible: () => void
   onDaily: () => void
   onSaved: () => void
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const ITEMS_EN: { id: Section; label: string }[] = [
+  { id: 'home', label: 'Home' },
   { id: 'read', label: 'Bible' },
   { id: 'daily', label: 'Daily' },
   { id: 'bookmarks', label: 'Saved' },
@@ -22,17 +24,19 @@ const ITEMS_EN: { id: Section; label: string }[] = [
 ]
 
 const ITEMS_AM: { id: Section; label: string }[] = [
+  { id: 'home', label: 'መነሻ' },
   { id: 'read', label: 'መጽሐፍ' },
   { id: 'daily', label: 'የዕለቱ' },
   { id: 'bookmarks', label: 'የተቀመጡ' },
   { id: 'more', label: 'ተጨማሪ' },
 ]
 
-/** The bottom navigation bar with 4 items matching the design. */
+/** The bottom navigation bar with items matching the design. */
 export default function BottomNav({
   view,
   moreOpen = false,
   language = 'am',
+  onHome,
   onBible,
   onDaily,
   onSaved,
@@ -40,6 +44,7 @@ export default function BottomNav({
   savedCount,
 }: Props) {
   const handlers: Record<Section, () => void> = {
+    home: onHome,
     read: onBible,
     daily: onDaily,
     bookmarks: onSaved,
@@ -51,11 +56,13 @@ export default function BottomNav({
   // Active section mapping
   const active: Section = moreOpen
     ? 'more'
-    : view === 'bookmarks'
-      ? 'bookmarks'
-      : view === 'daily'
-        ? 'daily'
-        : 'read'
+    : view === 'home'
+      ? 'home'
+      : view === 'bookmarks'
+        ? 'bookmarks'
+        : view === 'daily'
+          ? 'daily'
+          : 'read'
 
   return (
     <nav

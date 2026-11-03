@@ -17,6 +17,7 @@ import type {
 import BottomNav from './components/BottomNav'
 import BooksSheetBody from './components/BooksSheetBody'
 import DailyView from './components/DailyView'
+import HomeScreen from './components/HomeScreen'
 import MoreSheetBody from './components/MoreSheetBody'
 import PrayerJournal from './components/PrayerJournal'
 import SavedView from './components/SavedView'
@@ -38,13 +39,13 @@ function initialRoute(): Route {
     }
     return {
       ...fallback,
-      view: 'read',
+      view: 'home',
       translation: saved.translation ?? DEFAULT_TRANSLATION,
       book: saved.book ?? fallback.book,
       chapter: saved.chapter ?? fallback.chapter,
     }
   } catch {
-    return { ...fallback, view: 'read', translation: DEFAULT_TRANSLATION }
+    return { ...fallback, view: 'home', translation: DEFAULT_TRANSLATION }
   }
 }
 
@@ -298,6 +299,19 @@ export default function App() {
           </div>
         )}
 
+        {route.view === 'home' && (
+          <HomeScreen
+            books={books}
+            translation={route.translation}
+            language={prefs.language}
+            onOpen={openChapter}
+            onDaily={() => openSection('daily')}
+            onBooks={() => setSheet('books')}
+            onPrayers={() => openSection('prayers')}
+            lastPlace={route.book ? { book: route.book, chapter: route.chapter } : null}
+          />
+        )}
+
         {route.view === 'daily' && (
           <DailyView
             books={books}
@@ -350,6 +364,7 @@ export default function App() {
           moreOpen={sheet === 'more'}
           savedCount={bookmarks.length + highlights.length}
           language={prefs.language}
+          onHome={() => openSection('home')}
           onBible={() => openSection('read')}
           onDaily={() => openSection('daily')}
           onSaved={() => openSection('bookmarks')}

@@ -11,6 +11,8 @@ interface Props {
   language?: LanguageMode
   onOpen: (book: number, chapter: number, verse?: number) => void
   onDaily?: () => void
+  onBooks?: () => void
+  onPrayers?: () => void
   lastPlace?: { book: number; chapter: number; verse?: number } | null
 }
 
@@ -49,7 +51,7 @@ function formatTimeAgo(at: number, isEn: boolean): string {
   return new Date(at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
 }
 
-export default function HomeScreen({ books, translation: _translation, language = 'am', onOpen, onDaily, lastPlace }: Props) {
+export default function HomeScreen({ books, translation: _translation, language = 'am', onOpen, onDaily, onBooks, onPrayers, lastPlace }: Props) {
   const recent = useRecent()
   const isEn = language === 'en'
   const greeting = getGreeting(isEn)
@@ -120,6 +122,54 @@ export default function HomeScreen({ books, translation: _translation, language 
           </div>
           <span className="homeScreen__arrow" aria-hidden="true">›</span>
         </button>
+
+        {/* Quick Gateway Cards (Books, Daily, Prayers) */}
+        <div className="homeScreen__quickGrid">
+          {onBooks && (
+            <button
+              type="button"
+              className="homeScreen__quickCard"
+              onClick={onBooks}
+              title={isEn ? "Browse all 66 Books" : "ሁሉንም 66 መጻሕፍት ይመልከቱ"}
+            >
+              <div className="homeScreen__quickIcon">📖</div>
+              <div className="homeScreen__quickInfo">
+                <span className="homeScreen__quickTitle">{isEn ? '66 Books' : '66ቱ መጻሕፍት'}</span>
+                <span className="homeScreen__quickSub">{isEn ? 'Old & New Testament' : 'ብሉይና አዲስ ኪዳን'}</span>
+              </div>
+            </button>
+          )}
+
+          {onDaily && (
+            <button
+              type="button"
+              className="homeScreen__quickCard"
+              onClick={onDaily}
+              title={isEn ? "Today's Devotional" : "የዕለቱ ቃል"}
+            >
+              <div className="homeScreen__quickIcon">☀️</div>
+              <div className="homeScreen__quickInfo">
+                <span className="homeScreen__quickTitle">{isEn ? 'Daily Verse' : 'የዕለቱ ቃል'}</span>
+                <span className="homeScreen__quickSub">{isEn ? 'Verse of the Day' : 'ጥቅስና ማሰላሰያ'}</span>
+              </div>
+            </button>
+          )}
+
+          {onPrayers && (
+            <button
+              type="button"
+              className="homeScreen__quickCard"
+              onClick={onPrayers}
+              title={isEn ? "Prayer Journal" : "የጸሎት ማስታወሻ"}
+            >
+              <div className="homeScreen__quickIcon">🙏</div>
+              <div className="homeScreen__quickInfo">
+                <span className="homeScreen__quickTitle">{isEn ? 'Prayers' : 'ጸሎቶች'}</span>
+                <span className="homeScreen__quickSub">{isEn ? 'Personal Journal' : 'የግል ማስታወሻ'}</span>
+              </div>
+            </button>
+          )}
+        </div>
 
         {/* Recently Read Section */}
         <div className="homeScreen__section">

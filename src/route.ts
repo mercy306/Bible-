@@ -79,7 +79,7 @@ export function parseHash(fallbackTranslation = DEFAULT_TRANSLATION): Route {
 
   if (head === 'home') {
     return {
-      view: 'read',
+      view: 'home',
       translation,
       book: FALLBACK_BOOK,
       chapter: FALLBACK_CHAPTER,

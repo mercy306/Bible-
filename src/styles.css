@@ -6754,6 +6754,58 @@ body {
   z-index: 1;
 }
 
+/* Home Screen Quick Gateway Grid */
+.homeScreen__quickGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.homeScreen__quickCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 8px;
+  border-radius: 18px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.homeScreen__quickCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.homeScreen__quickIcon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.homeScreen__quickInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.homeScreen__quickTitle {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.homeScreen__quickSub {
+  font-size: 10px;
+  color: var(--ink-soft);
+  line-height: 1.2;
+}
+
 /* Recently Read Section */
 .homeScreen__section {
   display: flex;
@@ -8474,6 +8526,32 @@ body {
 :root[data-theme='dark'] .homeScreen__keepCard:hover {
   background: linear-gradient(180deg, #222630 0%, #171920 100%) !important;
   border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+:root[data-theme='bw'] .homeScreen__quickCard,
+:root[data-theme='dark'] .homeScreen__quickCard {
+  background: linear-gradient(180deg, #1C1F26 0%, #13151A 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4) !important;
+  color: #FFFFFF !important;
+}
+
+:root[data-theme='bw'] .homeScreen__quickCard:hover,
+:root[data-theme='dark'] .homeScreen__quickCard:hover {
+  background: linear-gradient(180deg, #222630 0%, #171920 100%) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  transform: translateY(-2px);
+}
+
+:root[data-theme='bw'] .homeScreen__quickTitle,
+:root[data-theme='dark'] .homeScreen__quickTitle {
+  color: #FFFFFF !important;
+}
+
+:root[data-theme='bw'] .homeScreen__quickSub,
+:root[data-theme='dark'] .homeScreen__quickSub {
+  color: #8C93A1 !important;
 }
 
 :root[data-theme='bw'] .homeScreen__keepLabel,
