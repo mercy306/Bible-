@@ -17,13 +17,11 @@ import type {
 import BottomNav from './components/BottomNav'
 import BooksSheetBody from './components/BooksSheetBody'
 import DailyView from './components/DailyView'
-import HomeScreen from './components/HomeScreen'
 import MoreSheetBody from './components/MoreSheetBody'
 import PrayerJournal from './components/PrayerJournal'
 import SavedView from './components/SavedView'
 import Reader from './components/Reader'
 import Sheet from './components/Sheet'
-import SplashScreen from './components/SplashScreen'
 import TopBar from './components/TopBar'
 
 const LAST_PLACE = 'bible:last-place'
@@ -40,13 +38,13 @@ function initialRoute(): Route {
     }
     return {
       ...fallback,
-      view: 'home',
+      view: 'read',
       translation: saved.translation ?? DEFAULT_TRANSLATION,
       book: saved.book ?? fallback.book,
       chapter: saved.chapter ?? fallback.chapter,
     }
   } catch {
-    return { ...fallback, view: 'home', translation: DEFAULT_TRANSLATION }
+    return { ...fallback, view: 'read', translation: DEFAULT_TRANSLATION }
   }
 }
 
@@ -64,7 +62,6 @@ export default function App() {
   const [compare, setCompare] = useState<'off' | 'am54'>('off')
   const [memorize, setMemorize] = useState(false)
   const [wordLookup, setWordLookup] = useState(false)
-  const [showSplash, setShowSplash] = useState(true)
 
   const prefs = usePrefs()
   const bookmarks = useBookmarks()
@@ -271,7 +268,6 @@ export default function App() {
 
   return (
     <div className="app" style={{ ['--reader-size' as string]: `${prefs.sizePx}px` }}>
-      {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
       {showTopBar && (
         <TopBar
           book={route.book}
@@ -300,19 +296,6 @@ export default function App() {
           <div className="notice">
             {prefs.language === 'en' ? 'Loading…' : 'በመጫን ላይ…'}
           </div>
-        )}
-
-        {route.view === 'home' && (
-          <HomeScreen
-            books={books}
-            translation={route.translation}
-            language={prefs.language}
-            onOpen={openChapter}
-            onDaily={() => openSection('daily')}
-            onBooks={() => setSheet('books')}
-            onPrayers={() => openSection('prayers')}
-            lastPlace={route.book ? { book: route.book, chapter: route.chapter } : null}
-          />
         )}
 
         {route.view === 'daily' && (
@@ -367,7 +350,6 @@ export default function App() {
           moreOpen={sheet === 'more'}
           savedCount={bookmarks.length + highlights.length}
           language={prefs.language}
-          onHome={() => openSection('home')}
           onBible={() => openSection('read')}
           onDaily={() => openSection('daily')}
           onSaved={() => openSection('bookmarks')}
