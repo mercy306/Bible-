@@ -75,6 +75,7 @@ export default function Reader({
   const [revealed, setRevealed] = useState<Set<number>>(new Set())
   const [isChapterPlaying, setIsChapterPlaying] = useState(false)
   const [currentNoteText, setCurrentNoteText] = useState('')
+  const [isNoteOpen, setIsNoteOpen] = useState(false)
   const [noteSavedFeedback, setNoteSavedFeedback] = useState<number | null>(null)
 
   function handleChapterListen() {
@@ -135,8 +136,10 @@ export default function Reader({
           b.ref.book === chapter.book.nr,
       )
       setCurrentNoteText(existing?.note ?? '')
+      setIsNoteOpen(false)
     } else {
       setCurrentNoteText('')
+      setIsNoteOpen(false)
     }
   }, [selected, chapter.chapter, chapter.book.nr, bookmarks])
 
@@ -501,27 +504,26 @@ export default function Reader({
                   ))
                 )}
 
-                {/* Persistent collection tag on the verse when saved */}
-                {verseCollection && !on && (
+                {/* Persistent bookmark & collection indicators on verse when not selected */}
+                {(starred || verseCollection) && !on && (
                   <div className="verse__tagsRow">
-                    <span className="verse__tagBadge">
-                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-                        <line x1="7" y1="7" x2="7.01" y2="7" />
-                      </svg>
-                      {verseCollection}
-                    </span>
-                  </div>
-                )}
-
-                {/* Persistent note card directly on the verse when not selected */}
-                {verseNote && !on && (
-                  <div className="verse__inlineNoteCard" onClick={() => setSelected(n)}>
-                    <div className="verse__inlineNoteHead">
-                      <span className="verse__inlineNoteIcon">📝</span>
-                      <span className="verse__inlineNoteLabel">{language === 'en' ? 'Note' : 'ማስታወሻ'}</span>
-                    </div>
-                    <p className="verse__inlineNoteBody">{verseNote}</p>
+                    {starred && (
+                      <span className="verse__tagBadge verse__tagBadge--bookmark">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" stroke="none">
+                          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                        </svg>
+                        {language === 'en' ? 'Bookmark' : 'ዕልባት'}
+                      </span>
+                    )}
+                    {verseCollection && (
+                      <span className="verse__tagBadge">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                          <line x1="7" y1="7" x2="7.01" y2="7" />
+                        </svg>
+                        {verseCollection}
+                      </span>
+                    )}
                   </div>
                 )}
 
@@ -573,64 +575,60 @@ export default function Reader({
                       </div>
                     </div>
 
-                    {/* Inline Note Section right under selected verse */}
-                    <div className="verse__inlineNoteSection">
-                      <div className="verse__inlineSectionTitle">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                        </svg>
-                        <span>{language === 'en' ? 'Note' : 'ማስታወሻ'}</span>
-                        {noteSavedFeedback === n && (
-                          <span className="verse__inlineSavedBadge">
-                            ✓ {language === 'en' ? 'Saved' : 'ተቀምጧል'}
-                          </span>
-                        )}
-                      </div>
-                      <textarea
-                        className="verse__inlineNoteInput"
-                        rows={2}
-                        placeholder={
-                          language === 'en'
-                            ? 'Write your note or reflection here...'
-                            : 'የእርስዎን ማስታወሻ ወይም አስተያየት እዚህ ይጻፉ...'
-                        }
-                        value={currentNoteText}
-                        onChange={(e) => setCurrentNoteText(e.target.value)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                      <div className="verse__inlineNoteActions">
-                        <button
-                          type="button"
-                          className="verse__inlineNoteSaveBtn"
-                          onClick={() => {
-                            saveNote(bookmarks, ref, currentNoteText)
-                            setNoteSavedFeedback(n)
-                            setTimeout(() => setNoteSavedFeedback(null), 2500)
-                          }}
-                        >
-                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                            <polyline points="17 21 17 13 7 13 7 21" />
-                            <polyline points="7 3 7 8 15 8" />
-                          </svg>
-                          <span>{language === 'en' ? 'Save Note' : 'ማስታወሻ አስቀምጥ'}</span>
-                        </button>
-                        {verseNote && (
+                    {/* Inline Note Section (Toggled by the Note button below) */}
+                    {isNoteOpen && (
+                      <div className="verse__inlineNoteSection">
+                        <textarea
+                          className="verse__inlineNoteInput"
+                          rows={2}
+                          autoFocus
+                          placeholder={
+                            language === 'en'
+                              ? 'Write your note or reflection here...'
+                              : 'የእርስዎን ማስታወሻ ወይም አስተያየት እዚህ ይጻፉ...'
+                          }
+                          value={currentNoteText}
+                          onChange={(e) => setCurrentNoteText(e.target.value)}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className="verse__inlineNoteActions">
                           <button
                             type="button"
-                            className="verse__inlineNoteDeleteBtn"
+                            className="verse__inlineNoteSaveBtn"
                             onClick={() => {
-                              saveNote(bookmarks, ref, '')
-                              setCurrentNoteText('')
+                              saveNote(bookmarks, ref, currentNoteText)
+                              setNoteSavedFeedback(n)
+                              setTimeout(() => setNoteSavedFeedback(null), 2500)
                             }}
-                            title={language === 'en' ? 'Remove note' : 'ማስታወሻ አስወግድ'}
                           >
-                            {language === 'en' ? 'Delete Note' : 'ማስታወሻ አጥፋ'}
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                              <polyline points="17 21 17 13 7 13 7 21" />
+                              <polyline points="7 3 7 8 15 8" />
+                            </svg>
+                            <span>
+                              {noteSavedFeedback === n
+                                ? (language === 'en' ? 'Saved ✓' : 'ተቀምጧል ✓')
+                                : (language === 'en' ? 'Save' : 'አስቀምጥ')}
+                            </span>
                           </button>
-                        )}
+                          {verseNote && (
+                            <button
+                              type="button"
+                              className="verse__inlineNoteDeleteBtn"
+                              onClick={() => {
+                                saveNote(bookmarks, ref, '')
+                                setCurrentNoteText('')
+                                setIsNoteOpen(false)
+                              }}
+                              title={language === 'en' ? 'Remove note' : 'ማስታወሻ አስወግድ'}
+                            >
+                              {language === 'en' ? 'Delete' : 'አጥፋ'}
+                            </button>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Quick action buttons */}
                     <div className="verse__inlineActionsRow">
@@ -656,8 +654,8 @@ export default function Reader({
 
                       <button
                         type="button"
-                        className="verse__inlineActionBtn"
-                        onClick={() => setPanel('note')}
+                        className={`verse__inlineActionBtn ${isNoteOpen || verseNote ? 'is-active' : ''}`}
+                        onClick={() => setIsNoteOpen((cur) => !cur)}
                         title={language === 'en' ? 'Note' : 'ማስታወሻ'}
                       >
                         <span className="verse__inlineActionIcon">📝</span>

@@ -198,7 +198,7 @@ export default function TopBar({
             aria-label={isEn ? "Close search" : "ፍለጋ ዝጋ"}
             title={isEn ? "Back to reading" : "ወደ ንባብ ተመለስ"}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </button>
@@ -210,8 +210,9 @@ export default function TopBar({
               handleFormSubmit()
             }}
           >
-            <svg className="topbar__searchIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <svg className="topbar__searchIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
             <input
               ref={inputRef}
@@ -227,10 +228,10 @@ export default function TopBar({
               type="button"
               className={`topbar__kbToggleBtn ${showKeyboard ? 'is-active' : ''}`}
               onClick={() => setShowKeyboard((prev) => !prev)}
-              title={isEn ? "Amharic Keyboard" : "የአማርኛ ኪቦርድ"}
-              aria-label={isEn ? "Amharic Keyboard" : "የአማርኛ ኪቦርድ"}
+              title={isEn ? "Amharic & English Keyboard" : "የአማርኛ እና እንግሊዝኛ ኪቦርድ"}
+              aria-label={isEn ? "Amharic & English Keyboard" : "የአማርኛ እና እንግሊዝኛ ኪቦርድ"}
             >
-              አማ
+              አማ / EN
             </button>
             {query && (
               <button
