@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
   appId: 'com.sixtysix.biblereader',
-  appName: 'The Sixty-Six',
+  appName: 'መጽሐፍ ቅዱስ',
   webDir: 'dist',
   android: {
     // The whole Bible and commentary ship inside the app, so nothing is
