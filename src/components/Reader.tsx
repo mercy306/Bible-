@@ -20,6 +20,7 @@ import {
 } from '../userdata'
 import type { LanguageMode } from '../prefs'
 import type { ChapterResponse } from '../types'
+import { useReadingPlan, toggleChapterRead } from '../readingPlan'
 
 interface Props {
   chapter: ChapterResponse
@@ -70,6 +71,8 @@ export default function Reader({
   wordLookup,
 }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
+  const planInfo = useReadingPlan()
+  const isChapterCompleted = planInfo.isChapterDone(chapter.book.nr, chapter.chapter)
   const [highlightedTargetVerse, setHighlightedTargetVerse] = useState<number | null>(null)
   const [panel, setPanel] = useState<Panel>('none')
   const [word, setWord] = useState<{ text: string; verse: number } | null>(null)
@@ -776,7 +779,51 @@ export default function Reader({
 
 
 
-      <div className="readerBar" role="toolbar" aria-label={language === 'en' ? 'Reader controls' : 'የንባብ መቆጣጠሪያ'}>
+      {/* Chapter Completion Card for Reading Plan */}
+      <div className={`readerChapterEndCard ${isChapterCompleted ? 'is-completed' : ''}`}>
+        <div className="readerChapterEndCard__top">
+          <div className="readerChapterEndCard__iconBox">
+            {isChapterCompleted ? '🎉' : '📖'}
+          </div>
+          <div className="readerChapterEndCard__info">
+            <div className="readerChapterEndCard__title">
+              {isChapterCompleted
+                ? (language === 'en' ? 'Chapter Finished!' : 'ምዕራፉ ተጠናቋል!')
+                : (language === 'en'
+                    ? `Finished Chapter ${chapter.chapter}?`
+                    : `ምዕራፍ ${chapter.chapter}ን አንብበው ጨርሰዋል?`)}
+            </div>
+            <div className="readerChapterEndCard__sub">
+              {language === 'en'
+                ? `Reading Streak: 🔥 ${planInfo.streak.currentStreak} days • ${planInfo.planCompletedPercent}% of plan completed`
+                : `የንባብ ተከታታይነት: 🔥 ${planInfo.streak.currentStreak} ቀናት • ${planInfo.planCompletedPercent}% የእቅዱ ተጠናቋል`}
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          className={`readerChapterEndCard__btn ${isChapterCompleted ? 'is-done' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleChapterRead(chapter.book.nr, chapter.chapter)
+          }}
+        >
+          {isChapterCompleted ? (
+            <>
+              <span className="readerChapterEndCard__checkIcon">✓</span>
+              <span>{language === 'en' ? 'Completed (Tap to undo)' : 'ተነቧል (ምልክት አንሳ)'}</span>
+            </>
+          ) : (
+            <>
+              <span className="readerChapterEndCard__checkIcon">✓</span>
+              <span>{language === 'en' ? 'Mark Chapter as Read' : 'እንደተነበበ ምልክት አድርግ'}</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      <div className="readerBar" role="toolbar"  aria-label={language === 'en' ? 'Reader controls' : 'የንባብ መቆጣጠሪያ'}>
         <button
           type="button"
           className="readerBar__navBtn"

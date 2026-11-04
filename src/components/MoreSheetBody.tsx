@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { useReadingPlan } from '../readingPlan'
 import {
   FONTS,
   LANGUAGES,
@@ -26,6 +27,7 @@ interface Props {
   onSearch: () => void
   onSaved: () => void
   onPrayers: () => void
+  onPlan?: () => void
   savedCount: number
   prayerCount: number
   onGoTo: (reference: string) => void
@@ -139,6 +141,7 @@ export default function MoreSheetBody({
   onSearch,
   onSaved,
   onPrayers,
+  onPlan,
   savedCount,
   prayerCount,
   onGoTo,
@@ -147,6 +150,7 @@ export default function MoreSheetBody({
   const [tab, setTab] = useState<Tab>('read')
   const [reference, setReference] = useState('')
   const isEn = prefs.language === 'en'
+  const planInfo = useReadingPlan()
 
   const tabs: { id: Tab; label: string }[] = [
     { id: 'read', label: isEn ? 'Reading' : 'ንባብ' },
@@ -256,6 +260,16 @@ export default function MoreSheetBody({
 
       {tab === 'tools' && (
         <div className="mlist">
+          {onPlan && (
+            <button type="button" className="mwide" onClick={() => onPlan()}>
+              <span>📖 {isEn ? 'Reading plan & progress' : 'የንባብ እቅድ እና እድገት'}</span>
+              <span className="mwide__count">
+                {planInfo.streak.currentStreak > 0 ? `🔥 ${planInfo.streak.currentStreak}d • ` : ''}
+                {planInfo.planCompletedPercent}%
+              </span>
+            </button>
+          )}
+
           <button type="button" className="mwide" onClick={() => onSaved()}>
             {isEn ? 'Saved verses' : 'የተቀመጡ ጥቅሶች'}
             <span className="mwide__count">{savedCount}</span>

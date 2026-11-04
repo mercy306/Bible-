@@ -53,7 +53,7 @@ export default function BottomNav({
     ? 'more'
     : view === 'bookmarks'
       ? 'bookmarks'
-      : view === 'daily'
+      : view === 'daily' || view === 'plan'
         ? 'daily'
         : 'read'
 

@@ -106,7 +106,7 @@ export default function App() {
   useEffect(() => {
     let cancelled = false
 
-    if (route.view === 'daily' || route.view === 'bookmarks' || route.view === 'prayers') {
+    if (route.view === 'daily' || route.view === 'bookmarks' || route.view === 'prayers' || route.view === 'plan') {
       setLoading(false)
       return
     }
@@ -309,11 +309,12 @@ export default function App() {
           </div>
         )}
 
-        {route.view === 'daily' && (
+        {(route.view === 'daily' || route.view === 'plan') && (
           <DailyView
             books={books}
             translation={route.translation}
             language={prefs.language}
+            initialTab={route.view === 'plan' ? 'plan' : 'verse'}
             onOpen={openChapter}
             onBack={() => openSection('read')}
           />
@@ -408,6 +409,7 @@ export default function App() {
           onSearch={openSearch}
           onSaved={() => openSection('bookmarks')}
           onPrayers={() => openSection('prayers')}
+          onPlan={() => openSection('plan')}
           prayerCount={readPrayers().length}
           savedCount={bookmarks.length + highlights.length}
           onGoTo={(text) => {
