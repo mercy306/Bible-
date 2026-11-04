@@ -23,6 +23,7 @@ interface Props {
   onMore: () => void
   onBack?: () => void
   onDaily?: () => void
+  onSaga?: () => void
   translation?: string
   books?: { nr: number; name: string }[]
   onNavigate?: (book: number, chapter: number, verse?: number) => void
@@ -49,6 +50,7 @@ export default function TopBar({
   onMore: _onMore,
   onBack: _onBack,
   onDaily,
+  onSaga,
   translation = 'kjv',
   books = [],
   onNavigate,
@@ -291,6 +293,18 @@ export default function TopBar({
                   <line x1="3" y1="18" x2="21" y2="18" />
                 </svg>
               </button>
+
+              {onSaga && (
+                <button
+                  type="button"
+                  className="topbar__actionBtn topbar__sagaBtn"
+                  onClick={onSaga}
+                  title={isEn ? "Epic Chronological Saga" : "የዘመን ታሪክ ቅደም ተከተል"}
+                  aria-label={isEn ? "Epic Chronological Saga" : "የዘመን ታሪክ ቅደም ተከተል"}
+                >
+                  <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>👑</span>
+                </button>
+              )}
 
               <button
                 type="button"

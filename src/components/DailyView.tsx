@@ -15,6 +15,7 @@ interface Props {
   initialTab?: 'verse' | 'plan'
   onOpen: (book: number, chapter: number) => void
   onBack?: () => void
+  onSaga?: () => void
 }
 
 function todayIndex() {
@@ -37,6 +38,7 @@ export default function DailyView({
   initialTab = 'verse',
   onOpen,
   onBack,
+  onSaga,
 }: Props) {
   const [tab, setTab] = useState<'verse' | 'plan'>(initialTab)
 
@@ -258,6 +260,32 @@ export default function DailyView({
                 </svg>
               </div>
             </div>
+
+            {/* Epic Chronological Saga Teaser Card */}
+            {onSaga && (
+              <div className="dailyScreen__planTeaser dailyScreen__sagaTeaser" onClick={onSaga}>
+                <div className="dailyScreen__planTeaserLeft">
+                  <div className="dailyScreen__planTeaserIcon dailyScreen__planTeaserIcon--gold">
+                    👑
+                  </div>
+                  <div className="dailyScreen__planTeaserText">
+                    <div className="dailyScreen__planTeaserTitle">
+                      {isEn ? "Epic Chronological Saga" : "የዘመን ታሪክ ቅደም ተከተል"}
+                    </div>
+                    <div className="dailyScreen__planTeaserSub">
+                      {isEn ? "5 Epic Acts • 66 Books Harmonized" : "5 ታላላቅ ዘመናት • የተዋሃደ ታሪክ"}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="dailyScreen__planTeaserAction">
+                  <span>{isEn ? 'Explore' : 'ተመልከት'}</span>
+                  <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+                    <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}

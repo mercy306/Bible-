@@ -21,6 +21,7 @@ import MoreSheetBody from './components/MoreSheetBody'
 import PrayerJournal from './components/PrayerJournal'
 import SavedView from './components/SavedView'
 import Reader from './components/Reader'
+import SagaView from './components/SagaView'
 import Sheet from './components/Sheet'
 import TopBar from './components/TopBar'
 import LoadingView from './components/LoadingView'
@@ -128,7 +129,7 @@ export default function App() {
   useEffect(() => {
     let cancelled = false
 
-    if (route.view === 'daily' || route.view === 'bookmarks' || route.view === 'prayers' || route.view === 'plan') {
+    if (route.view === 'daily' || route.view === 'bookmarks' || route.view === 'prayers' || route.view === 'plan' || route.view === 'saga') {
       setLoading(false)
       return
     }
@@ -324,6 +325,7 @@ export default function App() {
           onMore={() => setSheet((s) => (s === 'more' ? 'none' : 'more'))}
           onBack={() => openSection('read')}
           onDaily={() => openSection('daily')}
+          onSaga={() => openSection('saga')}
           translation={route.translation}
           books={referenceBooks}
           onNavigate={(b, c, v) => goTo(b, c, v)}
@@ -346,6 +348,17 @@ export default function App() {
             language={prefs.language}
             initialTab={route.view === 'plan' ? 'plan' : 'verse'}
             onOpen={openChapter}
+            onBack={() => openSection('read')}
+            onSaga={() => openSection('saga')}
+          />
+        )}
+
+        {route.view === 'saga' && (
+          <SagaView
+            language={prefs.language}
+            onOpenPassage={(book, chapterNr, verseStart, verseEnd) => {
+              goTo(book, chapterNr, verseStart, verseEnd)
+            }}
             onBack={() => openSection('read')}
           />
         )}
@@ -440,6 +453,7 @@ export default function App() {
           onSaved={() => openSection('bookmarks')}
           onPrayers={() => openSection('prayers')}
           onPlan={() => openSection('plan')}
+          onSaga={() => openSection('saga')}
           prayerCount={readPrayers().length}
           savedCount={bookmarks.length + highlights.length}
           onGoTo={(text) => {

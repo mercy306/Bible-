@@ -1,9 +1,9 @@
 export interface Route {
   /**
    * Which of the sections is showing:
-   * read (Bible), daily, bookmarks, prayers, and plan.
+   * read (Bible), daily, bookmarks, prayers, plan, and saga.
    */
-  view: 'read' | 'search' | 'daily' | 'bookmarks' | 'prayers' | 'plan'
+  view: 'read' | 'search' | 'daily' | 'bookmarks' | 'prayers' | 'plan' | 'saga'
   translation: string
   book: number
   chapter: number
@@ -87,6 +87,16 @@ export function parseHash(fallbackTranslation = DEFAULT_TRANSLATION): Route {
     }
   }
 
+  if (head === 'saga') {
+    return {
+      view: 'saga',
+      translation,
+      book: FALLBACK_BOOK,
+      chapter: FALLBACK_CHAPTER,
+      q: '',
+    }
+  }
+
   if (head === 'home') {
     return {
       view: 'read',
@@ -130,6 +140,7 @@ export function hashFor(route: Route): string {
   if (route.view === 'prayers') return `#/prayers/${t}`
   if (route.view === 'daily') return `#/daily/${t}`
   if (route.view === 'plan') return `#/plan/${t}`
+  if (route.view === 'saga') return `#/saga/${t}`
   if (route.view === 'search') {
     const params = new URLSearchParams({ q: route.q })
     if (route.scope === 'commentary') params.set('scope', 'commentary')
