@@ -11226,3 +11226,36 @@ body {
     opacity: 1;
   }
 }
+
+
+.launchScreen__bookWrapper {
+  position: relative;
+  margin-bottom: 22px;
+  display: inline-block;
+}
+
+.launchScreen__bookImg {
+  display: block;
+  width: 190px;
+  height: auto;
+  max-width: 75vw;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+}
+
+.launchScreen__crossGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 60px;
+  transform: translate(-50%, -55%);
+  background: radial-gradient(circle, rgba(255, 230, 140, 0.65) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: launchCrossGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes launchCrossGlow {
+  0% { opacity: 0.4; transform: translate(-50%, -55%) scale(0.85); }
+  100% { opacity: 1; transform: translate(-50%, -55%) scale(1.2); }
+}

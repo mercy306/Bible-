@@ -48,68 +48,16 @@ export default function LaunchScreen({ onFinish }: Props) {
       <div className="launchScreen__aura" aria-hidden="true" />
 
       <div className="launchScreen__card">
-        {/* Minimalist Sacred Cross Emblem */}
-        <div className="launchScreen__emblem" aria-hidden="true">
-          <svg
-            viewBox="0 0 64 64"
-            width="54"
-            height="54"
-            fill="none"
-            stroke="currentColor"
-            className="launchScreen__crossSvg"
-          >
-            {/* Outer soft halo */}
-            <circle
-              cx="32"
-              cy="32"
-              r="28"
-              stroke="rgba(197, 160, 89, 0.2)"
-              strokeWidth="1"
-              strokeDasharray="2 4"
-            />
-            {/* Inner radiant diamond */}
-            <path
-              d="M32 18 L38 32 L32 46 L26 32 Z"
-              fill="rgba(197, 160, 89, 0.12)"
-              stroke="rgba(197, 160, 89, 0.35)"
-              strokeWidth="0.8"
-            />
-            {/* Vertical cross beam */}
-            <line
-              x1="32"
-              y1="10"
-              x2="32"
-              y2="54"
-              stroke="url(#crossGoldGrad)"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-            {/* Horizontal cross beam */}
-            <line
-              x1="18"
-              y1="25"
-              x2="46"
-              y2="25"
-              stroke="url(#crossGoldGrad)"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-            {/* Crossbeam terminal accents */}
-            <circle cx="32" cy="10" r="1.5" fill="#C5A059" />
-            <circle cx="32" cy="54" r="1.5" fill="#C5A059" />
-            <circle cx="18" cy="25" r="1.5" fill="#C5A059" />
-            <circle cx="46" cy="25" r="1.5" fill="#C5A059" />
-            {/* Center radiant jewel */}
-            <circle cx="32" cy="25" r="2.5" fill="#F4E8C1" />
-
-            <defs>
-              <linearGradient id="crossGoldGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#F4E8C1" />
-                <stop offset="50%" stopColor="#C5A059" />
-                <stop offset="100%" stopColor="#8A6E32" />
-              </linearGradient>
-            </defs>
-          </svg>
+        {/* Open Bible with Cross (matches the opening splash screen) */}
+        <div className="launchScreen__bookWrapper" aria-hidden="true">
+          <img
+            src="/bible-open-cross.png"
+            alt="The Holy Bible with Cross"
+            className="launchScreen__bookImg"
+            width={190}
+            height={127}
+          />
+          <div className="launchScreen__crossGlow" />
         </div>
 
         {/* Sacred Bilingual Typography */}
