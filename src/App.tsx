@@ -23,6 +23,7 @@ import SavedView from './components/SavedView'
 import Reader from './components/Reader'
 import Sheet from './components/Sheet'
 import TopBar from './components/TopBar'
+import LoadingView from './components/LoadingView'
 
 
 const LAST_PLACE = 'bible:last-place'
@@ -333,9 +334,7 @@ export default function App() {
       <main className="main">
         {error && <div className="notice notice--error">{error}</div>}
         {loading && (
-          <div className="notice">
-            {prefs.language === 'en' ? 'Loading…' : 'በመጫን ላይ…'}
-          </div>
+          <LoadingView language={prefs.language} />
         )}
 
         {(route.view === 'daily' || route.view === 'plan') && (
