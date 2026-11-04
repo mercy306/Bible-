@@ -181,7 +181,7 @@ export default function App() {
         book,
         chapter: chapterNr,
         verse,
-        verseEnd: verseEnd && verseEnd !== verse ? verseEnd : undefined,
+        verseEnd: verseEnd ?? verse,
         q: '',
       }),
     [go, route],

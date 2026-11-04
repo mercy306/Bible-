@@ -127,10 +127,10 @@ export function hashFor(route: Route): string {
     return `#/search/${t}?${params.toString()}`
   }
   const passage =
-    route.verse && route.verseEnd
-      ? route.verseEnd === route.verse
-        ? `/${route.verse}`
-        : `/${route.verse}-${route.verseEnd}`
+    route.verse
+      ? route.verseEnd && route.verseEnd !== route.verse
+        ? `/${route.verse}-${route.verseEnd}`
+        : `/${route.verse}`
       : ''
   return `#/t/${t}/${route.book}/${route.chapter}${passage}`
 }
