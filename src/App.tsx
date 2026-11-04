@@ -175,7 +175,15 @@ export default function App() {
 
   const goTo = useCallback(
     (book: number, chapterNr: number, verse?: number, verseEnd?: number) =>
-      go({ ...route, view: 'read', book, chapter: chapterNr, verse, verseEnd, q: '' }),
+      go({
+        ...route,
+        view: 'read',
+        book,
+        chapter: chapterNr,
+        verse,
+        verseEnd: verse ? (verseEnd ?? verse) : undefined,
+        q: '',
+      }),
     [go, route],
   )
 
@@ -340,8 +348,8 @@ export default function App() {
             wordLookup={wordLookup}
             targetVerse={route.verse}
             passage={
-              route.verse && route.verseEnd
-                ? { from: route.verse, to: route.verseEnd }
+              route.verse
+                ? { from: route.verse, to: route.verseEnd ?? route.verse }
                 : null
             }
           />
