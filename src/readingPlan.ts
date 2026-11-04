@@ -126,74 +126,34 @@ for (const b of BIBLE_BOOKS) {
   }
 }
 
+// Generate Old Testament (books 1-39, 929 chapters)
+const OT_CHAPTERS = ALL_CHAPTERS.filter((c) => c.book <= 39)
+
 // Generate New Testament (books 40-66, 260 chapters)
 const NT_CHAPTERS = ALL_CHAPTERS.filter((c) => c.book >= 40)
 
-// Generate Psalms & Proverbs (books 19 and 20)
-function buildPsalmsAndProverbs(): PlanDay[] {
-  const days: PlanDay[] = []
-  for (let d = 1; d <= 30; d++) {
-    const chapters: PlanChapter[] = []
-    const startPs = (d - 1) * 5 + 1
-    for (let p = startPs; p <= startPs + 4 && p <= 150; p++) {
-      chapters.push({ book: 19, chapter: p })
-    }
-    chapters.push({ book: 20, chapter: d })
-    if (d === 30) {
-      chapters.push({ book: 20, chapter: 31 })
-    }
-    days.push({ day: d, chapters })
-  }
-  return days
-}
-
-// Generate 4 Gospels (books 40-43, 89 chapters)
-const GOSPEL_CHAPTERS = ALL_CHAPTERS.filter((c) => c.book >= 40 && c.book <= 43)
-
 export const READING_PLANS: Record<string, ReadingPlanDef> = {
-  year: {
-    id: 'year',
-    titleAm: 'በ1 ዓመት ሙሉ መጽሐፍ ቅዱስ',
-    titleEn: 'Whole Bible in 1 Year',
-    descAm: 'ከኦሪት ዘፍጥረት እስከ ዮሐንስ ራእይ በ365 ቀናት (በቀን ~3-4 ምዕራፎች)',
-    descEn: 'From Genesis to Revelation in 365 days (~3-4 chapters/day)',
-    icon: '📖',
+  ot: {
+    id: 'ot',
+    titleAm: 'ብሉይ ኪዳን',
+    titleEn: 'Old Testament',
+    descAm: 'የብሉይ ኪዳን 39 መጻሕፍት (929 ምዕራፎች በ365 ቀናት)',
+    descEn: 'All 39 Old Testament books (929 chapters in 365 days)',
+    icon: '📜',
     totalDays: 365,
-    totalChapters: 1189,
-    days: buildChunkedDays(ALL_CHAPTERS, 365),
+    totalChapters: 929,
+    days: buildChunkedDays(OT_CHAPTERS, 365),
   },
-  nt90: {
-    id: 'nt90',
-    titleAm: 'ሐዲስ ኪዳን በ90 ቀናት',
-    titleEn: 'New Testament in 90 Days',
-    descAm: '260 የሐዲስ ኪዳን ምዕራፎች በ3 ወራት (በቀን ~3 ምዕራፎች)',
-    descEn: 'All 260 New Testament chapters in 3 months (~3 chapters/day)',
+  nt: {
+    id: 'nt',
+    titleAm: 'ሐዲስ ኪዳን',
+    titleEn: 'New Testament',
+    descAm: 'የሐዲስ ኪዳን 27 መጻሕፍት (260 ምዕራፎች በ90 ቀናት)',
+    descEn: 'All 27 New Testament books (260 chapters in 90 days)',
     icon: '✝️',
     totalDays: 90,
     totalChapters: 260,
     days: buildChunkedDays(NT_CHAPTERS, 90),
-  },
-  psalms30: {
-    id: 'psalms30',
-    titleAm: 'መዝሙርና ምሳሌ በ30 ቀናት',
-    titleEn: 'Psalms & Proverbs in 30 Days',
-    descAm: '150 መዝሙራትና 31 የምሳሌ ምዕራፎች በ1 ወር (በቀን 5 መዝሙር + 1 ምሳሌ)',
-    descEn: 'Daily prayer and wisdom: 5 Psalms + 1 Proverbs daily for 30 days',
-    icon: '🕊️',
-    totalDays: 30,
-    totalChapters: 181,
-    days: buildPsalmsAndProverbs(),
-  },
-  gospels30: {
-    id: 'gospels30',
-    titleAm: '4ቱ ወንጌላት በ30 ቀናት',
-    titleEn: 'The 4 Gospels in 30 Days',
-    descAm: 'የኢየሱስ ክርስቶስ ሕይወትና ትምህርት በማቴዎስ፣ ማርቆስ፣ ሉቃስና ዮሐንስ',
-    descEn: 'Life and teachings of Jesus across all 4 Gospels in 30 days',
-    icon: '🌟',
-    totalDays: 30,
-    totalChapters: 89,
-    days: buildChunkedDays(GOSPEL_CHAPTERS, 30),
   },
 }
 
@@ -230,7 +190,7 @@ function getYesterdayString(): string {
 }
 
 let completedSet: Set<string> = new Set()
-let activePlanId = 'year'
+let activePlanId = 'ot'
 let planStartDate = getTodayString()
 let streakData: ReadingStreak = {
   currentStreak: 0,
@@ -252,8 +212,8 @@ function loadPlanStore() {
     completedSet = new Set()
   }
 
-  activePlanId = localStorage.getItem(KEY_ACTIVE_PLAN) || 'year'
-  if (!READING_PLANS[activePlanId]) activePlanId = 'year'
+  activePlanId = localStorage.getItem(KEY_ACTIVE_PLAN) || 'ot'
+  if (!READING_PLANS[activePlanId]) activePlanId = 'ot'
 
   planStartDate = localStorage.getItem(KEY_START_DATE) || getTodayString()
 
@@ -450,7 +410,7 @@ export interface PlanProgressInfo {
 
 function computePlanProgress(): PlanProgressInfo {
   loadPlanStore()
-  const plan = READING_PLANS[activePlanId] || READING_PLANS.year
+  const plan = READING_PLANS[activePlanId] || READING_PLANS.ot
 
   // Calculate day index based on start date
   const start = new Date(planStartDate).getTime()

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { BooksResponse, Testament } from '../types'
 import { useRecent, type RecentPlace } from '../userdata'
 import { useAllBookNames } from './useBookNames'
@@ -85,10 +85,14 @@ export default function BooksSheetBody({
   onOpenRecent,
   language = 'am',
 }: Props) {
-  const [filter, setFilter] = useState<'all' | Testament>('all')
+  const [filter, setFilter] = useState<Testament>(() => (book <= 39 ? 'OT' : 'NT'))
   const allNames = useAllBookNames()
 
   const isEn = language === 'en'
+
+  useEffect(() => {
+    setFilter(book <= 39 ? 'OT' : 'NT')
+  }, [book])
 
   const sections = useMemo(() => {
     if (!books) return []
@@ -99,10 +103,7 @@ export default function BooksSheetBody({
           ? (GROUP_NAMES_EN[group.id] ?? group.name)
           : (GROUP_NAMES_AM[group.id] ?? GROUP_BY_NAME_AM[cleanName] ?? group.name)
 
-        const items = books.books.filter((b) => {
-          if (filter !== 'all' && b.testament !== filter) return false
-          return true
-        })
+        const items = books.books.filter((b) => b.testament === filter)
 
         return {
           ...group,
@@ -149,25 +150,23 @@ export default function BooksSheetBody({
         </section>
       )}
 
-      <div className="segbar" role="group" aria-label="Choose a testament">
+      <div className="segbar" role="group" aria-label={isEn ? "Choose a testament" : "ኪዳን ይምረጡ"}>
         {(
           isEn
             ? [
-                ['all', 'All'],
-                ['OT', 'Old'],
-                ['NT', 'New'],
+                ['OT', 'Old Testament'],
+                ['NT', 'New Testament'],
               ]
             : [
-                ['all', 'ሁሉም'],
-                ['OT', 'ብሉይ'],
-                ['NT', 'ሐዲስ'],
+                ['OT', 'ብሉይ ኪዳን'],
+                ['NT', 'ሐዲስ ኪዳን'],
               ]
         ).map(([id, label]) => (
           <button
             key={id}
             type="button"
             className={`segbar__btn ${filter === id ? 'is-active' : ''}`}
-            onClick={() => setFilter(id as 'all' | Testament)}
+            onClick={() => setFilter(id as Testament)}
             aria-pressed={filter === id}
           >
             {label}
