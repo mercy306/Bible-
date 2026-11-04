@@ -12431,7 +12431,8 @@ body {
 .sagaMobileScreen {
   min-height: 100vh;
   padding-bottom: 120px;
-  color: var(--ink, #1e293b);
+  background: var(--bg);
+  color: var(--ink);
   animation: sagaMobileFade 0.2s ease-out;
 }
 
@@ -12445,7 +12446,6 @@ body {
   position: relative;
   overflow: hidden;
   padding: 16px 14px 14px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .sagaMobileHero__navRow {
@@ -12463,7 +12463,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -12475,7 +12475,7 @@ body {
 
 .sagaMobileHero__backBtn:active {
   transform: scale(0.9);
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .sagaMobileHero__backBtn svg {
@@ -12493,15 +12493,15 @@ body {
   align-items: center;
   gap: 5px;
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #fef08a;
-  background: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.35);
   padding: 2px 8px;
-  border-radius: 12px;
+  border-radius: 9999px;
   margin-bottom: 3px;
-  border: 1px solid rgba(254, 240, 138, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .sagaMobileHero__title {
@@ -12509,7 +12509,7 @@ body {
   font-size: 1.25rem;
   font-weight: 800;
   color: #ffffff;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -12519,20 +12519,20 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 10px;
-  border-radius: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  color: #fef08a;
-  font-size: 0.8rem;
-  font-weight: 800;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   flex-shrink: 0;
 }
 
 .sagaMobileHero__statIcon {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 /* Horizontal Segmented Act Pills */
@@ -12554,9 +12554,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 7px 14px;
   border-radius: 9999px;
-  background: rgba(0, 0, 0, 0.48);
+  background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.82rem;
@@ -12566,23 +12566,25 @@ body {
   flex-shrink: 0;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: all 0.18s ease;
+  transition: all 0.15s ease;
 }
 
 .sagaMobileActTab:active {
-  transform: scale(0.94);
+  transform: scale(0.95);
 }
 
 .sagaMobileActTab.is-active {
-  background: linear-gradient(135deg, #d4af37, #f59e0b);
-  border-color: #fef08a;
-  color: #1a1202;
-  font-weight: 800;
-  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #111812;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.sagaMobileActTab__icon {
-  font-size: 0.95rem;
+[data-theme="bw"] .sagaMobileActTab.is-active,
+[data-theme="dark"] .sagaMobileActTab.is-active {
+  background: #ffffff;
+  color: #0E1013;
 }
 
 .sagaMobileActTab__label {
@@ -12591,9 +12593,9 @@ body {
 
 .sagaMobileActTab__badge {
   font-size: 0.66rem;
-  padding: 1px 5px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 1px 6px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.12);
   color: inherit;
 }
 
@@ -12606,13 +12608,11 @@ body {
 
 /* Current Act Info Header */
 .sagaMobileActHeader {
-  background: var(--card-bg, rgba(255, 255, 255, 0.05));
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.1));
-  border-left: 4px solid #eab308;
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 14px;
   padding: 12px 14px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 12px;
 }
 
 .sagaMobileActHeader__top {
@@ -12620,29 +12620,30 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .sagaMobileActHeader__badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.74rem;
+  gap: 6px;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: #eab308;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
 }
 
 .sagaMobileActHeader__progress {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--ink-soft, #94a3b8);
+  color: var(--ink-soft);
 }
 
 .sagaMobileActHeader__title {
   margin: 0 0 4px;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   font-weight: 800;
-  color: var(--ink, #1e293b);
+  color: var(--ink);
   line-height: 1.35;
 }
 
@@ -12650,23 +12651,22 @@ body {
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.45;
-  color: var(--ink-soft, #64748b);
+  color: var(--ink-soft);
 }
 
 /* Scene Cards Stack */
 .sagaMobileScenesList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .sagaMobileCard {
-  background: var(--card-bg, rgba(255, 255, 255, 0.04));
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
-  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.12s ease, border-color 0.15s ease;
 }
 
 .sagaMobileCard:active {
@@ -12674,13 +12674,11 @@ body {
 }
 
 .sagaMobileCard.is-done {
-  border-color: rgba(16, 185, 129, 0.35);
-  background: rgba(16, 185, 129, 0.02);
+  opacity: 0.82;
 }
 
 .sagaMobileCard.is-expanded {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent);
 }
 
 /* Touch-Friendly Scene Card Header */
@@ -12688,7 +12686,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 11px 13px;
   cursor: pointer;
   user-select: none;
 }
@@ -12697,33 +12695,32 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.06);
-  border: 1.8px solid var(--line, rgba(255, 255, 255, 0.25));
-  color: var(--ink, #1e293b);
-  font-size: 0.82rem;
-  font-weight: 800;
+  background: var(--panel-2);
+  border: 1.5px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
   cursor: pointer;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .sagaMobileCard__checkBtn:active {
-  transform: scale(0.88);
+  transform: scale(0.9);
 }
 
 .sagaMobileCard__checkBtn.is-checked {
-  background: #10b981;
-  border-color: #10b981;
-  color: #ffffff;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.45);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .sagaMobileCard__checkBtn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .sagaMobileCard__info {
@@ -12736,48 +12733,40 @@ body {
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
 .sagaMobileCard__eraTag {
   font-size: 0.68rem;
-  font-weight: 700;
-  color: #d97706;
-}
-
-[data-theme="bw"] .sagaMobileCard__eraTag,
-[data-theme="dark"] .sagaMobileCard__eraTag {
-  color: #facc15;
+  font-weight: 600;
+  color: var(--ink-soft);
 }
 
 .sagaMobileCard__geoTag {
   font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--ink-soft, #64748b);
-  background: rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
   padding: 1px 6px;
   border-radius: 4px;
 }
 
-[data-theme="bw"] .sagaMobileCard__geoTag,
-[data-theme="dark"] .sagaMobileCard__geoTag {
-  background: rgba(255, 255, 255, 0.08);
-}
-
 .sagaMobileCard__title {
   margin: 0;
-  font-size: 0.96rem;
+  font-size: 0.94rem;
   font-weight: 800;
   line-height: 1.35;
-  color: var(--ink, #0f172a);
+  color: var(--ink);
 }
 
 .sagaMobileCard__chevron {
-  width: 20px;
-  height: 20px;
-  color: var(--ink-soft, #94a3b8);
+  width: 18px;
+  height: 18px;
+  color: var(--ink-soft);
   flex-shrink: 0;
   transition: transform 0.2s ease;
+  opacity: 0.7;
 }
 
 .sagaMobileCard.is-expanded .sagaMobileCard__chevron {
@@ -12788,7 +12777,7 @@ body {
 .sagaMobileCard__quickChips {
   display: flex;
   gap: 6px;
-  padding: 0 14px 12px;
+  padding: 0 13px 10px;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -12802,63 +12791,55 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 10px;
+  padding: 4px 10px;
   border-radius: 8px;
-  background: rgba(212, 175, 55, 0.1);
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  color: var(--ink, #1e293b);
-  font-size: 0.76rem;
-  font-weight: 700;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, transform 0.12s ease;
 }
 
 .sagaMobileChip:active {
-  transform: scale(0.94);
-  background: rgba(212, 175, 55, 0.25);
-}
-
-.sagaMobileChip__icon {
-  font-size: 0.85rem;
+  transform: scale(0.95);
+  background: var(--highlight);
 }
 
 .sagaMobileChip__ref {
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .sagaMobileChip__arrow {
-  color: #d97706;
-  font-weight: 900;
-  font-size: 0.85rem;
-}
-
-[data-theme="bw"] .sagaMobileChip__arrow,
-[data-theme="dark"] .sagaMobileChip__arrow {
-  color: #facc15;
+  color: var(--ink-soft);
+  font-weight: 700;
+  font-size: 0.8rem;
+  opacity: 0.6;
 }
 
 /* Expanded Card Details */
 .sagaMobileCard__details {
-  padding: 4px 14px 14px;
-  border-top: 1px dashed var(--line, rgba(0, 0, 0, 0.08));
+  padding: 4px 13px 13px;
+  border-top: 1px dashed var(--line);
   animation: sagaMobileFade 0.2s ease-out;
 }
 
 .sagaMobileCard__summary {
-  margin: 10px 0 12px;
-  font-size: 0.85rem;
-  line-height: 1.55;
-  color: var(--ink-soft, #475569);
+  margin: 8px 0 10px;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
 }
 
 /* Collapsible Geopolitical Box */
 .sagaMobileGeoBox {
-  background: rgba(212, 175, 55, 0.08);
-  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
   border-radius: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   overflow: hidden;
 }
 
@@ -12867,7 +12848,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 8px 11px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -12875,33 +12856,30 @@ body {
 }
 
 .sagaMobileGeoBox__title {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: #b45309;
-}
-
-[data-theme="bw"] .sagaMobileGeoBox__title,
-[data-theme="dark"] .sagaMobileGeoBox__title {
-  color: #facc15;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .sagaMobileGeoBox__icon {
   font-size: 0.7rem;
-  color: inherit;
+  color: var(--ink-soft);
   opacity: 0.7;
 }
 
 .sagaMobileGeoBox__body {
-  padding: 8px 12px 12px;
-  border-top: 1px dashed rgba(212, 175, 55, 0.2);
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--ink-soft, #475569);
+  padding: 8px 11px 11px;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
 }
 
 .sagaMobileGeoBox__date {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   margin-bottom: 4px;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .sagaMobileGeoBox__text {
@@ -12912,16 +12890,15 @@ body {
 .sagaMobilePassagesList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 
 .sagaMobilePassagesList__label {
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-soft, #64748b);
-  margin-bottom: 2px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  margin-bottom: 1px;
 }
 
 .sagaMobilePassageRow {
@@ -12929,17 +12906,17 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  background: var(--card-bg, rgba(0, 0, 0, 0.03));
-  border: 1px solid var(--line, rgba(0, 0, 0, 0.06));
-  border-radius: 10px;
-  padding: 8px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 7px 10px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .sagaMobilePassageRow:active {
   transform: scale(0.98);
-  background: rgba(212, 175, 55, 0.1);
+  background: var(--highlight);
 }
 
 .sagaMobilePassageRow__left {
@@ -12956,29 +12933,24 @@ body {
 
 .sagaMobilePassageRow__genreBadge {
   font-size: 0.62rem;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
   padding: 1px 5px;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.08);
-  color: var(--ink-soft, #64748b);
-}
-
-[data-theme="bw"] .sagaMobilePassageRow__genreBadge,
-[data-theme="dark"] .sagaMobilePassageRow__genreBadge {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
 }
 
 .sagaMobilePassageRow__ref {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  color: var(--ink, #0f172a);
+  color: var(--ink);
 }
 
 .sagaMobilePassageRow__ctx {
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   line-height: 1.35;
-  color: var(--ink-soft, #64748b);
+  color: var(--ink-soft);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -12988,25 +12960,26 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #d4af37, #ca8a04);
-  color: #171100;
-  font-size: 0.78rem;
-  font-weight: 800;
+  padding: 5px 11px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.76rem;
+  font-weight: 700;
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-  transition: transform 0.15s ease;
+  transition: transform 0.12s ease, opacity 0.15s ease;
 }
 
 .sagaMobilePassageRow__readBtn:active {
-  transform: scale(0.9);
+  transform: scale(0.92);
+  opacity: 0.85;
 }
 
 .sagaMobilePassageRow__readBtn svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
 }
 
 /* Mobile Nav Footer */
@@ -13014,9 +12987,9 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line, rgba(0, 0, 0, 0.08));
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
 }
 
 .sagaMobileNavFooter__spacer {
@@ -13027,15 +13000,15 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 18px;
-  border-radius: 12px;
-  background: var(--card-bg, rgba(0, 0, 0, 0.05));
-  border: 1px solid var(--line, rgba(0, 0, 0, 0.1));
-  color: var(--ink, #0f172a);
-  font-size: 0.84rem;
+  padding: 9px 16px;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  transition: transform 0.12s ease;
 }
 
 .sagaMobileNavFooter__btn:active {
@@ -13043,8 +13016,7 @@ body {
 }
 
 .sagaMobileNavFooter__btn--next {
-  background: linear-gradient(135deg, #d4af37, #ca8a04);
-  color: #1a1202;
-  border-color: #eab308;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
 }

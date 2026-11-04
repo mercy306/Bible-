@@ -98,7 +98,7 @@ export default function SagaView({
 
           <div className="sagaMobileHero__titleGroup">
             <span className="sagaMobileHero__pill">
-              👑 {isEn ? 'Chronological Saga' : 'የዘመን ታሪክ'}
+              {isEn ? 'Chronological Saga' : 'የዘመን ታሪክ'}
             </span>
             <h1 className="sagaMobileHero__title">
               {isEn ? 'The Biblical Epic' : 'የመጽሐፍ ቅዱስ ጉዞ'}
@@ -106,8 +106,7 @@ export default function SagaView({
           </div>
 
           <div className="sagaMobileHero__statPill">
-            <span className="sagaMobileHero__statIcon">🏆</span>
-            <span className="sagaMobileHero__statText">{totalProgress.percent}%</span>
+            <span className="sagaMobileHero__statText">{totalProgress.completed}/{totalProgress.total}</span>
           </div>
         </div>
 
@@ -125,10 +124,9 @@ export default function SagaView({
                 className={`sagaMobileActTab ${isSelected ? 'is-active' : ''}`}
                 onClick={() => setSelectedActId(act.id)}
               >
-                <span className="sagaMobileActTab__icon">{act.badgeIcon}</span>
                 <span className="sagaMobileActTab__label">Act {act.romanNr}</span>
-                {prog.percent > 0 && (
-                  <span className="sagaMobileActTab__badge">{prog.percent}%</span>
+                {prog.completed > 0 && (
+                  <span className="sagaMobileActTab__badge">{prog.completed}/{prog.total}</span>
                 )}
               </button>
             )
@@ -142,7 +140,6 @@ export default function SagaView({
         <section className="sagaMobileActHeader">
           <div className="sagaMobileActHeader__top">
             <div className="sagaMobileActHeader__badge">
-              <span>{selectedAct.badgeIcon}</span>
               <span>Act {selectedAct.romanNr}</span>
               <span>•</span>
               <span>{isEn ? selectedAct.eraEn : selectedAct.eraAm}</span>
@@ -199,10 +196,10 @@ export default function SagaView({
 
                   <div className="sagaMobileCard__info">
                     <div className="sagaMobileCard__tags">
-                      <span className="sagaMobileCard__eraTag">⏳ {scene.eraEstimate}</span>
+                      <span className="sagaMobileCard__eraTag">{scene.eraEstimate}</span>
                       {scene.geopolitical && (
                         <span className="sagaMobileCard__geoTag">
-                          🏛️ {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}
+                          {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}
                         </span>
                       )}
                     </div>
@@ -237,7 +234,6 @@ export default function SagaView({
                           onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)
                         }}
                       >
-                        <span className="sagaMobileChip__icon">📖</span>
                         <span className="sagaMobileChip__ref">{refStr}</span>
                         <span className="sagaMobileChip__arrow">›</span>
                       </button>
