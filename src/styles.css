@@ -9981,3 +9981,176 @@ body {
   100% { transform: translateX(0%); }
 }
 
+
+
+/* ==========================================================================
+   MINIMIZED SCRIPTURE READING MODE (Clean, Distraction-Free)
+   ========================================================================== */
+.topbar.topbar--compact {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 60 !important;
+}
+
+.topbar.topbar--compact .mountainHero,
+.topbar.topbar--compact .topbar__hero,
+.topbar__hero.topbar__hero--compact {
+  padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 10px !important;
+  border-radius: 0 0 16px 16px !important;
+  min-height: auto !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+}
+
+.topbar.topbar--compact .mountainHero__bg,
+.topbar.topbar--compact .mountainHero__overlay {
+  display: none !important;
+}
+
+:root:not([data-theme='bw']):not([data-theme='dark']) .topbar.topbar--compact .mountainHero,
+:root[data-theme='light'] .topbar.topbar--compact .mountainHero {
+  background: #CAD5C8 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+:root[data-theme='bw'] .topbar.topbar--compact .mountainHero,
+:root[data-theme='dark'] .topbar.topbar--compact .mountainHero {
+  background: rgba(14, 16, 19, 0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Reader Container Optimization */
+.read {
+  max-width: 680px !important;
+  margin: 0 auto !important;
+  padding: 8px 16px calc(110px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.verses {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.verse {
+  padding: 8px 6px !important;
+  line-height: 1.8 !important;
+}
+
+.verse__text {
+  font-size: 1.12rem !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Compact Floating Chapter Bar */
+.readerBar {
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 4px 8px !important;
+  gap: 6px !important;
+}
+
+.readerBar__chapterBtn {
+  padding: 6px 14px !important;
+  font-size: 12.5px !important;
+}
+
+.readerBar__navBtn,
+.readerBar__listenBtn {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+
+/* ==========================================================================
+   SEARCH TARGET VERSE SPOTLIGHT & DIRECT JUMP INDICATOR
+   ========================================================================== */
+.verse.verse--searchTarget {
+  animation: searchVerseSpotlight 3.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+  border-radius: 12px !important;
+  scroll-margin-top: 76px !important;
+}
+
+.verse__searchTargetBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #D4AF37 0%, #B89228 100%);
+  color: #1A1505;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+  animation: badgePopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  letter-spacing: 0.02em;
+}
+
+.verse__searchTargetIcon {
+  font-size: 12px;
+}
+
+@keyframes badgePopIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes searchVerseSpotlight {
+  0% {
+    background: rgba(212, 175, 55, 0.32);
+    box-shadow: 0 0 0 3px #D4AF37, 0 8px 24px rgba(212, 175, 55, 0.35);
+    transform: scale(1.02);
+  }
+  25% {
+    background: rgba(212, 175, 55, 0.22);
+    box-shadow: 0 0 0 2.5px #D4AF37, 0 6px 18px rgba(212, 175, 55, 0.25);
+    transform: scale(1.01);
+  }
+  50% {
+    background: rgba(212, 175, 55, 0.32);
+    box-shadow: 0 0 0 3px #D4AF37, 0 8px 24px rgba(212, 175, 55, 0.35);
+    transform: scale(1.02);
+  }
+  75% {
+    background: rgba(212, 175, 55, 0.18);
+    box-shadow: 0 0 0 2px #D4AF37, 0 4px 14px rgba(212, 175, 55, 0.2);
+    transform: scale(1);
+  }
+  100% {
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 0 1.5px rgba(212, 175, 55, 0.5);
+  }
+}
+
+:root[data-theme='bw'] .verse.verse--searchTarget,
+:root[data-theme='dark'] .verse.verse--searchTarget {
+  animation: searchVerseSpotlightDark 3.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+}
+
+@keyframes searchVerseSpotlightDark {
+  0% {
+    background: rgba(212, 175, 55, 0.28);
+    box-shadow: 0 0 0 3px #F4E8C1, 0 8px 28px rgba(244, 232, 193, 0.35);
+    transform: scale(1.02);
+  }
+  25% {
+    background: rgba(212, 175, 55, 0.18);
+    box-shadow: 0 0 0 2.5px #F4E8C1, 0 6px 20px rgba(244, 232, 193, 0.25);
+    transform: scale(1.01);
+  }
+  50% {
+    background: rgba(212, 175, 55, 0.28);
+    box-shadow: 0 0 0 3px #F4E8C1, 0 8px 28px rgba(244, 232, 193, 0.35);
+    transform: scale(1.02);
+  }
+  75% {
+    background: rgba(212, 175, 55, 0.18);
+    box-shadow: 0 0 0 2px #D4AF37, 0 4px 16px rgba(212, 175, 55, 0.2);
+    transform: scale(1);
+  }
+  100% {
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 0 1.5px rgba(212, 175, 55, 0.5);
+  }
+}

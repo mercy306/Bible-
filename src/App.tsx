@@ -338,6 +338,7 @@ export default function App() {
             compare={compare}
             memorize={memorize}
             wordLookup={wordLookup}
+            targetVerse={route.verse}
             passage={
               route.verse && route.verseEnd
                 ? { from: route.verse, to: route.verseEnd }

@@ -41,6 +41,7 @@ export default function TopBar({
   book,
   chapter,
   primary,
+  view,
   moreOpen: _moreOpen,
   language,
   onLanguage: _onLanguage,
@@ -55,6 +56,7 @@ export default function TopBar({
   onToggleSearch,
   initialQuery = '',
 }: Props) {
+  const isReadView = !view || view === 'read'
   const prefs = usePrefs()
   const [internalSearchOpen, setInternalSearchOpen] = useState(false)
   const isSearchOpen = searchOpen !== undefined ? searchOpen : internalSearchOpen
@@ -187,8 +189,8 @@ export default function TopBar({
   }
 
   return (
-    <header className="topbar topbar--mountain">
-      <MountainHero className="topbar__hero">
+    <header className={`topbar topbar--mountain ${isReadView ? 'topbar--compact' : ''}`}>
+      <MountainHero className={`topbar__hero ${isReadView ? 'topbar__hero--compact' : ''}`}>
         {isSearchOpen ? (
         <div className="topbar__searchRow">
           <button
@@ -313,20 +315,22 @@ export default function TopBar({
             </div>
           </div>
 
-          <div className="homeScreen__heroText">
-            <h2 className="homeScreen__greeting">{getGreeting(isEn)}</h2>
-            <blockquote
-              className="homeScreen__quote"
-              style={{ cursor: onDaily ? 'pointer' : undefined }}
-              onClick={onDaily}
-              title={onDaily ? (isEn ? 'Go to Daily Devotional' : 'ወደ ዕለቱ ጥቅስ ይሂዱ') : undefined}
-            >
-              <div className="homeScreen__quoteText">
-                {isEn ? '“The Lord is my shepherd; I shall not want.”' : '“እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም።”'}
-              </div>
-              <cite className="homeScreen__quoteRef">{isEn ? 'PSALM 23:1' : 'መዝሙር 23:1'}</cite>
-            </blockquote>
-          </div>
+          {!isReadView && (
+            <div className="homeScreen__heroText">
+              <h2 className="homeScreen__greeting">{getGreeting(isEn)}</h2>
+              <blockquote
+                className="homeScreen__quote"
+                style={{ cursor: onDaily ? 'pointer' : undefined }}
+                onClick={onDaily}
+                title={onDaily ? (isEn ? 'Go to Daily Devotional' : 'ወደ ዕለቱ ጥቅስ ይሂዱ') : undefined}
+              >
+                <div className="homeScreen__quoteText">
+                  {isEn ? '“The Lord is my shepherd; I shall not want.”' : '“እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም።”'}
+                </div>
+                <cite className="homeScreen__quoteRef">{isEn ? 'PSALM 23:1' : 'መዝሙር 23:1'}</cite>
+              </blockquote>
+            </div>
+          )}
         </>
       )}
       </MountainHero>

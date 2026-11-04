@@ -27,6 +27,7 @@ interface Props {
   onAppearance?: () => void
   /** Passage limits from the route, e.g. 16 to 20. */
   passage?: { from: number; to: number } | null
+  targetVerse?: number
   language: LanguageMode
   compare: 'off' | 'am54'
   memorize: boolean
@@ -62,12 +63,14 @@ export default function Reader({
   onOpen,
   onAppearance: _onAppearance,
   passage = null,
+  targetVerse,
   language,
   compare,
   memorize,
   wordLookup,
 }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
+  const [highlightedTargetVerse, setHighlightedTargetVerse] = useState<number | null>(null)
   const [panel, setPanel] = useState<Panel>('none')
   const [word, setWord] = useState<{ text: string; verse: number } | null>(null)
   const [counterpart, setCounterpart] = useState<ChapterResponse | null>(null)
@@ -380,6 +383,39 @@ export default function Reader({
       ? (amBookName ?? chapter.book.name)
       : (amBookName && enBookName ? `${amBookName} (${enBookName})` : chapter.book.name)
 
+  useEffect(() => {
+    if (!targetVerse) {
+      setHighlightedTargetVerse(null)
+      return
+    }
+
+    setHighlightedTargetVerse(targetVerse)
+    setSelected(targetVerse)
+
+    const timer = setTimeout(() => {
+      let el = document.getElementById(`v${targetVerse}`)
+      if (!el) {
+        const row = rows.find((r) => r.from <= targetVerse && targetVerse <= r.to)
+        if (row) {
+          el = document.getElementById(`v${row.from}`)
+        }
+      }
+
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 180)
+
+    const clearTimer = setTimeout(() => {
+      setHighlightedTargetVerse(null)
+    }, 4500)
+
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(clearTimer)
+    }
+  }, [targetVerse, chapter.book.nr, chapter.chapter, rows])
+
   return (
     <article className="read">
       {chapter.fallback && (
@@ -446,12 +482,19 @@ export default function Reader({
             )?.collection ??
             ''
 
+          const isSearchTarget =
+            highlightedTargetVerse !== null &&
+            (n === highlightedTargetVerse ||
+              (folded && row.from <= highlightedTargetVerse && highlightedTargetVerse <= row.to))
+
           return (
             <li
               key={n}
               className={`verse ${on ? 'is-on' : ''} ${lit ? 'is-lit' : ''} ${
                 starred ? 'is-starred' : ''
-              } ${missing ? 'verse--grouped' : ''} ${folded ? 'verse--run' : ''} ${hidden ? 'verse--hidden' : ''}`}
+              } ${missing ? 'verse--grouped' : ''} ${folded ? 'verse--run' : ''} ${
+                hidden ? 'verse--hidden' : ''
+              } ${isSearchTarget ? 'verse--searchTarget is-searchTarget' : ''}`}
               id={`v${n}`}
               onClick={(e) => {
                 // Tapping the row selects it, unless text is being selected.
@@ -466,6 +509,14 @@ export default function Reader({
               }}
             >
               <div className="verse__body">
+                {isSearchTarget && (
+                  <div className="verse__searchTargetBadge">
+                    <span className="verse__searchTargetIcon">🎯</span>
+                    <span className="verse__searchTargetText">
+                      {language === 'en' ? 'Searched Verse' : 'የተፈለገው ጥቅስ'}
+                    </span>
+                  </div>
+                )}
                 {hidden ? (
                   <button
                     type="button"

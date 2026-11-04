@@ -11,7 +11,7 @@ interface Props {
   language?: LanguageMode
   onScope: (scope: 'text' | 'commentary') => void
   onFilter: (next: { testament?: 'OT' | 'NT' | 'all'; book: number | null }) => void
-  onOpen: (book: number, chapter: number) => void
+  onOpen: (book: number, chapter: number, verse?: number) => void
 }
 
 export default function SearchResults({
@@ -209,7 +209,7 @@ function TextResults({
   language = 'am',
 }: {
   search: SearchResponse
-  onOpen: (book: number, chapter: number) => void
+  onOpen: (book: number, chapter: number, verse?: number) => void
   language?: LanguageMode
 }) {
   const isEn = language === 'en'
@@ -253,7 +253,7 @@ function TextResults({
             <button
               type="button"
               className="hit"
-              onClick={() => onOpen(hit.book, hit.chapter)}
+              onClick={() => onOpen(hit.book, hit.chapter, hit.verse)}
             >
               <span className="hit__ref">
                 <span className="hit__testament">
