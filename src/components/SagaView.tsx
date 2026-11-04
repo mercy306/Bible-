@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import MountainHero from './MountainHero'
 import {
   SAGA_ACTS,
   type SagaAct,
@@ -61,9 +62,9 @@ export default function SagaView({
   function getGenreBadge(genre: InterwovenPassage['genre']) {
     switch (genre) {
       case 'narrative':
-        return { label: isEn ? 'Narrative' : 'ታሪክ', icon: '📖' }
+        return { label: isEn ? 'History' : 'ታሪክ', icon: '📖' }
       case 'poetry':
-        return { label: isEn ? 'Psalm/Poetry' : 'መዝሙር', icon: '🎵' }
+        return { label: isEn ? 'Psalm' : 'መዝሙር', icon: '🎵' }
       case 'prophecy':
         return { label: isEn ? 'Prophecy' : 'ትንቢት', icon: '📣' }
       case 'gospel':
@@ -73,19 +74,19 @@ export default function SagaView({
       case 'law':
         return { label: isEn ? 'Law' : 'ሕግ', icon: '📜' }
       case 'apocalyptic':
-        return { label: isEn ? 'Apocalypse' : 'ራእይ', icon: '👁️' }
+        return { label: isEn ? 'Vision' : 'ራእይ', icon: '👁️' }
     }
   }
 
   return (
-    <div className="sagaView sagaView--minimized">
-      {/* Minimized Clean Header */}
-      <header className="sagaMiniHeader">
-        <div className="sagaMiniHeader__left">
+    <div className="sagaMobileScreen">
+      {/* Native Mobile Hero Header */}
+      <MountainHero className="sagaMobileHero">
+        <div className="sagaMobileHero__navRow">
           {onBack && (
             <button
               type="button"
-              className="sagaMiniHeader__backBtn"
+              className="sagaMobileHero__backBtn"
               onClick={onBack}
               aria-label={isEn ? 'Back to Bible' : 'ወደ መጽሐፍ ተመለስ'}
             >
@@ -94,216 +95,278 @@ export default function SagaView({
               </svg>
             </button>
           )}
-          <div>
-            <h1 className="sagaMiniHeader__title">
-              {isEn ? 'Chronological Saga' : 'የዘመን ታሪክ ቅደም ተከተል'}
+
+          <div className="sagaMobileHero__titleGroup">
+            <span className="sagaMobileHero__pill">
+              👑 {isEn ? 'Chronological Saga' : 'የዘመን ታሪክ'}
+            </span>
+            <h1 className="sagaMobileHero__title">
+              {isEn ? 'The Biblical Epic' : 'የመጽሐፍ ቅዱስ ጉዞ'}
             </h1>
-            <div className="sagaMiniHeader__sub">
-              {isEn ? '5 Acts • 66 Books Chronologically Harmonized' : '5 ታላላቅ ዘመናት • 66 መጻሕፍት በቅደም ተከተል'}
-            </div>
+          </div>
+
+          <div className="sagaMobileHero__statPill">
+            <span className="sagaMobileHero__statIcon">🏆</span>
+            <span className="sagaMobileHero__statText">{totalProgress.percent}%</span>
           </div>
         </div>
 
-        <div className="sagaMiniHeader__progressPill" title={isEn ? 'Overall progress' : 'አጠቃላይ እድገት'}>
-          <span>{totalProgress.completed}/{totalProgress.total}</span>
-          <span className="sagaMiniHeader__progressPct">({totalProgress.percent}%)</span>
-        </div>
-      </header>
-
-      {/* Minimized Act Switcher Pill Tabs */}
-      <nav className="sagaMiniActTabs" aria-label="Acts">
-        {SAGA_ACTS.map((act) => {
-          const isSelected = act.id === selectedActId
-          const prog = getActProgress(act.id)
-          return (
-            <button
-              key={act.id}
-              type="button"
-              className={`sagaMiniActTab ${isSelected ? 'is-active' : ''}`}
-              onClick={() => setSelectedActId(act.id)}
-            >
-              <span className="sagaMiniActTab__icon">{act.badgeIcon}</span>
-              <span className="sagaMiniActTab__label">Act {act.romanNr}</span>
-              {prog.percent > 0 && (
-                <span className="sagaMiniActTab__pct">{prog.percent}%</span>
-              )}
-            </button>
-          )
-        })}
-      </nav>
-
-      {/* Compact Act Summary Bar */}
-      <div className="sagaMiniActBar">
-        <div className="sagaMiniActBar__left">
-          <span className="sagaMiniActBar__title">
-            {isEn ? selectedAct.titleEn.split('(')[0].trim() : selectedAct.titleAm.split('-')[0].trim()}
-          </span>
-          <span className="sagaMiniActBar__dot">•</span>
-          <span className="sagaMiniActBar__era">
-            {isEn ? selectedAct.eraEn.split('(')[0].trim() : selectedAct.eraAm.split('(')[0].trim()}
-          </span>
-        </div>
-        <div className="sagaMiniActBar__count">
-          {selectedActProgress.completed}/{selectedActProgress.total} {isEn ? 'done' : 'ተጠናቋል'}
-        </div>
-      </div>
-
-      {/* Minimized Scene List */}
-      <div className="sagaMiniList">
-        {selectedAct.scenes.map((scene) => {
-          const isDone = progressState.completedScenes.includes(scene.id)
-          const isExpanded = !!expandedScenes[scene.id]
-          const isInterludeOpen = !!expandedInterludes[scene.id]
-
-          return (
-            <div
-              key={scene.id}
-              className={`sagaMiniCard ${isDone ? 'is-done' : ''} ${isExpanded ? 'is-expanded' : ''}`}
-            >
-              {/* Minimized Scene Header Row (Click to Expand / Collapse) */}
-              <div
-                className="sagaMiniCard__head"
-                onClick={() => toggleSceneExpanded(scene.id)}
-                role="button"
-                tabIndex={0}
-                aria-expanded={isExpanded}
+        {/* Horizontal Mobile Act Segmented Tabs */}
+        <div className="sagaMobileActTabs" role="tablist">
+          {SAGA_ACTS.map((act) => {
+            const isSelected = act.id === selectedActId
+            const prog = getActProgress(act.id)
+            return (
+              <button
+                key={act.id}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                className={`sagaMobileActTab ${isSelected ? 'is-active' : ''}`}
+                onClick={() => setSelectedActId(act.id)}
               >
-                {/* Checkbox button */}
-                <button
-                  type="button"
-                  className={`sagaMiniCard__check ${isDone ? 'is-checked' : ''}`}
-                  onClick={(e) => handleToggleScene(scene.id, e)}
-                  title={isDone ? (isEn ? 'Mark unread' : 'አልተነበበም በል') : (isEn ? 'Mark read' : 'ተነቧል በል')}
+                <span className="sagaMobileActTab__icon">{act.badgeIcon}</span>
+                <span className="sagaMobileActTab__label">Act {act.romanNr}</span>
+                {prog.percent > 0 && (
+                  <span className="sagaMobileActTab__badge">{prog.percent}%</span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      </MountainHero>
+
+      {/* Main Mobile Feed Container */}
+      <main className="sagaMobileFeed">
+        {/* Current Act Info Header */}
+        <section className="sagaMobileActHeader">
+          <div className="sagaMobileActHeader__top">
+            <div className="sagaMobileActHeader__badge">
+              <span>{selectedAct.badgeIcon}</span>
+              <span>Act {selectedAct.romanNr}</span>
+              <span>•</span>
+              <span>{isEn ? selectedAct.eraEn : selectedAct.eraAm}</span>
+            </div>
+            <span className="sagaMobileActHeader__progress">
+              {selectedActProgress.completed}/{selectedActProgress.total} {isEn ? 'read' : 'ተነቧል'}
+            </span>
+          </div>
+
+          <h2 className="sagaMobileActHeader__title">
+            {isEn ? selectedAct.titleEn : selectedAct.titleAm}
+          </h2>
+
+          <p className="sagaMobileActHeader__desc">
+            {isEn ? selectedAct.summaryEn : selectedAct.summaryAm}
+          </p>
+        </section>
+
+        {/* Mobile Scene Cards */}
+        <div className="sagaMobileScenesList">
+          {selectedAct.scenes.map((scene) => {
+            const isDone = progressState.completedScenes.includes(scene.id)
+            const isExpanded = !!expandedScenes[scene.id]
+            const isInterludeOpen = !!expandedInterludes[scene.id]
+
+            return (
+              <article
+                key={scene.id}
+                className={`sagaMobileCard ${isDone ? 'is-done' : ''} ${isExpanded ? 'is-expanded' : ''}`}
+              >
+                {/* Touch-Friendly Scene Card Header */}
+                <div
+                  className="sagaMobileCard__tapRow"
+                  onClick={() => toggleSceneExpanded(scene.id)}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isExpanded}
                 >
-                  {isDone ? '✓' : scene.sceneNr}
-                </button>
-
-                {/* Title & Era */}
-                <div className="sagaMiniCard__main">
-                  <div className="sagaMiniCard__title">
-                    {isEn ? scene.titleEn : scene.titleAm}
-                  </div>
-                  <div className="sagaMiniCard__meta">
-                    <span className="sagaMiniCard__era">⏳ {scene.eraEstimate}</span>
-                    <span className="sagaMiniCard__passagesCount">
-                      📖 {scene.passages.length} {isEn ? 'passages' : 'ክፍሎች'}
-                    </span>
-                    {scene.geopolitical && (
-                      <span className="sagaMiniCard__geoPill">🏛️ {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}</span>
+                  {/* Round Completion Checkbox */}
+                  <button
+                    type="button"
+                    className={`sagaMobileCard__checkBtn ${isDone ? 'is-checked' : ''}`}
+                    onClick={(e) => handleToggleScene(scene.id, e)}
+                    aria-label={isDone ? (isEn ? 'Mark unread' : 'አልተነበበም') : (isEn ? 'Mark read' : 'ተነቧል')}
+                  >
+                    {isDone ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    ) : (
+                      <span>{scene.sceneNr}</span>
                     )}
-                  </div>
-                </div>
+                  </button>
 
-                {/* Expand / Collapse Indicator */}
-                <span className="sagaMiniCard__arrow">
-                  {isExpanded ? '▴' : '▾'}
-                </span>
-              </div>
-
-              {/* Collapsible Body */}
-              {isExpanded && (
-                <div className="sagaMiniCard__body">
-                  <p className="sagaMiniCard__summary">
-                    {isEn ? scene.summaryEn : scene.summaryAm}
-                  </p>
-
-                  {/* Minimized Geopolitical Interlude */}
-                  {scene.geopolitical && (
-                    <div className="sagaMiniGeo">
-                      <button
-                        type="button"
-                        className="sagaMiniGeo__head"
-                        onClick={(e) => toggleInterlude(scene.id, e)}
-                      >
-                        <span className="sagaMiniGeo__title">
-                          🏛️ {isEn ? scene.geopolitical.titleEn : scene.geopolitical.titleAm}
+                  <div className="sagaMobileCard__info">
+                    <div className="sagaMobileCard__tags">
+                      <span className="sagaMobileCard__eraTag">⏳ {scene.eraEstimate}</span>
+                      {scene.geopolitical && (
+                        <span className="sagaMobileCard__geoTag">
+                          🏛️ {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}
                         </span>
-                        <span className="sagaMiniGeo__date">({scene.geopolitical.historicalDate})</span>
-                        <span className="sagaMiniGeo__chev">{isInterludeOpen ? '▲' : '▼'}</span>
-                      </button>
-
-                      {isInterludeOpen && (
-                        <div className="sagaMiniGeo__content">
-                          {isEn ? scene.geopolitical.bodyEn : scene.geopolitical.bodyAm}
-                        </div>
                       )}
                     </div>
-                  )}
 
-                  {/* Interwoven Scriptures List */}
-                  <div className="sagaMiniPassages">
-                    {scene.passages.map((p, idx) => {
-                      const badge = getGenreBadge(p.genre)
-                      const bookName = isEn ? p.bookNameEn : p.bookNameAm
-                      const refStr = p.verseStart
-                        ? p.verseEnd && p.verseEnd !== p.verseStart
-                          ? `${bookName} ${p.chapter}:${p.verseStart}–${p.verseEnd}`
-                          : `${bookName} ${p.chapter}:${p.verseStart}`
-                        : `${bookName} ${p.chapter}`
+                    <h3 className="sagaMobileCard__title">
+                      {isEn ? scene.titleEn : scene.titleAm}
+                    </h3>
+                  </div>
 
-                      return (
-                        <div
-                          key={`${p.bookNr}-${p.chapter}-${idx}`}
-                          className="sagaMiniPassageItem"
-                        >
-                          <div className="sagaMiniPassageItem__left">
-                            <div className="sagaMiniPassageItem__ref">
-                              <span>{badge.icon}</span>
-                              <strong>{refStr}</strong>
-                              <span className="sagaMiniPassageItem__genre">{badge.label}</span>
-                            </div>
-                            <div className="sagaMiniPassageItem__ctx">
-                              {isEn ? p.contextEn : p.contextAm}
-                            </div>
-                          </div>
-
-                          <button
-                            type="button"
-                            className="sagaMiniPassageItem__btn"
-                            onClick={() => onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)}
-                          >
-                            <span>{isEn ? 'Read' : 'አንብብ'}</span>
-                            <span>›</span>
-                          </button>
-                        </div>
-                      )
-                    })}
+                  <div className="sagaMobileCard__chevron">
+                    <svg viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                    </svg>
                   </div>
                 </div>
-              )}
-            </div>
-          )
-        })}
-      </div>
 
-      {/* Compact Act Switcher Footer */}
-      <footer className="sagaMiniFooter">
-        {selectedActId > 1 && (
-          <button
-            type="button"
-            className="sagaMiniFooter__btn"
-            onClick={() => {
-              setSelectedActId(selectedActId - 1)
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-          >
-            ‹ Act {selectedActId - 1}
-          </button>
-        )}
-        <div className="sagaMiniFooter__spacer" />
-        {selectedActId < 5 && (
-          <button
-            type="button"
-            className="sagaMiniFooter__btn sagaMiniFooter__btn--next"
-            onClick={() => {
-              setSelectedActId(selectedActId + 1)
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-          >
-            Act {selectedActId + 1} ›
-          </button>
-        )}
-      </footer>
+                {/* Direct 1-Tap Scripture Quick Chips (Always visible on mobile!) */}
+                <div className="sagaMobileCard__quickChips">
+                  {scene.passages.map((p, idx) => {
+                    const bookName = isEn ? p.bookNameEn : p.bookNameAm
+                    const refStr = p.verseStart
+                      ? `${bookName} ${p.chapter}:${p.verseStart}`
+                      : `${bookName} ${p.chapter}`
+
+                    return (
+                      <button
+                        key={`${p.bookNr}-${p.chapter}-${idx}`}
+                        type="button"
+                        className="sagaMobileChip"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)
+                        }}
+                      >
+                        <span className="sagaMobileChip__icon">📖</span>
+                        <span className="sagaMobileChip__ref">{refStr}</span>
+                        <span className="sagaMobileChip__arrow">›</span>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Expanded Details Section */}
+                {isExpanded && (
+                  <div className="sagaMobileCard__details">
+                    <p className="sagaMobileCard__summary">
+                      {isEn ? scene.summaryEn : scene.summaryAm}
+                    </p>
+
+                    {/* Collapsible Geopolitical Box */}
+                    {scene.geopolitical && (
+                      <div className="sagaMobileGeoBox">
+                        <button
+                          type="button"
+                          className="sagaMobileGeoBox__header"
+                          onClick={(e) => toggleInterlude(scene.id, e)}
+                        >
+                          <div className="sagaMobileGeoBox__title">
+                            🏛️ {isEn ? scene.geopolitical.titleEn : scene.geopolitical.titleAm}
+                          </div>
+                          <span className="sagaMobileGeoBox__icon">
+                            {isInterludeOpen ? '▲' : '▼'}
+                          </span>
+                        </button>
+
+                        {isInterludeOpen && (
+                          <div className="sagaMobileGeoBox__body">
+                            <div className="sagaMobileGeoBox__date">
+                              {isEn ? 'Period' : 'ዘመን'}: <strong>{scene.geopolitical.historicalDate}</strong>
+                            </div>
+                            <p className="sagaMobileGeoBox__text">
+                              {isEn ? scene.geopolitical.bodyEn : scene.geopolitical.bodyAm}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Detailed Passage Cards with Context Notes */}
+                    <div className="sagaMobilePassagesList">
+                      <div className="sagaMobilePassagesList__label">
+                        {isEn ? 'Interwoven Historical Readings:' : 'የተዋሃዱ ታሪካዊ ንባቦች:'}
+                      </div>
+
+                      {scene.passages.map((p, idx) => {
+                        const badge = getGenreBadge(p.genre)
+                        const bookName = isEn ? p.bookNameEn : p.bookNameAm
+                        const fullRef = p.verseStart
+                          ? p.verseEnd && p.verseEnd !== p.verseStart
+                            ? `${bookName} ${p.chapter}:${p.verseStart}–${p.verseEnd}`
+                            : `${bookName} ${p.chapter}:${p.verseStart}`
+                          : `${bookName} ${p.chapter}`
+
+                        return (
+                          <div
+                            key={`${p.bookNr}-${p.chapter}-detail-${idx}`}
+                            className="sagaMobilePassageRow"
+                            onClick={() => onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)}
+                          >
+                            <div className="sagaMobilePassageRow__left">
+                              <div className="sagaMobilePassageRow__refLine">
+                                <span className="sagaMobilePassageRow__genreBadge">{badge.label}</span>
+                                <span className="sagaMobilePassageRow__ref">{fullRef}</span>
+                              </div>
+                              <div className="sagaMobilePassageRow__ctx">
+                                {isEn ? p.contextEn : p.contextAm}
+                              </div>
+                            </div>
+
+                            <button
+                              type="button"
+                              className="sagaMobilePassageRow__readBtn"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)
+                              }}
+                            >
+                              <span>{isEn ? 'Read' : 'አንብብ'}</span>
+                              <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+                              </svg>
+                            </button>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+              </article>
+            )
+          })}
+        </div>
+
+        {/* Mobile Next / Prev Act Switcher */}
+        <div className="sagaMobileNavFooter">
+          {selectedActId > 1 && (
+            <button
+              type="button"
+              className="sagaMobileNavFooter__btn"
+              onClick={() => {
+                setSelectedActId(selectedActId - 1)
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+            >
+              ‹ Act {selectedActId - 1}
+            </button>
+          )}
+
+          <div className="sagaMobileNavFooter__spacer" />
+
+          {selectedActId < 5 && (
+            <button
+              type="button"
+              className="sagaMobileNavFooter__btn sagaMobileNavFooter__btn--next"
+              onClick={() => {
+                setSelectedActId(selectedActId + 1)
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+            >
+              Act {selectedActId + 1} ›
+            </button>
+          )}
+        </div>
+      </main>
     </div>
   )
 }
