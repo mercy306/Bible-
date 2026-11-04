@@ -392,26 +392,49 @@ export default function Reader({
     setHighlightedTargetVerse(targetVerse)
     setSelected(targetVerse)
 
-    const timer = setTimeout(() => {
-      let el = document.getElementById(`v${targetVerse}`)
+    const doScroll = () => {
+      let el = document.getElementById("v" + targetVerse)
       if (!el) {
         const row = rows.find((r) => r.from <= targetVerse && targetVerse <= r.to)
         if (row) {
-          el = document.getElementById(`v${row.from}`)
+          el = document.getElementById("v" + row.from)
         }
       }
 
-      if (el) {
+      if (!el) return
+
+      try {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      } catch {
+        el.scrollIntoView(true)
       }
-    }, 180)
+
+      const mainEl = document.querySelector('.main') as HTMLElement | null
+      if (mainEl && mainEl.scrollHeight > mainEl.clientHeight) {
+        const rect = el.getBoundingClientRect()
+        const mainRect = mainEl.getBoundingClientRect()
+        const targetScroll = mainEl.scrollTop + (rect.top - mainRect.top) - (mainEl.clientHeight / 2) + (rect.height / 2)
+        mainEl.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' })
+      }
+
+      const rect = el.getBoundingClientRect()
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop
+      const targetWindowY = rect.top + scrollY - (window.innerHeight / 2) + (rect.height / 2)
+      window.scrollTo({ top: Math.max(0, targetWindowY), behavior: 'smooth' })
+    }
+
+    const t1 = setTimeout(doScroll, 80)
+    const t2 = setTimeout(doScroll, 280)
+    const t3 = setTimeout(doScroll, 600)
 
     const clearTimer = setTimeout(() => {
       setHighlightedTargetVerse(null)
-    }, 4500)
+    }, 5500)
 
     return () => {
-      clearTimeout(timer)
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(t3)
       clearTimeout(clearTimer)
     }
   }, [targetVerse, chapter.book.nr, chapter.chapter, rows])

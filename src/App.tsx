@@ -181,7 +181,7 @@ export default function App() {
         book,
         chapter: chapterNr,
         verse,
-        verseEnd: verse ? (verseEnd ?? verse) : undefined,
+        verseEnd: verseEnd && verseEnd !== verse ? verseEnd : undefined,
         q: '',
       }),
     [go, route],
@@ -348,8 +348,8 @@ export default function App() {
             wordLookup={wordLookup}
             targetVerse={route.verse}
             passage={
-              route.verse
-                ? { from: route.verse, to: route.verseEnd ?? route.verse }
+              route.verse && route.verseEnd && route.verseEnd !== route.verse
+                ? { from: route.verse, to: route.verseEnd }
                 : null
             }
           />
