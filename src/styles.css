@@ -11291,23 +11291,17 @@ body {
   color: #facc15;
 }
 
-.sagaView {
-  max-width: 860px;
+.sagaView--minimized {
+  max-width: 720px;
   margin: 0 auto;
-  padding: 16px 16px 120px;
+  padding: 10px 12px 100px;
   color: var(--ink, #f1f5f9);
-  animation: sagaFadeIn 0.3s ease-out;
+  animation: sagaFadeIn 0.25s ease-out;
 }
 
 @keyframes sagaFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Header */
@@ -11955,4 +11949,477 @@ body {
   color: #1a1202;
   border-color: #eab308;
   box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25);
+}
+
+/* ==========================================================================
+   Epic Chronological Saga Mode - Minimized UI
+   ========================================================================== */
+
+/* Minimized Top Header */
+.sagaMiniHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 4px 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+}
+
+.sagaMiniHeader__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sagaMiniHeader__backBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--card-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  color: var(--ink, #fff);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.sagaMiniHeader__backBtn:active {
+  transform: scale(0.92);
+}
+
+.sagaMiniHeader__backBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sagaMiniHeader__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--ink, #ffffff);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sagaMiniHeader__sub {
+  font-size: 0.72rem;
+  color: var(--ink-soft, #94a3b8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sagaMiniHeader__progressPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #eab308;
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  padding: 4px 8px;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.sagaMiniHeader__progressPct {
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+/* Minimized Act Switcher Pills */
+.sagaMiniActTabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+.sagaMiniActTabs::-webkit-scrollbar {
+  display: none;
+}
+
+.sagaMiniActTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: var(--card-bg, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.1));
+  color: var(--ink-soft, #94a3b8);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+
+.sagaMiniActTab:active {
+  transform: scale(0.94);
+}
+
+.sagaMiniActTab.is-active {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(234, 179, 8, 0.12));
+  border-color: #eab308;
+  color: #fef08a;
+  box-shadow: 0 2px 10px rgba(234, 179, 8, 0.15);
+}
+
+.sagaMiniActTab__icon {
+  font-size: 0.95rem;
+}
+
+.sagaMiniActTab__pct {
+  font-size: 0.68rem;
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  padding: 1px 5px;
+  border-radius: 10px;
+}
+
+/* Compact Act Summary Bar */
+.sagaMiniActBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.06));
+  font-size: 0.78rem;
+}
+
+.sagaMiniActBar__left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sagaMiniActBar__title {
+  font-weight: 800;
+  color: var(--ink, #ffffff);
+  white-space: nowrap;
+}
+
+.sagaMiniActBar__dot {
+  opacity: 0.4;
+}
+
+.sagaMiniActBar__era {
+  color: #eab308;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sagaMiniActBar__count {
+  font-weight: 700;
+  color: var(--ink-soft, #94a3b8);
+  flex-shrink: 0;
+}
+
+/* Minimized Scene List */
+.sagaMiniList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sagaMiniCard {
+  background: var(--card-bg, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.sagaMiniCard.is-done {
+  border-color: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.02);
+}
+
+.sagaMiniCard.is-expanded {
+  border-color: rgba(234, 179, 8, 0.35);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sagaMiniCard__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sagaMiniCard__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: var(--ink, #ffffff);
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.sagaMiniCard__check:active {
+  transform: scale(0.9);
+}
+
+.sagaMiniCard__check.is-checked {
+  background: #10b981;
+  border-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+.sagaMiniCard__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.sagaMiniCard__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink, #ffffff);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sagaMiniCard__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sagaMiniCard__era {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #eab308;
+}
+
+.sagaMiniCard__passagesCount {
+  font-size: 0.68rem;
+  color: var(--ink-soft, #94a3b8);
+}
+
+.sagaMiniCard__geoPill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.sagaMiniCard__arrow {
+  font-size: 0.85rem;
+  color: var(--ink-soft, #94a3b8);
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+/* Collapsible Scene Body */
+.sagaMiniCard__body {
+  padding: 0 12px 12px;
+  border-top: 1px dashed var(--line, rgba(255, 255, 255, 0.07));
+  margin-top: 2px;
+  animation: sagaFadeIn 0.2s ease-out;
+}
+
+.sagaMiniCard__summary {
+  margin: 10px 0 10px;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--ink-soft, #cbd5e1);
+}
+
+/* Minimized Geopolitical Box */
+.sagaMiniGeo {
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.sagaMiniGeo__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 7px 10px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sagaMiniGeo__title {
+  font-size: 0.77rem;
+  font-weight: 700;
+  color: #eab308;
+}
+
+.sagaMiniGeo__date {
+  font-size: 0.7rem;
+  color: var(--ink-soft, #94a3b8);
+}
+
+.sagaMiniGeo__chev {
+  font-size: 0.65rem;
+  color: #eab308;
+  margin-left: auto;
+}
+
+.sagaMiniGeo__content {
+  padding: 6px 10px 10px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ink-soft, #e2e8f0);
+  border-top: 1px dashed rgba(212, 175, 55, 0.15);
+}
+
+/* Minimized Passages List */
+.sagaMiniPassages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sagaMiniPassageItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.06));
+  border-radius: 8px;
+  padding: 6px 8px;
+  transition: background-color 0.15s ease;
+}
+
+.sagaMiniPassageItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sagaMiniPassageItem__left {
+  flex: 1;
+  min-width: 0;
+}
+
+.sagaMiniPassageItem__ref {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: var(--ink, #ffffff);
+  margin-bottom: 2px;
+}
+
+.sagaMiniPassageItem__genre {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink-soft, #94a3b8);
+}
+
+.sagaMiniPassageItem__ctx {
+  font-size: 0.73rem;
+  color: var(--ink-soft, #94a3b8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sagaMiniPassageItem__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #d4af37, #ca8a04);
+  color: #171100;
+  font-size: 0.74rem;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.sagaMiniPassageItem__btn:active {
+  transform: scale(0.92);
+}
+
+/* Minimized Footer Navigation */
+.sagaMiniFooter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+}
+
+.sagaMiniFooter__spacer {
+  flex: 1;
+}
+
+.sagaMiniFooter__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: var(--card-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.1));
+  color: var(--ink, #ffffff);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sagaMiniFooter__btn:active {
+  transform: scale(0.95);
+}
+
+.sagaMiniFooter__btn--next {
+  background: linear-gradient(135deg, #d4af37, #ca8a04);
+  color: #1a1202;
+  border-color: #eab308;
 }

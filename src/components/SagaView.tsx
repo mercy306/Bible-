@@ -24,6 +24,7 @@ export default function SagaView({
   const isEn = language === 'en'
   const [selectedActId, setSelectedActId] = useState<number>(1)
   const [progressState, setProgressState] = useState(() => getSagaProgress())
+  const [expandedScenes, setExpandedScenes] = useState<Record<string, boolean>>({})
   const [expandedInterludes, setExpandedInterludes] = useState<Record<string, boolean>>({})
 
   const totalProgress = useMemo(() => getTotalSagaProgress(), [progressState])
@@ -36,12 +37,21 @@ export default function SagaView({
     return getActProgress(selectedActId)
   }, [selectedActId, progressState])
 
-  function handleToggleScene(sceneId: string) {
+  function handleToggleScene(sceneId: string, e: React.MouseEvent) {
+    e.stopPropagation()
     const next = toggleSceneCompleted(sceneId)
     setProgressState(next)
   }
 
-  function toggleInterlude(sceneId: string) {
+  function toggleSceneExpanded(sceneId: string) {
+    setExpandedScenes((prev) => ({
+      ...prev,
+      [sceneId]: !prev[sceneId],
+    }))
+  }
+
+  function toggleInterlude(sceneId: string, e: React.MouseEvent) {
+    e.stopPropagation()
     setExpandedInterludes((prev) => ({
       ...prev,
       [sceneId]: !prev[sceneId],
@@ -53,7 +63,7 @@ export default function SagaView({
       case 'narrative':
         return { label: isEn ? 'Narrative' : 'ታሪክ', icon: '📖' }
       case 'poetry':
-        return { label: isEn ? 'Poetry / Psalm' : 'መዝሙር / ቅኔ', icon: '🎵' }
+        return { label: isEn ? 'Psalm/Poetry' : 'መዝሙር', icon: '🎵' }
       case 'prophecy':
         return { label: isEn ? 'Prophecy' : 'ትንቢት', icon: '📣' }
       case 'gospel':
@@ -61,284 +71,217 @@ export default function SagaView({
       case 'epistle':
         return { label: isEn ? 'Epistle' : 'መልእክት', icon: '✉️' }
       case 'law':
-        return { label: isEn ? 'Law / Torah' : 'ሕግ / ቶራ', icon: '📜' }
+        return { label: isEn ? 'Law' : 'ሕግ', icon: '📜' }
       case 'apocalyptic':
-        return { label: isEn ? 'Apocalyptic' : 'ራእይ', icon: '👁️' }
+        return { label: isEn ? 'Apocalypse' : 'ራእይ', icon: '👁️' }
     }
   }
 
   return (
-    <div className="sagaView">
-      {/* Top Navigation & Header */}
-      <header className="sagaHeader">
-        <div className="sagaHeader__topRow">
+    <div className="sagaView sagaView--minimized">
+      {/* Minimized Clean Header */}
+      <header className="sagaMiniHeader">
+        <div className="sagaMiniHeader__left">
           {onBack && (
             <button
               type="button"
-              className="sagaHeader__backBtn"
+              className="sagaMiniHeader__backBtn"
               onClick={onBack}
               aria-label={isEn ? 'Back to Bible' : 'ወደ መጽሐፍ ተመለስ'}
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </button>
           )}
-
-          <div className="sagaHeader__titleBlock">
-            <div className="sagaHeader__badge">
-              <span className="sagaHeader__badgeDot" />
-              <span>{isEn ? 'Chronological Saga' : 'የዘመን ታሪክ ቅደም ተከተል'}</span>
-            </div>
-            <h1 className="sagaHeader__title">
-              {isEn ? 'The Epic Biblical Saga' : 'የመጽሐፍ ቅዱስ ታሪካዊ ጉዞ'}
+          <div>
+            <h1 className="sagaMiniHeader__title">
+              {isEn ? 'Chronological Saga' : 'የዘመን ታሪክ ቅደም ተከተል'}
             </h1>
+            <div className="sagaMiniHeader__sub">
+              {isEn ? '5 Acts • 66 Books Chronologically Harmonized' : '5 ታላላቅ ዘመናት • 66 መጻሕፍት በቅደም ተከተል'}
+            </div>
           </div>
         </div>
 
-        <p className="sagaHeader__desc">
-          {isEn
-            ? 'The entire 66-book canon reimagined as one continuous, cinematic historical saga. Narrative, poetry, and prophecy interwoven into the exact moments they happened.'
-            : 'መላው 66ቱ መጻሕፍት በአንድ ወጥ፣ ታሪካዊና መንፈሳዊ ፍሰት። ታሪኩ፣ መዝሙራቱና ትንቢቶቹ በተከናወኑበት ትክክለኛ የዘመን ቅደም ተከተል ተዋህደው ቀርበዋል።'}
-        </p>
-
-        {/* Global Progress Bar */}
-        <div className="sagaGlobalProgress">
-          <div className="sagaGlobalProgress__meta">
-            <span>
-              {isEn ? 'Overall Saga Progress' : 'ጠቅላላ የጉዞው እድገት'}
-            </span>
-            <span className="sagaGlobalProgress__stat">
-              {totalProgress.completed} / {totalProgress.total} {isEn ? 'Scenes' : 'ክፍሎች'} ({totalProgress.percent}%)
-            </span>
-          </div>
-          <div className="sagaProgressBar">
-            <div
-              className="sagaProgressBar__fill"
-              style={{ width: `${totalProgress.percent}%` }}
-            />
-          </div>
+        <div className="sagaMiniHeader__progressPill" title={isEn ? 'Overall progress' : 'አጠቃላይ እድገት'}>
+          <span>{totalProgress.completed}/{totalProgress.total}</span>
+          <span className="sagaMiniHeader__progressPct">({totalProgress.percent}%)</span>
         </div>
       </header>
 
-      {/* Act Switcher Tabs */}
-      <nav className="sagaActTabs" aria-label="Acts">
+      {/* Minimized Act Switcher Pill Tabs */}
+      <nav className="sagaMiniActTabs" aria-label="Acts">
         {SAGA_ACTS.map((act) => {
           const isSelected = act.id === selectedActId
-          const actProg = getActProgress(act.id)
+          const prog = getActProgress(act.id)
           return (
             <button
               key={act.id}
               type="button"
-              className={`sagaActTab ${isSelected ? 'is-active' : ''}`}
+              className={`sagaMiniActTab ${isSelected ? 'is-active' : ''}`}
               onClick={() => setSelectedActId(act.id)}
-              style={{ ['--act-color' as string]: act.color }}
             >
-              <div className="sagaActTab__top">
-                <span className="sagaActTab__icon">{act.badgeIcon}</span>
-                <span className="sagaActTab__roman">Act {act.romanNr}</span>
-              </div>
-              <div className="sagaActTab__name">
-                {isEn ? act.titleEn.split('(')[0].trim() : act.titleAm.split('-')[0].trim()}
-              </div>
-              <div className="sagaActTab__progress">
-                <div
-                  className="sagaActTab__progressFill"
-                  style={{ width: `${actProg.percent}%` }}
-                />
-              </div>
+              <span className="sagaMiniActTab__icon">{act.badgeIcon}</span>
+              <span className="sagaMiniActTab__label">Act {act.romanNr}</span>
+              {prog.percent > 0 && (
+                <span className="sagaMiniActTab__pct">{prog.percent}%</span>
+              )}
             </button>
           )
         })}
       </nav>
 
-      {/* Selected Act Banner */}
-      <section
-        className="sagaActBanner"
-        style={{ ['--act-color' as string]: selectedAct.color }}
-      >
-        <div className="sagaActBanner__header">
-          <div className="sagaActBanner__pill">
-            <span>{selectedAct.badgeIcon}</span>
-            <span>Act {selectedAct.romanNr}</span>
-            <span className="sagaActBanner__divider">•</span>
-            <span>{isEn ? selectedAct.eraEn : selectedAct.eraAm}</span>
-          </div>
-          <span className="sagaActBanner__stat">
-            {selectedActProgress.completed} / {selectedActProgress.total} {isEn ? 'Completed' : 'ተጠናቋል'} ({selectedActProgress.percent}%)
+      {/* Compact Act Summary Bar */}
+      <div className="sagaMiniActBar">
+        <div className="sagaMiniActBar__left">
+          <span className="sagaMiniActBar__title">
+            {isEn ? selectedAct.titleEn.split('(')[0].trim() : selectedAct.titleAm.split('-')[0].trim()}
+          </span>
+          <span className="sagaMiniActBar__dot">•</span>
+          <span className="sagaMiniActBar__era">
+            {isEn ? selectedAct.eraEn.split('(')[0].trim() : selectedAct.eraAm.split('(')[0].trim()}
           </span>
         </div>
+        <div className="sagaMiniActBar__count">
+          {selectedActProgress.completed}/{selectedActProgress.total} {isEn ? 'done' : 'ተጠናቋል'}
+        </div>
+      </div>
 
-        <h2 className="sagaActBanner__title">
-          {isEn ? selectedAct.titleEn : selectedAct.titleAm}
-        </h2>
-
-        <p className="sagaActBanner__summary">
-          {isEn ? selectedAct.summaryEn : selectedAct.summaryAm}
-        </p>
-      </section>
-
-      {/* Scene Timeline */}
-      <div className="sagaTimeline">
-        {selectedAct.scenes.map((scene, index) => {
+      {/* Minimized Scene List */}
+      <div className="sagaMiniList">
+        {selectedAct.scenes.map((scene) => {
           const isDone = progressState.completedScenes.includes(scene.id)
-          const isInterludeExpanded = !!expandedInterludes[scene.id]
+          const isExpanded = !!expandedScenes[scene.id]
+          const isInterludeOpen = !!expandedInterludes[scene.id]
 
           return (
-            <article
+            <div
               key={scene.id}
-              className={`sagaSceneCard ${isDone ? 'is-done' : ''}`}
-              id={scene.id}
+              className={`sagaMiniCard ${isDone ? 'is-done' : ''} ${isExpanded ? 'is-expanded' : ''}`}
             >
-              {/* Timeline spine with scene number */}
-              <div className="sagaSceneCard__node">
-                <div className="sagaSceneCard__circle">
+              {/* Minimized Scene Header Row (Click to Expand / Collapse) */}
+              <div
+                className="sagaMiniCard__head"
+                onClick={() => toggleSceneExpanded(scene.id)}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isExpanded}
+              >
+                {/* Checkbox button */}
+                <button
+                  type="button"
+                  className={`sagaMiniCard__check ${isDone ? 'is-checked' : ''}`}
+                  onClick={(e) => handleToggleScene(scene.id, e)}
+                  title={isDone ? (isEn ? 'Mark unread' : 'አልተነበበም በል') : (isEn ? 'Mark read' : 'ተነቧል በል')}
+                >
                   {isDone ? '✓' : scene.sceneNr}
-                </div>
-                {index < selectedAct.scenes.length - 1 && (
-                  <div className="sagaSceneCard__line" />
-                )}
-              </div>
+                </button>
 
-              {/* Scene Content */}
-              <div className="sagaSceneCard__content">
-                <div className="sagaSceneCard__top">
-                  <div className="sagaSceneCard__eraTag">
-                    <span className="sagaSceneCard__eraIcon">⏳</span>
-                    <span>{scene.eraEstimate}</span>
+                {/* Title & Era */}
+                <div className="sagaMiniCard__main">
+                  <div className="sagaMiniCard__title">
+                    {isEn ? scene.titleEn : scene.titleAm}
                   </div>
-
-                  <button
-                    type="button"
-                    className={`sagaSceneCard__checkBtn ${isDone ? 'is-checked' : ''}`}
-                    onClick={() => handleToggleScene(scene.id)}
-                    title={isDone ? (isEn ? 'Mark unread' : 'አልተነበበም በል') : (isEn ? 'Mark completed' : 'ተነቧል በል')}
-                  >
-                    <span className="sagaSceneCard__checkIcon">
-                      {isDone ? '✓' : '○'}
+                  <div className="sagaMiniCard__meta">
+                    <span className="sagaMiniCard__era">⏳ {scene.eraEstimate}</span>
+                    <span className="sagaMiniCard__passagesCount">
+                      📖 {scene.passages.length} {isEn ? 'passages' : 'ክፍሎች'}
                     </span>
-                    <span>{isDone ? (isEn ? 'Completed' : 'ተነቧል') : (isEn ? 'Mark as Read' : 'ተነቧል')}</span>
-                  </button>
-                </div>
-
-                <h3 className="sagaSceneCard__title">
-                  {isEn ? scene.titleEn : scene.titleAm}
-                </h3>
-                {language !== 'en' && (
-                  <div className="sagaSceneCard__titleEn">{scene.titleEn}</div>
-                )}
-
-                <p className="sagaSceneCard__summary">
-                  {isEn ? scene.summaryEn : scene.summaryAm}
-                </p>
-
-                {/* Geopolitical Interlude (if present) */}
-                {scene.geopolitical && (
-                  <div className="sagaInterlude">
-                    <button
-                      type="button"
-                      className="sagaInterlude__toggle"
-                      onClick={() => toggleInterlude(scene.id)}
-                      aria-expanded={isInterludeExpanded}
-                    >
-                      <div className="sagaInterlude__toggleLeft">
-                        <span className="sagaInterlude__icon">🏛️</span>
-                        <div>
-                          <div className="sagaInterlude__badge">
-                            {isEn ? 'Geopolitical Context' : 'ታሪካዊና ጂኦፖለቲካዊ ዳራ'}
-                          </div>
-                          <div className="sagaInterlude__title">
-                            {isEn ? scene.geopolitical.titleEn : scene.geopolitical.titleAm}
-                          </div>
-                        </div>
-                      </div>
-                      <span className="sagaInterlude__chevron">
-                        {isInterludeExpanded ? '▲' : '▼'}
-                      </span>
-                    </button>
-
-                    {isInterludeExpanded && (
-                      <div className="sagaInterlude__body">
-                        <div className="sagaInterlude__empire">
-                          <span>{isEn ? 'Superpower' : 'ኃያል መንግሥት'}:</span>{' '}
-                          <strong>{isEn ? scene.geopolitical.empireNameEn : scene.geopolitical.empireNameAm}</strong>
-                          <span className="sagaInterlude__date">({scene.geopolitical.historicalDate})</span>
-                        </div>
-                        <p className="sagaInterlude__text">
-                          {isEn ? scene.geopolitical.bodyEn : scene.geopolitical.bodyAm}
-                        </p>
-                      </div>
+                    {scene.geopolitical && (
+                      <span className="sagaMiniCard__geoPill">🏛️ {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}</span>
                     )}
                   </div>
-                )}
+                </div>
 
-                {/* Interwoven Passages Section */}
-                <div className="sagaPassages">
-                  <div className="sagaPassages__header">
-                    <span className="sagaPassages__icon">🔗</span>
-                    <span>
-                      {isEn ? 'Interwoven Scriptures' : 'የተዋሃዱ የመጽሐፍ ቅዱስ ክፍሎች'}
-                    </span>
-                  </div>
+                {/* Expand / Collapse Indicator */}
+                <span className="sagaMiniCard__arrow">
+                  {isExpanded ? '▴' : '▾'}
+                </span>
+              </div>
 
-                  <div className="sagaPassages__list">
-                    {scene.passages.map((passage, pIdx) => {
-                      const badge = getGenreBadge(passage.genre)
-                      const bookName = isEn ? passage.bookNameEn : passage.bookNameAm
-                      const refStr = passage.verseStart
-                        ? passage.verseEnd && passage.verseEnd !== passage.verseStart
-                          ? `${bookName} ${passage.chapter}:${passage.verseStart}–${passage.verseEnd}`
-                          : `${bookName} ${passage.chapter}:${passage.verseStart}`
-                        : `${bookName} ${passage.chapter}`
+              {/* Collapsible Body */}
+              {isExpanded && (
+                <div className="sagaMiniCard__body">
+                  <p className="sagaMiniCard__summary">
+                    {isEn ? scene.summaryEn : scene.summaryAm}
+                  </p>
+
+                  {/* Minimized Geopolitical Interlude */}
+                  {scene.geopolitical && (
+                    <div className="sagaMiniGeo">
+                      <button
+                        type="button"
+                        className="sagaMiniGeo__head"
+                        onClick={(e) => toggleInterlude(scene.id, e)}
+                      >
+                        <span className="sagaMiniGeo__title">
+                          🏛️ {isEn ? scene.geopolitical.titleEn : scene.geopolitical.titleAm}
+                        </span>
+                        <span className="sagaMiniGeo__date">({scene.geopolitical.historicalDate})</span>
+                        <span className="sagaMiniGeo__chev">{isInterludeOpen ? '▲' : '▼'}</span>
+                      </button>
+
+                      {isInterludeOpen && (
+                        <div className="sagaMiniGeo__content">
+                          {isEn ? scene.geopolitical.bodyEn : scene.geopolitical.bodyAm}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Interwoven Scriptures List */}
+                  <div className="sagaMiniPassages">
+                    {scene.passages.map((p, idx) => {
+                      const badge = getGenreBadge(p.genre)
+                      const bookName = isEn ? p.bookNameEn : p.bookNameAm
+                      const refStr = p.verseStart
+                        ? p.verseEnd && p.verseEnd !== p.verseStart
+                          ? `${bookName} ${p.chapter}:${p.verseStart}–${p.verseEnd}`
+                          : `${bookName} ${p.chapter}:${p.verseStart}`
+                        : `${bookName} ${p.chapter}`
 
                       return (
                         <div
-                          key={`${passage.bookNr}-${passage.chapter}-${pIdx}`}
-                          className="sagaPassageRow"
+                          key={`${p.bookNr}-${p.chapter}-${idx}`}
+                          className="sagaMiniPassageItem"
                         >
-                          <div className="sagaPassageRow__left">
-                            <div className="sagaPassageRow__refBadge">
-                              <span className="sagaPassageRow__genreIcon">{badge.icon}</span>
-                              <span className="sagaPassageRow__refText">{refStr}</span>
-                              <span className="sagaPassageRow__genreTag">{badge.label}</span>
+                          <div className="sagaMiniPassageItem__left">
+                            <div className="sagaMiniPassageItem__ref">
+                              <span>{badge.icon}</span>
+                              <strong>{refStr}</strong>
+                              <span className="sagaMiniPassageItem__genre">{badge.label}</span>
                             </div>
-                            <div className="sagaPassageRow__context">
-                              {isEn ? passage.contextEn : passage.contextAm}
+                            <div className="sagaMiniPassageItem__ctx">
+                              {isEn ? p.contextEn : p.contextAm}
                             </div>
                           </div>
 
                           <button
                             type="button"
-                            className="sagaPassageRow__readBtn"
-                            onClick={() =>
-                              onOpenPassage(
-                                passage.bookNr,
-                                passage.chapter,
-                                passage.verseStart,
-                                passage.verseEnd
-                              )
-                            }
+                            className="sagaMiniPassageItem__btn"
+                            onClick={() => onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)}
                           >
                             <span>{isEn ? 'Read' : 'አንብብ'}</span>
-                            <span aria-hidden="true">›</span>
+                            <span>›</span>
                           </button>
                         </div>
                       )
                     })}
                   </div>
                 </div>
-              </div>
-            </article>
+              )}
+            </div>
           )
         })}
       </div>
 
-      {/* Act Navigation Footer */}
-      <footer className="sagaFooterNav">
+      {/* Compact Act Switcher Footer */}
+      <footer className="sagaMiniFooter">
         {selectedActId > 1 && (
           <button
             type="button"
-            className="sagaFooterNav__btn"
+            className="sagaMiniFooter__btn"
             onClick={() => {
               setSelectedActId(selectedActId - 1)
               window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -347,13 +290,11 @@ export default function SagaView({
             ‹ Act {selectedActId - 1}
           </button>
         )}
-
-        <div className="sagaFooterNav__spacer" />
-
+        <div className="sagaMiniFooter__spacer" />
         {selectedActId < 5 && (
           <button
             type="button"
-            className="sagaFooterNav__btn sagaFooterNav__btn--primary"
+            className="sagaMiniFooter__btn sagaMiniFooter__btn--next"
             onClick={() => {
               setSelectedActId(selectedActId + 1)
               window.scrollTo({ top: 0, behavior: 'smooth' })
