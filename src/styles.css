@@ -12668,6 +12668,8 @@ body {
   border: 1px solid var(--line);
   border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
+  user-select: none;
   transition: transform 0.12s ease, border-color 0.15s ease;
 }
 
@@ -12775,30 +12777,51 @@ body {
   transform: rotate(180deg);
 }
 
+/* Expanded Card Details */
+.sagaMobileCard__details {
+  padding: 8px 12px 12px;
+  border-top: 1px dashed var(--line);
+  animation: sagaMobileFade 0.2s ease-out;
+}
+
+.sagaMobileCard__summary {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.sagaMobileCard__versesSection {
+  margin-bottom: 10px;
+}
+
+.sagaMobileCard__versesHeader {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
 /* 1-Tap Scripture Quick Chips */
 .sagaMobileCard__quickChips {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
-  padding: 0 13px 10px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.sagaMobileCard__quickChips::-webkit-scrollbar {
-  display: none;
+  padding: 0;
 }
 
 .sagaMobileChip {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
+  padding: 5px 10px;
   border-radius: 8px;
   background: var(--panel-2);
   border: 1px solid var(--line);
   color: var(--ink);
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -12820,20 +12843,6 @@ body {
   font-weight: 700;
   font-size: 0.8rem;
   opacity: 0.6;
-}
-
-/* Expanded Card Details */
-.sagaMobileCard__details {
-  padding: 4px 13px 13px;
-  border-top: 1px dashed var(--line);
-  animation: sagaMobileFade 0.2s ease-out;
-}
-
-.sagaMobileCard__summary {
-  margin: 8px 0 10px;
-  font-size: 0.83rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
 }
 
 /* Collapsible Geopolitical Box */

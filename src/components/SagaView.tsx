@@ -3,7 +3,6 @@ import MountainHero from './MountainHero'
 import {
   SAGA_ACTS,
   type SagaAct,
-  type InterwovenPassage,
   getSagaProgress,
   toggleSceneCompleted,
   getActProgress,
@@ -57,25 +56,6 @@ export default function SagaView({
       ...prev,
       [sceneId]: !prev[sceneId],
     }))
-  }
-
-  function getGenreBadge(genre: InterwovenPassage['genre']) {
-    switch (genre) {
-      case 'narrative':
-        return { label: isEn ? 'History' : 'ታሪክ', icon: '📖' }
-      case 'poetry':
-        return { label: isEn ? 'Psalm' : 'መዝሙር', icon: '🎵' }
-      case 'prophecy':
-        return { label: isEn ? 'Prophecy' : 'ትንቢት', icon: '📣' }
-      case 'gospel':
-        return { label: isEn ? 'Gospel' : 'ወንጌል', icon: '✝️' }
-      case 'epistle':
-        return { label: isEn ? 'Epistle' : 'መልእክት', icon: '✉️' }
-      case 'law':
-        return { label: isEn ? 'Law' : 'ሕግ', icon: '📜' }
-      case 'apocalyptic':
-        return { label: isEn ? 'Vision' : 'ራእይ', icon: '👁️' }
-    }
   }
 
   function cleanEra(raw: string, isEnLang: boolean) {
@@ -172,15 +152,13 @@ export default function SagaView({
               <article
                 key={scene.id}
                 className={`sagaMobileCard ${isDone ? 'is-done' : ''} ${isExpanded ? 'is-expanded' : ''}`}
+                onClick={() => toggleSceneExpanded(scene.id)}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isExpanded}
               >
                 {/* Touch-Friendly Scene Card Header */}
-                <div
-                  className="sagaMobileCard__tapRow"
-                  onClick={() => toggleSceneExpanded(scene.id)}
-                  role="button"
-                  tabIndex={0}
-                  aria-expanded={isExpanded}
-                >
+                <div className="sagaMobileCard__tapRow">
                   {/* Round Completion Checkbox */}
                   <button
                     type="button"
@@ -219,37 +197,44 @@ export default function SagaView({
                   </div>
                 </div>
 
-                {/* Direct 1-Tap Scripture Quick Chips (Always visible on mobile!) */}
-                <div className="sagaMobileCard__quickChips">
-                  {scene.passages.map((p, idx) => {
-                    const bookName = cleanBook(isEn ? p.bookNameEn : p.bookNameAm, isEn)
-                    const refStr = p.verseStart
-                      ? `${bookName} ${p.chapter}:${p.verseStart}`
-                      : `${bookName} ${p.chapter}`
-
-                    return (
-                      <button
-                        key={`${p.bookNr}-${p.chapter}-${idx}`}
-                        type="button"
-                        className="sagaMobileChip"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)
-                        }}
-                      >
-                        <span className="sagaMobileChip__ref">{refStr}</span>
-                        <span className="sagaMobileChip__arrow">›</span>
-                      </button>
-                    )
-                  })}
-                </div>
-
-                {/* Expanded Details Section */}
+                {/* Expanded Details Section - Shown ONLY when clicked! */}
                 {isExpanded && (
                   <div className="sagaMobileCard__details">
                     <p className="sagaMobileCard__summary">
                       {isEn ? scene.narrativeFlowEn : scene.narrativeFlowAm}
                     </p>
+
+                    {/* Verses / Scripture Chips (Shown only when expanded) */}
+                    <div className="sagaMobileCard__versesSection">
+                      <div className="sagaMobileCard__versesHeader">
+                        <span>{isEn ? 'Scriptures to Read:' : 'የሚነበቡ ክፍሎች፡'}</span>
+                      </div>
+                      <div className="sagaMobileCard__quickChips">
+                        {scene.passages.map((p, idx) => {
+                          const bookName = cleanBook(isEn ? p.bookNameEn : p.bookNameAm, isEn)
+                          const refStr = p.verseStart
+                            ? p.verseEnd && p.verseEnd !== p.verseStart
+                              ? `${bookName} ${p.chapter}:${p.verseStart}–${p.verseEnd}`
+                              : `${bookName} ${p.chapter}:${p.verseStart}`
+                            : `${bookName} ${p.chapter}`
+
+                          return (
+                            <button
+                              key={`${p.bookNr}-${p.chapter}-${idx}`}
+                              type="button"
+                              className="sagaMobileChip"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)
+                              }}
+                            >
+                              <span className="sagaMobileChip__ref">{refStr}</span>
+                              <span className="sagaMobileChip__arrow">›</span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
 
                     {/* Collapsible Geopolitical Box */}
                     {scene.geopolitical && (
@@ -279,46 +264,6 @@ export default function SagaView({
                         )}
                       </div>
                     )}
-
-                    {/* Detailed Passage Cards */}
-                    <div className="sagaMobilePassagesList">
-                      {scene.passages.map((p, idx) => {
-                        const badge = getGenreBadge(p.genre)
-                        const bookName = isEn ? p.bookNameEn : p.bookNameAm
-                        const fullRef = p.verseStart
-                          ? p.verseEnd && p.verseEnd !== p.verseStart
-                            ? `${bookName} ${p.chapter}:${p.verseStart}–${p.verseEnd}`
-                            : `${bookName} ${p.chapter}:${p.verseStart}`
-                          : `${bookName} ${p.chapter}`
-
-                        return (
-                          <div
-                            key={`${p.bookNr}-${p.chapter}-detail-${idx}`}
-                            className="sagaMobilePassageRow"
-                            onClick={() => onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)}
-                          >
-                            <div className="sagaMobilePassageRow__left">
-                              <span className="sagaMobilePassageRow__genreBadge">{badge.label}</span>
-                              <span className="sagaMobilePassageRow__ref">{fullRef}</span>
-                            </div>
-
-                            <button
-                              type="button"
-                              className="sagaMobilePassageRow__readBtn"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)
-                              }}
-                            >
-                              <span>{isEn ? 'Read' : 'አንብብ'}</span>
-                              <svg viewBox="0 0 20 20" fill="currentColor">
-                                <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
-                              </svg>
-                            </button>
-                          </div>
-                        )
-                      })}
-                    </div>
                   </div>
                 )}
               </article>
