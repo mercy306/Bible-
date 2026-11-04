@@ -21,14 +21,14 @@ export default function LoadingView({ language = 'am', message }: Props) {
       <div className="bibleLoading__aura" aria-hidden="true" />
 
       <div className="bibleLoading__content">
-        {/* Open Bible with Cross (matches the opening splash screen) */}
+        {/* Ornate Closed Leather Bible with Center Gold Cross Medallion */}
         <div className="bibleLoading__bookWrapper">
           <img
-            src="/bible-open-cross.png"
-            alt="The Holy Bible with Cross"
+            src="/bible-closed-cross.png"
+            alt="The Holy Bible with Ornate Golden Cross Medallion"
             className="bibleLoading__bookImg"
-            width={200}
-            height={133}
+            width={150}
+            height={165}
           />
           <div className="bibleLoading__crossGlow" aria-hidden="true" />
         </div>

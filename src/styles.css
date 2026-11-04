@@ -11146,10 +11146,10 @@ body {
 
 .bibleLoading__bookImg {
   display: block;
-  width: 190px;
+  width: 150px;
   height: auto;
-  max-width: 80vw;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.28));
+  max-width: 70vw;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.55));
   transition: transform 0.2s ease;
 }
 
@@ -11236,10 +11236,10 @@ body {
 
 .launchScreen__bookImg {
   display: block;
-  width: 190px;
+  width: 155px;
   height: auto;
-  max-width: 75vw;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.45));
+  max-width: 70vw;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.65));
 }
 
 .launchScreen__crossGlow {

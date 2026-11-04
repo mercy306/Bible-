@@ -48,14 +48,14 @@ export default function LaunchScreen({ onFinish }: Props) {
       <div className="launchScreen__aura" aria-hidden="true" />
 
       <div className="launchScreen__card">
-        {/* Open Bible with Cross (matches the opening splash screen) */}
+        {/* Ornate Closed Leather Bible with Center Gold Cross Medallion */}
         <div className="launchScreen__bookWrapper" aria-hidden="true">
           <img
-            src="/bible-open-cross.png"
-            alt="The Holy Bible with Cross"
+            src="/bible-closed-cross.png"
+            alt="The Holy Bible with Ornate Golden Cross Medallion"
             className="launchScreen__bookImg"
-            width={190}
-            height={127}
+            width={155}
+            height={171}
           />
           <div className="launchScreen__crossGlow" />
         </div>
