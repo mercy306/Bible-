@@ -118,16 +118,7 @@ function isPlaceholder(text: unknown): boolean {
   return typeof text !== 'string' || text.trim() === '' || PLACEHOLDER.test(text)
 }
 
-/** Chapter order across the whole Bible, for prev/next at book boundaries. */
-async function flatOrder(m: Meta) {
-  const order: { book: number; chapter: number }[] = []
-  for (const info of m.books) {
-    const raw = await load<RawBook>(`${m.id}/books/${bookKey(info.nr)}.json`).catch(() => null)
-    for (const c of raw?.chapters ?? []) order.push({ book: info.nr, chapter: c.c })
-  }
-  return order
-}
-
+// Book navigation helper
 // --- endpoints ---------------------------------------------------------------
 
 async function translations() {
@@ -164,19 +155,18 @@ async function chapter(translation: string, bookNr: number, chapterNr: number) {
   if (!found) throw new HttpError(404, `${info.name} has no chapter ${chapterNr}`)
 
   const totalChapters = raw.chapters.length
-  const order = await flatOrder(m)
-  const at = order.findIndex((p) => p.book === bookNr && p.chapter === chapterNr)
+  const bookIndex = m.books.findIndex((b) => b.nr === bookNr)
   const prev =
     chapterNr > 1
       ? { book: bookNr, chapter: chapterNr - 1 }
-      : at > 0
-        ? order[at - 1]
+      : bookIndex > 0
+        ? { book: m.books[bookIndex - 1].nr, chapter: m.books[bookIndex - 1].chapters }
         : null
   const next =
     chapterNr < totalChapters
       ? { book: bookNr, chapter: chapterNr + 1 }
-      : at >= 0 && at < order.length - 1
-        ? order[at + 1]
+      : bookIndex >= 0 && bookIndex < m.books.length - 1
+        ? { book: m.books[bookIndex + 1].nr, chapter: 1 }
         : null
 
   // Mirrors the server: English numbering is the grid, and any position the
@@ -510,15 +500,19 @@ async function amharicIndex() {
 }
 
 async function amharicCoverage() {
-  const data = await amharicData()
-  const chapters: Record<string, number[]> = {}
-  for (const key of Object.keys(data.chapters)) {
-    const [book, chapter] = key.split('.').map(Number)
-    if (!chapters[book]) chapters[book] = []
-    chapters[book].push(chapter)
+  try {
+    return await load<{ chapters: Record<string, number[]> }>('guide/coverage.json')
+  } catch {
+    const data = await amharicData()
+    const chapters: Record<string, number[]> = {}
+    for (const key of Object.keys(data.chapters)) {
+      const [book, chapter] = key.split('.').map(Number)
+      if (!chapters[book]) chapters[book] = []
+      chapters[book].push(chapter)
+    }
+    for (const list of Object.values(chapters)) list.sort((a, b) => a - b)
+    return { chapters }
   }
-  for (const list of Object.values(chapters)) list.sort((a, b) => a - b)
-  return { chapters }
 }
 
 interface StrongsEntry {
@@ -637,6 +631,20 @@ function jsonResponse(body: unknown, status = 200) {
  * the bundled copy there would only waste requests. Inside the app there is no
  * server at all, so every /api/... request is served from the package instead.
  */
+function isNativeApp(): boolean {
+  if (typeof window === 'undefined') return false
+  const cap = (window as any).Capacitor
+  if (cap?.isNativePlatform?.()) return true
+  if (cap?.getPlatform?.() === 'android' || cap?.getPlatform?.() === 'ios') return true
+  const proto = window.location.protocol
+  if (proto === 'capacitor:' || proto === 'file:' || proto === 'ionic:' || proto === 'content:') return true
+  if (window.location.hostname === 'localhost' && (!window.location.port || window.location.port === '443')) {
+    // In Capacitor Android webview, default server url is https://localhost
+    return true
+  }
+  return false
+}
+
 let installed = false
 
 export function installOfflineApi() {
@@ -647,8 +655,6 @@ export function installOfflineApi() {
   if (typeof scope.fetch !== 'function') return
 
   installed = true
-
-  const native = Boolean((scope as any).Capacitor?.isNativePlatform?.())
 
   const original = scope.fetch.bind(scope)
 
@@ -681,12 +687,16 @@ export function installOfflineApi() {
     // the only source. Elsewhere the server is asked first, but if it cannot
     // be reached the same bundled files answer instead, so the reader keeps
     // working rather than failing with a bare network error.
-    const first = native ? fromBundled(url) : fromNetwork(input, init)
+    const native = isNativeApp()
+    if (native) {
+      return fromBundled(url)
+    }
+
     try {
-      return await first
+      return await fromNetwork(input, init)
     } catch {
       try {
-        return native ? await fromNetwork(input, init) : await fromBundled(url)
+        return await fromBundled(url)
       } catch {
         return jsonResponse({ error: 'This data is not available offline.' }, 503)
       }

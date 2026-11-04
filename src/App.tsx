@@ -26,6 +26,24 @@ import TopBar from './components/TopBar'
 
 
 const LAST_PLACE = 'bible:last-place'
+const CACHED_CHAPTER = 'bible:cached-chapter'
+
+function initialCachedChapter(targetRoute: Route): ChapterResponse | null {
+  try {
+    const raw = localStorage.getItem(CACHED_CHAPTER)
+    if (!raw) return null
+    const parsed = JSON.parse(raw) as ChapterResponse
+    if (
+      parsed &&
+      parsed.translation?.id === targetRoute.translation &&
+      parsed.book?.nr === targetRoute.book &&
+      parsed.chapter === targetRoute.chapter
+    ) {
+      return parsed
+    }
+  } catch {}
+  return null
+}
 
 function initialRoute(): Route {
   const fallback = parseHash()
@@ -51,14 +69,15 @@ function initialRoute(): Route {
 
 export default function App() {
   const [route, setRoute] = useState<Route>(initialRoute)
+  const initialData = useMemo(() => initialCachedChapter(route), [])
   const [translations, setTranslations] = useState<Translation[]>([])
   const [books, setBooks] = useState<BooksResponse | null>(null)
-  const [chapter, setChapter] = useState<ChapterResponse | null>(null)
+  const [chapter, setChapter] = useState<ChapterResponse | null>(initialData)
   // Typed references are usually written in English ("John 3:16") even while
   // reading Amharic, so English book names are always available for matching.
   const [englishBooks, setEnglishBooks] = useState<BooksResponse['books']>([])
   const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(() => initialData === null && route.view === 'read')
   const [sheet, setSheet] = useState<'none' | 'books' | 'more'>('none')
   const [compare, setCompare] = useState<'off' | 'am54'>('off')
   const [memorize, setMemorize] = useState(false)
@@ -111,13 +130,23 @@ export default function App() {
       return
     }
 
-    setLoading(true)
+    if (
+      !chapter ||
+      chapter.book.nr !== route.book ||
+      chapter.chapter !== route.chapter ||
+      chapter.translation.id !== route.translation
+    ) {
+      setLoading(true)
+    }
     setError(null)
 
     fetchChapter(route.translation, route.book, route.chapter)
       .then((res) => {
         if (cancelled) return
         setChapter(res)
+        try {
+          localStorage.setItem(CACHED_CHAPTER, JSON.stringify(res))
+        } catch {}
         localStorage.setItem(
           LAST_PLACE,
           JSON.stringify({ translation: route.translation, book: route.book, chapter: route.chapter }),
