@@ -78,6 +78,18 @@ export default function SagaView({
     }
   }
 
+  function cleanEra(raw: string, isEnLang: boolean) {
+    if (!raw) return ''
+    if (!raw.includes('/')) return raw.trim()
+    const parts = raw.split('/')
+    return isEnLang ? parts[1].trim() : parts[0].trim()
+  }
+
+  function cleanBook(bookName: string, isEnLang: boolean) {
+    if (isEnLang) return bookName
+    return bookName.replace(/^ኦሪት\s+/, '')
+  }
+
   return (
     <div className="sagaMobileScreen">
       {/* Native Mobile Hero Header */}
@@ -136,27 +148,18 @@ export default function SagaView({
 
       {/* Main Mobile Feed Container */}
       <main className="sagaMobileFeed">
-        {/* Current Act Info Header */}
-        <section className="sagaMobileActHeader">
-          <div className="sagaMobileActHeader__top">
-            <div className="sagaMobileActHeader__badge">
-              <span>Act {selectedAct.romanNr}</span>
-              <span>•</span>
-              <span>{isEn ? selectedAct.eraEn : selectedAct.eraAm}</span>
-            </div>
-            <span className="sagaMobileActHeader__progress">
-              {selectedActProgress.completed}/{selectedActProgress.total} {isEn ? 'read' : 'ተነቧል'}
+        {/* Compact Act Bar */}
+        <div className="sagaMobileActSummaryBar">
+          <div className="sagaMobileActSummaryBar__left">
+            <span className="sagaMobileActSummaryBar__badge">Act {selectedAct.romanNr}</span>
+            <span className="sagaMobileActSummaryBar__title">
+              {isEn ? selectedAct.titleEn.split('(')[0].trim() : selectedAct.titleAm.split('-')[0].trim()}
             </span>
           </div>
-
-          <h2 className="sagaMobileActHeader__title">
-            {isEn ? selectedAct.titleEn : selectedAct.titleAm}
-          </h2>
-
-          <p className="sagaMobileActHeader__desc">
-            {isEn ? selectedAct.summaryEn : selectedAct.summaryAm}
-          </p>
-        </section>
+          <span className="sagaMobileActSummaryBar__count">
+            {selectedActProgress.completed}/{selectedActProgress.total} {isEn ? 'read' : 'ተነቧል'}
+          </span>
+        </div>
 
         {/* Mobile Scene Cards */}
         <div className="sagaMobileScenesList">
@@ -196,7 +199,7 @@ export default function SagaView({
 
                   <div className="sagaMobileCard__info">
                     <div className="sagaMobileCard__tags">
-                      <span className="sagaMobileCard__eraTag">{scene.eraEstimate}</span>
+                      <span className="sagaMobileCard__eraTag">{cleanEra(scene.eraEstimate, isEn)}</span>
                       {scene.geopolitical && (
                         <span className="sagaMobileCard__geoTag">
                           {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}
@@ -219,7 +222,7 @@ export default function SagaView({
                 {/* Direct 1-Tap Scripture Quick Chips (Always visible on mobile!) */}
                 <div className="sagaMobileCard__quickChips">
                   {scene.passages.map((p, idx) => {
-                    const bookName = isEn ? p.bookNameEn : p.bookNameAm
+                    const bookName = cleanBook(isEn ? p.bookNameEn : p.bookNameAm, isEn)
                     const refStr = p.verseStart
                       ? `${bookName} ${p.chapter}:${p.verseStart}`
                       : `${bookName} ${p.chapter}`
@@ -245,7 +248,7 @@ export default function SagaView({
                 {isExpanded && (
                   <div className="sagaMobileCard__details">
                     <p className="sagaMobileCard__summary">
-                      {isEn ? scene.summaryEn : scene.summaryAm}
+                      {isEn ? scene.narrativeFlowEn : scene.narrativeFlowAm}
                     </p>
 
                     {/* Collapsible Geopolitical Box */}
@@ -257,7 +260,7 @@ export default function SagaView({
                           onClick={(e) => toggleInterlude(scene.id, e)}
                         >
                           <div className="sagaMobileGeoBox__title">
-                            🏛️ {isEn ? scene.geopolitical.titleEn : scene.geopolitical.titleAm}
+                            {isEn ? scene.geopolitical.titleEn : scene.geopolitical.titleAm}
                           </div>
                           <span className="sagaMobileGeoBox__icon">
                             {isInterludeOpen ? '▲' : '▼'}
@@ -277,12 +280,8 @@ export default function SagaView({
                       </div>
                     )}
 
-                    {/* Detailed Passage Cards with Context Notes */}
+                    {/* Detailed Passage Cards */}
                     <div className="sagaMobilePassagesList">
-                      <div className="sagaMobilePassagesList__label">
-                        {isEn ? 'Interwoven Historical Readings:' : 'የተዋሃዱ ታሪካዊ ንባቦች:'}
-                      </div>
-
                       {scene.passages.map((p, idx) => {
                         const badge = getGenreBadge(p.genre)
                         const bookName = isEn ? p.bookNameEn : p.bookNameAm
@@ -299,13 +298,8 @@ export default function SagaView({
                             onClick={() => onOpenPassage(p.bookNr, p.chapter, p.verseStart, p.verseEnd)}
                           >
                             <div className="sagaMobilePassageRow__left">
-                              <div className="sagaMobilePassageRow__refLine">
-                                <span className="sagaMobilePassageRow__genreBadge">{badge.label}</span>
-                                <span className="sagaMobilePassageRow__ref">{fullRef}</span>
-                              </div>
-                              <div className="sagaMobilePassageRow__ctx">
-                                {isEn ? p.contextEn : p.contextAm}
-                              </div>
+                              <span className="sagaMobilePassageRow__genreBadge">{badge.label}</span>
+                              <span className="sagaMobilePassageRow__ref">{fullRef}</span>
                             </div>
 
                             <button
