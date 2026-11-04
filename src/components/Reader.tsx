@@ -390,7 +390,6 @@ export default function Reader({
     }
 
     setHighlightedTargetVerse(targetVerse)
-    setSelected(targetVerse)
 
     const doScroll = () => {
       let el = document.getElementById("v" + targetVerse)
@@ -429,7 +428,7 @@ export default function Reader({
 
     const clearTimer = setTimeout(() => {
       setHighlightedTargetVerse(null)
-    }, 5500)
+    }, 3400)
 
     return () => {
       clearTimeout(t1)

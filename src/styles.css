@@ -10063,10 +10063,10 @@ body {
 
 
 /* ==========================================================================
-   SEARCH TARGET VERSE SPOTLIGHT & DIRECT JUMP INDICATOR
+   TEMPORARY SEARCH HIGHLIGHT THAT DISAPPEARS
    ========================================================================== */
 .verse.verse--searchTarget {
-  animation: searchVerseSpotlight 3.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+  animation: temporarySearchHighlight 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
   border-radius: 12px !important;
   scroll-margin-top: 76px !important;
 }
@@ -10083,7 +10083,7 @@ body {
   border-radius: 999px;
   margin-bottom: 6px;
   box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
-  animation: badgePopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: badgeFadeOut 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
   letter-spacing: 0.02em;
 }
 
@@ -10091,67 +10091,69 @@ body {
   font-size: 12px;
 }
 
-@keyframes badgePopIn {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes badgeFadeOut {
+  0% { transform: scale(1); opacity: 1; }
+  55% { transform: scale(1); opacity: 1; }
+  90% { transform: scale(0.95); opacity: 0.1; }
+  100% { transform: scale(0.9); opacity: 0; display: none; }
 }
 
-@keyframes searchVerseSpotlight {
+@keyframes temporarySearchHighlight {
   0% {
-    background: rgba(212, 175, 55, 0.32);
+    background: rgba(212, 175, 55, 0.40);
     box-shadow: 0 0 0 3px #D4AF37, 0 8px 24px rgba(212, 175, 55, 0.35);
     transform: scale(1.02);
   }
-  25% {
-    background: rgba(212, 175, 55, 0.22);
-    box-shadow: 0 0 0 2.5px #D4AF37, 0 6px 18px rgba(212, 175, 55, 0.25);
+  20% {
+    background: rgba(212, 175, 55, 0.38);
+    box-shadow: 0 0 0 2.5px #D4AF37, 0 6px 20px rgba(212, 175, 55, 0.3);
     transform: scale(1.01);
   }
   50% {
-    background: rgba(212, 175, 55, 0.32);
-    box-shadow: 0 0 0 3px #D4AF37, 0 8px 24px rgba(212, 175, 55, 0.35);
-    transform: scale(1.02);
-  }
-  75% {
-    background: rgba(212, 175, 55, 0.18);
-    box-shadow: 0 0 0 2px #D4AF37, 0 4px 14px rgba(212, 175, 55, 0.2);
+    background: rgba(212, 175, 55, 0.30);
+    box-shadow: 0 0 0 2px #D4AF37, 0 4px 16px rgba(212, 175, 55, 0.25);
     transform: scale(1);
   }
+  75% {
+    background: rgba(212, 175, 55, 0.12);
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.25);
+  }
   100% {
-    background: rgba(212, 175, 55, 0.1);
-    box-shadow: 0 0 0 1.5px rgba(212, 175, 55, 0.5);
+    background: transparent;
+    box-shadow: none;
+    transform: none;
   }
 }
 
 :root[data-theme='bw'] .verse.verse--searchTarget,
 :root[data-theme='dark'] .verse.verse--searchTarget {
-  animation: searchVerseSpotlightDark 3.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+  animation: temporarySearchHighlightDark 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
 }
 
-@keyframes searchVerseSpotlightDark {
+@keyframes temporarySearchHighlightDark {
   0% {
-    background: rgba(212, 175, 55, 0.28);
+    background: rgba(244, 232, 193, 0.30);
     box-shadow: 0 0 0 3px #F4E8C1, 0 8px 28px rgba(244, 232, 193, 0.35);
     transform: scale(1.02);
   }
-  25% {
-    background: rgba(212, 175, 55, 0.18);
-    box-shadow: 0 0 0 2.5px #F4E8C1, 0 6px 20px rgba(244, 232, 193, 0.25);
+  20% {
+    background: rgba(244, 232, 193, 0.28);
+    box-shadow: 0 0 0 2.5px #F4E8C1, 0 6px 22px rgba(244, 232, 193, 0.3);
     transform: scale(1.01);
   }
   50% {
-    background: rgba(212, 175, 55, 0.28);
-    box-shadow: 0 0 0 3px #F4E8C1, 0 8px 28px rgba(244, 232, 193, 0.35);
-    transform: scale(1.02);
-  }
-  75% {
-    background: rgba(212, 175, 55, 0.18);
+    background: rgba(244, 232, 193, 0.20);
     box-shadow: 0 0 0 2px #D4AF37, 0 4px 16px rgba(212, 175, 55, 0.2);
     transform: scale(1);
   }
+  75% {
+    background: rgba(244, 232, 193, 0.08);
+    box-shadow: 0 0 0 1px rgba(244, 232, 193, 0.2);
+  }
   100% {
-    background: rgba(212, 175, 55, 0.1);
-    box-shadow: 0 0 0 1.5px rgba(212, 175, 55, 0.5);
+    background: transparent;
+    box-shadow: none;
+    transform: none;
   }
 }
 
