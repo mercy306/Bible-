@@ -179,12 +179,8 @@ export default function DailyView({
               </button>
             </div>
 
-            <div className="homeScreen__heroText" style={{ marginTop: '16px', marginBottom: '8px' }}>
-              <h2 className="homeScreen__greeting">{getGreeting(isEn)}</h2>
-              <blockquote className="homeScreen__quote">
-                {isEn ? '“The Lord is my shepherd; I shall not want.”' : '“እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም።”'}
-                <cite className="homeScreen__quoteRef">{isEn ? 'Psalm 23:1' : 'መዝሙር 23:1'}</cite>
-              </blockquote>
+            <div className="homeScreen__heroText" style={{ marginTop: '14px', marginBottom: '20px' }}>
+              <h2 className="homeScreen__greeting" style={{ textAlign: 'center', margin: 0 }}>{getGreeting(isEn)}</h2>
             </div>
           </MountainHero>
 
