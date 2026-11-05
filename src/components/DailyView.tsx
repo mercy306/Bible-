@@ -273,7 +273,7 @@ export default function DailyView({
                       {isEn ? "Epic Chronological Saga" : "የዘመን ታሪክ ቅደም ተከተል"}
                     </div>
                     <div className="dailyScreen__planTeaserSub">
-                      {isEn ? "5 Epic Acts • 66 Books Harmonized" : "5 ታላላቅ ዘመናት • የተዋሃደ ታሪክ"}
+                      {isEn ? "5 Epic Acts • 66 Books Harmonized" : "5 ታላላቅ ክፍሎች • 66ቱ መጻሕፍት"}
                     </div>
                   </div>
                 </div>

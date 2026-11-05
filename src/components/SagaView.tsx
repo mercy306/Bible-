@@ -116,7 +116,7 @@ export default function SagaView({
                 className={`sagaMobileActTab ${isSelected ? 'is-active' : ''}`}
                 onClick={() => setSelectedActId(act.id)}
               >
-                <span className="sagaMobileActTab__label">Act {act.romanNr}</span>
+                <span className="sagaMobileActTab__label">{isEn ? 'Act' : 'ክፍል'} {act.romanNr}</span>
                 {prog.completed > 0 && (
                   <span className="sagaMobileActTab__badge">{prog.completed}/{prog.total}</span>
                 )}
@@ -131,7 +131,7 @@ export default function SagaView({
         {/* Compact Act Bar */}
         <div className="sagaMobileActSummaryBar">
           <div className="sagaMobileActSummaryBar__left">
-            <span className="sagaMobileActSummaryBar__badge">Act {selectedAct.romanNr}</span>
+            <span className="sagaMobileActSummaryBar__badge">{isEn ? 'Act' : 'ክፍል'} {selectedAct.romanNr}</span>
             <span className="sagaMobileActSummaryBar__title">
               {isEn ? selectedAct.titleEn.split('(')[0].trim() : selectedAct.titleAm.split('-')[0].trim()}
             </span>
@@ -282,7 +282,7 @@ export default function SagaView({
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
             >
-              ‹ Act {selectedActId - 1}
+              ‹ {isEn ? 'Act' : 'ክፍል'} {selectedActId - 1}
             </button>
           )}
 
@@ -297,7 +297,7 @@ export default function SagaView({
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
             >
-              Act {selectedActId + 1} ›
+              {isEn ? 'Act' : 'ክፍል'} {selectedActId + 1} ›
             </button>
           )}
         </div>
