@@ -6911,19 +6911,19 @@ body {
 /* Floating Dark Capsule Bottom Navigation Bar (Mindful Matcha UI) */
 .botbar {
   position: fixed !important;
-  bottom: 16px !important;
+  bottom: 12px !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
   width: calc(100% - 28px) !important;
-  max-width: 420px !important;
+  max-width: 400px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-around !important;
   background: #1A1E1A !important;
-  border-radius: 40px !important;
-  padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+  border-radius: 30px !important;
+  padding: 3px 6px calc(3px + env(safe-area-inset-bottom, 0px)) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 16px 40px rgba(15, 25, 18, 0.32), 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 12px 32px rgba(15, 25, 18, 0.28), 0 2px 8px rgba(0, 0, 0, 0.12) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   z-index: 80 !important;
@@ -6932,8 +6932,8 @@ body {
 
 @media (max-width: 480px) {
   .botbar {
-    width: calc(100% - 24px) !important;
-    bottom: 14px !important;
+    width: calc(100% - 20px) !important;
+    bottom: 8px !important;
   }
 }
 
@@ -6942,17 +6942,17 @@ body {
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 2px !important;
+  gap: 1px !important;
   background: transparent !important;
   border: 0 !important;
   color: #8E9F8C !important;
-  padding: 6px 12px !important;
-  border-radius: 28px !important;
+  padding: 3px 6px !important;
+  border-radius: 20px !important;
   cursor: pointer !important;
   position: relative !important;
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
   flex: 1 !important;
-  max-width: 84px !important;
+  max-width: 76px !important;
 }
 
 .botbar__btn:hover {
@@ -6961,8 +6961,8 @@ body {
 }
 
 .botbar__icon {
-  width: 22px !important;
-  height: 22px !important;
+  width: 18px !important;
+  height: 18px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -6970,20 +6970,22 @@ body {
 }
 
 .botbar__icon svg {
-  width: 20px !important;
-  height: 20px !important;
+  width: 16px !important;
+  height: 16px !important;
 }
 
 .botbar__label {
-  font-size: 11px !important;
+  font-size: 9.5px !important;
   font-weight: 600 !important;
-  letter-spacing: 0.02em !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.1 !important;
 }
 
 .botbar__btn.is-active {
   background: #C7DEC0 !important;
   color: #1A2218 !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  padding: 3px 8px !important;
 }
 
 .botbar__btn.is-active .botbar__icon {
@@ -7003,14 +7005,15 @@ body {
 
 .botbar__badge {
   position: absolute !important;
-  top: 3px !important;
-  right: 12px !important;
+  top: 1px !important;
+  right: 8px !important;
   background: #D9534F !important;
   color: #ffffff !important;
-  font-size: 10px !important;
+  font-size: 8.5px !important;
   font-weight: 800 !important;
   border-radius: 10px !important;
-  padding: 1px 6px !important;
+  padding: 0 4px !important;
+  line-height: 12px !important;
   box-shadow: none !important;
   border: none !important;
 }
@@ -9995,10 +9998,10 @@ body {
 .topbar.topbar--compact .mountainHero,
 .topbar.topbar--compact .topbar__hero,
 .topbar__hero.topbar__hero--compact {
-  padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 10px !important;
-  border-radius: 0 0 16px 16px !important;
+  padding: calc(env(safe-area-inset-top, 0px) + 3px) 10px 4px !important;
+  border-radius: 0 0 12px 12px !important;
   min-height: auto !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
 }
 
 .topbar.topbar--compact .mountainHero__bg,
@@ -10020,11 +10023,58 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+.topbar.topbar--compact .topbar__mainRow {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 4px !important;
+  min-height: 28px !important;
+}
+
+.topbar.topbar--compact .topbar__titleBtn {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.topbar.topbar--compact .topbar__chapterTitle {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 3.5px 11px !important;
+  border-radius: 999px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+}
+
+.topbar.topbar--compact .topbar__rightActions {
+  gap: 4px !important;
+}
+
+.topbar.topbar--compact .topbar__actionBtn {
+  width: 27px !important;
+  height: 27px !important;
+  min-width: 27px !important;
+  min-height: 27px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+
+.topbar.topbar--compact .topbar__actionBtn svg {
+  width: 14px !important;
+  height: 14px !important;
+  stroke-width: 2 !important;
+}
+
+.topbar.topbar--compact .topbar__sagaBtn span {
+  font-size: 0.8rem !important;
+  line-height: 1 !important;
+}
+
 /* Reader Container Optimization */
 .read {
   max-width: 680px !important;
   margin: 0 auto !important;
-  padding: 8px 16px calc(110px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 6px 14px calc(92px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .verses {
@@ -10034,31 +10084,101 @@ body {
 }
 
 .verse {
-  padding: 8px 6px !important;
-  line-height: 1.8 !important;
+  padding: 7px 5px !important;
+  line-height: 1.75 !important;
 }
 
 .verse__text {
-  font-size: 1.12rem !important;
+  font-size: 1.1rem !important;
   letter-spacing: 0.01em !important;
 }
 
-/* Compact Floating Chapter Bar */
+/* Compact Floating Chapter Bar (Sleek, No Overlap) */
 .readerBar {
-  bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
-  padding: 4px 8px !important;
-  gap: 6px !important;
+  bottom: calc(62px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 2.5px 6px !important;
+  gap: 3px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  white-space: nowrap !important;
 }
 
 .readerBar__chapterBtn {
-  padding: 6px 14px !important;
-  font-size: 12.5px !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  padding: 3px 8px !important;
+  font-size: 11.5px !important;
+  border-radius: 999px !important;
+  gap: 3px !important;
+  line-height: 1 !important;
 }
 
-.readerBar__navBtn,
+.readerBar__chapterBtn span {
+  white-space: nowrap !important;
+}
+
+.readerBar__chapterBtn svg {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.readerBar__navBtn {
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  min-height: 25px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+.readerBar__navBtn svg {
+  width: 13px !important;
+  height: 13px !important;
+}
+
+.readerBar__divider {
+  width: 1px !important;
+  height: 14px !important;
+  margin: 0 1px !important;
+  opacity: 0.45 !important;
+}
+
 .readerBar__listenBtn {
-  width: 32px !important;
-  height: 32px !important;
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  min-height: 25px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+.readerBar__listenBtn svg {
+  width: 11px !important;
+  height: 11px !important;
+}
+
+/* Feature pills inside readerBar (POV / Matrix, Dilemma, Lineage Web) */
+.readerBar__matrixBtn,
+.readerBar__dilemmaBtn,
+.readerBar__lineageBtn {
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 0 7px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  gap: 3px !important;
+}
+
+.readerBar__matrixIcon {
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+}
+
+.readerBar__matrixLabel {
+  font-size: 10px !important;
+  font-weight: 700 !important;
 }
 
 
@@ -13234,8 +13354,8 @@ body {
   align-items: center;
   gap: 5px;
   padding: 0 10px;
-  height: 38px;
-  border-radius: 8px;
+  height: 24px;
+  border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--panel-2);
   color: var(--ink);
@@ -13987,8 +14107,8 @@ body {
   align-items: center;
   gap: 5px;
   padding: 0 10px;
-  height: 38px;
-  border-radius: 8px;
+  height: 24px;
+  border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--panel-2);
   color: var(--ink);
