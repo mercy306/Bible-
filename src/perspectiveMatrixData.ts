@@ -1,3 +1,6 @@
+import { CANON_66_BOOKS_MATRIX } from './perspectiveMatrixCanonData'
+import { SAGA_ACTS } from './sagaData'
+
 /**
  * Multidimensional Perspective Matrix (The POV Bible)
  * Core canonical dataset with 4 simultaneous real-time lenses:
@@ -548,14 +551,42 @@ export const PERSPECTIVE_MATRIX_DATA: PerspectiveMatrixItem[] = [
   }
 ]
 
-export function getPerspectiveMatrixForScene(sceneId: string): PerspectiveMatrixItem | undefined {
-  return PERSPECTIVE_MATRIX_DATA.find((m) => m.sceneId === sceneId)
-}
-
 export function getPerspectiveMatrixForChapter(bookNr: number, chapter: number): PerspectiveMatrixItem | undefined {
-  return PERSPECTIVE_MATRIX_DATA.find((m) => {
+  const milestone = PERSPECTIVE_MATRIX_DATA.find((m) => {
     if (m.bookNr !== bookNr) return false
     const end = m.chapterEnd ?? m.chapterStart
     return chapter >= m.chapterStart && chapter <= end
   })
+  if (milestone) return milestone
+
+  const canon = CANON_66_BOOKS_MATRIX[bookNr]
+  if (canon) {
+    return {
+      ...canon,
+      chapterStart: chapter,
+      chapterEnd: chapter
+    }
+  }
+  return undefined
+}
+
+export function getPerspectiveMatrixForScene(sceneId: string): PerspectiveMatrixItem | undefined {
+  const milestone = PERSPECTIVE_MATRIX_DATA.find((m) => m.sceneId === sceneId)
+  if (milestone) return milestone
+
+  for (const act of SAGA_ACTS) {
+    const scene = act.scenes.find((s) => s.id === sceneId)
+    if (scene && scene.passages && scene.passages.length > 0) {
+      const p = scene.passages[0]
+      const item = getPerspectiveMatrixForChapter(p.bookNr, p.chapter)
+      if (item) {
+        return {
+          ...item,
+          sceneId: scene.id
+        }
+      }
+    }
+  }
+
+  return undefined
 }
