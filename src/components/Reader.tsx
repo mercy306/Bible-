@@ -484,25 +484,6 @@ export default function Reader({
         </p>
       )}
 
-      {/* Multidimensional Perspective Matrix quick pill if this chapter has POV matrix data */}
-      {matrixItem && (
-        <div className="readerMatrixNotice">
-          <button
-            type="button"
-            className="readerMatrixNotice__btn"
-            onClick={() => setPanel('perspectiveMatrix')}
-          >
-            <span className="readerMatrixNotice__badge">4D POV</span>
-            <span className="readerMatrixNotice__text">
-              <strong>{language === 'en' ? 'Perspective Matrix:' : 'የእይታ ማትሪክስ፡'}</strong>{' '}
-              {language === 'en' ? matrixItem.titleEn : matrixItem.titleAm}
-            </span>
-            <span className="readerMatrixNotice__cta">
-              {language === 'en' ? 'Explore 4 Lenses ›' : '4ቱን ዕይታዎች መርምር ›'}
-            </span>
-          </button>
-        </div>
-      )}
 
       <ol className="verses">
         {rows.map((row) => {
