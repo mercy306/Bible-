@@ -121,6 +121,7 @@ export default function VerseCommentary({ chapter, verse, language = 'am', onOpe
             data={amharic}
             reference={chapter.reference}
             language={language}
+            onSwitchToEnglish={() => setTab('commentary')}
             onOpenGeneral={async () => {
               const res = await fetchAmharicCommentary(chapter.book.nr, chapter.chapter, true)
               setAmharic(res)

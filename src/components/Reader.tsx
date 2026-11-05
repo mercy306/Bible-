@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { fetchChapter, fetchCoverage } from '../api'
+import { fetchChapter } from '../api'
 import ChapterPicker from './ChapterPicker'
 import SharePanel from './SharePanel'
 import Sheet from './Sheet'
@@ -81,7 +81,6 @@ export default function Reader({
   const [panel, setPanel] = useState<Panel>('none')
   const [word, setWord] = useState<{ text: string; verse: number } | null>(null)
   const [counterpart, setCounterpart] = useState<ChapterResponse | null>(null)
-  const [coverage, setCoverage] = useState<Record<string, number[]> | null>(null)
   const [revealed, setRevealed] = useState<Set<number>>(new Set())
   const [isChapterPlaying, setIsChapterPlaying] = useState(false)
   const [currentNoteText, setCurrentNoteText] = useState('')
@@ -130,9 +129,6 @@ export default function Reader({
 
   const readingAmharic = chapter.translation.lang === 'am'
 
-  const covered = coverage?.[String(chapter.book.nr)] ?? null
-  const isCovered = covered ? covered.includes(chapter.chapter) : true
-
   useEffect(() => {
     setSelected(null)
     setPanel('none')
@@ -160,16 +156,6 @@ export default function Reader({
       setIsNoteOpen(false)
     }
   }, [selected, chapter.chapter, chapter.book.nr, bookmarks])
-
-  useEffect(() => {
-    let cancelled = false
-    fetchCoverage()
-      .then((res) => !cancelled && setCoverage(res.chapters))
-      .catch(() => !cancelled && setCoverage(null))
-    return () => {
-      cancelled = true
-    }
-  }, [])
 
   // The other language of the same chapter, fetched once so the verse list can
   // show one language or both without a second request per verse.
@@ -376,7 +362,6 @@ export default function Reader({
   }
 
   const selectedLines = selected === null ? [] : linesFor(selected)
-  const uncovered = covered ?? []
   const collectionNames = useCollections()
 
   // The collection this selected verse is already filed under, if any.
@@ -455,22 +440,6 @@ export default function Reader({
 
   return (
     <article className="read">
-      {chapter.fallback && (
-        <p className="notice notice--gap">
-          {language === 'en'
-            ? 'This chapter is shown from the earlier Ethiopian Bible Society edition.'
-            : 'ይህ ምዕራፍ ከቀድሞው የኢትዮጵያ መጽሐፍ ቅዱስ ማኅበር እትም ቀርቧል።'}
-        </p>
-      )}
-
-      {coverage !== null && !isCovered && (
-        <p className="notice notice--gap">
-          {language === 'en'
-            ? 'Your Amharic commentary book does not cover this chapter. English commentary is still available from any verse.'
-            : 'የአማርኛ ማብራሪያ መጽሐፉ ይህንን ምዕራፍ አያካትትም።'}
-        </p>
-      )}
-
       {/* The numbers the 2009 text does not separate are folded into the verse
           that holds them and labelled with the whole range, so a chapter note
           about them would only repeat what the text already shows. */}
@@ -962,7 +931,6 @@ export default function Reader({
         <ChapterPicker
           count={chapter.chapterCount}
           current={chapter.chapter}
-          uncovered={uncovered}
           language={language}
           onPick={(n) => {
             setPanel('none')

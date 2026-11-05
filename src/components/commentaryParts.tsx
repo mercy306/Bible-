@@ -69,11 +69,13 @@ export function AmharicBody({
   data,
   reference,
   onOpenGeneral,
+  onSwitchToEnglish,
   language = 'am',
 }: {
   data: AmharicCommentary | null
   reference: string
   onOpenGeneral: () => Promise<void>
+  onSwitchToEnglish?: () => void
   language?: LanguageMode
 }) {
   const isEn = language === 'en'
@@ -81,16 +83,28 @@ export function AmharicBody({
 
   if (!data.available || (!data.general && data.blocks.length === 0)) {
     return (
-      <>
+      <div className="amharic__emptyWrapper">
         <p className="notice">
           {isEn
-            ? `No commentary for ${reference}. In this book, commentary is only available in chapter ${data.covered}.`
-            : `ለ${reference} ማብራሪያ የለም። በዚህ መጽሐፍ ውስጥ ማብራሪያ በ${data.covered} ምዕራፍ ውስጥ ብቻ ነው።`}
+            ? `Amharic commentary is not available for ${reference}. English verse commentary is available.`
+            : `ለ${reference} የአማርኛ ማብራሪያ አልተገኘም። የእንግሊዝኛ የቁጥር ማብራሪያ ይገኛል።`}
         </p>
-        <button type="button" className="btn btn--quiet" onClick={onOpenGeneral}>
-          {isEn ? 'Browse book front sections' : 'የመጽሐፍ ቅዱስ መነሻ ክፍሎችን ክትት'}
-        </button>
-      </>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+          {onSwitchToEnglish && (
+            <button
+              type="button"
+              className="btn"
+              style={{ background: 'var(--accent)', color: 'var(--accent-ink, #ffffff)', fontWeight: 600 }}
+              onClick={onSwitchToEnglish}
+            >
+              {isEn ? '📖 View English Commentary' : '📖 የእንግሊዝኛ ማብራሪያ ይመልከቱ'}
+            </button>
+          )}
+          <button type="button" className="btn btn--quiet" onClick={onOpenGeneral}>
+            {isEn ? 'Browse book front sections' : 'የመጽሐፍ ቅዱስ መነሻ ክፍሎችን ክፈት'}
+          </button>
+        </div>
+      </div>
     )
   }
 

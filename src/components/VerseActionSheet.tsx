@@ -208,6 +208,7 @@ export default function VerseActionSheet({
                   data={amharic}
                   reference={chapter.reference}
                   language={language}
+                  onSwitchToEnglish={() => setCommLang('en')}
                   onOpenGeneral={async () => {
                     const res = await fetchAmharicCommentary(chapter.book.nr, chapter.chapter, true)
                     setAmharic(res)
