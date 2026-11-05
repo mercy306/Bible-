@@ -5,6 +5,8 @@ import SharePanel from './SharePanel'
 import Sheet from './Sheet'
 import VerseCommentary from './VerseCommentary'
 import WordPanel from './WordPanel'
+import PerspectiveMatrixSheet from './PerspectiveMatrixSheet'
+import { getPerspectiveMatrixForChapter } from '../perspectiveMatrixData'
 import { useBookNames } from './useBookNames'
 import {
   isBookmarked,
@@ -45,7 +47,7 @@ interface Line {
   alternate?: boolean
 }
 
-type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections'
+type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix'
 
 /**
  * One row of the chapter. A row labelled `from–to` covers several English
@@ -83,6 +85,10 @@ export default function Reader({
   const [currentNoteText, setCurrentNoteText] = useState('')
   const [isNoteOpen, setIsNoteOpen] = useState(false)
   const [noteSavedFeedback, setNoteSavedFeedback] = useState<number | null>(null)
+
+  const matrixItem = useMemo(() => {
+    return getPerspectiveMatrixForChapter(chapter.book.nr, chapter.chapter)
+  }, [chapter.book.nr, chapter.chapter])
 
   function handleChapterListen() {
     if (!('speechSynthesis' in window)) return
@@ -476,6 +482,26 @@ export default function Reader({
             {language === 'en' ? 'Read the whole chapter' : 'ሙሉውን ምዕራፍ አንብብ'}
           </button>
         </p>
+      )}
+
+      {/* Multidimensional Perspective Matrix quick pill if this chapter has POV matrix data */}
+      {matrixItem && (
+        <div className="readerMatrixNotice">
+          <button
+            type="button"
+            className="readerMatrixNotice__btn"
+            onClick={() => setPanel('perspectiveMatrix')}
+          >
+            <span className="readerMatrixNotice__badge">4D POV</span>
+            <span className="readerMatrixNotice__text">
+              <strong>{language === 'en' ? 'Perspective Matrix:' : 'የእይታ ማትሪክስ፡'}</strong>{' '}
+              {language === 'en' ? matrixItem.titleEn : matrixItem.titleAm}
+            </span>
+            <span className="readerMatrixNotice__cta">
+              {language === 'en' ? 'Explore 4 Lenses ›' : '4ቱን ዕይታዎች መርምር ›'}
+            </span>
+          </button>
+        </div>
       )}
 
       <ol className="verses">
@@ -891,7 +917,30 @@ export default function Reader({
             </svg>
           )}
         </button>
+
+        {matrixItem && (
+          <>
+            <div className="readerBar__divider" aria-hidden="true" />
+            <button
+              type="button"
+              className="readerBar__matrixBtn"
+              onClick={() => setPanel('perspectiveMatrix')}
+              title={language === 'en' ? 'Perspective Matrix (POV Bible)' : 'የእይታ ማትሪክስ (4D ዕይታ)'}
+              aria-label={language === 'en' ? 'Perspective Matrix (POV Bible)' : 'የእይታ ማትሪክስ (4D ዕይታ)'}
+            >
+              <span className="readerBar__matrixIcon">👁️</span>
+              <span className="readerBar__matrixLabel">{language === 'en' ? 'POV' : 'ዕይታ'}</span>
+            </button>
+          </>
+        )}
       </div>
+
+      <PerspectiveMatrixSheet
+        open={panel === 'perspectiveMatrix'}
+        item={matrixItem ?? null}
+        language={language}
+        onClose={() => setPanel('none')}
+      />
 
       <Sheet
         open={panel === 'chapters'}

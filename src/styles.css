@@ -13031,3 +13031,511 @@ body {
   color: var(--accent-ink);
   border-color: var(--accent);
 }
+
+/* ==========================================================================
+   MULTIDIMENSIONAL PERSPECTIVE MATRIX (THE POV BIBLE)
+   Clean, Calm, Adaptive Native Styles (No neon, optimal mobile layout)
+   ========================================================================== */
+
+.sagaMobileCard__matrixTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.sagaMobileMatrixSection {
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.sagaMobileMatrixBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.sagaMobileMatrixBtn:active {
+  transform: scale(0.98);
+}
+
+.sagaMobileMatrixBtn__lead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sagaMobileMatrixBtn__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.sagaMobileMatrixBtn__titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sagaMobileMatrixBtn__title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.sagaMobileMatrixBtn__subtitle {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.sagaMobileMatrixBtn__arrow {
+  color: var(--ink-soft);
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding-left: 8px;
+  flex-shrink: 0;
+}
+
+/* Reader View Matrix Notice & Toolbar Button */
+.readerMatrixNotice {
+  margin: 12px 0 16px;
+}
+
+.readerMatrixNotice__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 13px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.readerMatrixNotice__btn:active {
+  transform: scale(0.98);
+}
+
+.readerMatrixNotice__badge {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.readerMatrixNotice__text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.readerMatrixNotice__cta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.readerBar__matrixBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.readerBar__matrixBtn:active {
+  transform: scale(0.95);
+}
+
+.readerBar__matrixIcon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.readerBar__matrixLabel {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+/* Perspective Matrix Bottom Sheet Modal Body */
+.matrixSheetBody {
+  padding: 12px 16px 24px;
+}
+
+.matrixHeader {
+  margin-bottom: 12px;
+}
+
+.matrixHeader__tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.matrixHeader__era {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.matrixHeader__ref {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.matrixHeader__title {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.matrixHeader__subtitle {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+/* 4-Lens Segmented Control Switcher */
+.matrixTabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  background: var(--panel-2);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin: 12px 0 16px;
+}
+
+.matrixTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.matrixTab__icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.matrixTab__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1.15;
+}
+
+.matrixTab.is-active {
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-weight: 800;
+}
+
+/* Lens Views */
+.matrixLensView {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.matrixLensMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.matrixLensMeta__badge {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+}
+
+.matrixLensMeta__badge--accent {
+  border-color: var(--accent);
+}
+
+.matrixLensMeta__label {
+  font-size: 0.65rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.matrixLensMeta__val {
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+.matrixSection {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+}
+
+.matrixSection__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.matrixSection__icon {
+  font-size: 0.95rem;
+}
+
+.matrixSection__p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.matrixSection__p--highlight {
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+/* Linguistic Root Cards */
+.matrixLinguisticHeader {
+  margin-bottom: 4px;
+}
+
+.matrixLinguisticHeader__count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.matrixLinguisticGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.matrixLinguisticCard {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.matrixLinguisticCard__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.matrixLinguisticCard__termGroup {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.matrixLinguisticCard__original {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink);
+  font-family: 'Ezra SIL', 'SBL Hebrew', serif;
+  letter-spacing: 0.03em;
+}
+
+.matrixLinguisticCard__translit {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.matrixLinguisticCard__langBadge {
+  font-size: 0.64rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.matrixLinguisticCard__translationRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.matrixLinguisticCard__subLabel {
+  color: var(--ink-soft);
+}
+
+.matrixLinguisticCard__amharicTerm {
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.matrixLinguisticCard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.matrixLinguisticCard__block strong {
+  color: var(--ink);
+}
+
+.matrixLinguisticCard__block span {
+  color: var(--ink-soft);
+}
+
+.matrixLinguisticCard__block--sub {
+  font-size: 0.78rem;
+  opacity: 0.9;
+}
+
+/* Psychological / Human Experience */
+.matrixPsychChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.matrixPsychChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.matrixPsychQuote {
+  margin: 0;
+  padding: 9px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--panel);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.matrixSection--resonance {
+  border-color: rgba(var(--accent-rgb, 120, 160, 120), 0.35);
+}
+
+.matrixFooter {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.matrixFooter__readBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.matrixFooter__readBtn:active {
+  transform: scale(0.98);
+}

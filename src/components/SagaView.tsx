@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import MountainHero from './MountainHero'
+import PerspectiveMatrixSheet from './PerspectiveMatrixSheet'
 import {
   SAGA_ACTS,
   type SagaAct,
@@ -8,6 +9,10 @@ import {
   getActProgress,
   getTotalSagaProgress,
 } from '../sagaData'
+import {
+  getPerspectiveMatrixForScene,
+  type PerspectiveMatrixItem,
+} from '../perspectiveMatrixData'
 import type { LanguageMode } from '../prefs'
 
 interface Props {
@@ -26,6 +31,7 @@ export default function SagaView({
   const [progressState, setProgressState] = useState(() => getSagaProgress())
   const [expandedScenes, setExpandedScenes] = useState<Record<string, boolean>>({})
   const [expandedInterludes, setExpandedInterludes] = useState<Record<string, boolean>>({})
+  const [selectedMatrix, setSelectedMatrix] = useState<PerspectiveMatrixItem | null>(null)
 
   const totalProgress = useMemo(() => getTotalSagaProgress(), [progressState])
 
@@ -147,6 +153,7 @@ export default function SagaView({
             const isDone = progressState.completedScenes.includes(scene.id)
             const isExpanded = !!expandedScenes[scene.id]
             const isInterludeOpen = !!expandedInterludes[scene.id]
+            const matrixItem = getPerspectiveMatrixForScene(scene.id)
 
             return (
               <article
@@ -178,6 +185,9 @@ export default function SagaView({
                   <div className="sagaMobileCard__info">
                     <div className="sagaMobileCard__tags">
                       <span className="sagaMobileCard__eraTag">{cleanEra(scene.eraEstimate, isEn)}</span>
+                      {matrixItem && (
+                        <span className="sagaMobileCard__matrixTag">4D POV</span>
+                      )}
                       {scene.geopolitical && (
                         <span className="sagaMobileCard__geoTag">
                           {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}
@@ -235,6 +245,35 @@ export default function SagaView({
                         })}
                       </div>
                     </div>
+
+                    {/* Multidimensional Perspective Matrix (POV Bible) */}
+                    {matrixItem && (
+                      <div className="sagaMobileMatrixSection">
+                        <button
+                          type="button"
+                          className="sagaMobileMatrixBtn"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setSelectedMatrix(matrixItem)
+                          }}
+                        >
+                          <div className="sagaMobileMatrixBtn__lead">
+                            <span className="sagaMobileMatrixBtn__badge">4D POV</span>
+                            <div className="sagaMobileMatrixBtn__titles">
+                              <span className="sagaMobileMatrixBtn__title">
+                                {isEn ? 'Perspective Matrix (4 Lenses)' : 'የእይታ ማትሪክስ (4 ዕይታዎች)'}
+                              </span>
+                              <span className="sagaMobileMatrixBtn__subtitle">
+                                {isEn
+                                  ? 'Geopolitical • Covenant • Roots • Psychology'
+                                  : 'ፖለቲካ • ኪዳን • ሥነ-ቃል • ስነ-ልቦና'}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="sagaMobileMatrixBtn__arrow">›</span>
+                        </button>
+                      </div>
+                    )}
 
                     {/* Collapsible Geopolitical Box */}
                     {scene.geopolitical && (
@@ -302,6 +341,14 @@ export default function SagaView({
           )}
         </div>
       </main>
+
+      <PerspectiveMatrixSheet
+        open={Boolean(selectedMatrix)}
+        item={selectedMatrix}
+        language={language}
+        onClose={() => setSelectedMatrix(null)}
+        onOpenPassage={onOpenPassage}
+      />
     </div>
   )
 }
