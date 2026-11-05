@@ -165,7 +165,10 @@ export default function SagaView({
                 aria-expanded={isExpanded}
               >
                 {/* Touch-Friendly Scene Card Header */}
-                <div className="sagaMobileCard__tapRow">
+                <div
+                  className="sagaMobileCard__tapRow"
+                  onClick={() => toggleSceneExpanded(scene.id)}
+                >
                   {/* Round Completion Checkbox */}
                   <button
                     type="button"
@@ -200,7 +203,13 @@ export default function SagaView({
                     </h3>
                   </div>
 
-                  <div className="sagaMobileCard__chevron">
+                  <div
+                    className="sagaMobileCard__chevron"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      toggleSceneExpanded(scene.id)
+                    }}
+                  >
                     <svg viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                     </svg>
