@@ -7,6 +7,8 @@ import VerseCommentary from './VerseCommentary'
 import WordPanel from './WordPanel'
 import PerspectiveMatrixSheet from './PerspectiveMatrixSheet'
 import { getPerspectiveMatrixForChapter } from '../perspectiveMatrixData'
+import EthicsSandboxSheet from './EthicsSandboxSheet'
+import { getDilemmaForChapter } from '../ethicsSandboxData'
 import { useBookNames } from './useBookNames'
 import {
   isBookmarked,
@@ -47,7 +49,7 @@ interface Line {
   alternate?: boolean
 }
 
-type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix'
+type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox'
 
 /**
  * One row of the chapter. A row labelled `from–to` covers several English
@@ -88,6 +90,10 @@ export default function Reader({
 
   const matrixItem = useMemo(() => {
     return getPerspectiveMatrixForChapter(chapter.book.nr, chapter.chapter)
+  }, [chapter.book.nr, chapter.chapter])
+
+  const dilemmaItem = useMemo(() => {
+    return getDilemmaForChapter(chapter.book.nr, chapter.chapter)
   }, [chapter.book.nr, chapter.chapter])
 
   function handleChapterListen() {
@@ -914,6 +920,22 @@ export default function Reader({
             </button>
           </>
         )}
+
+        {dilemmaItem && (
+          <>
+            <div className="readerBar__divider" aria-hidden="true" />
+            <button
+              type="button"
+              className="readerBar__dilemmaBtn"
+              onClick={() => setPanel('ethicsSandbox')}
+              title={language === 'en' ? 'Living Ethics & Decision Sandbox' : 'የውሳኔና የሥነ-ምግባር አውድማ'}
+              aria-label={language === 'en' ? 'Living Ethics & Decision Sandbox' : 'የውሳኔና የሥነ-ምግባር አውድማ'}
+            >
+              <span className="readerBar__matrixIcon">⚖️</span>
+              <span className="readerBar__matrixLabel">{language === 'en' ? 'Dilemma' : 'ውሳኔ'}</span>
+            </button>
+          </>
+        )}
       </div>
 
       <PerspectiveMatrixSheet
@@ -921,6 +943,14 @@ export default function Reader({
         item={matrixItem ?? null}
         language={language}
         onClose={() => setPanel('none')}
+      />
+
+      <EthicsSandboxSheet
+        open={panel === 'ethicsSandbox'}
+        dilemma={dilemmaItem ?? null}
+        language={language}
+        onClose={() => setPanel('none')}
+        onOpenPassage={(b, c) => onOpen(b, c)}
       />
 
       <Sheet

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import MountainHero from './MountainHero'
 import PerspectiveMatrixSheet from './PerspectiveMatrixSheet'
+import EthicsSandboxSheet from './EthicsSandboxSheet'
 import {
   SAGA_ACTS,
   type SagaAct,
@@ -13,6 +14,10 @@ import {
   getPerspectiveMatrixForScene,
   type PerspectiveMatrixItem,
 } from '../perspectiveMatrixData'
+import {
+  getDilemmaForScene,
+  type DilemmaCase,
+} from '../ethicsSandboxData'
 import type { LanguageMode } from '../prefs'
 
 interface Props {
@@ -32,6 +37,7 @@ export default function SagaView({
   const [expandedScenes, setExpandedScenes] = useState<Record<string, boolean>>({})
   const [expandedInterludes, setExpandedInterludes] = useState<Record<string, boolean>>({})
   const [selectedMatrix, setSelectedMatrix] = useState<PerspectiveMatrixItem | null>(null)
+  const [selectedDilemma, setSelectedDilemma] = useState<DilemmaCase | null>(null)
 
   const totalProgress = useMemo(() => getTotalSagaProgress(), [progressState])
 
@@ -154,6 +160,7 @@ export default function SagaView({
             const isExpanded = !!expandedScenes[scene.id]
             const isInterludeOpen = !!expandedInterludes[scene.id]
             const matrixItem = getPerspectiveMatrixForScene(scene.id)
+            const dilemmaItem = getDilemmaForScene(scene.id)
 
             return (
               <article
@@ -190,6 +197,9 @@ export default function SagaView({
                       <span className="sagaMobileCard__eraTag">{cleanEra(scene.eraEstimate, isEn)}</span>
                       {matrixItem && (
                         <span className="sagaMobileCard__matrixTag">4D POV</span>
+                      )}
+                      {dilemmaItem && (
+                        <span className="sagaMobileCard__dilemmaTag">{isEn ? '⚖️ Dilemma' : '⚖️ ውሳኔ'}</span>
                       )}
                       {scene.geopolitical && (
                         <span className="sagaMobileCard__geoTag">
@@ -284,6 +294,35 @@ export default function SagaView({
                       </div>
                     )}
 
+                    {/* Living Ethics & Ancient Wisdom Sandbox */}
+                    {dilemmaItem && (
+                      <div className="sagaMobileDilemmaSection">
+                        <button
+                          type="button"
+                          className="sagaMobileDilemmaBtn"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setSelectedDilemma(dilemmaItem)
+                          }}
+                        >
+                          <div className="sagaMobileMatrixBtn__lead">
+                            <span className="sagaMobileDilemmaBtn__badge">⚖️ {isEn ? 'Dilemma' : 'ውሳኔ'}</span>
+                            <div className="sagaMobileMatrixBtn__titles">
+                              <span className="sagaMobileMatrixBtn__title">
+                                {isEn ? dilemmaItem.titleEn : dilemmaItem.titleAm}
+                              </span>
+                              <span className="sagaMobileMatrixBtn__subtitle">
+                                {isEn
+                                  ? 'Ethical Node • Moral Stakes • Consequence Engine'
+                                  : 'የሥነ-ምግባር አጣብቂኝ • የውሳኔ መስቀለኛ መንገድ • ውጤት'}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="sagaMobileMatrixBtn__arrow">›</span>
+                        </button>
+                      </div>
+                    )}
+
                     {/* Collapsible Geopolitical Box */}
                     {scene.geopolitical && (
                       <div className="sagaMobileGeoBox">
@@ -356,6 +395,14 @@ export default function SagaView({
         item={selectedMatrix}
         language={language}
         onClose={() => setSelectedMatrix(null)}
+        onOpenPassage={onOpenPassage}
+      />
+
+      <EthicsSandboxSheet
+        open={Boolean(selectedDilemma)}
+        dilemma={selectedDilemma}
+        language={language}
+        onClose={() => setSelectedDilemma(null)}
         onOpenPassage={onOpenPassage}
       />
     </div>
