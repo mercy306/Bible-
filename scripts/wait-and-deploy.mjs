@@ -13,24 +13,40 @@ function getDevices() {
   }
 }
 
-console.log('Waiting for phone connection...')
-const maxAttempts = 30
+console.log('Watching for phone connection (will run for up to 10 minutes)...')
+const maxAttempts = 300 // 300 * 2s = 600 seconds (10 min)
+
 for (let i = 0; i < maxAttempts; i++) {
   const devices = getDevices()
   if (devices.length > 0) {
-    console.log(`Found device: ${devices[0]}! Installing APK...`)
-    execSync(`"${ADB}" install -r android/app/build/outputs/apk/debug/app-debug.apk`, { stdio: 'inherit' })
-    console.log('Stopping old process...')
-    execSync(`"${ADB}" shell am force-stop com.sixtysix.biblereader`, { stdio: 'inherit' })
-    console.log('Launching updated app...')
-    execSync(`"${ADB}" shell monkey -p com.sixtysix.biblereader -c android.intent.category.LAUNCHER 1`, { stdio: 'inherit' })
-    console.log('Successfully updated on phone!')
+    const deviceId = devices[0]
+    console.log(`[+] Device detected: ${deviceId}! Starting installation...`)
+    
+    // Install APK
+    execSync(`"${ADB}" -s ${deviceId} install -r android/app/build/outputs/apk/debug/app-debug.apk`, { stdio: 'inherit' })
+    console.log('[+] APK installed successfully!')
+    
+    // Restart App
+    execSync(`"${ADB}" -s ${deviceId} shell am force-stop com.sixtysix.biblereader`, { stdio: 'inherit' })
+    execSync(`"${ADB}" -s ${deviceId} shell monkey -p com.sixtysix.biblereader -c android.intent.category.LAUNCHER 1`, { stdio: 'inherit' })
+    console.log('[+] App launched!')
+    
+    // Wait 3 seconds for UI to render
+    const t0 = Date.now()
+    while (Date.now() - t0 < 3000) {}
+    
+    // Capture live screenshot
+    execSync(`"${ADB}" -s ${deviceId} shell screencap -p /sdcard/screen_nt_live.png`, { stdio: 'inherit' })
+    execSync(`"${ADB}" -s ${deviceId} pull /sdcard/screen_nt_live.png screen_nt_live.png`, { stdio: 'inherit' })
+    console.log('[+] Screenshot saved to screen_nt_live.png!')
+    console.log('DEPLOY_SUCCESS')
     process.exit(0)
   }
-  // Wait 1.5 seconds between checks
+  
+  // Sleep 2 seconds
   const start = Date.now()
-  while (Date.now() - start < 1500) {}
+  while (Date.now() - start < 2000) {}
 }
 
-console.log('Device not detected within timeout.')
+console.log('[-] Phone not detected within 10 minutes.')
 process.exit(1)
