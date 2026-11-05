@@ -29,6 +29,7 @@ interface Props {
   onPrayers: () => void
   onPlan?: () => void
   onSaga?: () => void
+  onLineage?: () => void
   savedCount: number
   prayerCount: number
   onGoTo: (reference: string) => void
@@ -144,6 +145,7 @@ export default function MoreSheetBody({
   onPrayers,
   onPlan,
   onSaga,
+  onLineage,
   savedCount,
   prayerCount,
   onGoTo,
@@ -276,6 +278,13 @@ export default function MoreSheetBody({
             <button type="button" className="mwide" onClick={() => onSaga()}>
               <span>👑 {isEn ? 'Epic Chronological Saga' : 'የዘመን ታሪክ ቅደም ተከተል'}</span>
               <span className="mwide__count">5 Acts</span>
+            </button>
+          )}
+
+          {onLineage && (
+            <button type="button" className="mwide" onClick={() => onLineage()}>
+              <span>🌳 {isEn ? 'Genealogical & Cultural Web' : 'የትውልድ ሐረግና የባህል ትሥሥር'}</span>
+              <span className="mwide__count">Roots</span>
             </button>
           )}
 

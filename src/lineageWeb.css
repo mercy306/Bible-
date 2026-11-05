@@ -1,0 +1,532 @@
+/* ==========================================================================
+   Lineage & Cultural Web (The Interactive Roots Bible)
+   Obsidian, Sage & Parchment Theme
+   ========================================================================== */
+
+.lineageSheetBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 0 24px;
+}
+
+/* Tabs */
+.lineageTabs {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-hover, rgba(0, 0, 0, 0.04));
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lineageTabBtn {
+  flex: 1;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted, #666);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.lineageTabBtn.is-active {
+  background: var(--surface, #fff);
+  color: var(--text, #111);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Search bar */
+.lineageSearchBox {
+  position: relative;
+  width: 100%;
+}
+
+.lineageSearchInput {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border-radius: 12px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  background: var(--surface, #fff);
+  color: var(--text, #111);
+  font-size: 0.9rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.lineageSearchInput:focus {
+  border-color: var(--accent, #3d6e52);
+}
+
+.lineageSearchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Person Spotlight Card */
+.lineageSpotlight {
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lineageSpotlight__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lineageBadgesRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lineageBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+.lineageBadge--canaanite,
+.lineageBadge--moabite,
+.lineageBadge--hittite {
+  background: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+  border-color: rgba(217, 119, 6, 0.25);
+}
+
+.lineageBadge--cushite {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.lineageBadge--hebrew {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1d4ed8;
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.lineageBadge--greek_roman {
+  background: rgba(139, 92, 246, 0.1);
+  color: #6d28d9;
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+.lineageSpotlight__names {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.lineageSpotlight__nameEn {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text, #111);
+  margin: 0;
+}
+
+.lineageSpotlight__nameAm {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-muted, #555);
+}
+
+.lineageSpotlight__era {
+  font-size: 0.8rem;
+  color: var(--text-muted, #777);
+}
+
+/* Kinship Tree Section */
+.lineageKinshipBox {
+  background: var(--bg-hover, rgba(0, 0, 0, 0.02));
+  border: 1px dashed var(--border, rgba(0, 0, 0, 0.1));
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lineageKinshipRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lineageKinshipLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted, #666);
+  min-width: 75px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.lineageKinshipLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lineagePillBtn {
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.12));
+  background: var(--surface, #fff);
+  color: var(--text, #222);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.12s;
+}
+
+.lineagePillBtn:hover {
+  background: var(--accent, #3d6e52);
+  color: #fff;
+  border-color: var(--accent, #3d6e52);
+}
+
+.lineagePillNone {
+  font-size: 0.78rem;
+  color: var(--text-muted, #888);
+  font-style: italic;
+}
+
+/* Theology & Bio */
+.lineageTheologyBox {
+  background: rgba(61, 110, 82, 0.08);
+  border-left: 3px solid var(--accent, #3d6e52);
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lineageTheologyTitle {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent, #3d6e52);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lineageTheologyText {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--text, #222);
+  margin: 0;
+}
+
+.lineageBioText {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--text-muted, #555);
+  margin: 0;
+}
+
+.lineageVersesRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lineageVerseBadge {
+  background: var(--bg-hover, rgba(0, 0, 0, 0.05));
+  color: var(--text-muted, #555);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+/* Cultural Web Grid */
+.lineageCulturalGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lineageFilterRow {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lineageFilterChip {
+  white-space: nowrap;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  background: var(--surface, #fff);
+  color: var(--text-muted, #666);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.lineageFilterChip.is-active {
+  background: var(--accent, #3d6e52);
+  color: #fff;
+  border-color: var(--accent, #3d6e52);
+}
+
+.lineagePersonCard {
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.1s;
+}
+
+.lineagePersonCard:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent, #3d6e52);
+}
+
+.lineagePersonCard__left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.lineagePersonCard__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text, #111);
+}
+
+.lineagePersonCard__am {
+  font-size: 0.82rem;
+  color: var(--text-muted, #666);
+}
+
+.lineagePersonCard__desc {
+  font-size: 0.78rem;
+  color: var(--text-muted, #777);
+}
+
+.lineagePersonCard__action {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent, #3d6e52);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Six Degrees View */
+.sixDegreesBox {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sixDegreesPresets {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sixDegreesPresetsTitle {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sixDegreesChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sixDegreesPresetBtn {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  background: var(--surface, #fff);
+  color: var(--text, #333);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.sixDegreesPresetBtn:hover {
+  border-color: var(--accent, #3d6e52);
+  color: var(--accent, #3d6e52);
+}
+
+.sixDegreesSelectors {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface, #fff);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
+}
+
+.sixDegreesSelect {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.15));
+  background: var(--surface, #fff);
+  color: var(--text, #111);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sixDegreesSwapIcon {
+  font-size: 1.1rem;
+  color: var(--text-muted, #888);
+}
+
+/* Path Chain Visualization */
+.pathChain {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 8px;
+}
+
+.pathStep {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.pathStepNode {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  transition: border-color 0.12s;
+}
+
+.pathStepNode:hover {
+  border-color: var(--accent, #3d6e52);
+}
+
+.pathStepNumber {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent, #3d6e52);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pathStepInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pathStepName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text, #111);
+}
+
+.pathStepBadge {
+  font-size: 0.72rem;
+  color: var(--text-muted, #666);
+}
+
+.pathConnector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0 8px 13px;
+}
+
+.pathLine {
+  width: 2px;
+  height: 24px;
+  background: var(--accent, #3d6e52);
+  opacity: 0.4;
+}
+
+.pathRelation {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent, #3d6e52);
+  background: rgba(61, 110, 82, 0.08);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* Reader Bar Lineage Button */
+.readerBar__lineageBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(61, 110, 82, 0.12);
+  color: var(--accent, #3d6e52);
+  border: 1px solid rgba(61, 110, 82, 0.25);
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.readerBar__lineageBtn:hover {
+  background: var(--accent, #3d6e52);
+  color: #fff;
+}

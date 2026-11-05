@@ -9,6 +9,8 @@ import PerspectiveMatrixSheet from './PerspectiveMatrixSheet'
 import { getPerspectiveMatrixForChapter } from '../perspectiveMatrixData'
 import EthicsSandboxSheet from './EthicsSandboxSheet'
 import { getDilemmaForChapter } from '../ethicsSandboxData'
+import LineageWebSheet from './LineageWebSheet'
+import { isLineageChapter } from '../lineageData'
 import { useBookNames } from './useBookNames'
 import {
   isBookmarked,
@@ -49,7 +51,7 @@ interface Line {
   alternate?: boolean
 }
 
-type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox'
+type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb'
 
 /**
  * One row of the chapter. A row labelled `from–to` covers several English
@@ -93,6 +95,10 @@ export default function Reader({
 
   const dilemmaItem = useMemo(() => {
     return getDilemmaForChapter(chapter.book.nr, chapter.chapter)
+  }, [chapter.book.nr, chapter.chapter])
+
+  const isLineage = useMemo(() => {
+    return isLineageChapter(chapter.book.nr, chapter.chapter)
   }, [chapter.book.nr, chapter.chapter])
 
   function handleChapterListen() {
@@ -905,6 +911,22 @@ export default function Reader({
             </button>
           </>
         )}
+
+        {isLineage && (
+          <>
+            <div className="readerBar__divider" aria-hidden="true" />
+            <button
+              type="button"
+              className="readerBar__lineageBtn"
+              onClick={() => setPanel('lineageWeb')}
+              title={language === 'en' ? 'Genealogical & Cultural Lineage Web' : 'የትውልድ ሐረግና የባህል ትሥሥር'}
+              aria-label={language === 'en' ? 'Genealogical & Cultural Lineage Web' : 'የትውልድ ሐረግና የባህል ትሥሥር'}
+            >
+              <span className="readerBar__matrixIcon">🌳</span>
+              <span className="readerBar__matrixLabel">{language === 'en' ? 'Lineage' : 'ትውልድ'}</span>
+            </button>
+          </>
+        )}
       </div>
 
       <PerspectiveMatrixSheet
@@ -917,6 +939,13 @@ export default function Reader({
       <EthicsSandboxSheet
         open={panel === 'ethicsSandbox'}
         dilemma={dilemmaItem ?? null}
+        language={language}
+        onClose={() => setPanel('none')}
+        onOpenPassage={(b, c) => onOpen(b, c)}
+      />
+
+      <LineageWebSheet
+        open={panel === 'lineageWeb'}
         language={language}
         onClose={() => setPanel('none')}
         onOpenPassage={(b, c) => onOpen(b, c)}

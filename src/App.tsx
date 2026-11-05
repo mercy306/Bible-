@@ -22,6 +22,7 @@ import PrayerJournal from './components/PrayerJournal'
 import SavedView from './components/SavedView'
 import Reader from './components/Reader'
 import SagaView from './components/SagaView'
+import LineageWebSheet from './components/LineageWebSheet'
 import Sheet from './components/Sheet'
 import TopBar from './components/TopBar'
 import LoadingView from './components/LoadingView'
@@ -81,7 +82,7 @@ export default function App() {
   const [englishBooks, setEnglishBooks] = useState<BooksResponse['books']>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(() => initialData === null && route.view === 'read')
-  const [sheet, setSheet] = useState<'none' | 'books' | 'more'>('none')
+  const [sheet, setSheet] = useState<'none' | 'books' | 'more' | 'lineage'>('none')
   const [compare, setCompare] = useState<'off' | 'am54'>('off')
   const [memorize, setMemorize] = useState(false)
   const [wordLookup, setWordLookup] = useState(false)
@@ -454,6 +455,7 @@ export default function App() {
           onPrayers={() => openSection('prayers')}
           onPlan={() => openSection('plan')}
           onSaga={() => openSection('saga')}
+          onLineage={() => setSheet('lineage')}
           prayerCount={readPrayers().length}
           savedCount={bookmarks.length + highlights.length}
           onGoTo={(text) => {
@@ -464,6 +466,16 @@ export default function App() {
           onPrint={() => window.print()}
         />
       </Sheet>
+
+      <LineageWebSheet
+        open={sheet === 'lineage'}
+        language={prefs.language}
+        onClose={() => setSheet('none')}
+        onOpenPassage={(b, c) => {
+          setSheet('none')
+          goTo(b, c)
+        }}
+      />
 
       {showLaunch && (
         <LaunchScreen onFinish={() => setShowLaunch(false)} />
