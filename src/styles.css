@@ -6112,7 +6112,7 @@ button,
 
 /* App Shell: Phone size (max-width: 480px) centered on desktop, native on mobile */
 body {
-  background: #ACBDAA;
+  background: #090A0D;
   margin: 0;
   padding: 0;
 }
@@ -6124,7 +6124,7 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--bg);
-  box-shadow: 0 10px 40px rgba(30, 45, 76, 0.16);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   position: relative;
   display: flex;
   flex-direction: column;

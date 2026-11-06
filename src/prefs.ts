@@ -74,7 +74,7 @@ const DEFAULTS: Prefs = {
   theme: 'bw',
   accent: 'brown',
   customColor: '',
-  language: 'both',
+  language: 'am',
   leading: 1.9,
   paragraphGap: 7,
   verseNumbers: true,

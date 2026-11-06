@@ -51,7 +51,7 @@ export default function TopBar({
   onBack: _onBack,
   onDaily,
   onSaga,
-  translation = 'kjv',
+  translation = 'am',
   books = [],
   onNavigate,
   searchOpen,

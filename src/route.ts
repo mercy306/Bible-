@@ -19,7 +19,7 @@ export interface Route {
   filterBook?: number | null
 }
 
-export const DEFAULT_TRANSLATION = 'kjv'
+export const DEFAULT_TRANSLATION = 'am'
 // Opening the Bible should land in the beginning, ready to read, not in a list
 // of books. A returning reader is sent back to wherever they stopped instead.
 const FALLBACK_BOOK = 1
