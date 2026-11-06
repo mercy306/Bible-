@@ -10164,7 +10164,8 @@ body {
 .readerBar__matrixBtn,
 .readerBar__dilemmaBtn,
 .readerBar__lineageBtn,
-.readerBar__atlasBtn {
+.readerBar__atlasBtn,
+.readerBar__capsuleBtn {
   height: 24px !important;
   min-height: 24px !important;
   padding: 0 7px !important;
@@ -14991,4 +14992,322 @@ html, body {
 .atlasWpChip__sub {
   font-size: 0.64rem;
   color: var(--ink-soft);
+}
+
+
+/* ==========================================================================
+   The Generation Time-Capsule & Ancient Context Lens
+   ========================================================================== */
+
+.capsuleSheetBody {
+  padding: 12px 14px calc(76px + env(safe-area-inset-bottom, 0px));
+}
+
+.capsuleSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.capsuleSelector::-webkit-scrollbar {
+  display: none;
+}
+
+.capsuleSelector__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.capsuleSelector__btn.is-active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb, 120, 160, 120), 0.3);
+}
+
+.capsuleHeroCard {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.capsuleHeroCard__badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.capsuleBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.capsuleBadge--era {
+  background: rgba(var(--accent-rgb, 120, 160, 120), 0.15);
+  color: var(--accent);
+}
+
+.capsuleBadge--loc {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.capsuleHeroCard__title {
+  margin: 0 0 4px 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.capsuleHeroCard__tagline {
+  margin: 0 0 12px 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+.capsuleScriptureBox {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 10px 12px;
+}
+
+.capsuleScriptureBox__ref {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.capsuleScriptureBox__text {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* 4 Lens Tabs */
+.capsuleTabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  background: var(--panel-2);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin-bottom: 14px;
+}
+
+.capsuleTabs__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.capsuleTabs__btn.is-active {
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.capsuleTabs__icon {
+  font-size: 1.1rem;
+}
+
+/* Content Cards */
+.capsuleContentCard {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.capsuleContentCard--warning {
+  border-color: rgba(220, 80, 70, 0.35);
+  background: color-mix(in srgb, var(--panel) 94%, #dc5046 6%);
+}
+
+.capsuleContentCard--truth {
+  border-color: rgba(var(--accent-rgb, 120, 160, 120), 0.35);
+  background: color-mix(in srgb, var(--panel) 94%, var(--accent) 6%);
+}
+
+.capsuleSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.capsuleSection__title {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.capsuleSection__title--alert {
+  color: #dc5046;
+}
+
+.capsuleSection__body {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.capsuleSection__body--highlight {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.capsuleQuoteCallout {
+  background: var(--panel);
+  border-left: 3px solid #dc5046;
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.capsuleContextBlock {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* Cross References */
+.capsuleCrossRefs {
+  margin-bottom: 14px;
+}
+
+.capsuleCrossRefs__title {
+  margin: 0 0 8px 0;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.capsuleCrossRefs__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.capsuleCrossRefItem {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.capsuleCrossRefItem__ref {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.capsuleCrossRefItem__note {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* Read Chapter Button */
+.capsuleReadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.capsuleReadBtn:active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+}
+
+/* Reader floating pill */
+.readerBar__capsuleBtn {
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 0 7px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  gap: 3px !important;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.readerBar__capsuleBtn:active {
+  transform: scale(0.95);
 }

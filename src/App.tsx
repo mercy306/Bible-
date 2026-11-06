@@ -24,6 +24,7 @@ import Reader from './components/Reader'
 import SagaView from './components/SagaView'
 import LineageWebSheet from './components/LineageWebSheet'
 import ChronoAtlasSheet from './components/ChronoAtlasSheet'
+import TimeCapsuleSheet from './components/TimeCapsuleSheet'
 import Sheet from './components/Sheet'
 import TopBar from './components/TopBar'
 import LoadingView from './components/LoadingView'
@@ -83,7 +84,7 @@ export default function App() {
   const [englishBooks, setEnglishBooks] = useState<BooksResponse['books']>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(() => initialData === null && route.view === 'read')
-  const [sheet, setSheet] = useState<'none' | 'books' | 'more' | 'lineage' | 'atlas'>('none')
+  const [sheet, setSheet] = useState<'none' | 'books' | 'more' | 'lineage' | 'atlas' | 'capsule'>('none')
   const [compare, setCompare] = useState<'off' | 'am54'>('off')
   const [memorize, setMemorize] = useState(false)
   const [wordLookup, setWordLookup] = useState(false)
@@ -458,6 +459,7 @@ export default function App() {
           onSaga={() => openSection('saga')}
           onLineage={() => setSheet('lineage')}
           onAtlas={() => setSheet('atlas')}
+          onTimeCapsule={() => setSheet('capsule')}
           prayerCount={readPrayers().length}
           savedCount={bookmarks.length + highlights.length}
           onGoTo={(text) => {
@@ -481,6 +483,16 @@ export default function App() {
 
       <ChronoAtlasSheet
         open={sheet === 'atlas'}
+        language={prefs.language}
+        onClose={() => setSheet('none')}
+        onOpenPassage={(b, c) => {
+          setSheet('none')
+          goTo(b, c)
+        }}
+      />
+
+      <TimeCapsuleSheet
+        open={sheet === 'capsule'}
         language={prefs.language}
         onClose={() => setSheet('none')}
         onOpenPassage={(b, c) => {

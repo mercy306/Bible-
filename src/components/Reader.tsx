@@ -12,6 +12,8 @@ import { getDilemmaForChapter } from '../ethicsSandboxData'
 import LineageWebSheet from './LineageWebSheet'
 import { isLineageChapter } from '../lineageData'
 import ChronoAtlasSheet from './ChronoAtlasSheet'
+import TimeCapsuleSheet from './TimeCapsuleSheet'
+import { getTimeCapsuleForChapter, getTimeCapsuleForVerse } from '../timeCapsuleData'
 import { getExpeditionForChapter } from '../chronoAtlasData'
 import { useBookNames } from './useBookNames'
 import {
@@ -53,7 +55,7 @@ interface Line {
   alternate?: boolean
 }
 
-type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb' | 'chronoAtlas'
+type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb' | 'chronoAtlas' | 'timeCapsule'
 
 /**
  * One row of the chapter. A row labelled `from–to` covers several English
@@ -101,6 +103,12 @@ export default function Reader({
 
   const isLineage = useMemo(() => {
     return isLineageChapter(chapter.book.nr, chapter.chapter)
+  }, [chapter.book.nr, chapter.chapter])
+
+  const [selectedCapsuleId, setSelectedCapsuleId] = useState<string | undefined>(undefined)
+
+  const timeCapsuleItem = useMemo(() => {
+    return getTimeCapsuleForChapter(chapter.book.nr, chapter.chapter)
   }, [chapter.book.nr, chapter.chapter])
 
   const expeditionItem = useMemo(() => {
@@ -742,6 +750,26 @@ export default function Reader({
                         <span>{language === 'en' ? 'Commentary' : 'ማብራሪያ'}</span>
                       </button>
 
+                      {(() => {
+                        const vCapsule = getTimeCapsuleForVerse(chapter.book.nr, chapter.chapter, n)
+                        if (!vCapsule) return null
+                        return (
+                          <button
+                            type="button"
+                            className="verse__inlineActionBtn"
+                            style={{ borderColor: 'var(--accent)', background: 'var(--panel-2)' }}
+                            onClick={() => {
+                              setSelectedCapsuleId(vCapsule.id)
+                              setPanel('timeCapsule')
+                            }}
+                            title={language === 'en' ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
+                          >
+                            <span className="verse__inlineActionIcon">⏳</span>
+                            <span style={{ fontWeight: 800 }}>{language === 'en' ? 'Context' : 'እውነታ'}</span>
+                          </button>
+                        )
+                      })()}
+
                       <button
                         type="button"
                         className="verse__inlineActionBtn"
@@ -934,6 +962,25 @@ export default function Reader({
           </>
         )}
 
+        {timeCapsuleItem && (
+          <>
+            <div className="readerBar__divider" aria-hidden="true" />
+            <button
+              type="button"
+              className="readerBar__capsuleBtn"
+              onClick={() => {
+                setSelectedCapsuleId(timeCapsuleItem.id)
+                setPanel('timeCapsule')
+              }}
+              title={language === 'en' ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
+              aria-label={language === 'en' ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
+            >
+              <span className="readerBar__matrixIcon">⏳</span>
+              <span className="readerBar__matrixLabel">{language === 'en' ? 'Context' : 'እውነታ'}</span>
+            </button>
+          </>
+        )}
+
         {isLineage && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
@@ -969,6 +1016,14 @@ export default function Reader({
       <ChronoAtlasSheet
         open={panel === 'chronoAtlas'}
         initialExpeditionId={expeditionItem?.id}
+        language={language}
+        onClose={() => setPanel('none')}
+        onOpenPassage={(b, c) => onOpen(b, c)}
+      />
+
+      <TimeCapsuleSheet
+        open={panel === 'timeCapsule'}
+        initialEntryId={selectedCapsuleId || timeCapsuleItem?.id}
         language={language}
         onClose={() => setPanel('none')}
         onOpenPassage={(b, c) => onOpen(b, c)}
