@@ -15266,14 +15266,14 @@ html, body {
   color: var(--ink);
 }
 
-/* 4 Lens Tabs */
+/* 5 Lens Tabs (including Parallel Harmony) */
 .capsuleTabs {
   position: sticky;
   top: -8px;
   z-index: 20;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
   background: var(--panel);
   padding: 4px;
   border-radius: 12px;
@@ -15287,17 +15287,18 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 8px 4px;
+  gap: 2px;
+  padding: 6px 2px;
   border-radius: 8px;
   border: none;
   background: transparent;
   color: var(--ink-soft);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
   text-align: center;
+  white-space: nowrap;
 }
 
 .capsuleTabs__btn.is-active {
@@ -15463,5 +15464,342 @@ html, body {
 }
 
 .readerBar__capsuleBtn:active {
+  transform: scale(0.95);
+}
+
+
+/* ==========================================================================
+   Parallel Scripture Harmony & False Teaching Defense
+   ========================================================================== */
+
+.harmonySheetBody {
+  padding: 8px 12px calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+.harmonyBanner {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.harmonyBanner__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(var(--accent-rgb, 120, 160, 120), 0.15);
+  color: var(--accent);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.harmonyBanner__title {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.harmonyBanner__category {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.harmonySelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.harmonySelector::-webkit-scrollbar {
+  display: none;
+}
+
+.harmonySelector__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.harmonySelector__pill.is-active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff) !important;
+  border-color: var(--accent);
+}
+
+.harmonyComparison {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.harmonyPassageCard {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+}
+
+.harmonyPassageCard--a {
+  border-left: 3px solid var(--accent);
+}
+
+.harmonyPassageCard--b {
+  border-left: 3px solid #6b8afd;
+}
+
+.harmonyPassageCard--c {
+  border-left: 3px solid #e5a93c;
+}
+
+.harmonyPassageCard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.harmonyPassageCard__ref {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.harmonyPassageCard__copyBtn {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.harmonyPassageCard__copyBtn:active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+}
+
+.harmonyPassageCard__context {
+  margin: 0 0 8px 0;
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.harmonyPassageCard__text {
+  margin: 0 0 10px 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.harmonyPassageCard__openBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.harmonyPassageCard__openBtn:active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+}
+
+.harmonyDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: -4px 0;
+}
+
+.harmonyDivider__icon {
+  font-size: 0.8rem;
+}
+
+.harmonyDivider__label {
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  background: var(--panel-2);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.harmonyPillars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.harmonyPillarCard {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.harmonyPillarCard--bridge {
+  border-left: 3px solid #6b8afd;
+}
+
+.harmonyPillarCard--trap {
+  border-left: 3px solid #e05d5d;
+  background: rgba(224, 93, 93, 0.04);
+}
+
+.harmonyPillarCard--truth {
+  border-left: 3px solid var(--accent);
+  background: rgba(var(--accent-rgb, 120, 160, 120), 0.05);
+}
+
+.harmonyPillarCard__title {
+  margin: 0 0 6px 0;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.harmonyPillarCard__title--alert {
+  color: #e05d5d;
+}
+
+.harmonyPillarCard__title--truth {
+  color: var(--accent);
+}
+
+.harmonyPillarCard__body {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.harmonyPillarCard__body--highlight {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Callout inside TimeCapsuleSheet */
+.capsuleHarmonyBanner {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.capsuleHarmonyBanner__left {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.capsuleHarmonyBanner__icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.capsuleHarmonyBanner__title {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.capsuleHarmonyBanner__desc {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+.capsuleHarmonyBanner__btn {
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.capsuleHarmonyBanner__btn:active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+}
+
+/* Reader bar harmony button */
+.readerBar__harmonyBtn {
+  height: 24px !important;
+  min-height: 24px !important;
+  padding: 0 7px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  gap: 3px !important;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.readerBar__harmonyBtn:active {
   transform: scale(0.95);
 }

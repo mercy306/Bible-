@@ -13,6 +13,8 @@ import LineageWebSheet from './LineageWebSheet'
 import { isLineageChapter } from '../lineageData'
 import ChronoAtlasSheet from './ChronoAtlasSheet'
 import TimeCapsuleSheet from './TimeCapsuleSheet'
+import ParallelHarmonySheet from './ParallelHarmonySheet'
+import { findParallelHarmonies } from '../parallelHarmonyData'
 import { getTimeCapsuleForChapter, getTimeCapsuleForVerse } from '../timeCapsuleData'
 import { getExpeditionForChapter } from '../chronoAtlasData'
 import { useBookNames } from './useBookNames'
@@ -55,7 +57,7 @@ interface Line {
   alternate?: boolean
 }
 
-type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb' | 'chronoAtlas' | 'timeCapsule'
+type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb' | 'chronoAtlas' | 'timeCapsule' | 'parallelHarmony'
 
 /**
  * One row of the chapter. A row labelled `from–to` covers several English
@@ -106,6 +108,7 @@ export default function Reader({
   }, [chapter.book.nr, chapter.chapter])
 
   const [selectedCapsuleId, setSelectedCapsuleId] = useState<string | undefined>(undefined)
+  const [selectedHarmonyId, setSelectedHarmonyId] = useState<string | undefined>()
 
   const timeCapsuleItem = useMemo(() => {
     return getTimeCapsuleForChapter(chapter.book.nr, chapter.chapter)
@@ -770,6 +773,26 @@ export default function Reader({
                         )
                       })()}
 
+                      {(() => {
+                        const vHarmonies = findParallelHarmonies(chapter.book.nr, chapter.chapter, n)
+                        if (vHarmonies.length === 0) return null
+                        return (
+                          <button
+                            type="button"
+                            className="verse__inlineActionBtn"
+                            style={{ borderColor: '#6b8afd', background: 'var(--panel-2)' }}
+                            onClick={() => {
+                              setSelectedHarmonyId(vHarmonies[0].id)
+                              setPanel('parallelHarmony')
+                            }}
+                            title={language === 'en' ? 'Parallel Scripture Harmony' : 'የተዛማጅ ክፍሎች ማነጻጸሪያ'}
+                          >
+                            <span className="verse__inlineActionIcon">🔄</span>
+                            <span style={{ fontWeight: 800, color: '#6b8afd' }}>{language === 'en' ? 'Parallels' : 'ተዛማጅ'}</span>
+                          </button>
+                        )
+                      })()}
+
                       <button
                         type="button"
                         className="verse__inlineActionBtn"
@@ -981,6 +1004,29 @@ export default function Reader({
           </>
         )}
 
+        {(() => {
+          const cHarmonies = findParallelHarmonies(chapter.book.nr, chapter.chapter)
+          if (cHarmonies.length === 0) return null
+          return (
+            <>
+              <div className="readerBar__divider" aria-hidden="true" />
+              <button
+                type="button"
+                className="readerBar__harmonyBtn"
+                onClick={() => {
+                  setSelectedHarmonyId(cHarmonies[0].id)
+                  setPanel('parallelHarmony')
+                }}
+                title={language === 'en' ? 'Parallel Scripture Harmony' : 'የተዛማጅ ክፍሎች ማነጻጸሪያ'}
+                aria-label={language === 'en' ? 'Parallel Scripture Harmony' : 'የተዛማጅ ክፍሎች ማነጻጸሪያ'}
+              >
+                <span className="readerBar__matrixIcon">🔄</span>
+                <span className="readerBar__matrixLabel">{language === 'en' ? 'Parallels' : 'ተዛማጅ'}</span>
+              </button>
+            </>
+          )
+        })()}
+
         {isLineage && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
@@ -1024,6 +1070,17 @@ export default function Reader({
       <TimeCapsuleSheet
         open={panel === 'timeCapsule'}
         initialEntryId={selectedCapsuleId || timeCapsuleItem?.id}
+        language={language}
+        onClose={() => setPanel('none')}
+        onOpenPassage={(b, c) => onOpen(b, c)}
+      />
+
+      <ParallelHarmonySheet
+        open={panel === 'parallelHarmony'}
+        initialHarmonyId={selectedHarmonyId}
+        bookNr={chapter.book.nr}
+        chapter={chapter.chapter}
+        verse={selected ?? undefined}
         language={language}
         onClose={() => setPanel('none')}
         onOpenPassage={(b, c) => onOpen(b, c)}

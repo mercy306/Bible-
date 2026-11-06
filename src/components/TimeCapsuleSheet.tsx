@@ -5,21 +5,24 @@ import {
   TIME_CAPSULE_ENTRIES,
   type TimeCapsuleEntry,
 } from '../timeCapsuleData'
+import { findParallelHarmonies } from '../parallelHarmonyData'
 
 interface Props {
   open: boolean
   onClose: () => void
   initialEntryId?: string
+  initialTab?: TabType
   language?: LanguageMode
   onOpenPassage?: (book: number, chapter: number) => void
 }
 
-type TabType = 'scene' | 'metaphor' | 'distortion' | 'truth'
+export type TabType = 'scene' | 'metaphor' | 'distortion' | 'truth' | 'harmony'
 
 export default function TimeCapsuleSheet({
   open,
   onClose,
   initialEntryId,
+  initialTab,
   language = 'am',
   onOpenPassage,
 }: Props) {
@@ -28,7 +31,13 @@ export default function TimeCapsuleSheet({
   const [selectedId, setSelectedId] = useState<string>(
     initialEntryId || TIME_CAPSULE_ENTRIES[0].id
   )
-  const [activeTab, setActiveTab] = useState<TabType>('scene')
+  const [activeTab, setActiveTab] = useState<TabType>(initialTab || 'scene')
+
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab)
+    }
+  }, [initialTab])
   const [searchQuery, setSearchQuery] = useState('')
   const [testament, setTestament] = useState<'all' | 'ot' | 'nt'>('all')
   const [copied, setCopied] = useState(false)
@@ -53,6 +62,10 @@ export default function TimeCapsuleSheet({
       TIME_CAPSULE_ENTRIES[0]
     )
   }, [selectedId])
+
+  const matchingHarmonies = useMemo(() => {
+    return findParallelHarmonies(entry.bookNr, entry.chapter, entry.verseStart)
+  }, [entry.bookNr, entry.chapter, entry.verseStart])
 
   const filteredEntries = useMemo(() => {
     let list = TIME_CAPSULE_ENTRIES
@@ -259,6 +272,33 @@ export default function TimeCapsuleSheet({
               {isEn ? entry.verseTextEn : entry.verseTextAm}
             </blockquote>
           </div>
+
+          {/* Parallel Scripture Harmony Spotlight */}
+          {matchingHarmonies.length > 0 && (
+            <div className="capsuleHarmonyBanner">
+              <div className="capsuleHarmonyBanner__left">
+                <span className="capsuleHarmonyBanner__icon">🔄</span>
+                <div>
+                  <strong className="capsuleHarmonyBanner__title">
+                    {isEn ? 'Parallel Scripture Harmony Available' : 'የተዛማጅ ክፍሎች ማነጻጸሪያና ውህደት'}
+                  </strong>
+                  <p className="capsuleHarmonyBanner__desc">
+                    {isEn
+                      ? 'Compare with parallel accounts to uncover why words differ and stop false teachings.'
+                      : 'ይህ ክፍል በሌሎች ወንጌላት/መጻሕፍት እንዴት እንደተጻፈና ለምን አገላለጹ እንደተለያየ ጎን ለጎን አነጻጽር።'}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="capsuleHarmonyBanner__btn"
+                onClick={() => setActiveTab('harmony')}
+              >
+                <span>{isEn ? 'Compare Side-by-Side' : 'ጎን ለጎን አነጻጽር'}</span>
+                <span>→</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* 4 Interactive Lens Tabs (Sticky Under Header) */}
@@ -296,7 +336,16 @@ export default function TimeCapsuleSheet({
             onClick={() => setActiveTab('truth')}
           >
             <span className="capsuleTabs__icon">✨</span>
-            <span>{isEn ? 'Biblical Truth' : 'እውነተኛው አውድ'}</span>
+            <span>{isEn ? 'Context' : 'እውነታ'}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`capsuleTabs__btn ${activeTab === 'harmony' ? 'is-active' : ''}`}
+            onClick={() => setActiveTab('harmony')}
+          >
+            <span className="capsuleTabs__icon">🔄</span>
+            <span>{isEn ? 'Parallels' : 'ተዛማጅ'}</span>
           </button>
         </nav>
 
@@ -416,6 +465,181 @@ export default function TimeCapsuleSheet({
                 {isEn ? entry.truthEn.timelessPrinciple : entry.truthAm.timelessPrinciple}
               </p>
             </div>
+          </div>
+        )}
+
+        {/* Tab 5: Parallel Scripture Harmony (የተዛማጅ ክፍሎች ማነጻጸሪያና ውህደት) */}
+        {activeTab === 'harmony' && (
+          <div className="capsuleContentCard">
+            {matchingHarmonies.length > 0 ? (
+              (() => {
+                const h = matchingHarmonies[0]
+                return (
+                  <div className="harmonyPillars">
+                    <div className="harmonyBanner" style={{ margin: 0 }}>
+                      <div className="harmonyBanner__badge">
+                        ⚖️ {isEn ? 'Scripture Interprets Scripture' : 'መጽሐፍ ቅዱስ ራሱን በራሱ ይተረጉማል'}
+                      </div>
+                      <h3 className="harmonyBanner__title">
+                        {isEn ? h.titleEn : h.titleAm}
+                      </h3>
+                      <span className="harmonyBanner__category">
+                        {isEn ? h.categoryLabelEn : h.categoryLabelAm}
+                      </span>
+                    </div>
+
+                    {/* Side by Side Comparison Cards */}
+                    <div className="harmonyComparison">
+                      <div className="harmonyPassageCard harmonyPassageCard--a">
+                        <div className="harmonyPassageCard__head">
+                          <span className="harmonyPassageCard__ref">
+                            {isEn ? h.passageA.refEn : h.passageA.refAm}
+                          </span>
+                        </div>
+                        <p className="harmonyPassageCard__context">
+                          👤 {isEn ? h.passageA.writerContextEn : h.passageA.writerContextAm}
+                        </p>
+                        <blockquote className="harmonyPassageCard__text">
+                          «{isEn ? h.passageA.textEn : h.passageA.textAm}»
+                        </blockquote>
+                        {onOpenPassage && (
+                          <button
+                            type="button"
+                            className="harmonyPassageCard__openBtn"
+                            onClick={() => {
+                              onClose()
+                              onOpenPassage(h.passageA.bookNr, h.passageA.chapter)
+                            }}
+                          >
+                            📖 {isEn ? 'Read Chapter' : 'ምዕራፉን አንብብ'} →
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="harmonyDivider">
+                        <span className="harmonyDivider__icon">⚡</span>
+                        <span className="harmonyDivider__label">VS</span>
+                      </div>
+
+                      <div className="harmonyPassageCard harmonyPassageCard--b">
+                        <div className="harmonyPassageCard__head">
+                          <span className="harmonyPassageCard__ref">
+                            {isEn ? h.passageB.refEn : h.passageB.refAm}
+                          </span>
+                        </div>
+                        <p className="harmonyPassageCard__context">
+                          👤 {isEn ? h.passageB.writerContextEn : h.passageB.writerContextAm}
+                        </p>
+                        <blockquote className="harmonyPassageCard__text">
+                          «{isEn ? h.passageB.textEn : h.passageB.textAm}»
+                        </blockquote>
+                        {onOpenPassage && (
+                          <button
+                            type="button"
+                            className="harmonyPassageCard__openBtn"
+                            onClick={() => {
+                              onClose()
+                              onOpenPassage(h.passageB.bookNr, h.passageB.chapter)
+                            }}
+                          >
+                            📖 {isEn ? 'Read Chapter' : 'ምዕራፉን አንብብ'} →
+                          </button>
+                        )}
+                      </div>
+
+                      {h.passageC && (
+                        <>
+                          <div className="harmonyDivider">
+                            <span className="harmonyDivider__icon">➕</span>
+                            <span className="harmonyDivider__label">AND</span>
+                          </div>
+                          <div className="harmonyPassageCard harmonyPassageCard--c">
+                            <div className="harmonyPassageCard__head">
+                              <span className="harmonyPassageCard__ref">
+                                {isEn ? h.passageC.refEn : h.passageC.refAm}
+                              </span>
+                            </div>
+                            <p className="harmonyPassageCard__context">
+                              👤 {isEn ? h.passageC.writerContextEn : h.passageC.writerContextAm}
+                            </p>
+                            <blockquote className="harmonyPassageCard__text">
+                              «{isEn ? h.passageC.textEn : h.passageC.textAm}»
+                            </blockquote>
+                            {onOpenPassage && (
+                              <button
+                                type="button"
+                                className="harmonyPassageCard__openBtn"
+                                onClick={() => {
+                                  onClose()
+                                  onOpenPassage(h.passageC!.bookNr, h.passageC!.chapter)
+                                }}
+                              >
+                                📖 {isEn ? 'Read Chapter' : 'ምዕራፉን አንብብ'} →
+                              </button>
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </div>
+
+                    {/* 3 Core Harmonization Insights */}
+                    <div className="harmonyPillarCard harmonyPillarCard--bridge">
+                      <h4 className="harmonyPillarCard__title">
+                        🔍 {isEn ? 'Why Did the Words Differ?' : 'ለምን አገላለጹ ተለያየ? (የቋንቋና የታሪክ ልዩነት)'}
+                      </h4>
+                      <p className="harmonyPillarCard__body">
+                        {isEn ? h.whyDiffersEn : h.whyDiffersAm}
+                      </p>
+                    </div>
+
+                    <div className="harmonyPillarCard harmonyPillarCard--trap">
+                      <h4 className="harmonyPillarCard__title harmonyPillarCard__title--alert">
+                        ⚠️ {isEn ? 'The False Teaching Trap' : 'የሐሰት መምህራን ወጥመድ (ጥቅሱን ብቻ በመነጠል የሚፈጠር ስህተት)'}
+                      </h4>
+                      <p className="harmonyPillarCard__body">
+                        {isEn ? h.falseTrapEn : h.falseTrapAm}
+                      </p>
+                    </div>
+
+                    <div className="harmonyPillarCard harmonyPillarCard--truth">
+                      <h4 className="harmonyPillarCard__title harmonyPillarCard__title--truth">
+                        🛡️ {isEn ? 'The Harmonized Divine Truth' : 'የተዛማጁ እውነተኛ ውህደት (ሁለቱን አንድ ላይ ስናነብ)'}
+                      </h4>
+                      <p className="harmonyPillarCard__body harmonyPillarCard__body--highlight">
+                        {isEn ? h.harmonizedTruthEn : h.harmonizedTruthAm}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })()
+            ) : (
+              <div className="harmonyPillars">
+                <div className="harmonyBanner" style={{ margin: 0 }}>
+                  <div className="harmonyBanner__badge">
+                    ⚖️ {isEn ? 'Scripture Interprets Scripture' : 'መጽሐፍ ቅዱስ ራሱን በራሱ ይተረጉማል'}
+                  </div>
+                  <h3 className="harmonyBanner__title">
+                    {isEn ? 'Biblical Balance & Guard Verses' : 'የተዛማጅ ክፍሎች ማመዛዘኛ'}
+                  </h3>
+                  <p className="harmonyBanner__category">
+                    {isEn
+                      ? 'No verse should be isolated. Read these complementary scriptures to maintain total doctrinal integrity.'
+                      : 'የሐሰት መምህራን አንድ ጥቅስ ብቻ ነጥለው እንዳያሳስቱ ይህንን ክፍል ከእነዚህ አጎራባችና ተዛማጅ ጥቅሶች ጋር አነጻጽር።'}
+                  </p>
+                </div>
+
+                <div className="capsuleCrossRefs__list">
+                  {entry.crossReferences.map((cr, idx) => (
+                    <div key={idx} className="capsuleCrossRefItem">
+                      <span className="capsuleCrossRefItem__ref">{cr.ref}</span>
+                      <span className="capsuleCrossRefItem__note">
+                        {isEn ? cr.noteEn : cr.noteAm}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
