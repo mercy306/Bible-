@@ -11,6 +11,8 @@ import EthicsSandboxSheet from './EthicsSandboxSheet'
 import { getDilemmaForChapter } from '../ethicsSandboxData'
 import LineageWebSheet from './LineageWebSheet'
 import { isLineageChapter } from '../lineageData'
+import ChronoAtlasSheet from './ChronoAtlasSheet'
+import { getExpeditionForChapter } from '../chronoAtlasData'
 import { useBookNames } from './useBookNames'
 import {
   isBookmarked,
@@ -51,7 +53,7 @@ interface Line {
   alternate?: boolean
 }
 
-type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb'
+type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb' | 'chronoAtlas'
 
 /**
  * One row of the chapter. A row labelled `from–to` covers several English
@@ -99,6 +101,10 @@ export default function Reader({
 
   const isLineage = useMemo(() => {
     return isLineageChapter(chapter.book.nr, chapter.chapter)
+  }, [chapter.book.nr, chapter.chapter])
+
+  const expeditionItem = useMemo(() => {
+    return getExpeditionForChapter(chapter.book.nr, chapter.chapter)
   }, [chapter.book.nr, chapter.chapter])
 
   function handleChapterListen() {
@@ -912,6 +918,22 @@ export default function Reader({
           </>
         )}
 
+        {expeditionItem && (
+          <>
+            <div className="readerBar__divider" aria-hidden="true" />
+            <button
+              type="button"
+              className="readerBar__atlasBtn"
+              onClick={() => setPanel('chronoAtlas')}
+              title={language === 'en' ? 'The Living Chrono-Atlas (Journey Map)' : 'የመጽሐፍ ቅዱስ ሕያው የጉዞ ካርታ'}
+              aria-label={language === 'en' ? 'The Living Chrono-Atlas (Journey Map)' : 'የመጽሐፍ ቅዱስ ሕያው የጉዞ ካርታ'}
+            >
+              <span className="readerBar__matrixIcon">🗺️</span>
+              <span className="readerBar__matrixLabel">{language === 'en' ? 'Atlas' : 'ጉዞ'}</span>
+            </button>
+          </>
+        )}
+
         {isLineage && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
@@ -939,6 +961,14 @@ export default function Reader({
       <EthicsSandboxSheet
         open={panel === 'ethicsSandbox'}
         dilemma={dilemmaItem ?? null}
+        language={language}
+        onClose={() => setPanel('none')}
+        onOpenPassage={(b, c) => onOpen(b, c)}
+      />
+
+      <ChronoAtlasSheet
+        open={panel === 'chronoAtlas'}
+        initialExpeditionId={expeditionItem?.id}
         language={language}
         onClose={() => setPanel('none')}
         onOpenPassage={(b, c) => onOpen(b, c)}

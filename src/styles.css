@@ -2993,13 +2993,13 @@ select {
   right:0;
   bottom:0;
   left:0;
-  z-index:40;
+  z-index:120 !important;
   background:#14100c6b
 }
 
 .sheet {
   position:fixed;
-  z-index:41;
+  z-index:130 !important;
   display:flex;
   flex-direction:column;
   background:var(--panel);
@@ -10163,7 +10163,8 @@ body {
 /* Feature pills inside readerBar (POV / Matrix, Dilemma, Lineage Web) */
 .readerBar__matrixBtn,
 .readerBar__dilemmaBtn,
-.readerBar__lineageBtn {
+.readerBar__lineageBtn,
+.readerBar__atlasBtn {
   height: 24px !important;
   min-height: 24px !important;
   padding: 0 7px !important;
@@ -14492,3 +14493,502 @@ html, body {
   max-width: 100vw;
 }
 
+
+/* ==========================================================================
+   The Living Chrono-Atlas (Interactive Ancient Biblical Expeditions)
+   ========================================================================== */
+
+.atlasSheetBody {
+  padding: 12px 14px calc(76px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Expedition Selector Horizontal Chips */
+.atlasSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.atlasSelector::-webkit-scrollbar {
+  display: none;
+}
+
+.atlasSelector__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.atlasSelector__btn.is-active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(var(--accent-rgb, 120, 160, 120), 0.3);
+}
+
+.atlasSelector__icon {
+  font-size: 1rem;
+}
+
+/* Expedition Header Brief */
+.atlasHeader {
+  margin-bottom: 12px;
+}
+
+.atlasHeader__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.atlasHeader__era,
+.atlasHeader__dist,
+.atlasHeader__time {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--accent);
+}
+
+.atlasHeader__title {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.atlasHeader__desc {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* Ancient World Vector Map Canvas */
+.atlasMapWrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: var(--atlas-sea-1, #1e2820);
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.atlasMapSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+:root[data-theme='light'] {
+  --atlas-sea-1: #c2d6bf;
+  --atlas-sea-2: #a8c4a4;
+  --atlas-land-1: #e9f0e6;
+  --atlas-land-2: #d6e2d2;
+}
+
+:root[data-theme='dark'],
+:root[data-theme='bw'] {
+  --atlas-sea-1: #161e18;
+  --atlas-sea-2: #0e1410;
+  --atlas-land-1: #253327;
+  --atlas-land-2: #1b261d;
+}
+
+.atlasLand {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 0.8;
+  transition: all 0.3s ease;
+}
+
+.atlasRiver {
+  fill: none;
+  stroke: var(--atlas-sea-1);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+.atlasWaterBody {
+  fill: var(--atlas-sea-1);
+  opacity: 0.95;
+}
+
+.atlasMapLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  fill: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
+:root[data-theme='light'] .atlasMapLabel {
+  fill: rgba(30, 45, 30, 0.35);
+}
+
+.atlasMapLabel--sea {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  font-style: italic;
+  opacity: 0.45;
+}
+
+/* Routes */
+.atlasRouteBase {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 2.5;
+  stroke-dasharray: 4 4;
+}
+
+:root[data-theme='light'] .atlasRouteBase {
+  stroke: rgba(0, 0, 0, 0.2);
+}
+
+.atlasRouteActive {
+  fill: none;
+  stroke: #72cc52;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Waypoints */
+.atlasWpNode {
+  fill: var(--panel);
+  stroke: #72cc52;
+  stroke-width: 2;
+  transition: all 0.2s ease;
+}
+
+.atlasWpGroup.is-active .atlasWpNode {
+  fill: #88de74;
+  stroke: #ffffff;
+  stroke-width: 2.5;
+}
+
+.atlasWpLabel {
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--ink, #ffffff);
+  paint-order: stroke;
+  stroke: var(--panel, #000000);
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.atlasPulseRing {
+  animation: pulseAtlasRing 2s infinite ease-out;
+}
+
+@keyframes pulseAtlasRing {
+  0% { transform: scale(0.6); opacity: 1; transform-origin: center; }
+  100% { transform: scale(1.6); opacity: 0; transform-origin: center; }
+}
+
+/* Avatar Traveling Marker */
+.atlasAvatarRing {
+  fill: rgba(26, 32, 26, 0.9);
+  stroke: #88de74;
+  stroke-width: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Playback Controller Bar */
+.atlasControlsBar {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.atlasControlsBar__top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.atlasPlayBtn {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.atlasPlayBtn:active {
+  transform: scale(0.92);
+}
+
+.atlasScrubberWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.atlasScrubber {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 6px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.atlasScrubber__stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.atlasSpeedBtn,
+.atlasResetBtn {
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Waypoint Dossier Card */
+.atlasWaypointCard {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.atlasWaypointCard__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.atlasWaypointCard__tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.atlasWaypointCard__region {
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.atlasWaypointCard__name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.atlasMetricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 6px;
+}
+
+.atlasMetric {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.atlasMetric__label {
+  font-size: 0.64rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.atlasMetric__val {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.atlasWaypointCard__scripture {
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  background: var(--panel-2);
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.atlasWaypointCard__scriptureRef {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.atlasWaypointCard__quote {
+  margin: 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.atlasWaypointCard__sig {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.atlasWaypointCard__sig strong {
+  color: var(--ink);
+}
+
+.atlasReadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.atlasReadBtn:hover {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+}
+
+/* Waypoints Milestone Checklist */
+.atlasWaypointsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.atlasWaypointsList__title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.atlasWaypointsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 6px;
+}
+
+.atlasWpChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.atlasWpChip:hover {
+  background: var(--panel-2);
+}
+
+.atlasWpChip.is-selected {
+  border-color: var(--accent);
+  background: var(--panel-2);
+}
+
+.atlasWpChip__num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.atlasWpChip.is-selected .atlasWpChip__num {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+}
+
+.atlasWpChip__info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.atlasWpChip__name {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.atlasWpChip__sub {
+  font-size: 0.64rem;
+  color: var(--ink-soft);
+}
