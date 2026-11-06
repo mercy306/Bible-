@@ -4759,8 +4759,8 @@ select {
 }
 
 .mtabs__btn.is-active {
-  background:var(--accent);
-  color:#fff
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff) !important;
 }
 
 .mlist {
@@ -10102,6 +10102,13 @@ body {
   border-radius: 999px !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
   white-space: nowrap !important;
+  max-width: 96vw !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+
+.readerBar::-webkit-scrollbar {
+  display: none !important;
 }
 
 .readerBar__chapterBtn {
@@ -15000,119 +15007,121 @@ html, body {
    ========================================================================== */
 
 .capsuleSheetBody {
-  padding: 12px 14px calc(76px + env(safe-area-inset-bottom, 0px));
+  padding: 8px 12px calc(76px + env(safe-area-inset-bottom, 0px));
 }
 
-.capsuleFilterBar {
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.capsuleFilterBar__search {
-  position: relative;
+.capsuleHeaderRow {
   display: flex;
   align-items: center;
-  width: 100%;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.capsuleFilterBar__icon {
+.capsuleSearchField {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.capsuleSearchField__icon {
   position: absolute;
-  left: 12px;
-  font-size: 0.85rem;
+  left: 10px;
+  font-size: 0.8rem;
   opacity: 0.6;
   pointer-events: none;
 }
 
-.capsuleFilterBar__input {
+.capsuleSearchField__input {
   width: 100%;
-  padding: 8px 32px 8px 34px;
+  padding: 7px 28px 7px 30px;
   border-radius: 10px;
   background: var(--panel-2);
   border: 1px solid var(--line);
   color: var(--ink);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-family: inherit;
   outline: none;
   transition: border-color 0.15s ease;
 }
 
-.capsuleFilterBar__input:focus {
+.capsuleSearchField__input:focus {
   border-color: var(--accent);
 }
 
-.capsuleFilterBar__clear {
+.capsuleSearchField__clear {
   position: absolute;
-  right: 10px;
+  right: 8px;
   background: none;
   border: none;
   color: var(--ink-soft);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   cursor: pointer;
-  padding: 4px;
+  padding: 2px 4px;
 }
 
-.capsuleFilterBar__pills {
+.capsuleJumpPill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.capsuleJumpPill__icon {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.capsuleJumpPill__select {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.capsuleJumpPill__select option,
+.capsuleJumpPill__select optgroup {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.capsuleJumpPill__arrow {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.capsuleFilterPills {
   display: flex;
   gap: 6px;
-  align-items: center;
+  margin-bottom: 10px;
 }
 
-.capsulePill {
+.capsuleFilterPill {
   flex: 1;
-  padding: 5px 8px;
+  padding: 6px 4px;
   border-radius: 8px;
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--ink-soft);
-  font-size: 0.74rem;
-  font-weight: 600;
-  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-align: center;
+  cursor: pointer;
   transition: all 0.15s ease;
 }
 
-.capsulePill.is-active {
+.capsuleFilterPill.is-active {
   background: var(--accent);
-  color: var(--accent-ink, #ffffff);
+  color: var(--accent-ink, #ffffff) !important;
   border-color: var(--accent);
-}
-
-.capsuleQuickJump {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 6px 10px;
-}
-
-.capsuleQuickJump__label {
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: var(--ink-soft);
-  white-space: nowrap;
-}
-
-.capsuleQuickJump__select {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--ink);
-  font-size: 0.8rem;
-  font-weight: 600;
-  outline: none;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.capsuleQuickJump__select option,
-.capsuleQuickJump__select optgroup {
-  background: var(--bg);
-  color: var(--ink);
 }
 
 .capsuleSelector {
@@ -15191,6 +15200,12 @@ html, body {
   color: var(--ink-soft);
 }
 
+.capsuleBadge--year {
+  background: rgba(var(--accent-rgb, 120, 160, 120), 0.12);
+  border: 1px solid var(--line);
+  color: var(--accent);
+}
+
 .capsuleHeroCard__title {
   margin: 0 0 4px 0;
   font-size: 1.15rem;
@@ -15213,11 +15228,34 @@ html, body {
   padding: 10px 12px;
 }
 
+.capsuleScriptureBox__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
 .capsuleScriptureBox__ref {
   font-size: 0.74rem;
   font-weight: 800;
   color: var(--accent);
-  margin-bottom: 4px;
+}
+
+.capsuleScriptureBox__copyBtn {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+}
+
+.capsuleScriptureBox__copyBtn:active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
 }
 
 .capsuleScriptureBox__text {
@@ -15230,14 +15268,18 @@ html, body {
 
 /* 4 Lens Tabs */
 .capsuleTabs {
+  position: sticky;
+  top: -8px;
+  z-index: 20;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 4px;
-  background: var(--panel-2);
+  background: var(--panel);
   padding: 4px;
   border-radius: 12px;
   border: 1px solid var(--line);
   margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .capsuleTabs__btn {

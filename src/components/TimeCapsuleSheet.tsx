@@ -31,7 +31,9 @@ export default function TimeCapsuleSheet({
   const [activeTab, setActiveTab] = useState<TabType>('scene')
   const [searchQuery, setSearchQuery] = useState('')
   const [testament, setTestament] = useState<'all' | 'ot' | 'nt'>('all')
+  const [copied, setCopied] = useState(false)
   const bodyRef = useRef<HTMLDivElement | null>(null)
+  const chipContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (initialEntryId) {
@@ -80,24 +82,46 @@ export default function TimeCapsuleSheet({
     })
   }, [testament, searchQuery])
 
+  // Auto-scroll selected chip into view
+  useEffect(() => {
+    if (!chipContainerRef.current) return
+    const activeBtn = chipContainerRef.current.querySelector<HTMLElement>(
+      '.capsuleSelector__btn.is-active'
+    )
+    if (activeBtn) {
+      activeBtn.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      })
+    }
+  }, [entry.id, filteredEntries])
+
+  const handleCopyScripture = () => {
+    const textToCopy = `${isEn ? entry.verseRefEn : entry.verseRefAm}\n"${isEn ? entry.verseTextEn : entry.verseTextAm}"`
+    navigator.clipboard?.writeText(textToCopy).catch(() => {})
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
     <Sheet
       open={open}
       title={isEn ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
       onClose={onClose}
     >
-      <div ref={bodyRef} className="sheet__body capsuleSheetBody">
-        {/* Search & Testament Filters */}
-        <div className="capsuleFilterBar">
-          <div className="capsuleFilterBar__search">
-            <span className="capsuleFilterBar__icon">🔍</span>
+      <div ref={bodyRef} className="capsuleSheetBody">
+        {/* Top Control Header: Search & Quick Book Picker */}
+        <div className="capsuleHeaderRow">
+          <div className="capsuleSearchField">
+            <span className="capsuleSearchField__icon">🔍</span>
             <input
               type="text"
-              className="capsuleFilterBar__input"
+              className="capsuleSearchField__input"
               placeholder={
                 isEn
-                  ? 'Search 66 books or topics (e.g. Camel, Law, Tithe)...'
-                  : 'ከ66ቱ መጻሕፍት ወይም ርዕስ ፈልግ (ለምሳሌ፡ ግመል፣ አስራት)...'
+                  ? 'Search 66 books or topics (Camel, Law, Tithe)...'
+                  : 'ከ66ቱ መጻሕፍት ወይም ርዕስ ፈልግ (ግመል፣ አስራት)...'
               }
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -105,7 +129,7 @@ export default function TimeCapsuleSheet({
             {searchQuery && (
               <button
                 type="button"
-                className="capsuleFilterBar__clear"
+                className="capsuleSearchField__clear"
                 onClick={() => setSearchQuery('')}
                 aria-label="Clear search"
               >
@@ -114,64 +138,64 @@ export default function TimeCapsuleSheet({
             )}
           </div>
 
-          <div className="capsuleFilterBar__pills">
-            <button
-              type="button"
-              className={`capsulePill ${testament === 'all' ? 'is-active' : ''}`}
-              onClick={() => setTestament('all')}
+          <div className="capsuleJumpPill" title={isEn ? 'Select Book' : 'መጽሐፍ ይምረጡ'}>
+            <span className="capsuleJumpPill__icon">{entry.keyIcon}</span>
+            <select
+              id="capsuleBookSelect"
+              className="capsuleJumpPill__select"
+              value={entry.id}
+              onChange={(e) => {
+                setSelectedId(e.target.value)
+                setActiveTab('scene')
+              }}
+              aria-label="Jump to book"
             >
-              {isEn ? 'All (66)' : 'ሁሉም (66)'}
-            </button>
-            <button
-              type="button"
-              className={`capsulePill ${testament === 'ot' ? 'is-active' : ''}`}
-              onClick={() => setTestament('ot')}
-            >
-              {isEn ? 'Old Test. (39)' : 'ብሉይ ኪዳን (39)'}
-            </button>
-            <button
-              type="button"
-              className={`capsulePill ${testament === 'nt' ? 'is-active' : ''}`}
-              onClick={() => setTestament('nt')}
-            >
-              {isEn ? 'New Test. (27)' : 'ሐዲስ ኪዳን (27)'}
-            </button>
+              <optgroup label={isEn ? 'Old Testament (39 Books)' : 'ብሉይ ኪዳን (39 መጻሕፍት)'}>
+                {TIME_CAPSULE_ENTRIES.filter((e) => e.bookNr <= 39).map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.bookNr}. {isEn ? item.verseRefEn : item.verseRefAm}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label={isEn ? 'New Testament (27 Books)' : 'ሐዲስ ኪዳን (27 መጻሕፍት)'}>
+                {TIME_CAPSULE_ENTRIES.filter((e) => e.bookNr >= 40).map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.bookNr}. {isEn ? item.verseRefEn : item.verseRefAm}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+            <span className="capsuleJumpPill__arrow">▾</span>
           </div>
         </div>
 
-        {/* Quick Dropdown Jump */}
-        <div className="capsuleQuickJump">
-          <label htmlFor="capsuleBookSelect" className="capsuleQuickJump__label">
-            {isEn ? 'Select Book:' : 'መጽሐፍ ይምረጡ:'}
-          </label>
-          <select
-            id="capsuleBookSelect"
-            className="capsuleQuickJump__select"
-            value={entry.id}
-            onChange={(e) => {
-              setSelectedId(e.target.value)
-              setActiveTab('scene')
-            }}
+        {/* Testament Filter Segmented Bar */}
+        <div className="capsuleFilterPills">
+          <button
+            type="button"
+            className={`capsuleFilterPill ${testament === 'all' ? 'is-active' : ''}`}
+            onClick={() => setTestament('all')}
           >
-            <optgroup label={isEn ? 'Old Testament (39 Books)' : 'ብሉይ ኪዳን (39 መጻሕፍት)'}>
-              {TIME_CAPSULE_ENTRIES.filter((e) => e.bookNr <= 39).map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.bookNr}. {isEn ? item.verseRefEn : item.verseRefAm} — {isEn ? item.titleEn : item.titleAm}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label={isEn ? 'New Testament (27 Books)' : 'ሐዲስ ኪዳን (27 መጻሕፍት)'}>
-              {TIME_CAPSULE_ENTRIES.filter((e) => e.bookNr >= 40).map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.bookNr}. {isEn ? item.verseRefEn : item.verseRefAm} — {isEn ? item.titleEn : item.titleAm}
-                </option>
-              ))}
-            </optgroup>
-          </select>
+            {isEn ? 'All (66 Books)' : 'ሁሉም (66 መጻሕፍት)'}
+          </button>
+          <button
+            type="button"
+            className={`capsuleFilterPill ${testament === 'ot' ? 'is-active' : ''}`}
+            onClick={() => setTestament('ot')}
+          >
+            {isEn ? 'Old Testament (39)' : 'ብሉይ ኪዳን (39)'}
+          </button>
+          <button
+            type="button"
+            className={`capsuleFilterPill ${testament === 'nt' ? 'is-active' : ''}`}
+            onClick={() => setTestament('nt')}
+          >
+            {isEn ? 'New Testament (27)' : 'ሐዲስ ኪዳን (27)'}
+          </button>
         </div>
 
-        {/* Entry Selector Horizontal Chips */}
-        <div className="capsuleSelector" role="tablist">
+        {/* Horizontal Scrollable Book Chips */}
+        <div ref={chipContainerRef} className="capsuleSelector" role="tablist">
           {filteredEntries.map((item) => {
             const isSel = item.id === entry.id
             return (
@@ -202,6 +226,11 @@ export default function TimeCapsuleSheet({
             <span className="capsuleBadge capsuleBadge--loc">
               📍 {isEn ? entry.locationEn : entry.locationAm}
             </span>
+            {entry.yearApprox && (
+              <span className="capsuleBadge capsuleBadge--year">
+                ⏳ {entry.yearApprox}
+              </span>
+            )}
           </div>
 
           <h2 className="capsuleHeroCard__title">
@@ -213,8 +242,18 @@ export default function TimeCapsuleSheet({
 
           {/* Scripture Box */}
           <div className="capsuleScriptureBox">
-            <div className="capsuleScriptureBox__ref">
-              {isEn ? entry.verseRefEn : entry.verseRefAm}
+            <div className="capsuleScriptureBox__head">
+              <span className="capsuleScriptureBox__ref">
+                {isEn ? entry.verseRefEn : entry.verseRefAm}
+              </span>
+              <button
+                type="button"
+                className="capsuleScriptureBox__copyBtn"
+                onClick={handleCopyScripture}
+                title={isEn ? 'Copy Verse' : 'ጥቅሱን ገልብጥ'}
+              >
+                {copied ? '✓' : '📋'}
+              </button>
             </div>
             <blockquote className="capsuleScriptureBox__text">
               {isEn ? entry.verseTextEn : entry.verseTextAm}
@@ -222,7 +261,7 @@ export default function TimeCapsuleSheet({
           </div>
         </div>
 
-        {/* 4 Interactive Lens Tabs */}
+        {/* 4 Interactive Lens Tabs (Sticky Under Header) */}
         <nav className="capsuleTabs" aria-label="Lenses">
           <button
             type="button"
