@@ -8055,31 +8055,26 @@ body {
    ========================================================================== */
 
 /* --- 1. MINDFUL MATCHA UI ENHANCEMENTS (Serene, Pastel, Pill-shaped) --- */
-:root:not([data-theme='bw']):not([data-theme='dark']),
 :root[data-theme='light'] {
   --reader-highlight: rgba(203, 224, 196, 0.45);
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) body,
 :root[data-theme='light'] body {
   background: #C4CFC1 !important;
 }
 
 @media (max-width: 480px) {
-  :root:not([data-theme='bw']):not([data-theme='dark']) body,
-  :root[data-theme='light'] body {
+    :root[data-theme='light'] body {
     background: #CAD5C8 !important;
   }
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .app,
 :root[data-theme='light'] .app {
   background: #CAD5C8 !important;
   box-shadow: 0 16px 48px rgba(35, 50, 35, 0.12) !important;
 }
 
 /* Header & Mountain Hero in Mindful Matcha Light */
-:root:not([data-theme='bw']):not([data-theme='dark']) .mountainHero,
 :root[data-theme='light'] .mountainHero {
   background: #CAD5C8 !important;
   color: #192218 !important;
@@ -8089,18 +8084,15 @@ body {
   padding: 16px 20px 28px !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .mountainHero__bg,
 :root[data-theme='light'] .mountainHero__bg {
   opacity: 0.08 !important;
   filter: brightness(1.2) saturate(0.6) !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .mountainHero__overlay,
 :root[data-theme='light'] .mountainHero__overlay {
   background: linear-gradient(180deg, rgba(232, 239, 229, 0.5) 0%, rgba(202, 213, 200, 0.98) 100%) !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__chapterTitle,
 :root[data-theme='light'] .topbar__chapterTitle {
   color: #192218 !important;
   background: #DCE5DA !important;
@@ -8113,7 +8105,6 @@ body {
   font-weight: 800 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__actionBtn,
 :root[data-theme='light'] .topbar__actionBtn {
   background: #FFFFFF !important;
   color: #192218 !important;
@@ -8121,14 +8112,12 @@ body {
   box-shadow: 0 3px 12px rgba(40, 60, 40, 0.05) !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__actionBtn:hover,
 :root[data-theme='light'] .topbar__actionBtn:hover {
   background: #F0F6EE !important;
   color: #38553A !important;
   border-color: #CBE0C4 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__backBtn,
 :root[data-theme='light'] .topbar__backBtn {
   background: #FFFFFF !important;
   border: 1px solid rgba(120, 155, 120, 0.18) !important;
@@ -8136,7 +8125,6 @@ body {
   box-shadow: 0 2px 8px rgba(40, 60, 40, 0.05) !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__searchForm,
 :root[data-theme='light'] .topbar__searchForm {
   background: #FFFFFF !important;
   border: 1px solid rgba(120, 155, 120, 0.18) !important;
@@ -8145,43 +8133,36 @@ body {
   color: #192218 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__searchIcon,
 :root[data-theme='light'] .topbar__searchIcon {
   color: #5A6B5C !important;
   opacity: 0.8 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__searchInput,
 :root[data-theme='light'] .topbar__searchInput {
   color: #192218 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__searchInput::placeholder,
 :root[data-theme='light'] .topbar__searchInput::placeholder {
   color: #7A8B7C !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__kbToggleBtn,
 :root[data-theme='light'] .topbar__kbToggleBtn {
   background: #EEF3EC !important;
   border: 1px solid rgba(120, 155, 120, 0.22) !important;
   color: #2F3E31 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__kbToggleBtn.is-active,
 :root[data-theme='light'] .topbar__kbToggleBtn.is-active {
   background: #223826 !important;
   color: #FFFFFF !important;
   border-color: #223826 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__clearBtn,
 :root[data-theme='light'] .topbar__clearBtn {
   background: #E0E8DD !important;
   color: #4A5B4C !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__searchDropdown,
 :root[data-theme='light'] .topbar__searchDropdown {
   background: #F7FAF6 !important;
   border: 1px solid rgba(120, 155, 120, 0.2) !important;
@@ -8189,27 +8170,23 @@ body {
   color: #192218 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__hitItem,
 :root[data-theme='light'] .topbar__hitItem {
   background: #FFFFFF !important;
   border: 1px solid rgba(120, 155, 120, 0.12) !important;
   color: #192218 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__hitItem:hover,
 :root[data-theme='light'] .topbar__hitItem:hover {
   background: #EEF3EC !important;
   border-color: rgba(120, 155, 120, 0.25) !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar__refHit,
 :root[data-theme='light'] .topbar__refHit {
   background: #FFFFFF !important;
   border: 1px solid rgba(120, 155, 120, 0.16) !important;
   color: #192218 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__greeting,
 :root[data-theme='light'] .homeScreen__greeting {
   color: #192218 !important;
   text-shadow: none !important;
@@ -8218,7 +8195,6 @@ body {
   letter-spacing: -0.02em !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__quote,
 :root[data-theme='light'] .homeScreen__quote {
   background: #FFFFFF !important;
   color: #192218 !important;
@@ -8229,13 +8205,11 @@ body {
   padding: 18px 22px !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__quoteRef,
 :root[data-theme='light'] .homeScreen__quoteRef {
   color: #38553A !important;
   font-weight: 700 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__keepCard,
 :root[data-theme='light'] .homeScreen__keepCard {
   background: #FFFFFF !important;
   border-radius: 26px !important;
@@ -8245,14 +8219,12 @@ body {
   gap: 16px !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__keepCard:hover,
 :root[data-theme='light'] .homeScreen__keepCard:hover {
   background: #F8FAF7 !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 12px 28px rgba(40, 60, 45, 0.08) !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__keepIcon,
 :root[data-theme='light'] .homeScreen__keepIcon {
   background: #EAF2E7 !important;
   color: #38553A !important;
@@ -8262,23 +8234,19 @@ body {
   height: 44px !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__keepLabel,
 :root[data-theme='light'] .homeScreen__keepLabel {
   color: #38553A !important;
   font-weight: 700 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__keepRef,
 :root[data-theme='light'] .homeScreen__keepRef {
   color: #192218 !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__arrow,
 :root[data-theme='light'] .homeScreen__arrow {
   color: #38553A !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__recentItem,
 :root[data-theme='light'] .homeScreen__recentItem {
   background: #FFFFFF !important;
   border-radius: 22px !important;
@@ -8287,14 +8255,12 @@ body {
   padding: 14px 18px !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__recentItem:hover,
 :root[data-theme='light'] .homeScreen__recentItem:hover {
   background: #F8FAF7 !important;
   transform: translateY(-2px) !important;
   border-color: rgba(120, 155, 120, 0.2) !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .homeScreen__recentIcon,
 :root[data-theme='light'] .homeScreen__recentIcon {
   background: #EAF2E7 !important;
   color: #38553A !important;
@@ -10009,7 +9975,6 @@ body {
   display: none !important;
 }
 
-:root:not([data-theme='bw']):not([data-theme='dark']) .topbar.topbar--compact .mountainHero,
 :root[data-theme='light'] .topbar.topbar--compact .mountainHero {
   background: #CAD5C8 !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
@@ -15802,4 +15767,454 @@ html, body {
 
 .readerBar__harmonyBtn:active {
   transform: scale(0.95);
+}
+
+
+/* ==========================================================================
+   EXPANDED COLOR THEMES: Sepia, Burgundy, Gold, Night, Mocha, Paper
+   ========================================================================== */
+
+/* --- 3. WARM PARCHMENT SEPIA THEME --- */
+:root[data-theme='sepia'] body {
+  background: #E8DFC8 !important;
+}
+:root[data-theme='sepia'] .app {
+  background: #F5EEE2 !important;
+  box-shadow: 0 16px 48px rgba(70, 50, 30, 0.12) !important;
+}
+:root[data-theme='sepia'] .mountainHero {
+  background: #EFE5D3 !important;
+  color: #2B1708 !important;
+  border-radius: 0 0 32px 32px !important;
+  box-shadow: 0 6px 20px rgba(50, 35, 20, 0.05) !important;
+  border-bottom: 1px solid #DFD2BA !important;
+  padding: 16px 20px 28px !important;
+}
+:root[data-theme='sepia'] .mountainHero__bg {
+  opacity: 0.05 !important;
+}
+:root[data-theme='sepia'] .topbar__chapterTitle {
+  color: #2B1708 !important;
+  background: #E5D9C2 !important;
+  border: 1px solid #DFD2BA !important;
+}
+:root[data-theme='sepia'] .botbar {
+  background: rgba(245, 238, 226, 0.94) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid #DFD2BA !important;
+  box-shadow: 0 12px 32px rgba(60, 40, 20, 0.12) !important;
+}
+:root[data-theme='sepia'] .botbar__btn {
+  color: #7D634C !important;
+}
+:root[data-theme='sepia'] .botbar__btn.is-active {
+  background: #2B1708 !important;
+  color: #F5EEE2 !important;
+}
+:root[data-theme='sepia'] .botbar__btn.is-active .botbar__icon svg {
+  color: #F5EEE2 !important;
+  stroke: #F5EEE2 !important;
+}
+:root[data-theme='sepia'] .botbar__btn.is-active .botbar__label {
+  color: #F5EEE2 !important;
+}
+:root[data-theme='sepia'] .readerBar {
+  background: rgba(245, 238, 226, 0.95) !important;
+  border: 1px solid #DFD2BA !important;
+  color: #2B1708 !important;
+}
+:root[data-theme='sepia'] .readerBar__chapterBtn {
+  background: #2B1708 !important;
+  color: #F5EEE2 !important;
+}
+:root[data-theme='sepia'] .readerBar__navBtn {
+  color: #2B1708 !important;
+}
+:root[data-theme='sepia'] .readerBar__listenBtn {
+  background: #EFE5D3 !important;
+  color: #2B1708 !important;
+  border: 1px solid #DFD2BA !important;
+}
+
+/* --- 4. IMPERIAL VELVET BURGUNDY THEME --- */
+:root[data-theme='burgundy'] body {
+  background: #1C050B !important;
+}
+:root[data-theme='burgundy'] .app {
+  background: #2E0811 !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+}
+:root[data-theme='burgundy'] .mountainHero {
+  background: #2E0811 !important;
+  color: #FDF6EC !important;
+  border-radius: 0 0 32px 32px !important;
+  border-bottom: 1px solid #5C1828 !important;
+}
+:root[data-theme='burgundy'] .mountainHero__bg,
+:root[data-theme='burgundy'] .mountainHero__overlay {
+  display: none !important;
+}
+:root[data-theme='burgundy'] .topbar__chapterTitle {
+  color: #FDF6EC !important;
+  background: #3D0C18 !important;
+  border: 1px solid #7D2035 !important;
+}
+:root[data-theme='burgundy'] .botbar {
+  background: rgba(46, 8, 17, 0.94) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1px solid #5C1828 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+}
+:root[data-theme='burgundy'] .botbar__btn {
+  color: #D9B89D !important;
+}
+:root[data-theme='burgundy'] .botbar__btn.is-active {
+  background: #D4AF37 !important;
+  color: #2E0811 !important;
+}
+:root[data-theme='burgundy'] .botbar__btn.is-active .botbar__icon svg {
+  color: #2E0811 !important;
+  stroke: #2E0811 !important;
+}
+:root[data-theme='burgundy'] .botbar__btn.is-active .botbar__label {
+  color: #2E0811 !important;
+}
+:root[data-theme='burgundy'] .readerBar {
+  background: rgba(61, 12, 24, 0.94) !important;
+  border: 1px solid #5C1828 !important;
+  color: #FDF6EC !important;
+}
+:root[data-theme='burgundy'] .readerBar__chapterBtn {
+  background: #D4AF37 !important;
+  color: #2E0811 !important;
+}
+:root[data-theme='burgundy'] .readerBar__navBtn {
+  color: #FDF6EC !important;
+}
+:root[data-theme='burgundy'] .readerBar__listenBtn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #FDF6EC !important;
+  border: 1px solid #5C1828 !important;
+}
+
+/* --- 5. ROYAL HONEY GOLD THEME --- */
+:root[data-theme='gold'] body {
+  background: #EFE0BD !important;
+}
+:root[data-theme='gold'] .app {
+  background: #FAF2DC !important;
+  box-shadow: 0 16px 48px rgba(60, 40, 10, 0.12) !important;
+}
+:root[data-theme='gold'] .mountainHero {
+  background: #F2E2BE !important;
+  color: #2B1708 !important;
+  border-radius: 0 0 32px 32px !important;
+  border-bottom: 1px solid #DFC792 !important;
+}
+:root[data-theme='gold'] .topbar__chapterTitle {
+  color: #2B1708 !important;
+  background: #EFE0BD !important;
+  border: 1px solid #DFC792 !important;
+}
+:root[data-theme='gold'] .botbar {
+  background: rgba(250, 242, 220, 0.95) !important;
+  border: 1px solid #DFC792 !important;
+  box-shadow: 0 12px 32px rgba(60, 40, 10, 0.12) !important;
+}
+:root[data-theme='gold'] .botbar__btn {
+  color: #8C6239 !important;
+}
+:root[data-theme='gold'] .botbar__btn.is-active {
+  background: #D97706 !important;
+  color: #FFFFFF !important;
+}
+:root[data-theme='gold'] .botbar__btn.is-active .botbar__icon svg {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+:root[data-theme='gold'] .botbar__btn.is-active .botbar__label {
+  color: #FFFFFF !important;
+}
+:root[data-theme='gold'] .readerBar {
+  background: rgba(255, 253, 245, 0.95) !important;
+  border: 1px solid #DFC792 !important;
+}
+:root[data-theme='gold'] .readerBar__chapterBtn {
+  background: #D97706 !important;
+  color: #FFFFFF !important;
+}
+:root[data-theme='gold'] .readerBar__navBtn {
+  color: #2B1708 !important;
+}
+:root[data-theme='gold'] .readerBar__listenBtn {
+  background: #F2E2BE !important;
+  color: #2B1708 !important;
+  border: 1px solid #DFC792 !important;
+}
+
+/* --- 6. MIDNIGHT NAVY THEME (Deep OLED Ocean) --- */
+:root[data-theme='night'] body {
+  background: #050B14 !important;
+}
+:root[data-theme='night'] .app {
+  background: #0B1320 !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+}
+:root[data-theme='night'] .mountainHero {
+  background: #0B1320 !important;
+  color: #FFFFFF !important;
+  border-radius: 0 0 32px 32px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+:root[data-theme='night'] .mountainHero__bg,
+:root[data-theme='night'] .mountainHero__overlay {
+  display: none !important;
+}
+:root[data-theme='night'] .topbar__chapterTitle {
+  color: #FFFFFF !important;
+  background: #111D30 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+:root[data-theme='night'] .botbar {
+  background: rgba(17, 29, 48, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
+}
+:root[data-theme='night'] .botbar__btn {
+  color: #7D8FA9 !important;
+}
+:root[data-theme='night'] .botbar__btn.is-active {
+  background: #38BDF8 !important;
+  color: #0B1320 !important;
+}
+:root[data-theme='night'] .botbar__btn.is-active .botbar__icon svg {
+  color: #0B1320 !important;
+  stroke: #0B1320 !important;
+}
+:root[data-theme='night'] .botbar__btn.is-active .botbar__label {
+  color: #0B1320 !important;
+}
+:root[data-theme='night'] .readerBar {
+  background: rgba(25, 39, 63, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+:root[data-theme='night'] .readerBar__chapterBtn {
+  background: #38BDF8 !important;
+  color: #0B1320 !important;
+}
+:root[data-theme='night'] .readerBar__navBtn {
+  color: #FFFFFF !important;
+}
+:root[data-theme='night'] .readerBar__listenBtn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* --- 7. WARM MOCHA / ESPRESSO THEME --- */
+:root[data-theme='dark'] body {
+  background: #120D0A !important;
+}
+:root[data-theme='dark'] .app {
+  background: #1D1612 !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
+}
+:root[data-theme='dark'] .mountainHero {
+  background: #1D1612 !important;
+  color: #FFFFFF !important;
+  border-radius: 0 0 32px 32px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+:root[data-theme='dark'] .mountainHero__bg,
+:root[data-theme='dark'] .mountainHero__overlay {
+  display: none !important;
+}
+:root[data-theme='dark'] .topbar__chapterTitle {
+  color: #FFFFFF !important;
+  background: #261E19 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+:root[data-theme='dark'] .botbar {
+  background: rgba(38, 30, 25, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+:root[data-theme='dark'] .botbar__btn {
+  color: #A38F83 !important;
+}
+:root[data-theme='dark'] .botbar__btn.is-active {
+  background: #E5825F !important;
+  color: #1D1612 !important;
+}
+:root[data-theme='dark'] .botbar__btn.is-active .botbar__icon svg {
+  color: #1D1612 !important;
+  stroke: #1D1612 !important;
+}
+:root[data-theme='dark'] .botbar__btn.is-active .botbar__label {
+  color: #1D1612 !important;
+}
+:root[data-theme='dark'] .readerBar {
+  background: rgba(48, 38, 32, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+:root[data-theme='dark'] .readerBar__chapterBtn {
+  background: #E5825F !important;
+  color: #1D1612 !important;
+}
+:root[data-theme='dark'] .readerBar__navBtn {
+  color: #FFFFFF !important;
+}
+:root[data-theme='dark'] .readerBar__listenBtn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* --- 8. CRISP WHITE / DAYLIGHT THEME --- */
+:root[data-theme='paper'] body {
+  background: #E5E7EB !important;
+}
+:root[data-theme='paper'] .app {
+  background: #FFFFFF !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08) !important;
+}
+:root[data-theme='paper'] .mountainHero {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  border-radius: 0 0 32px 32px !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+:root[data-theme='paper'] .topbar__chapterTitle {
+  color: #0F172A !important;
+  background: #F1F5F9 !important;
+  border: 1px solid #E2E8F0 !important;
+}
+:root[data-theme='paper'] .botbar {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08) !important;
+}
+:root[data-theme='paper'] .botbar__btn {
+  color: #64748B !important;
+}
+:root[data-theme='paper'] .botbar__btn.is-active {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+:root[data-theme='paper'] .botbar__btn.is-active .botbar__icon svg {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+:root[data-theme='paper'] .botbar__btn.is-active .botbar__label {
+  color: #FFFFFF !important;
+}
+:root[data-theme='paper'] .readerBar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+}
+:root[data-theme='paper'] .readerBar__chapterBtn {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+:root[data-theme='paper'] .readerBar__navBtn {
+  color: #0F172A !important;
+}
+:root[data-theme='paper'] .readerBar__listenBtn {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+/* ==========================================================================
+   ENHANCED THEME & ACCENT PALETTE UI
+   ========================================================================== */
+.themePaletteGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.themePaletteCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 4px 6px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: var(--panel-2);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  min-height: 62px;
+}
+
+.themePaletteCard:hover {
+  transform: translateY(-1px);
+  border-color: var(--ink-soft);
+}
+
+.themePaletteCard.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft), 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: var(--panel);
+}
+
+.themePalettePreview {
+  width: 34px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.themePaletteLabel {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.accentSwatchesRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.accentSwatchBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: all 0.16s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.accentSwatchBtn:hover {
+  transform: scale(1.12);
+}
+
+.accentSwatchBtn.is-active {
+  border-color: #FFFFFF;
+  box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--ink);
+  transform: scale(1.08);
 }

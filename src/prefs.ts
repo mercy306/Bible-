@@ -23,19 +23,25 @@ export const LEADING_RANGE = { min: 1.5, max: 2.2, step: 0.05 } as const
 export const PARAGRAPH_RANGE = { min: 4, max: 20, step: 2 } as const
 
 export const THEMES = [
-  { id: 'light', label: 'Green', note: 'Sage Green' },
-  { id: 'bw', label: 'Black', note: 'Soft Black' },
+  { id: 'bw', label: 'Black', am: 'ጥቁር', note: 'Soft Black / Obsidian', bg: '#0E1013', ink: '#FFFFFF' },
+  { id: 'light', label: 'Green', am: 'አረንጓዴ', note: 'Sage Green / Matcha', bg: '#CAD5C8', ink: '#192218' },
+  { id: 'sepia', label: 'Sepia', am: 'ብራና', note: 'Warm Parchment / Ancient', bg: '#F5EEE2', ink: '#2B1708' },
+  { id: 'burgundy', label: 'Burgundy', am: 'ወይን', note: 'Imperial Velvet Wine', bg: '#2E0811', ink: '#FDF6EC' },
+  { id: 'gold', label: 'Gold', am: 'ወርቃማ', note: 'Royal Honey Amber', bg: '#FAF2DC', ink: '#2B1708' },
+  { id: 'night', label: 'Navy', am: 'ሰማያዊ', note: 'Midnight Blue / OLED', bg: '#0B1320', ink: '#EBF0EC' },
+  { id: 'dark', label: 'Mocha', am: 'ቡናማ', note: 'Warm Espresso Earth', bg: '#1D1612', ink: '#F7EDE6' },
+  { id: 'paper', label: 'Paper', am: 'ንጹሕ ነጭ', note: 'Crisp White Daylight', bg: '#FFFFFF', ink: '#0F172A' },
 ] as const
 
 export const ACCENTS = [
-  { id: 'gold', label: 'Gold Trim', swatch: '#d4af37' },
-  { id: 'burgundy', label: 'Burgundy', swatch: '#721c24' },
-  { id: 'amber', label: 'Honey Gold', swatch: '#d97706' },
-  { id: 'brown', label: 'Brown', swatch: '#7a4b2a' },
-  { id: 'blue', label: 'Blue', swatch: '#2a5a86' },
-  { id: 'green', label: 'Green', swatch: '#3a6448' },
-  { id: 'plum', label: 'Plum', swatch: '#6b3a63' },
-  { id: 'slate', label: 'Slate', swatch: '#3f4a54' },
+  { id: 'gold', label: 'Gold', am: 'ወርቅ', swatch: '#d4af37' },
+  { id: 'amber', label: 'Amber', am: 'ማር ወርቅ', swatch: '#d97706' },
+  { id: 'burgundy', label: 'Burgundy', am: 'ቀይ ወይን', swatch: '#8b1e3f' },
+  { id: 'brown', label: 'Terracotta', am: 'ሸክላ', swatch: '#c85a32' },
+  { id: 'green', label: 'Forest', am: 'ኤመራልድ', swatch: '#2d6a4f' },
+  { id: 'blue', label: 'Sapphire', am: 'ሰንፔር', swatch: '#2563eb' },
+  { id: 'plum', label: 'Amethyst', am: 'ሐምራዊ', swatch: '#7c3aed' },
+  { id: 'slate', label: 'Slate', am: 'ብረት', swatch: '#64748b' },
 ] as const
 
 /** How much of the two languages the reading screen shows at once. */
@@ -45,7 +51,7 @@ export const LANGUAGES = [
 ] as const
 
 export type FontId = 'serif' | 'sans' | 'traditional'
-export type ThemeId = 'light' | 'bw' | 'dark' | 'burgundy' | 'sepia' | 'gold' | 'night'
+export type ThemeId = 'light' | 'bw' | 'dark' | 'burgundy' | 'sepia' | 'gold' | 'night' | 'paper'
 export type AccentId = 'gold' | 'burgundy' | 'amber' | 'brown' | 'blue' | 'green' | 'plum' | 'slate'
 export type LanguageMode = 'am' | 'en' | 'both'
 
@@ -84,7 +90,7 @@ const DEFAULTS: Prefs = {
 }
 
 const FONT_IDS = ['serif', 'sans', 'traditional'] as FontId[]
-const THEME_IDS = ['light', 'bw', 'dark', 'burgundy', 'sepia', 'gold', 'night'] as ThemeId[]
+const THEME_IDS = ['light', 'bw', 'dark', 'burgundy', 'sepia', 'gold', 'night', 'paper'] as ThemeId[]
 const ACCENT_IDS = ['gold', 'burgundy', 'amber', 'brown', 'blue', 'green', 'plum', 'slate'] as AccentId[]
 const LANGUAGE_IDS = ['am', 'en', 'both'] as LanguageMode[]
 

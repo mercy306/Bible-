@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { useReadingPlan } from '../readingPlan'
 import {
+  ACCENTS,
   FONTS,
   LANGUAGES,
   SIZE_RANGE,
@@ -241,22 +242,53 @@ export default function MoreSheetBody({
 
       {tab === 'look' && (
         <div className="mlist">
-          <Row label={isEn ? "Theme" : "ገጽታ"}>
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Color Theme" : "የቀለም ገጽታ"}>
-              {THEMES.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`segbar__btn ${prefs.theme === item.id || (item.id === 'bw' && prefs.theme === 'dark') ? 'is-active' : ''}`}
-                  onClick={() => setPref('theme', item.id)}
-                  aria-pressed={prefs.theme === item.id || (item.id === 'bw' && prefs.theme === 'dark')}
-                  title={item.note}
-                >
-                  {item.id === 'light'
-                    ? (isEn ? '🌿 Sage Green' : '🌿 አረንጓዴ')
-                    : (isEn ? '🖤 Soft Black' : '🖤 ጥቁር')}
-                </button>
-              ))}
+          <Row label={isEn ? "Theme" : "የቀለም ገጽታ"}>
+            <div className="themePaletteGrid" role="radiogroup" aria-label={isEn ? "Theme presets" : "የገጽታ አማራጮች"}>
+              {THEMES.map((item) => {
+                const isActive = prefs.theme === item.id
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={`themePaletteCard ${isActive ? 'is-active' : ''}`}
+                    onClick={() => setPref('theme', item.id)}
+                    role="radio"
+                    aria-checked={isActive}
+                    title={item.note}
+                  >
+                    <div
+                      className="themePalettePreview"
+                      style={{ background: item.bg, color: item.ink }}
+                    >
+                      Aa
+                    </div>
+                    <span className="themePaletteLabel">
+                      {isEn ? item.label : item.am}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </Row>
+
+          <Row label={isEn ? "Accent Color" : "የማድመቂያ ቀለም"}>
+            <div className="accentSwatchesRow" role="radiogroup" aria-label={isEn ? "Accent color options" : "የማድመቂያ ቀለም አማራጮች"}>
+              {ACCENTS.map((item) => {
+                const isActive = prefs.accent === item.id
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={`accentSwatchBtn ${isActive ? 'is-active' : ''}`}
+                    style={{ background: item.swatch }}
+                    onClick={() => setPref('accent', item.id)}
+                    role="radio"
+                    aria-checked={isActive}
+                    title={isEn ? item.label : item.am}
+                    aria-label={isEn ? item.label : item.am}
+                  />
+                )
+              })}
             </div>
           </Row>
 
