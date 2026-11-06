@@ -29,6 +29,8 @@ export default function TimeCapsuleSheet({
     initialEntryId || TIME_CAPSULE_ENTRIES[0].id
   )
   const [activeTab, setActiveTab] = useState<TabType>('scene')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [testament, setTestament] = useState<'all' | 'ot' | 'nt'>('all')
   const bodyRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -50,6 +52,34 @@ export default function TimeCapsuleSheet({
     )
   }, [selectedId])
 
+  const filteredEntries = useMemo(() => {
+    let list = TIME_CAPSULE_ENTRIES
+    if (testament === 'ot') {
+      list = list.filter((e) => e.bookNr <= 39)
+    } else if (testament === 'nt') {
+      list = list.filter((e) => e.bookNr >= 40)
+    }
+
+    if (!searchQuery.trim()) return list
+
+    const q = searchQuery.toLowerCase().trim()
+    return list.filter((e) => {
+      const matchRef =
+        e.verseRefAm.toLowerCase().includes(q) ||
+        e.verseRefEn.toLowerCase().includes(q)
+      const matchTitle =
+        e.titleAm.toLowerCase().includes(q) ||
+        e.titleEn.toLowerCase().includes(q)
+      const matchTag =
+        e.taglineAm.toLowerCase().includes(q) ||
+        e.taglineEn.toLowerCase().includes(q)
+      const matchDistortion =
+        e.distortionAm.claim.toLowerCase().includes(q) ||
+        e.distortionEn.claim.toLowerCase().includes(q)
+      return matchRef || matchTitle || matchTag || matchDistortion
+    })
+  }, [testament, searchQuery])
+
   return (
     <Sheet
       open={open}
@@ -57,9 +87,92 @@ export default function TimeCapsuleSheet({
       onClose={onClose}
     >
       <div ref={bodyRef} className="sheet__body capsuleSheetBody">
+        {/* Search & Testament Filters */}
+        <div className="capsuleFilterBar">
+          <div className="capsuleFilterBar__search">
+            <span className="capsuleFilterBar__icon">🔍</span>
+            <input
+              type="text"
+              className="capsuleFilterBar__input"
+              placeholder={
+                isEn
+                  ? 'Search 66 books or topics (e.g. Camel, Law, Tithe)...'
+                  : 'ከ66ቱ መጻሕፍት ወይም ርዕስ ፈልግ (ለምሳሌ፡ ግመል፣ አስራት)...'
+              }
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                className="capsuleFilterBar__clear"
+                onClick={() => setSearchQuery('')}
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          <div className="capsuleFilterBar__pills">
+            <button
+              type="button"
+              className={`capsulePill ${testament === 'all' ? 'is-active' : ''}`}
+              onClick={() => setTestament('all')}
+            >
+              {isEn ? 'All (66)' : 'ሁሉም (66)'}
+            </button>
+            <button
+              type="button"
+              className={`capsulePill ${testament === 'ot' ? 'is-active' : ''}`}
+              onClick={() => setTestament('ot')}
+            >
+              {isEn ? 'Old Test. (39)' : 'ብሉይ ኪዳን (39)'}
+            </button>
+            <button
+              type="button"
+              className={`capsulePill ${testament === 'nt' ? 'is-active' : ''}`}
+              onClick={() => setTestament('nt')}
+            >
+              {isEn ? 'New Test. (27)' : 'ሐዲስ ኪዳን (27)'}
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Dropdown Jump */}
+        <div className="capsuleQuickJump">
+          <label htmlFor="capsuleBookSelect" className="capsuleQuickJump__label">
+            {isEn ? 'Select Book:' : 'መጽሐፍ ይምረጡ:'}
+          </label>
+          <select
+            id="capsuleBookSelect"
+            className="capsuleQuickJump__select"
+            value={entry.id}
+            onChange={(e) => {
+              setSelectedId(e.target.value)
+              setActiveTab('scene')
+            }}
+          >
+            <optgroup label={isEn ? 'Old Testament (39 Books)' : 'ብሉይ ኪዳን (39 መጻሕፍት)'}>
+              {TIME_CAPSULE_ENTRIES.filter((e) => e.bookNr <= 39).map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.bookNr}. {isEn ? item.verseRefEn : item.verseRefAm} — {isEn ? item.titleEn : item.titleAm}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label={isEn ? 'New Testament (27 Books)' : 'ሐዲስ ኪዳን (27 መጻሕፍት)'}>
+              {TIME_CAPSULE_ENTRIES.filter((e) => e.bookNr >= 40).map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.bookNr}. {isEn ? item.verseRefEn : item.verseRefAm} — {isEn ? item.titleEn : item.titleAm}
+                </option>
+              ))}
+            </optgroup>
+          </select>
+        </div>
+
         {/* Entry Selector Horizontal Chips */}
         <div className="capsuleSelector" role="tablist">
-          {TIME_CAPSULE_ENTRIES.map((item) => {
+          {filteredEntries.map((item) => {
             const isSel = item.id === entry.id
             return (
               <button

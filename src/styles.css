@@ -15003,6 +15003,118 @@ html, body {
   padding: 12px 14px calc(76px + env(safe-area-inset-bottom, 0px));
 }
 
+.capsuleFilterBar {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.capsuleFilterBar__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.capsuleFilterBar__icon {
+  position: absolute;
+  left: 12px;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.capsuleFilterBar__input {
+  width: 100%;
+  padding: 8px 32px 8px 34px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.capsuleFilterBar__input:focus {
+  border-color: var(--accent);
+}
+
+.capsuleFilterBar__clear {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.capsuleFilterBar__pills {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.capsulePill {
+  flex: 1;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.capsulePill.is-active {
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  border-color: var(--accent);
+}
+
+.capsuleQuickJump {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+.capsuleQuickJump__label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.capsuleQuickJump__select {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.capsuleQuickJump__select option,
+.capsuleQuickJump__select optgroup {
+  background: var(--bg);
+  color: var(--ink);
+}
+
 .capsuleSelector {
   display: flex;
   align-items: center;
