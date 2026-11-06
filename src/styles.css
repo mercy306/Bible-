@@ -10074,7 +10074,7 @@ body {
 .read {
   max-width: 680px !important;
   margin: 0 auto !important;
-  padding: 6px 14px calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 6px 14px calc(118px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .verses {
@@ -10095,7 +10095,8 @@ body {
 
 /* Compact Floating Chapter Bar (Sleek, No Overlap) */
 .readerBar {
-  bottom: calc(62px + env(safe-area-inset-bottom, 0px)) !important;
+  bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+  z-index: 60 !important;
   padding: 2.5px 6px !important;
   gap: 3px !important;
   border-radius: 999px !important;
@@ -13719,6 +13720,336 @@ body {
 
 .matrixFooter__readBtn:active {
   transform: scale(0.98);
+}
+
+/* ==========================================================================
+   Comprehensive In-Depth Perspective Matrix (POV Deep Dive)
+   ========================================================================== */
+
+/* 5-Column Perspective Matrix Switcher */
+.matrixTabs.matrixTabs--5col {
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 3px;
+  padding: 3px;
+}
+
+@media (max-width: 360px) {
+  .matrixTabs.matrixTabs--5col .matrixTab__label {
+    font-size: 0.62rem;
+  }
+}
+
+/* Quick Jump to Full Exposition */
+.matrixJumpBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: 4px;
+}
+
+.matrixJumpBtn:hover {
+  background: var(--panel-2);
+}
+
+.matrixJumpBtn__arrow {
+  font-size: 1rem;
+}
+
+/* Archaeological Discoveries List */
+.matrixArchList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.matrixArchItem {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.matrixArchItem__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.matrixArchItem__name {
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.matrixArchItem__era {
+  font-size: 0.64rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--panel-2);
+  color: var(--accent);
+  border: 1px solid var(--line);
+}
+
+.matrixArchItem__sig {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+/* Core Doctrines Chips */
+.matrixDoctrinesList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.matrixDoctrineChip {
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+/* Scriptural Cross-References */
+.matrixCrossRefList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.matrixCrossRefItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.matrixCrossRefItem__ref {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.matrixCrossRefItem__note {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* Linguistic Badges */
+.matrixLinguisticCard__badges {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.matrixLinguisticCard__strongs {
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(var(--accent-rgb, 120, 160, 120), 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb, 120, 160, 120), 0.3);
+}
+
+.matrixLinguisticHeader__badge {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* Psychological Questions */
+.matrixQuestionsList {
+  margin: 0;
+  padding: 0 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.matrixQuestionItem {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* In-Depth Exposition / Deep Dive Tab */
+.matrixSection--expoLead {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, var(--panel-2) 0%, var(--panel) 100%);
+}
+
+.matrixSection__p--lead {
+  font-size: 0.9rem !important;
+  line-height: 1.65 !important;
+  font-weight: 500;
+}
+
+/* Exegesis List */
+.matrixExegesisList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.matrixExegesisCard {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.matrixExegesisCard__badge {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.matrixExegesisCard__quote {
+  margin: 0;
+  padding: 6px 10px;
+  border-left: 2px solid var(--accent);
+  background: var(--panel-2);
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+  font-size: 0.84rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.matrixExegesisCard__body {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.matrixExegesisCard__body strong {
+  color: var(--ink);
+}
+
+/* Theological Q&A Accordion */
+.matrixQAList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.matrixQACard {
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.matrixQACard.is-open {
+  border-color: var(--accent);
+}
+
+.matrixQACard__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.matrixQACard__q {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.matrixQACard__chevron {
+  font-size: 0.65rem;
+  color: var(--ink-soft);
+}
+
+.matrixQACard__ans {
+  padding: 8px 12px 12px;
+  border-top: 1px solid var(--line);
+  background: var(--panel-2);
+}
+
+.matrixQACard__ans p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* Transformative Takeaways */
+.matrixSection--takeaways {
+  border-color: rgba(var(--accent-rgb, 120, 160, 120), 0.4);
+}
+
+.matrixTakeawaysList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.matrixTakeawayItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.matrixTakeawayItem__num {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin-top: 1px;
+}
+
+.matrixTakeawayItem__text {
+  flex: 1;
 }
 
 /* ==========================================================================

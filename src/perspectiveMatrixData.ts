@@ -1,16 +1,73 @@
 import { CANON_66_BOOKS_MATRIX } from './perspectiveMatrixCanonData'
 import { SAGA_ACTS } from './sagaData'
+import { enrichPerspectiveMatrixItem } from './perspectiveMatrixExposition'
 
 /**
  * Multidimensional Perspective Matrix (The POV Bible)
- * Core canonical dataset with 4 simultaneous real-time lenses:
+ * Core canonical dataset with 5 simultaneous real-time lenses:
  * 1. Geopolitical / Eyewitness (politics, logistics, empires, ordinary ground-level chronicler)
  * 2. Theological / Covenantal (divine meta-narrative, redemptive history, Christological typology)
- * 3. Linguistic / Hebrew-Greek Root (original language terms, etymology, theological depth)
+ * 3. Linguistic / Hebrew-Greek Root (original language terms, etymology, theological depth, Strong's Concordance)
  * 4. Psychological / Human Experience (character emotional architecture, fear, grief, courage, modern resonance)
+ * 5. Deep Exposition (scholarly narrative synthesis, archaeological dossier, key verse exegesis, Q&A)
  */
 
-export type PerspectiveLensKey = 'geopolitical' | 'theological' | 'linguistic' | 'psychological'
+export type PerspectiveLensKey = 'geopolitical' | 'theological' | 'linguistic' | 'psychological' | 'exposition'
+
+export interface ArchaeologicalEvidence {
+  siteOrArtifactEn: string
+  siteOrArtifactAm: string
+  significanceEn: string
+  significanceAm: string
+  era?: string
+}
+
+export interface ScriptureCrossReference {
+  ref: string
+  noteEn: string
+  noteAm: string
+}
+
+export interface KeyVerseExegesis {
+  verseRef: string
+  textAm: string
+  textEn: string
+  exegesisAm: string
+  exegesisEn: string
+}
+
+export interface TypologicalSymbol {
+  symbolAm: string
+  symbolEn: string
+  fulfillmentAm: string
+  fulfillmentEn: string
+  verseAnchor?: string
+}
+
+export interface TheologicalQA {
+  questionAm: string
+  questionEn: string
+  answerAm: string
+  answerEn: string
+}
+
+export interface DeepExpositionData {
+  summaryAm: string
+  summaryEn: string
+  historicalDossierAm: string
+  historicalDossierEn: string
+  covenantalFrameworkAm: string
+  covenantalFrameworkEn: string
+  linguisticInsightsAm: string
+  linguisticInsightsEn: string
+  humanHeartAnalysisAm: string
+  humanHeartAnalysisEn: string
+  keyVersesExegesis?: KeyVerseExegesis[]
+  archaeologicalEvidences?: ArchaeologicalEvidence[]
+  theologicalQandA?: TheologicalQA[]
+  transformativeTakeawaysAm: string[]
+  transformativeTakeawaysEn: string[]
+}
 
 export interface LinguisticTerm {
   original: string
@@ -23,6 +80,9 @@ export interface LinguisticTerm {
   theologicalDepthAm: string
   canonicalUsageEn: string
   canonicalUsageAm: string
+  strongsNumber?: string
+  partOfSpeech?: string
+  relatedScriptures?: string[]
 }
 
 export interface GeopoliticalLensData {
@@ -37,6 +97,11 @@ export interface GeopoliticalLensData {
   historicalDynamicsAm: string
   groundRealitiesEn: string
   groundRealitiesAm: string
+  archaeologicalEvidences?: ArchaeologicalEvidence[]
+  socialCustomsAm?: string
+  socialCustomsEn?: string
+  rulingPowersDetailAm?: string
+  rulingPowersDetailEn?: string
 }
 
 export interface TheologicalLensData {
@@ -50,6 +115,10 @@ export interface TheologicalLensData {
   christForeshadowingAm: string
   metaNarrativeAnchorEn: string
   metaNarrativeAnchorAm: string
+  coreDoctrinesAm?: string[]
+  coreDoctrinesEn?: string[]
+  typologicalSymbols?: TypologicalSymbol[]
+  crossReferences?: ScriptureCrossReference[]
 }
 
 export interface PsychologicalLensData {
@@ -63,6 +132,12 @@ export interface PsychologicalLensData {
   existentialQuestionAm: string
   modernReflectionEn: string
   modernReflectionAm: string
+  characterProfileAm?: string
+  characterProfileEn?: string
+  defenseMechanismsAm?: string
+  defenseMechanismsEn?: string
+  transformativeQuestionsAm?: string[]
+  transformativeQuestionsEn?: string[]
 }
 
 export interface PerspectiveMatrixItem {
@@ -79,6 +154,7 @@ export interface PerspectiveMatrixItem {
   theological: TheologicalLensData
   linguistic: LinguisticTerm[]
   psychological: PsychologicalLensData
+  deepExposition?: DeepExpositionData
 }
 
 export const PERSPECTIVE_MATRIX_DATA: PerspectiveMatrixItem[] = [
@@ -557,22 +633,27 @@ export function getPerspectiveMatrixForChapter(bookNr: number, chapter: number):
     const end = m.chapterEnd ?? m.chapterStart
     return chapter >= m.chapterStart && chapter <= end
   })
-  if (milestone) return milestone
+  if (milestone) {
+    return enrichPerspectiveMatrixItem(milestone, bookNr, chapter)
+  }
 
   const canon = CANON_66_BOOKS_MATRIX[bookNr]
   if (canon) {
-    return {
+    const item: PerspectiveMatrixItem = {
       ...canon,
       chapterStart: chapter,
       chapterEnd: chapter
     }
+    return enrichPerspectiveMatrixItem(item, bookNr, chapter)
   }
   return undefined
 }
 
 export function getPerspectiveMatrixForScene(sceneId: string): PerspectiveMatrixItem | undefined {
   const milestone = PERSPECTIVE_MATRIX_DATA.find((m) => m.sceneId === sceneId)
-  if (milestone) return milestone
+  if (milestone) {
+    return enrichPerspectiveMatrixItem(milestone, milestone.bookNr, milestone.chapterStart)
+  }
 
   for (const act of SAGA_ACTS) {
     const scene = act.scenes.find((s) => s.id === sceneId)
