@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { fetchAmharicCommentary } from '../api'
+import type { AmharicCommentary } from '../types'
 import Sheet from './Sheet'
 import { useBookNames } from './useBookNames'
 import type { LanguageMode } from '../prefs'
@@ -28,6 +30,27 @@ export default function PerspectiveMatrixSheet({
 }: Props) {
   const [activeLens, setActiveLens] = useState<PerspectiveLensKey>('geopolitical')
   const [openQAIndex, setOpenQAIndex] = useState<number | null>(null)
+  const [commentary, setCommentary] = useState<AmharicCommentary | null>(null)
+  const [showFullCommentary, setShowFullCommentary] = useState(false)
+
+  useEffect(() => {
+    if (!item || !open) return
+    let cancelled = false
+    fetchAmharicCommentary(item.bookNr, item.chapterStart)
+      .then((data) => {
+        if (!cancelled && data.available && data.blocks && data.blocks.length > 0) {
+          setCommentary(data)
+        } else if (!cancelled) {
+          setCommentary(null)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setCommentary(null)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [item?.bookNr, item?.chapterStart, open])
   const isEn = language === 'en'
 
   const { am: bookAm, en: bookEn } = useBookNames(item?.bookNr ?? 1)
@@ -573,6 +596,38 @@ export default function PerspectiveMatrixSheet({
                             </div>
                           )
                         })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Full Verse-by-Verse Chapter Commentary Accordion */}
+                  {commentary && commentary.blocks && commentary.blocks.length > 0 && (
+                    <div className="matrixSection matrixSection--commentary">
+                      <div className="matrixSection__label">
+                        <span className="matrixSection__icon">📖</span>
+                        <span>{isEn ? 'Protestant Verse-by-Verse Chapter Commentary' : 'የፕሮቴስታንት የቁጥር-በ-ቁጥር የምዕራፉ ማብራሪያ'}</span>
+                      </div>
+                      <div className="matrixCommentaryCard">
+                        <div className="matrixCommentaryText">
+                          {commentary.blocks.slice(0, showFullCommentary ? commentary.blocks.length : 1).map((b, idx) => (
+                            <div key={idx} className="matrixCommentaryBlock">
+                              <p style={{ whiteSpace: 'pre-line', margin: 0, lineHeight: 1.6, fontSize: '0.82rem', color: 'var(--ink)' }}>
+                                {b.text}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                        {commentary.blocks.length > 1 && (
+                          <button
+                            type="button"
+                            className="matrixCommentaryToggleBtn"
+                            onClick={() => setShowFullCommentary(!showFullCommentary)}
+                          >
+                            {showFullCommentary
+                              ? (isEn ? 'Show Less ▲' : 'አሳንስ ▲')
+                              : (isEn ? `Read All ${commentary.blocks.length} Commentary Sections ▼` : `ሁሉንም ${commentary.blocks.length} ማብራሪያዎች አንብብ ▼`)}
+                          </button>
+                        )}
                       </div>
                     </div>
                   )}

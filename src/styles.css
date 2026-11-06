@@ -14052,6 +14052,40 @@ body {
   flex: 1;
 }
 
+/* Chapter Protestant Commentary inside Deep Dive */
+.matrixSection--commentary {
+  border-color: rgba(var(--accent-rgb, 120, 160, 120), 0.35);
+  background: var(--panel);
+}
+
+.matrixCommentaryCard {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.matrixCommentaryToggleBtn {
+  align-self: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--panel);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all 0.15s ease;
+}
+
+.matrixCommentaryToggleBtn:hover {
+  background: var(--panel-2);
+}
+
 /* ==========================================================================
    The Living Ethics & Ancient Wisdom Sandbox (Applied Dilemma Bible)
    ========================================================================== */
