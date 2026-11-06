@@ -64,6 +64,8 @@ export interface Prefs {
   paragraphGap: number
   /** Whether the small verse numbers are shown at all. */
   verseNumbers: boolean
+  /** Whether study feature pills (POV, Context, etc.) appear in the floating reader bar. */
+  showStudyTools: boolean
 }
 
 const KEY = 'bible:prefs'
@@ -78,6 +80,7 @@ const DEFAULTS: Prefs = {
   leading: 1.9,
   paragraphGap: 7,
   verseNumbers: true,
+  showStudyTools: false,
 }
 
 const FONT_IDS = ['serif', 'sans', 'traditional'] as FontId[]
@@ -112,6 +115,7 @@ function read(): Prefs {
         DEFAULTS.paragraphGap,
       ),
       verseNumbers: typeof parsed.verseNumbers === 'boolean' ? parsed.verseNumbers : DEFAULTS.verseNumbers,
+      showStudyTools: typeof parsed.showStudyTools === 'boolean' ? parsed.showStudyTools : DEFAULTS.showStudyTools,
     }
   } catch {
     return { ...DEFAULTS }

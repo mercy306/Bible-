@@ -30,7 +30,7 @@ import {
   useHighlights,
   type VerseRef,
 } from '../userdata'
-import type { LanguageMode } from '../prefs'
+import { usePrefs, type LanguageMode } from '../prefs'
 import type { ChapterResponse } from '../types'
 import { useReadingPlan, toggleChapterRead } from '../readingPlan'
 
@@ -109,6 +109,7 @@ export default function Reader({
 
   const [selectedCapsuleId, setSelectedCapsuleId] = useState<string | undefined>(undefined)
   const [selectedHarmonyId, setSelectedHarmonyId] = useState<string | undefined>()
+  const prefs = usePrefs()
 
   const timeCapsuleItem = useMemo(() => {
     return getTimeCapsuleForChapter(chapter.book.nr, chapter.chapter)
@@ -937,7 +938,7 @@ export default function Reader({
           )}
         </button>
 
-        {matrixItem && (
+        {prefs.showStudyTools && matrixItem && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
             <button
@@ -953,7 +954,7 @@ export default function Reader({
           </>
         )}
 
-        {dilemmaItem && (
+        {prefs.showStudyTools && dilemmaItem && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
             <button
@@ -969,7 +970,7 @@ export default function Reader({
           </>
         )}
 
-        {expeditionItem && (
+        {prefs.showStudyTools && expeditionItem && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
             <button
@@ -985,7 +986,7 @@ export default function Reader({
           </>
         )}
 
-        {timeCapsuleItem && (
+        {prefs.showStudyTools && timeCapsuleItem && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
             <button
@@ -1004,7 +1005,7 @@ export default function Reader({
           </>
         )}
 
-        {(() => {
+        {prefs.showStudyTools && (() => {
           const cHarmonies = findParallelHarmonies(chapter.book.nr, chapter.chapter)
           if (cHarmonies.length === 0) return null
           return (
@@ -1027,7 +1028,7 @@ export default function Reader({
           )
         })()}
 
-        {isLineage && (
+        {prefs.showStudyTools && isLineage && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />
             <button

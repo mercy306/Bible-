@@ -205,6 +205,27 @@ export default function MoreSheetBody({
             </div>
           </Row>
 
+          <Row label={isEn ? "Study Buttons" : "የጥናት አዝራሮች"}>
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Study buttons" : "የጥናት አዝራሮች"}>
+              <button
+                type="button"
+                className={`segbar__btn ${!prefs.showStudyTools ? 'is-active' : ''}`}
+                onClick={() => setPref('showStudyTools', false)}
+                aria-pressed={!prefs.showStudyTools}
+              >
+                {isEn ? 'Hidden' : 'የተደበቀ'}
+              </button>
+              <button
+                type="button"
+                className={`segbar__btn ${prefs.showStudyTools ? 'is-active' : ''}`}
+                onClick={() => setPref('showStudyTools', true)}
+                aria-pressed={prefs.showStudyTools}
+              >
+                {isEn ? 'Shown' : 'የሚታይ'}
+              </button>
+            </div>
+          </Row>
+
 
           <Slide
             label={isEn ? "Text size" : "የፊደል መጠን"}
