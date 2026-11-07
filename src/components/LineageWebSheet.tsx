@@ -152,8 +152,8 @@ export default function LineageWebSheet({
                   style={{
                     flexShrink: 0,
                     fontWeight: 700,
-                    background: 'var(--ink, #1c1917)',
-                    color: 'var(--paper, #ffffff)',
+                    background: 'var(--panel-2)',
+                    color: 'var(--ink)',
                     borderRadius: '999px',
                     padding: '4px 12px',
                     fontSize: '12px',
@@ -189,8 +189,8 @@ export default function LineageWebSheet({
                   style={{
                     flexShrink: 0,
                     fontWeight: activePersonId === item.id ? 700 : 500,
-                    background: activePersonId === item.id ? 'var(--accent, #2d6a4f)' : 'rgba(128, 128, 128, 0.12)',
-                    color: activePersonId === item.id ? '#ffffff' : 'inherit',
+                    background: activePersonId === item.id ? 'var(--accent)' : 'var(--panel-2, rgba(128, 128, 128, 0.12))',
+                    color: activePersonId === item.id ? 'var(--accent-ink, #ffffff)' : 'var(--ink)',
                     borderRadius: '999px',
                     padding: '4px 10px',
                     fontSize: '12px',
@@ -211,7 +211,7 @@ export default function LineageWebSheet({
                     <span className={`lineageBadge lineageBadge--${activePerson.culturalTag}`}>
                       {isEn ? activePerson.culturalBadgeEn : activePerson.culturalBadgeAm}
                     </span>
-                    <span className="lineageBadge" style={{ background: 'rgba(0,0,0,0.05)', color: 'var(--text-muted)' }}>
+                    <span className="lineageBadge" style={{ background: 'var(--panel-2)', color: 'var(--ink)' }}>
                       {isEn ? activePerson.tribeOrNationEn : activePerson.tribeOrNationAm}
                     </span>
                   </div>
@@ -658,15 +658,15 @@ export default function LineageWebSheet({
                     {isEn ? 'Direct Covenant Bloodline:' : 'ቀጥተኛው የቃል ኪዳን የደም መስመር:'}
                   </span>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 700, flexWrap: 'wrap', marginTop: 4 }}>
-                    <span style={{ color: '#fff' }}>ኖኅ (Noah)</span>
+                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ኖኅ (Noah)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: 'var(--accent)' }}>ሴም (Shem)</span>
+                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ሴም (Shem)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
                     <span>አርፋክስድ (Arpachshad)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
                     <span>ሳላ (Shelah)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: '#6ee7b7' }}>ዔቦር (Eber / ዕብራዊ)</span>
+                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ዔቦር (Eber / ዕብራዊ)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
                     <span>ፋሌቅ (Peleg)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
@@ -678,11 +678,11 @@ export default function LineageWebSheet({
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
                     <span>ታራ (Terah)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: 'var(--accent)' }}>አብርሃም (Abraham)</span>
+                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>አብርሃም (Abraham)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
                     <span>ይስሐቅ (Isaac)</span>
                     <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: '#f59e0b' }}>ያዕቆብ/እስራኤል (Jacob)</span>
+                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ያዕቆብ/እስራኤል (Jacob)</span>
                   </div>
                 </div>
 
@@ -841,7 +841,7 @@ export default function LineageWebSheet({
                 </article>
 
                 {/* Spiritual & Messianic Fulfillment */}
-                <article className="diasporaCard" style={{ borderColor: 'rgba(212, 175, 55, 0.4)', background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(22, 25, 33, 0.95) 100%)' }}>
+                <article className="diasporaCard" style={{ borderColor: 'var(--lineage-card-border, var(--line))', background: 'var(--lineage-card-bg-sub, var(--panel-2))' }}>
                   <h3 className="diasporaHeader">
                     <span>✝️</span>
                     <span>{isEn ? DIASPORA_DISCOVERY_SUMMARY.spiritualFulfillmentTitleEn : DIASPORA_DISCOVERY_SUMMARY.spiritualFulfillmentTitleAm}</span>

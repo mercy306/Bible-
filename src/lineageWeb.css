@@ -206,6 +206,44 @@
   border-color: rgba(139, 92, 246, 0.25);
 }
 
+:root[data-theme='bw'] .lineageBadge--hebrew,
+:root[data-theme='dark'] .lineageBadge--hebrew,
+[data-theme='burgundy'] .lineageBadge--hebrew {
+  color: #60a5fa;
+  background: rgba(96, 165, 250, 0.18);
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
+:root[data-theme='bw'] .lineageBadge--cushite,
+:root[data-theme='dark'] .lineageBadge--cushite,
+[data-theme='burgundy'] .lineageBadge--cushite {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.18);
+  border-color: rgba(52, 211, 153, 0.35);
+}
+
+:root[data-theme='bw'] .lineageBadge--canaanite,
+:root[data-theme='bw'] .lineageBadge--moabite,
+:root[data-theme='bw'] .lineageBadge--hittite,
+:root[data-theme='dark'] .lineageBadge--canaanite,
+:root[data-theme='dark'] .lineageBadge--moabite,
+:root[data-theme='dark'] .lineageBadge--hittite,
+[data-theme='burgundy'] .lineageBadge--canaanite,
+[data-theme='burgundy'] .lineageBadge--moabite,
+[data-theme='burgundy'] .lineageBadge--hittite {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.18);
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+:root[data-theme='bw'] .lineageBadge--greek_roman,
+:root[data-theme='dark'] .lineageBadge--greek_roman,
+[data-theme='burgundy'] .lineageBadge--greek_roman {
+  color: #c084fc;
+  background: rgba(192, 132, 252, 0.18);
+  border-color: rgba(192, 132, 252, 0.35);
+}
+
 .lineageSpotlight__names {
   display: flex;
   align-items: baseline;
@@ -280,7 +318,7 @@
 
 .lineagePillBtn:hover {
   background: var(--accent, #3d6e52);
-  color: #fff;
+  color: var(--accent-ink, #ffffff);
   border-color: var(--accent, #3d6e52);
 }
 
@@ -369,7 +407,7 @@
 
 .lineageFilterChip.is-active {
   background: var(--accent, #3d6e52);
-  color: #fff;
+  color: var(--accent-ink, #ffffff);
   border-color: var(--accent, #3d6e52);
 }
 
@@ -528,7 +566,7 @@
   height: 26px;
   border-radius: 50%;
   background: var(--accent, #3d6e52);
-  color: #fff;
+  color: var(--accent-ink, #ffffff);
   font-size: 0.78rem;
   font-weight: 700;
   display: flex;
@@ -595,7 +633,7 @@
 
 .readerBar__lineageBtn:hover {
   background: var(--accent, #3d6e52);
-  color: #fff;
+  color: var(--accent-ink, #ffffff);
 }
 
 /* ==========================================================================
@@ -638,7 +676,7 @@
 
 .nationsSubTabBtn.is-active {
   background: var(--lineage-accent);
-  color: #fff;
+  color: var(--accent-ink, #ffffff);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -962,7 +1000,7 @@
 
 .tribeJumpBtn:hover {
   background: var(--lineage-accent);
-  color: #fff;
+  color: var(--accent-ink, #ffffff);
 }
 
 /* Noah Branch Cards */
