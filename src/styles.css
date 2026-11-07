@@ -21,6 +21,28 @@
   color-scheme: light;
 }
 
+:root[data-theme='paper'] {
+  --bg: #FFFFFF;
+  --panel: #F8FAFC;
+  --panel-2: #F1F5F9;
+  --panel-sage: #E2E8F0;
+  --ink: #0F172A;
+  --ink-soft: #475569;
+  --line: #E2E8F0;
+  --highlight: rgba(254, 243, 199, 0.7);
+  --forest: #0F172A;
+  --sage: #64748B;
+  --terracotta: #C2410C;
+  --terracotta-soft: #FFEDD5;
+  --accent: #0F172A;
+  --accent-soft: rgba(15, 23, 42, 0.08);
+  --accent-ink: #FFFFFF;
+  --primary-blue: #2563EB;
+  --sand: #F8FAFC;
+  --reader-size: 20px;
+  color-scheme: light;
+}
+
 :root[data-theme='bw'],
 :root[data-theme='dark'] {
   --bg: #0E1013;
@@ -2340,6 +2362,23 @@ select {
   --terracotta-soft: #faebed;
   --accent: #7a1f2d;
   --accent-soft: #faebed
+}
+
+[data-theme=paper] {
+  --bg: #FFFFFF;
+  --panel: #F8FAFC;
+  --panel-2: #F1F5F9;
+  --panel-sage: #E2E8F0;
+  --ink: #0F172A;
+  --ink-soft: #475569;
+  --line: #E2E8F0;
+  --highlight: #FEF3C7;
+  --forest: #0F172A;
+  --sage: #64748B;
+  --terracotta: #C2410C;
+  --terracotta-soft: #FFEDD5;
+  --accent: #0F172A;
+  --accent-soft: rgba(15, 23, 42, 0.08);
 }
 
 [data-theme=sepia] {
@@ -8985,6 +9024,39 @@ body {
   color: #0E1013 !important;
 }
 
+/* Light & Paper Themes Sheet Styles */
+:root[data-theme='paper'] .sheet,
+:root[data-theme='light'] .sheet,
+:root[data-theme='sepia'] .sheet,
+:root[data-theme='gold'] .sheet {
+  background: var(--panel) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--ink) !important;
+}
+
+:root[data-theme='paper'] .sheet__title,
+:root[data-theme='light'] .sheet__title,
+:root[data-theme='sepia'] .sheet__title,
+:root[data-theme='gold'] .sheet__title {
+  color: var(--ink) !important;
+}
+
+:root[data-theme='paper'] .sheet__head,
+:root[data-theme='light'] .sheet__head,
+:root[data-theme='sepia'] .sheet__head,
+:root[data-theme='gold'] .sheet__head {
+  border-bottom: 1px solid var(--line) !important;
+}
+
+:root[data-theme='paper'] .sheet__close,
+:root[data-theme='light'] .sheet__close,
+:root[data-theme='sepia'] .sheet__close,
+:root[data-theme='gold'] .sheet__close {
+  background: var(--panel-2) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--ink) !important;
+}
+
 /* Recently Read Row in Books Sheet */
 :root[data-theme='bw'] .recent__title,
 :root[data-theme='dark'] .recent__title {
@@ -9227,6 +9299,32 @@ body {
 :root[data-theme='bw'] .verse,
 :root[data-theme='dark'] .verse {
   color: #FFFFFF !important;
+}
+
+:root[data-theme='paper'] .reader,
+:root[data-theme='paper'] .verse,
+:root[data-theme='paper'] .verse__line,
+:root[data-theme='light'] .reader,
+:root[data-theme='light'] .verse,
+:root[data-theme='light'] .verse__line,
+:root[data-theme='sepia'] .reader,
+:root[data-theme='sepia'] .verse,
+:root[data-theme='sepia'] .verse__line,
+:root[data-theme='gold'] .reader,
+:root[data-theme='gold'] .verse,
+:root[data-theme='gold'] .verse__line {
+  color: var(--ink) !important;
+}
+
+:root[data-theme='paper'] .verse__n,
+:root[data-theme='paper'] .verse__num,
+:root[data-theme='light'] .verse__n,
+:root[data-theme='light'] .verse__num,
+:root[data-theme='sepia'] .verse__n,
+:root[data-theme='sepia'] .verse__num,
+:root[data-theme='gold'] .verse__n,
+:root[data-theme='gold'] .verse__num {
+  color: var(--ink-soft) !important;
 }
 
 :root[data-theme='bw'] .verse__num,
@@ -16125,6 +16223,74 @@ html, body {
   background: #F1F5F9 !important;
   color: #0F172A !important;
   border: 1px solid #E2E8F0 !important;
+}
+
+:root[data-theme='paper'] .topbar__actionBtn {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+:root[data-theme='paper'] .topbar__actionBtn:hover {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+}
+
+:root[data-theme='paper'] .topbar__backBtn {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+:root[data-theme='paper'] .topbar__searchForm {
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+:root[data-theme='paper'] .topbar__searchInput {
+  color: #0F172A !important;
+}
+
+:root[data-theme='paper'] .topbar__searchInput::placeholder {
+  color: #94A3B8 !important;
+}
+
+:root[data-theme='paper'] .topbar__searchIcon {
+  color: #64748B !important;
+}
+
+:root[data-theme='paper'] .topbar__kbToggleBtn {
+  background: #F1F5F9 !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #475569 !important;
+}
+
+:root[data-theme='paper'] .topbar__kbToggleBtn.is-active {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+
+:root[data-theme='paper'] .homeScreen__greeting,
+:root[data-theme='paper'] .homeScreen__quote {
+  color: #0F172A !important;
+}
+
+:root[data-theme='paper'] .homeScreen__quoteRef {
+  color: #64748B !important;
+}
+
+:root[data-theme='paper'] .homeScreen__keepCard,
+:root[data-theme='paper'] .homeScreen__recentItem {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+}
+
+:root[data-theme='paper'] .homeScreen__keepLabel,
+:root[data-theme='paper'] .homeScreen__recentRef {
+  color: #0F172A !important;
 }
 
 /* ==========================================================================

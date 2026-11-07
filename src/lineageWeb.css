@@ -1,7 +1,74 @@
 /* ==========================================================================
    Lineage & Cultural Web (The Interactive Roots Bible)
-   Obsidian, Sage & Parchment Theme
+   Obsidian, Sage & Daylight Themes with Full Light/Dark Contrast
    ========================================================================== */
+
+:root {
+  --surface: var(--panel, #16181d);
+  --border: var(--line, rgba(255, 255, 255, 0.08));
+  --text: var(--ink, #ffffff);
+  --text-muted: var(--ink-soft, #94a3b8);
+  --bg-hover: rgba(255, 255, 255, 0.05);
+
+  --lineage-card-bg: var(--panel, #16181d);
+  --lineage-card-bg-sub: var(--panel-2, #1e2128);
+  --lineage-card-border: var(--line, rgba(255, 255, 255, 0.08));
+  --lineage-text: var(--ink, #ffffff);
+  --lineage-text-soft: var(--ink-soft, #94a3b8);
+  --lineage-step-bg: rgba(255, 255, 255, 0.04);
+  --lineage-accent: var(--accent, #d4af37);
+  
+  --lineage-origin-title: #93c5fd;
+  --lineage-origin-border: #60a5fa;
+  --lineage-exile-title: #fca5a5;
+  --lineage-exile-border: #f87171;
+  --lineage-now-title: #6ee7b7;
+  --lineage-now-border: #34d399;
+  
+  --lineage-ethiopia-bg: rgba(45, 106, 79, 0.2);
+  --lineage-ethiopia-border: rgba(45, 106, 79, 0.4);
+  --lineage-ethiopia-title: #6ee7b7;
+  --lineage-ethiopia-text: #d1fae5;
+  
+  --lineage-accordion-bg: rgba(0, 0, 0, 0.25);
+  --lineage-toggle-bg: rgba(255, 255, 255, 0.03);
+  --lineage-toggle-border: rgba(255, 255, 255, 0.14);
+}
+
+:root[data-theme='light'],
+:root[data-theme='paper'],
+:root[data-theme='sepia'],
+:root[data-theme='gold'] {
+  --surface: var(--panel, #ffffff);
+  --border: var(--line, rgba(0, 0, 0, 0.12));
+  --text: var(--ink, #0f172a);
+  --text-muted: var(--ink-soft, #475569);
+  --bg-hover: rgba(0, 0, 0, 0.04);
+
+  --lineage-card-bg: var(--panel, #ffffff);
+  --lineage-card-bg-sub: var(--panel-2, #f1f5f9);
+  --lineage-card-border: var(--line, rgba(0, 0, 0, 0.12));
+  --lineage-text: var(--ink, #0f172a);
+  --lineage-text-soft: var(--ink-soft, #475569);
+  --lineage-step-bg: rgba(0, 0, 0, 0.03);
+  --lineage-accent: var(--accent, #b45309);
+  
+  --lineage-origin-title: #1d4ed8;
+  --lineage-origin-border: #2563eb;
+  --lineage-exile-title: #b91c1c;
+  --lineage-exile-border: #dc2626;
+  --lineage-now-title: #047857;
+  --lineage-now-border: #059669;
+  
+  --lineage-ethiopia-bg: rgba(4, 120, 87, 0.08);
+  --lineage-ethiopia-border: rgba(4, 120, 87, 0.3);
+  --lineage-ethiopia-title: #047857;
+  --lineage-ethiopia-text: #064e3b;
+  
+  --lineage-accordion-bg: rgba(0, 0, 0, 0.03);
+  --lineage-toggle-bg: rgba(0, 0, 0, 0.03);
+  --lineage-toggle-border: rgba(0, 0, 0, 0.16);
+}
 
 .lineageSheetBody {
   display: flex;
@@ -543,10 +610,10 @@
 .nationsSubTabs {
   display: flex;
   gap: 6px;
-  background: var(--panel-2, rgba(255, 255, 255, 0.05));
+  background: var(--lineage-card-bg-sub);
   padding: 4px;
   border-radius: 999px;
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--lineage-card-border);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -564,20 +631,20 @@
   border: none;
   border-radius: 999px;
   background: transparent;
-  color: var(--ink-soft, #888);
+  color: var(--lineage-text-soft);
   cursor: pointer;
   transition: all 0.16s ease;
 }
 
 .nationsSubTabBtn.is-active {
-  background: var(--accent, #d4af37);
-  color: #0e1013;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  background: var(--lineage-accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nationsHeroBanner {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(61, 110, 82, 0.12) 100%);
-  border: 1px solid rgba(212, 175, 55, 0.25);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 16px;
   padding: 14px 16px;
   display: flex;
@@ -588,7 +655,7 @@
 .nationsHeroTitle {
   font-size: 0.96rem;
   font-weight: 800;
-  color: var(--ink, #fff);
+  color: var(--lineage-text);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -597,7 +664,7 @@
 .nationsHeroDesc {
   font-size: 0.82rem;
   line-height: 1.5;
-  color: var(--ink-soft, #aaa);
+  color: var(--lineage-text-soft);
   margin: 0;
 }
 
@@ -609,19 +676,19 @@
 }
 
 .tribeCard {
-  background: var(--panel, #161921);
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  background: var(--lineage-card-bg);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 16px;
   padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   transition: transform 0.15s, border-color 0.15s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .tribeCard:hover {
-  border-color: var(--accent, #d4af37);
+  border-color: var(--lineage-accent);
 }
 
 .tribeHeader {
@@ -640,10 +707,10 @@
 .tribeSymbol {
   font-size: 1.8rem;
   line-height: 1;
-  background: var(--panel-2, rgba(255, 255, 255, 0.06));
+  background: var(--lineage-card-bg-sub);
   border-radius: 12px;
   padding: 6px;
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--lineage-card-border);
 }
 
 .tribeTitles {
@@ -655,13 +722,13 @@
 .tribeName {
   font-size: 1.1rem;
   font-weight: 800;
-  color: var(--ink, #fff);
+  color: var(--lineage-text);
   margin: 0;
 }
 
 .tribeMeaning {
   font-size: 0.76rem;
-  color: var(--ink-soft, #999);
+  color: var(--lineage-text-soft);
 }
 
 .tribeBadges {
@@ -676,26 +743,26 @@
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 6px;
-  background: var(--panel-2, rgba(255, 255, 255, 0.06));
-  color: var(--ink-soft, #ccc);
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.1));
+  background: var(--lineage-card-bg-sub);
+  color: var(--lineage-text-soft);
+  border: 1px solid var(--lineage-card-border);
 }
 
 .tribeBadge--kingdom {
   background: rgba(212, 175, 55, 0.15);
-  color: var(--accent, #d4af37);
+  color: var(--lineage-accent);
   border-color: rgba(212, 175, 55, 0.3);
 }
 
 .tribeBadge--mother {
   background: rgba(99, 102, 241, 0.15);
-  color: #a5b4fc;
+  color: var(--lineage-origin-title);
   border-color: rgba(99, 102, 241, 0.3);
 }
 
 .tribeProphecyBox {
-  background: var(--panel-2, rgba(255, 255, 255, 0.04));
-  border-left: 3px solid var(--accent, #d4af37);
+  background: var(--lineage-card-bg-sub);
+  border-left: 3px solid var(--lineage-accent);
   border-radius: 0 10px 10px 0;
   padding: 10px 12px;
   display: flex;
@@ -708,14 +775,14 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--accent, #d4af37);
+  color: var(--lineage-accent);
 }
 
 .tribeProphecyText {
   font-size: 0.82rem;
   font-style: italic;
   line-height: 1.45;
-  color: var(--ink, #eee);
+  color: var(--lineage-text);
   margin: 0;
 }
 
@@ -726,8 +793,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
-  background: var(--panel-2, rgba(255, 255, 255, 0.03));
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  background: var(--lineage-card-bg-sub);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 12px;
   padding: 10px 12px;
 }
@@ -743,22 +810,22 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  background: rgba(0, 0, 0, 0.15);
+  background: var(--lineage-step-bg);
   padding: 8px 10px;
   border-radius: 8px;
-  border-left: 2.5px solid transparent;
+  border-left: 3px solid transparent;
 }
 
 .tribeJourneyStep--origin {
-  border-left-color: #60a5fa;
+  border-left-color: var(--lineage-origin-border);
 }
 
 .tribeJourneyStep--exile {
-  border-left-color: #f87171;
+  border-left-color: var(--lineage-exile-border);
 }
 
 .tribeJourneyStep--now {
-  border-left-color: #34d399;
+  border-left-color: var(--lineage-now-border);
 }
 
 .tribeJourneyStepTitle {
@@ -772,21 +839,21 @@
 }
 
 .tribeJourneyStepTitle--origin {
-  color: #93c5fd;
+  color: var(--lineage-origin-title);
 }
 
 .tribeJourneyStepTitle--exile {
-  color: #fca5a5;
+  color: var(--lineage-exile-title);
 }
 
 .tribeJourneyStepTitle--now {
-  color: #6ee7b7;
+  color: var(--lineage-now-title);
 }
 
 .tribeJourneyStepContent {
-  font-size: 0.79rem;
-  line-height: 1.42;
-  color: var(--ink, #eee);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--lineage-text);
   margin: 0;
 }
 
@@ -797,10 +864,10 @@
   justify-content: space-between;
   width: 100%;
   padding: 7px 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px dashed var(--line, rgba(255, 255, 255, 0.14));
+  background: var(--lineage-toggle-bg);
+  border: 1px dashed var(--lineage-toggle-border);
   border-radius: 8px;
-  color: var(--ink-soft, #aaa);
+  color: var(--lineage-text-soft);
   font-size: 0.76rem;
   font-weight: 700;
   cursor: pointer;
@@ -808,9 +875,9 @@
 }
 
 .tribeAccordionToggle:hover {
-  background: rgba(255, 255, 255, 0.07);
-  color: var(--accent, #d4af37);
-  border-color: var(--accent, #d4af37);
+  background: var(--lineage-step-bg);
+  color: var(--lineage-accent);
+  border-color: var(--lineage-accent);
 }
 
 .tribeAccordionContent {
@@ -819,9 +886,9 @@
   gap: 10px;
   margin-top: 4px;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--lineage-accordion-bg);
   border-radius: 10px;
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--lineage-card-border);
 }
 
 .tribeDetailRow {
@@ -835,19 +902,19 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: var(--ink-soft, #888);
+  color: var(--lineage-text-soft);
 }
 
 .tribeDetailText {
   font-size: 0.82rem;
   line-height: 1.48;
-  color: var(--ink, #ddd);
+  color: var(--lineage-text);
   margin: 0;
 }
 
 .tribeEthiopiaHighlight {
-  background: rgba(45, 106, 79, 0.15);
-  border: 1px solid rgba(45, 106, 79, 0.35);
+  background: var(--lineage-ethiopia-bg);
+  border: 1px solid var(--lineage-ethiopia-border);
   border-radius: 10px;
   padding: 9px 12px;
   display: flex;
@@ -858,7 +925,7 @@
 .tribeEthiopiaTitle {
   font-size: 0.74rem;
   font-weight: 800;
-  color: #6ee7b7;
+  color: var(--lineage-ethiopia-title);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -867,7 +934,7 @@
 .tribeEthiopiaText {
   font-size: 0.81rem;
   line-height: 1.45;
-  color: #d1fae5;
+  color: var(--lineage-ethiopia-text);
   margin: 0;
 }
 
@@ -882,9 +949,9 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: var(--panel-2, rgba(255, 255, 255, 0.08));
-  color: var(--ink, #fff);
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  background: var(--lineage-card-bg-sub);
+  color: var(--lineage-text);
+  border: 1px solid var(--lineage-card-border);
   padding: 6px 12px;
   border-radius: 8px;
   font-size: 0.78rem;
@@ -894,19 +961,20 @@
 }
 
 .tribeJumpBtn:hover {
-  background: var(--accent, #d4af37);
-  color: #0e1013;
+  background: var(--lineage-accent);
+  color: #fff;
 }
 
 /* Noah Branch Cards */
 .noahBranchCard {
-  background: var(--panel, #161921);
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  background: var(--lineage-card-bg);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 16px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .noahBranchHeader {
@@ -918,7 +986,7 @@
 .noahBranchTitle {
   font-size: 1.2rem;
   font-weight: 800;
-  color: var(--accent, #d4af37);
+  color: var(--lineage-accent);
   margin: 0;
 }
 
@@ -937,25 +1005,25 @@
 }
 
 .noahSonChip {
-  background: var(--panel-2, rgba(255, 255, 255, 0.05));
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  background: var(--lineage-card-bg-sub);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 8px;
   padding: 4px 8px;
   font-size: 0.76rem;
-  color: var(--ink-soft, #ccc);
+  color: var(--lineage-text-soft);
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
 
 .noahSonChip strong {
-  color: var(--ink, #fff);
+  color: var(--lineage-text);
   font-weight: 700;
 }
 
 .noahSonItem {
-  background: var(--panel-2, rgba(255, 255, 255, 0.04));
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  background: var(--lineage-card-bg-sub);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 10px;
   padding: 8px 10px;
   display: flex;
@@ -966,12 +1034,12 @@
 .noahSonName {
   font-size: 0.84rem;
   font-weight: 800;
-  color: var(--ink, #fff);
+  color: var(--lineage-text);
 }
 
 .noahSonNations {
   font-size: 0.77rem;
-  color: var(--ink-soft, #aaa);
+  color: var(--lineage-text-soft);
 }
 
 /* Diaspora Insights */
@@ -982,19 +1050,20 @@
 }
 
 .diasporaCard {
-  background: var(--panel, #161921);
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  background: var(--lineage-card-bg);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 16px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .diasporaHeader {
   font-size: 1rem;
   font-weight: 800;
-  color: var(--accent, #d4af37);
+  color: var(--lineage-accent);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1004,7 +1073,7 @@
 .diasporaText {
   font-size: 0.84rem;
   line-height: 1.5;
-  color: var(--ink, #ddd);
+  color: var(--lineage-text);
   margin: 0;
 }
 
@@ -1021,8 +1090,8 @@
 }
 
 .diasporaSubCard {
-  background: var(--panel-2, rgba(255, 255, 255, 0.04));
-  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  background: var(--lineage-card-bg-sub);
+  border: 1px solid var(--lineage-card-border);
   border-radius: 12px;
   padding: 12px;
   display: flex;
@@ -1033,12 +1102,12 @@
 .diasporaSubTitle {
   font-size: 0.88rem;
   font-weight: 800;
-  color: #6ee7b7;
+  color: var(--lineage-now-title);
 }
 
 .diasporaSubDesc {
   font-size: 0.8rem;
   line-height: 1.45;
-  color: var(--ink-soft, #bbb);
+  color: var(--lineage-text-soft);
   margin: 0;
 }
