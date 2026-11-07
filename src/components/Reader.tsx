@@ -970,22 +970,6 @@ export default function Reader({
           </>
         )}
 
-        {prefs.showStudyTools && expeditionItem && (
-          <>
-            <div className="readerBar__divider" aria-hidden="true" />
-            <button
-              type="button"
-              className="readerBar__atlasBtn"
-              onClick={() => setPanel('chronoAtlas')}
-              title={language === 'en' ? 'The Living Chrono-Atlas (Journey Map)' : 'የመጽሐፍ ቅዱስ ሕያው የጉዞ ካርታ'}
-              aria-label={language === 'en' ? 'The Living Chrono-Atlas (Journey Map)' : 'የመጽሐፍ ቅዱስ ሕያው የጉዞ ካርታ'}
-            >
-              <span className="readerBar__matrixIcon">🗺️</span>
-              <span className="readerBar__matrixLabel">{language === 'en' ? 'Atlas' : 'ጉዞ'}</span>
-            </button>
-          </>
-        )}
-
         {prefs.showStudyTools && timeCapsuleItem && (
           <>
             <div className="readerBar__divider" aria-hidden="true" />

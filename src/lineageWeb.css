@@ -530,3 +530,386 @@
   background: var(--accent, #3d6e52);
   color: #fff;
 }
+
+/* ==========================================================================
+   Nations & 12 Tribes Dossier Styling
+   ========================================================================== */
+.nationsTribesBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nationsSubTabs {
+  display: flex;
+  gap: 6px;
+  background: var(--panel-2, rgba(255, 255, 255, 0.05));
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.1));
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nationsSubTabBtn {
+  flex: 1;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft, #888);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.nationsSubTabBtn.is-active {
+  background: var(--accent, #d4af37);
+  color: #0e1013;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.nationsHeroBanner {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(61, 110, 82, 0.12) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nationsHeroTitle {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--ink, #fff);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nationsHeroDesc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-soft, #aaa);
+  margin: 0;
+}
+
+/* Tribe Cards */
+.tribeCardsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tribeCard {
+  background: var(--panel, #161921);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.15s, border-color 0.15s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tribeCard:hover {
+  border-color: var(--accent, #d4af37);
+}
+
+.tribeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tribeHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tribeSymbol {
+  font-size: 1.8rem;
+  line-height: 1;
+  background: var(--panel-2, rgba(255, 255, 255, 0.06));
+  border-radius: 12px;
+  padding: 6px;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+}
+
+.tribeTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tribeName {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ink, #fff);
+  margin: 0;
+}
+
+.tribeMeaning {
+  font-size: 0.76rem;
+  color: var(--ink-soft, #999);
+}
+
+.tribeBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.tribeBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--panel-2, rgba(255, 255, 255, 0.06));
+  color: var(--ink-soft, #ccc);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.1));
+}
+
+.tribeBadge--kingdom {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--accent, #d4af37);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.tribeBadge--mother {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.tribeProphecyBox {
+  background: var(--panel-2, rgba(255, 255, 255, 0.04));
+  border-left: 3px solid var(--accent, #d4af37);
+  border-radius: 0 10px 10px 0;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tribeProphecyTitle {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent, #d4af37);
+}
+
+.tribeProphecyText {
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ink, #eee);
+  margin: 0;
+}
+
+.tribeDetailRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tribeDetailLabel {
+  font-size: 0.73rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft, #888);
+}
+
+.tribeDetailText {
+  font-size: 0.82rem;
+  line-height: 1.48;
+  color: var(--ink, #ddd);
+  margin: 0;
+}
+
+.tribeEthiopiaHighlight {
+  background: rgba(45, 106, 79, 0.15);
+  border: 1px solid rgba(45, 106, 79, 0.35);
+  border-radius: 10px;
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tribeEthiopiaTitle {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #6ee7b7;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tribeEthiopiaText {
+  font-size: 0.81rem;
+  line-height: 1.45;
+  color: #d1fae5;
+  margin: 0;
+}
+
+.tribeActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tribeJumpBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--panel-2, rgba(255, 255, 255, 0.08));
+  color: var(--ink, #fff);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tribeJumpBtn:hover {
+  background: var(--accent, #d4af37);
+  color: #0e1013;
+}
+
+/* Noah Branch Cards */
+.noahBranchCard {
+  background: var(--panel, #161921);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.noahBranchHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.noahBranchTitle {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent, #d4af37);
+  margin: 0;
+}
+
+.noahSonsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.noahSonItem {
+  background: var(--panel-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.noahSonName {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--ink, #fff);
+}
+
+.noahSonNations {
+  font-size: 0.77rem;
+  color: var(--ink-soft, #aaa);
+}
+
+/* Diaspora Insights */
+.diasporaBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.diasporaCard {
+  background: var(--panel, #161921);
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.diasporaHeader {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent, #d4af37);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.diasporaText {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink, #ddd);
+  margin: 0;
+}
+
+.diasporaGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 600px) {
+  .diasporaGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.diasporaSubCard {
+  background: var(--panel-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.diasporaSubTitle {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #6ee7b7;
+}
+
+.diasporaSubDesc {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-soft, #bbb);
+  margin: 0;
+}
