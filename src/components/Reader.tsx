@@ -29,7 +29,7 @@ import {
   useHighlights,
   type VerseRef,
 } from '../userdata'
-import { usePrefs, type LanguageMode } from '../prefs'
+import type { LanguageMode } from '../prefs'
 import type { ChapterResponse } from '../types'
 import { useReadingPlan, toggleChapterRead } from '../readingPlan'
 
@@ -104,7 +104,6 @@ export default function Reader({
 
   const [selectedCapsuleId, setSelectedCapsuleId] = useState<string | undefined>(undefined)
   const [selectedHarmonyId, setSelectedHarmonyId] = useState<string | undefined>()
-  const prefs = usePrefs()
 
   const timeCapsuleItem = useMemo(() => {
     return getTimeCapsuleForChapter(chapter.book.nr, chapter.chapter)
@@ -932,82 +931,6 @@ export default function Reader({
             </svg>
           )}
         </button>
-
-        {prefs.showStudyTools && matrixItem && (
-          <>
-            <div className="readerBar__divider" aria-hidden="true" />
-            <button
-              type="button"
-              className="readerBar__matrixBtn"
-              onClick={() => setPanel('perspectiveMatrix')}
-              title={language === 'en' ? 'Perspective Matrix (POV Bible)' : 'የእይታ ማትሪክስ (4D ዕይታ)'}
-              aria-label={language === 'en' ? 'Perspective Matrix (POV Bible)' : 'የእይታ ማትሪክስ (4D ዕይታ)'}
-            >
-              <span className="readerBar__matrixIcon">👁️</span>
-              <span className="readerBar__matrixLabel">{language === 'en' ? 'POV' : 'ዕይታ'}</span>
-            </button>
-          </>
-        )}
-
-        {prefs.showStudyTools && dilemmaItem && (
-          <>
-            <div className="readerBar__divider" aria-hidden="true" />
-            <button
-              type="button"
-              className="readerBar__dilemmaBtn"
-              onClick={() => setPanel('ethicsSandbox')}
-              title={language === 'en' ? 'Living Ethics & Decision Sandbox' : 'የውሳኔና የሥነ-ምግባር አውድማ'}
-              aria-label={language === 'en' ? 'Living Ethics & Decision Sandbox' : 'የውሳኔና የሥነ-ምግባር አውድማ'}
-            >
-              <span className="readerBar__matrixIcon">⚖️</span>
-              <span className="readerBar__matrixLabel">{language === 'en' ? 'Dilemma' : 'ውሳኔ'}</span>
-            </button>
-          </>
-        )}
-
-        {prefs.showStudyTools && timeCapsuleItem && (
-          <>
-            <div className="readerBar__divider" aria-hidden="true" />
-            <button
-              type="button"
-              className="readerBar__capsuleBtn"
-              onClick={() => {
-                setSelectedCapsuleId(timeCapsuleItem.id)
-                setPanel('timeCapsule')
-              }}
-              title={language === 'en' ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
-              aria-label={language === 'en' ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
-            >
-              <span className="readerBar__matrixIcon">⏳</span>
-              <span className="readerBar__matrixLabel">{language === 'en' ? 'Context' : 'እውነታ'}</span>
-            </button>
-          </>
-        )}
-
-        {prefs.showStudyTools && (() => {
-          const cHarmonies = findParallelHarmonies(chapter.book.nr, chapter.chapter)
-          if (cHarmonies.length === 0) return null
-          return (
-            <>
-              <div className="readerBar__divider" aria-hidden="true" />
-              <button
-                type="button"
-                className="readerBar__harmonyBtn"
-                onClick={() => {
-                  setSelectedHarmonyId(cHarmonies[0].id)
-                  setPanel('parallelHarmony')
-                }}
-                title={language === 'en' ? 'Parallel Scripture Harmony' : 'የተዛማጅ ክፍሎች ማነጻጸሪያ'}
-                aria-label={language === 'en' ? 'Parallel Scripture Harmony' : 'የተዛማጅ ክፍሎች ማነጻጸሪያ'}
-              >
-                <span className="readerBar__matrixIcon">🔄</span>
-                <span className="readerBar__matrixLabel">{language === 'en' ? 'Parallels' : 'ተዛማጅ'}</span>
-              </button>
-            </>
-          )
-        })()}
-
-
       </div>
 
       <PerspectiveMatrixSheet

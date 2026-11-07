@@ -38,7 +38,7 @@ export default function LineageWebSheet({
   const [tribeFilter, setTribeFilter] = useState<'all' | 'southern' | 'northern'>('all')
   const [expandedTribes, setExpandedTribes] = useState<Record<string, boolean>>({})
   const [expandedNoah, setExpandedNoah] = useState<Record<string, boolean>>({})
-  const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'jesus')
+  const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
   const [searchQuery, setSearchQuery] = useState('')
   const [culturalFilter, setCulturalFilter] = useState<CulturalFilter>('all')
 
@@ -46,7 +46,7 @@ export default function LineageWebSheet({
   const [fromId, setFromId] = useState<string>('ruth')
   const [toId, setToId] = useState<string>('jesus')
 
-  const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['jesus']
+  const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
 
   // Search results
   const searchResults = useMemo(() => {
@@ -189,6 +189,43 @@ export default function LineageWebSheet({
               </div>
             )}
 
+            {/* Quick-Jump Biblical Patriarchs / Family Heads */}
+            <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', padding: '6px 0 12px', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+              {[
+                { id: 'adam', en: 'Adam', am: 'አዳም' },
+                { id: 'cain', en: 'Cain', am: 'ቃየል' },
+                { id: 'seth', en: 'Seth', am: 'ሴት' },
+                { id: 'noah', en: 'Noah', am: 'ኖኅ' },
+                { id: 'abraham', en: 'Abraham', am: 'አብርሃም' },
+                { id: 'jacob', en: 'Jacob', am: 'ያዕቆብ' },
+                { id: 'amram', en: 'Amram', am: 'እንበረም' },
+                { id: 'moses', en: 'Moses', am: 'ሙሴ' },
+                { id: 'david', en: 'David', am: 'ዳዊት' },
+                { id: 'solomon', en: 'Solomon', am: 'ሰሎሞን' },
+                { id: 'jesus', en: 'Jesus', am: 'ኢየሱስ' },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="lineagePillBtn"
+                  onClick={() => selectPerson(item.id)}
+                  style={{
+                    flexShrink: 0,
+                    fontWeight: activePersonId === item.id ? 700 : 500,
+                    background: activePersonId === item.id ? 'var(--accent, #2d6a4f)' : 'rgba(128, 128, 128, 0.12)',
+                    color: activePersonId === item.id ? '#ffffff' : 'inherit',
+                    borderRadius: '999px',
+                    padding: '4px 10px',
+                    fontSize: '12px',
+                    border: '1px solid var(--line, rgba(0,0,0,0.1))',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {isEn ? item.en : item.am}
+                </button>
+              ))}
+            </div>
+
             {/* Spotlight Card */}
             <article className="lineageSpotlight">
               <header className="lineageSpotlight__header">
@@ -244,6 +281,37 @@ export default function LineageWebSheet({
                     )}
                   </div>
                 </div>
+
+                {/* Siblings (brothers & sisters) */}
+                {(() => {
+                  const siblings = Object.values(LINEAGE_PEOPLE).filter(
+                    (p) =>
+                      p.id !== activePerson.id &&
+                      ((activePerson.fatherId && p.fatherId === activePerson.fatherId) ||
+                        (activePerson.motherId && p.motherId === activePerson.motherId))
+                  )
+                  if (siblings.length === 0) return null
+                  return (
+                    <div className="lineageKinshipRow">
+                      <span className="lineageKinshipLabel">
+                        {isEn ? 'Siblings:' : 'ወንድሞችና እህቶች:'}
+                      </span>
+                      <div className="lineageKinshipLinks">
+                        {siblings.map((sib) => (
+                          <button
+                            key={sib.id}
+                            type="button"
+                            className="lineagePillBtn"
+                            onClick={() => selectPerson(sib.id)}
+                          >
+                            <span>↔️</span>
+                            <span>{isEn ? sib.nameEn : sib.nameAm}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })()}
 
                 {/* Spouses */}
                 <div className="lineageKinshipRow">
