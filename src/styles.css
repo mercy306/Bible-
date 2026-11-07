@@ -1,3 +1,30 @@
+/* ==========================================================================
+   Ethiopic & Latin Reader Typefaces (Offline Bundled Fonts)
+   ========================================================================== */
+@font-face {
+  font-family: 'Noto Serif Ethiopic';
+  src: url('/fonts/NotoSerifEthiopic-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans Ethiopic';
+  src: url('/fonts/NotoSansEthiopic-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Abyssinica SIL';
+  src: url('/fonts/AbyssinicaSIL-Regular.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root,
 :root[data-theme='light'] {
   --bg: #CAD5C8;
@@ -751,7 +778,7 @@ select {
 
 :root[data-lang=am],
 :root[data-lang=tig] {
-  font-family:"Noto Serif Ethiopic",Nyala,Abyssinica SIL,Kefa,serif
+  font-family:var(--reader-font, "Noto Serif Ethiopic", serif);
 }
 
 :root[data-lang=am] .verse__text,
@@ -2318,16 +2345,30 @@ select {
   padding:14px 16px 40px
 }
 
+:root[data-font=serif],
 [data-font=serif] {
-  --reader-font: "Noto Serif Ethiopic", Nyala, Georgia, "Times New Roman", serif
+  --reader-font: "Noto Serif Ethiopic", Georgia, "Times New Roman", serif !important;
 }
 
+:root[data-font=sans],
 [data-font=sans] {
-  --reader-font: "Noto Sans Ethiopic", "Abyssinica SIL", system-ui, -apple-system, "Segoe UI", sans-serif
+  --reader-font: "Noto Sans Ethiopic", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
 }
 
+:root[data-font=traditional],
 [data-font=traditional] {
-  --reader-font: "Abyssinica SIL", Nyala, "Noto Serif Ethiopic", "Times New Roman", serif
+  --reader-font: "Abyssinica SIL", "Noto Serif Ethiopic", Georgia, serif !important;
+}
+
+/* Individual preview styling for the typeface buttons in Look tab */
+.segbar__btn[data-font=serif] {
+  font-family: "Noto Serif Ethiopic", Georgia, serif !important;
+}
+.segbar__btn[data-font=sans] {
+  font-family: "Noto Sans Ethiopic", system-ui, sans-serif !important;
+}
+.segbar__btn[data-font=traditional] {
+  font-family: "Abyssinica SIL", serif !important;
 }
 
 [data-theme=burgundy] {
@@ -4473,7 +4514,7 @@ select {
 
 .read .verse__line {
   margin:0 0 10px;
-  font-family:var(--reader-font, inherit);
+  font-family:var(--reader-font, inherit) !important;
   font-size:var(--reader-size, 20px);
   line-height:1.9
 }
@@ -4762,9 +4803,9 @@ select {
 }
 
 .read .verse__line[lang=am] {
-  font-family:"Noto Serif Ethiopic",Nyala,Abyssinica SIL,serif;
+  font-family:var(--reader-font, "Noto Serif Ethiopic", serif) !important;
   line-height:calc(var(--reader-leading, 1.9) + .12);
-  letter-spacing:.005em
+  letter-spacing:.005em;
 }
 
 @media (orientation: landscape) and (max-height: 560px) {

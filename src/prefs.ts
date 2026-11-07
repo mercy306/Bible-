@@ -3,9 +3,9 @@ import { useSyncExternalStore } from 'react'
 /** Reading preferences: typeface, text size, theme and accent colour. */
 
 export const FONTS = [
-  { id: 'serif', label: 'Serif', note: 'Easy on the eyes' },
-  { id: 'sans', label: 'Clean', note: 'Plain and modern' },
-  { id: 'traditional', label: 'Traditional', note: 'Ethiopic book style' },
+  { id: 'serif', label: 'Serif', am: 'ሴሪፍ', note: 'Easy on the eyes' },
+  { id: 'sans', label: 'Clean', am: 'ዘመናዊ', note: 'Plain and modern' },
+  { id: 'traditional', label: 'Traditional', am: 'ባሕላዊ', note: 'Ethiopic book style' },
 ] as const
 
 export const SIZES = [
@@ -252,6 +252,13 @@ export function applyPrefs(prefs: Prefs) {
   root.dataset.size = String(prefs.sizePx)
   root.dataset.theme = prefs.theme
   root.dataset.accent = prefs.accent
+
+  const fontMap: Record<FontId, string> = {
+    serif: '"Noto Serif Ethiopic", Georgia, "Times New Roman", serif',
+    sans: '"Noto Sans Ethiopic", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    traditional: '"Abyssinica SIL", "Noto Serif Ethiopic", Georgia, serif',
+  }
+  root.style.setProperty('--reader-font', fontMap[prefs.font] || fontMap.serif)
 
   if (prefs.accent === 'custom' && prefs.customColor) {
     root.style.setProperty('--accent', prefs.customColor)

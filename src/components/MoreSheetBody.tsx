@@ -218,6 +218,31 @@ export default function MoreSheetBody({
             show={(v) => `${v}px`}
             onChange={(v) => setPref('sizePx', v)}
           />
+
+          <Row label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
+              {FONTS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`segbar__btn ${prefs.font === item.id ? 'is-active' : ''}`}
+                  onClick={() => setPref('font', item.id)}
+                  aria-pressed={prefs.font === item.id}
+                  data-font={item.id}
+                  aria-label={item.note}
+                  title={item.note}
+                >
+                  {isEn ? item.label : item.am}
+                </button>
+              ))}
+            </div>
+          </Row>
+
+          <p className="msample" lang={isEn ? 'en' : 'am'}>
+            {isEn
+              ? 'In the beginning God created the heaven and the earth.'
+              : 'በመጀመሪያ እግዚአብሔር ሰማይንና ምድርን ፈጠረ።'}
+          </p>
         </div>
       )}
 
@@ -325,7 +350,7 @@ export default function MoreSheetBody({
                   aria-label={item.note}
                   title={item.note}
                 >
-                  {item.label}
+                  {isEn ? item.label : item.am}
                 </button>
               ))}
             </div>
