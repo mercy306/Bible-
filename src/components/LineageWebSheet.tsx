@@ -3,8 +3,6 @@ import Sheet from './Sheet'
 import type { LanguageMode } from '../prefs'
 import {
   LINEAGE_PEOPLE,
-  findSixDegreesPath,
-  PRESET_CONNECTIONS,
 } from '../lineageData'
 import {
   NOAH_SONS_DATA,
@@ -21,8 +19,7 @@ interface Props {
   onOpenPassage?: (book: number, chapter: number) => void
 }
 
-type TabMode = 'tree' | 'nations_tribes' | 'cultural' | 'path'
-type CulturalFilter = 'all' | 'twelve_tribes' | 'noah_nations' | 'gentile_women' | 'cushite_african' | 'royal' | 'priestly'
+type TabMode = 'tree' | 'nations_tribes'
 type NationsSubTab = 'tribes' | 'noah' | 'diaspora'
 
 export default function LineageWebSheet({
@@ -41,11 +38,6 @@ export default function LineageWebSheet({
   const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
   const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
-  const [culturalFilter, setCulturalFilter] = useState<CulturalFilter>('all')
-
-  // Six Degrees states
-  const [fromId, setFromId] = useState<string>('ruth')
-  const [toId, setToId] = useState<string>('jesus')
 
   const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
 
@@ -61,41 +53,6 @@ export default function LineageWebSheet({
         p.culturalBadgeAm.includes(q)
     )
   }, [searchQuery])
-
-  // Filtered Cultural list
-  const culturalList = useMemo(() => {
-    const all = Object.values(LINEAGE_PEOPLE)
-    if (culturalFilter === 'twelve_tribes') {
-      return all.filter((p) => [
-        'reuben', 'simeon', 'levi', 'judah', 'dan', 'naphtali',
-        'gad', 'asher', 'issachar', 'zebulun', 'joseph', 'benjamin',
-        'ephraim', 'manasseh', 'dinah'
-      ].includes(p.id))
-    }
-    if (culturalFilter === 'noah_nations') {
-      return all.filter((p) => [
-        'noah', 'shem', 'ham', 'japheth', 'cush', 'mizraim', 'put', 'canaan_son', 'gomer', 'javan', 'nimrod'
-      ].includes(p.id))
-    }
-    if (culturalFilter === 'gentile_women') {
-      return all.filter((p) => ['tamar', 'rahab', 'ruth', 'bathsheba', 'asenath'].includes(p.id))
-    }
-    if (culturalFilter === 'cushite_african') {
-      return all.filter((p) => ['cush', 'nimrod', 'mizraim', 'put', 'zipporah', 'queen_of_sheba', 'ebed_melech', 'ethiopian_eunuch'].includes(p.id))
-    }
-    if (culturalFilter === 'royal') {
-      return all.filter((p) => ['judah', 'perez', 'boaz', 'david', 'solomon', 'joseph_carpenter', 'mary_mother', 'jesus'].includes(p.id))
-    }
-    if (culturalFilter === 'priestly') {
-      return all.filter((p) => ['levi', 'kohath', 'amram', 'moses', 'aaron', 'eleazar', 'phinehas', 'zadok', 'zechariah_priest', 'john_baptist'].includes(p.id))
-    }
-    return all
-  }, [culturalFilter])
-
-  // Computed shortest path for Six Degrees
-  const pathSteps = useMemo(() => {
-    return findSixDegreesPath(fromId, toId)
-  }, [fromId, toId])
 
   const selectPerson = (id: string) => {
     if (LINEAGE_PEOPLE[id]) {
@@ -117,10 +74,6 @@ export default function LineageWebSheet({
       onClose()
     }
   }
-
-  const allPersonsSorted = useMemo(() => {
-    return Object.values(LINEAGE_PEOPLE).sort((a, b) => (isEn ? a.nameEn.localeCompare(b.nameEn) : a.nameAm.localeCompare(b.nameAm)))
-  }, [isEn])
 
   return (
     <Sheet
@@ -149,23 +102,7 @@ export default function LineageWebSheet({
             <span>👑</span>
             <span>{isEn ? '12 Tribes & Noah' : 'የኖኅ ልጆችና 12ቱ ነገዶች'}</span>
           </button>
-          <button
-            type="button"
-            className={`lineageTabBtn ${activeTab === 'cultural' ? 'is-active' : ''}`}
-            onClick={() => setActiveTab('cultural')}
-          >
-            <span>🌍</span>
-            <span>{isEn ? 'Cultural & Diaspora Web' : 'የባህልና ብሔር ትሥሥር'}</span>
-          </button>
-          <button
-            type="button"
-            className={`lineageTabBtn ${activeTab === 'path' ? 'is-active' : ''}`}
-            onClick={() => setActiveTab('path')}
-          >
-            <span>🔗</span>
-            <span>{isEn ? 'Six Degrees Connector' : 'የትውልድ ድልድይ'}</span>
-          </button>
-        </nav>
+          </nav>
 
         {/* ============================================================ */}
         {/* TAB 1: LIVING FAMILY TREE EXPLORER */}
@@ -919,195 +856,7 @@ export default function LineageWebSheet({
         )}
 
         {/* ============================================================ */}
-        {/* TAB 3: CULTURAL & DIASPORA MATRIX                            */}
-        {/* ============================================================ */}
-        {activeTab === 'cultural' && (
-          <div className="lineageCulturalGrid">
-            {/* Filter Chips */}
-            <div className="lineageFilterRow">
-              <button
-                type="button"
-                className={`lineageFilterChip ${culturalFilter === 'all' ? 'is-active' : ''}`}
-                onClick={() => setCulturalFilter('all')}
-              >
-                {isEn ? 'All Figures' : 'ሁሉም'}
-              </button>
-              <button
-                type="button"
-                className={`lineageFilterChip ${culturalFilter === 'twelve_tribes' ? 'is-active' : ''}`}
-                onClick={() => setCulturalFilter('twelve_tribes')}
-              >
-                👑 {isEn ? '12 Tribes of Israel' : '12ቱ የእስራኤል ነገዶች'}
-              </button>
-              <button
-                type="button"
-                className={`lineageFilterChip ${culturalFilter === 'noah_nations' ? 'is-active' : ''}`}
-                onClick={() => setCulturalFilter('noah_nations')}
-              >
-                🌍 {isEn ? 'Nations of Noah' : 'የኖኅ 3 ልጆችና ሕዝቦች'}
-              </button>
-              <button
-                type="button"
-                className={`lineageFilterChip ${culturalFilter === 'gentile_women' ? 'is-active' : ''}`}
-                onClick={() => setCulturalFilter('gentile_women')}
-              >
-                👑 {isEn ? "Gentile Women in Christ's Line" : 'በክርስቶስ ሐረግ ያሉ አሕዛብ ሴቶች'}
-              </button>
-              <button
-                type="button"
-                className={`lineageFilterChip ${culturalFilter === 'cushite_african' ? 'is-active' : ''}`}
-                onClick={() => setCulturalFilter('cushite_african')}
-              >
-                🌍 {isEn ? 'African & Cushite Roots' : 'የአፍሪካና የኩሽ ትሥሥር'}
-              </button>
-              <button
-                type="button"
-                className={`lineageFilterChip ${culturalFilter === 'royal' ? 'is-active' : ''}`}
-                onClick={() => setCulturalFilter('royal')}
-              >
-                🦁 {isEn ? 'Royal Davidic Line' : 'የዳዊት የንግሥና መስመር'}
-              </button>
-              <button
-                type="button"
-                className={`lineageFilterChip ${culturalFilter === 'priestly' ? 'is-active' : ''}`}
-                onClick={() => setCulturalFilter('priestly')}
-              >
-                🕯️ {isEn ? 'Priestly Levite Line' : 'የሌዊ የክህነት መስመር'}
-              </button>
-            </div>
-
-            {/* List of Persons */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {culturalList.map((p) => (
-                <div
-                  key={p.id}
-                  className="lineagePersonCard"
-                  onClick={() => selectPerson(p.id)}
-                >
-                  <div className="lineagePersonCard__left">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span className="lineagePersonCard__name">{isEn ? p.nameEn : p.nameAm}</span>
-                      <span className={`lineageBadge lineageBadge--${p.culturalTag}`} style={{ padding: '2px 6px', fontSize: '0.68rem' }}>
-                        {isEn ? p.culturalBadgeEn : p.culturalBadgeAm}
-                      </span>
-                    </div>
-                    <span className="lineagePersonCard__desc">
-                      {isEn ? p.tribeOrNationEn : p.tribeOrNationAm} • {isEn ? p.eraEn : p.eraAm}
-                    </span>
-                  </div>
-                  <span className="lineagePersonCard__action">
-                    {isEn ? 'Explore →' : 'መርምር →'}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ============================================================ */}
-        {/* TAB 3: "SIX DEGREES OF SCRIPTURE" CONNECTOR */}
-        {/* ============================================================ */}
-        {activeTab === 'path' && (
-          <div className="sixDegreesBox">
-            {/* Presets */}
-            <div className="sixDegreesPresets">
-              <span className="sixDegreesPresetsTitle">
-                {isEn ? '⚡ Famous Connections (Tap to Load)' : '⚡ ታዋቂ ትሥሥሮች (ለመክፈት ይንኩ)'}
-              </span>
-              <div className="sixDegreesChips">
-                {PRESET_CONNECTIONS.map((c) => (
-                  <button
-                    key={c.fromId + c.toId}
-                    type="button"
-                    className="sixDegreesPresetBtn"
-                    onClick={() => {
-                      setFromId(c.fromId)
-                      setToId(c.toId)
-                    }}
-                  >
-                    {isEn ? c.labelEn : c.labelAm}
-                  </button>
-                ))}
               </div>
-            </div>
-
-            {/* Selectors */}
-            <div className="sixDegreesSelectors">
-              <select
-                className="sixDegreesSelect"
-                value={fromId}
-                onChange={(e) => setFromId(e.target.value)}
-              >
-                {allPersonsSorted.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {isEn ? p.nameEn : p.nameAm}
-                  </option>
-                ))}
-              </select>
-
-              <span className="sixDegreesSwapIcon">➔</span>
-
-              <select
-                className="sixDegreesSelect"
-                value={toId}
-                onChange={(e) => setToId(e.target.value)}
-              >
-                {allPersonsSorted.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {isEn ? p.nameEn : p.nameAm}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Path visualization */}
-            {pathSteps.length > 0 ? (
-              <div className="pathChain">
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--accent)', marginBottom: '8px' }}>
-                  {isEn
-                    ? `Found connection across ${pathSteps.length - 1} generational links:`
-                    : `በ${pathSteps.length - 1} የትውልድ እርከኖች የተገኘ ትሥሥር፦`}
-                </div>
-                {pathSteps.map((step, idx) => (
-                  <div key={step.person.id + idx} className="pathStep">
-                    <div
-                      className="pathStepNode"
-                      onClick={() => selectPerson(step.person.id)}
-                      title={isEn ? 'Click to inspect in Family Tree' : 'በትውልድ ዛፍ ውስጥ ለማየት ይንኩ'}
-                    >
-                      <span className="pathStepNumber">{idx + 1}</span>
-                      <div className="pathStepInfo">
-                        <span className="pathStepName">
-                          {isEn ? step.person.nameEn : step.person.nameAm}
-                        </span>
-                        <span className="pathStepBadge">
-                          {isEn ? step.person.culturalBadgeEn : step.person.culturalBadgeAm} • {isEn ? step.person.eraEn : step.person.eraAm}
-                        </span>
-                      </div>
-                      <span style={{ fontSize: '0.78rem', color: 'var(--accent)', fontWeight: 600 }}>
-                        {isEn ? 'Inspect 🌳' : 'እይ 🌳'}
-                      </span>
-                    </div>
-
-                    {step.relationToNextEn && (
-                      <div className="pathConnector">
-                        <div className="pathLine" />
-                        <span className="pathRelation">
-                          ⬇️ {isEn ? step.relationToNextEn : step.relationToNextAm}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div style={{ textAlign: 'center', padding: '24px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                {isEn ? 'No direct connection found between these two figures.' : 'በእነዚህ ሁለት ሰዎች መካከል ቀጥተኛ ትሥሥር አልተገኘም።'}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
     </Sheet>
   )
 }

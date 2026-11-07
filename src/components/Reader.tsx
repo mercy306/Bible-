@@ -5,17 +5,10 @@ import SharePanel from './SharePanel'
 import Sheet from './Sheet'
 import VerseCommentary from './VerseCommentary'
 import WordPanel from './WordPanel'
-import PerspectiveMatrixSheet from './PerspectiveMatrixSheet'
-import { getPerspectiveMatrixForChapter } from '../perspectiveMatrixData'
-import EthicsSandboxSheet from './EthicsSandboxSheet'
-import { getDilemmaForChapter } from '../ethicsSandboxData'
-import LineageWebSheet from './LineageWebSheet'
-import ChronoAtlasSheet from './ChronoAtlasSheet'
 import TimeCapsuleSheet from './TimeCapsuleSheet'
 import ParallelHarmonySheet from './ParallelHarmonySheet'
 import { findParallelHarmonies } from '../parallelHarmonyData'
 import { getTimeCapsuleForChapter, getTimeCapsuleForVerse } from '../timeCapsuleData'
-import { getExpeditionForChapter } from '../chronoAtlasData'
 import { useBookNames } from './useBookNames'
 import {
   isBookmarked,
@@ -56,7 +49,7 @@ interface Line {
   alternate?: boolean
 }
 
-type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'perspectiveMatrix' | 'ethicsSandbox' | 'lineageWeb' | 'chronoAtlas' | 'timeCapsule' | 'parallelHarmony'
+type Panel = 'none' | 'chapters' | 'commentary' | 'note' | 'share' | 'collections' | 'timeCapsule' | 'parallelHarmony'
 
 /**
  * One row of the chapter. A row labelled `from–to` covers several English
@@ -94,23 +87,11 @@ export default function Reader({
   const [isNoteOpen, setIsNoteOpen] = useState(false)
   const [noteSavedFeedback, setNoteSavedFeedback] = useState<number | null>(null)
 
-  const matrixItem = useMemo(() => {
-    return getPerspectiveMatrixForChapter(chapter.book.nr, chapter.chapter)
-  }, [chapter.book.nr, chapter.chapter])
-
-  const dilemmaItem = useMemo(() => {
-    return getDilemmaForChapter(chapter.book.nr, chapter.chapter)
-  }, [chapter.book.nr, chapter.chapter])
-
   const [selectedCapsuleId, setSelectedCapsuleId] = useState<string | undefined>(undefined)
   const [selectedHarmonyId, setSelectedHarmonyId] = useState<string | undefined>()
 
   const timeCapsuleItem = useMemo(() => {
     return getTimeCapsuleForChapter(chapter.book.nr, chapter.chapter)
-  }, [chapter.book.nr, chapter.chapter])
-
-  const expeditionItem = useMemo(() => {
-    return getExpeditionForChapter(chapter.book.nr, chapter.chapter)
   }, [chapter.book.nr, chapter.chapter])
 
   function handleChapterListen() {
@@ -933,29 +914,6 @@ export default function Reader({
         </button>
       </div>
 
-      <PerspectiveMatrixSheet
-        open={panel === 'perspectiveMatrix'}
-        item={matrixItem ?? null}
-        language={language}
-        onClose={() => setPanel('none')}
-      />
-
-      <EthicsSandboxSheet
-        open={panel === 'ethicsSandbox'}
-        dilemma={dilemmaItem ?? null}
-        language={language}
-        onClose={() => setPanel('none')}
-        onOpenPassage={(b, c) => onOpen(b, c)}
-      />
-
-      <ChronoAtlasSheet
-        open={panel === 'chronoAtlas'}
-        initialExpeditionId={expeditionItem?.id}
-        language={language}
-        onClose={() => setPanel('none')}
-        onOpenPassage={(b, c) => onOpen(b, c)}
-      />
-
       <TimeCapsuleSheet
         open={panel === 'timeCapsule'}
         initialEntryId={selectedCapsuleId || timeCapsuleItem?.id}
@@ -970,13 +928,6 @@ export default function Reader({
         bookNr={chapter.book.nr}
         chapter={chapter.chapter}
         verse={selected ?? undefined}
-        language={language}
-        onClose={() => setPanel('none')}
-        onOpenPassage={(b, c) => onOpen(b, c)}
-      />
-
-      <LineageWebSheet
-        open={panel === 'lineageWeb'}
         language={language}
         onClose={() => setPanel('none')}
         onOpenPassage={(b, c) => onOpen(b, c)}

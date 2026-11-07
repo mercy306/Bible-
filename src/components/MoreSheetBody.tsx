@@ -144,15 +144,15 @@ export default function MoreSheetBody({
   onTranslation: _onTranslation,
   onLanguage,
   onSearch,
-  onSaved,
-  onPrayers,
+  onSaved: _onSaved,
+  onPrayers: _onPrayers,
   onPlan,
   onSaga,
   onLineage,
   onAtlas,
   onTimeCapsule,
-  savedCount,
-  prayerCount,
+  savedCount: _savedCount,
+  prayerCount: _prayerCount,
   onGoTo,
   onPrint,
 }: Props) {
@@ -206,26 +206,7 @@ export default function MoreSheetBody({
             </div>
           </Row>
 
-          <Row label={isEn ? "Study Buttons" : "የጥናት አዝራሮች"}>
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Study buttons" : "የጥናት አዝራሮች"}>
-              <button
-                type="button"
-                className={`segbar__btn ${!prefs.showStudyTools ? 'is-active' : ''}`}
-                onClick={() => setPref('showStudyTools', false)}
-                aria-pressed={!prefs.showStudyTools}
-              >
-                {isEn ? 'Hidden' : 'የተደበቀ'}
-              </button>
-              <button
-                type="button"
-                className={`segbar__btn ${prefs.showStudyTools ? 'is-active' : ''}`}
-                onClick={() => setPref('showStudyTools', true)}
-                aria-pressed={prefs.showStudyTools}
-              >
-                {isEn ? 'Shown' : 'የሚታይ'}
-              </button>
-            </div>
-          </Row>
+          
 
 
           <Slide
@@ -358,16 +339,6 @@ export default function MoreSheetBody({
               <span className="mwide__count">Context</span>
             </button>
           )}
-
-          <button type="button" className="mwide" onClick={() => onSaved()}>
-            {isEn ? 'Saved verses' : 'የተቀመጡ ጥቅሶች'}
-            <span className="mwide__count">{savedCount}</span>
-          </button>
-
-          <button type="button" className="mwide" onClick={() => onPrayers()}>
-            {isEn ? 'Prayer journal' : 'የጸሎት ማስታወሻ'}
-            <span className="mwide__count">{prayerCount}</span>
-          </button>
 
           <form
             className="mrow"

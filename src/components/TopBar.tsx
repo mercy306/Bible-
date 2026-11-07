@@ -51,7 +51,7 @@ export default function TopBar({
   onMore: _onMore,
   onBack: _onBack,
   onDaily,
-  onSaga,
+  onSaga: _onSaga,
   onLineage,
   translation = 'am',
   books = [],
@@ -265,7 +265,7 @@ export default function TopBar({
               onClick={onBooks}
               title={isEn ? "Choose Book or Chapter" : "መጽሐፍ ወይም ምዕራፍ ይምረጡ"}
             >
-              <h1 className="topbar__chapterTitle">{lead} {chapter}</h1>
+              <h1 className="topbar__chapterTitle">{lead} {chapter} <span style={{ opacity: 0.6, fontSize: "0.85em" }}>▾</span></h1>
             </button>
 
             <div className="topbar__rightActions">
@@ -282,31 +282,9 @@ export default function TopBar({
                 </svg>
               </button>
 
-              <button
-                type="button"
-                className="topbar__actionBtn"
-                onClick={onBooks}
-                title={isEn ? "All 66 Books" : "ሁሉም 66 መጻሕፍት"}
-                aria-label={isEn ? "All 66 Books" : "ሁሉም 66 መጻሕፍት"}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-              </button>
+              
 
-              {onSaga && (
-                <button
-                  type="button"
-                  className="topbar__actionBtn topbar__sagaBtn"
-                  onClick={onSaga}
-                  title={isEn ? "Epic Chronological Saga" : "የዘመን ታሪክ ቅደም ተከተል"}
-                  aria-label={isEn ? "Epic Chronological Saga" : "የዘመን ታሪክ ቅደም ተከተል"}
-                >
-                  <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>👑</span>
-                </button>
-              )}
+              
 
               {onLineage && (
                 <button
