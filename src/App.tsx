@@ -88,7 +88,8 @@ export default function App() {
   const [sheet, setSheet] = useState<'none' | 'books' | 'more' | 'lineage' | 'atlas' | 'capsule'>('none')
   const [compare, setCompare] = useState<'off' | 'am54'>('off')
   const [memorize, setMemorize] = useState(false)
-  const [wordLookup, setWordLookup] = useState(false)
+  const [wordLookup, setWordLookup] = useState(() => { try { return localStorage.getItem('wordLookup') === 'true' } catch { return false } })
+  const handleWordLookup = (val: boolean) => { setWordLookup(val); try { localStorage.setItem('wordLookup', String(val)) } catch {} }
   const [showLaunch, setShowLaunch] = useState(true)
 
 
@@ -481,7 +482,7 @@ export default function App() {
           onCompare={setCompare}
           onMemorize={setMemorize}
           wordLookup={wordLookup}
-          onWordLookup={setWordLookup}
+          onWordLookup={handleWordLookup}
           onTranslation={(id) => go({ ...route, translation: id })}
           onLanguage={handleLanguage}
           onSearch={openSearch}
