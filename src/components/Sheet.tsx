@@ -5,6 +5,7 @@ interface Props {
   open: boolean
   title: string
   onClose: () => void
+  onBack?: () => void
   children: ReactNode
   /** 'left' slides in from the side, 'bottom' rises from the bar. */
   side?: 'left' | 'bottom'
@@ -20,19 +21,32 @@ export default function Sheet({
   open,
   title,
   onClose,
+  onBack,
   children,
   side = 'bottom',
   labelId,
   language = 'am',
 }: Props) {
+  const effectiveBack = onBack ?? onClose
+
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        effectiveBack()
+      }
+    }
+    const onAppBack = (e: Event) => {
+      e.preventDefault()
+      effectiveBack()
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
+    window.addEventListener('app:back', onAppBack)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('app:back', onAppBack)
+    }
+  }, [open, effectiveBack])
 
   if (!open) return null
 
@@ -48,7 +62,21 @@ export default function Sheet({
       >
         <div className="sheet__grip" aria-hidden="true" />
         <header className="sheet__head">
-          <h2 className="sheet__title">{title}</h2>
+          <div className="sheet__headLeft">
+            <button
+              type="button"
+              className="sheet__back"
+              onClick={effectiveBack}
+              aria-label={language === 'en' ? 'Back' : 'ወደ ኋላ'}
+              title={language === 'en' ? 'Back' : 'ወደ ኋላ'}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+              <span className="sheet__backText">{language === 'en' ? 'Back' : 'ወደ ኋላ'}</span>
+            </button>
+            <h2 className="sheet__title">{title}</h2>
+          </div>
           <button
             type="button"
             className="sheet__close"

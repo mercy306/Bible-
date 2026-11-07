@@ -155,6 +155,11 @@ export default function ChronoAtlasSheet({
         setIsPlaying(false)
         onClose()
       }}
+      onBack={() => {
+        setIsPlaying(false)
+        onClose()
+      }}
+      language={language}
     >
       <div ref={bodyRef} className="sheet__body atlasSheetBody">
         {/* Expedition Selector Tabs */}

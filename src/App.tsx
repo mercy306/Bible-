@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { App as CapApp } from '@capacitor/app'
 import {
   fetchBooks,
   fetchChapter,
@@ -202,6 +203,36 @@ export default function App() {
       cancelled = true
     }
   }, [route.translation])
+
+  useEffect(() => {
+    let removeHandler: (() => void) | undefined
+    const setup = async () => {
+      try {
+        const handle = await CapApp.addListener('backButton', () => {
+          const evt = new CustomEvent('app:back', { cancelable: true })
+          const handled = !window.dispatchEvent(evt)
+          if (handled) return
+
+          if (sheet !== 'none') {
+            setSheet('none')
+            return
+          }
+
+          if (route.view !== 'read') {
+            go({ ...route, view: 'read' })
+            return
+          }
+
+          CapApp.exitApp()
+        })
+        removeHandler = () => handle.remove()
+      } catch {}
+    }
+    setup()
+    return () => {
+      if (removeHandler) removeHandler()
+    }
+  }, [sheet, route, go])
 
   const openChapter = useCallback(
     (book: number, chapterNr: number) =>

@@ -122,6 +122,8 @@ export default function TimeCapsuleSheet({
       open={open}
       title={isEn ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
       onClose={onClose}
+      onBack={onClose}
+      language={language}
     >
       <div ref={bodyRef} className="capsuleSheetBody">
         {/* Top Control Header: Search & Quick Book Picker */}

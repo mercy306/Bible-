@@ -39,6 +39,7 @@ export default function LineageWebSheet({
   const [expandedTribes, setExpandedTribes] = useState<Record<string, boolean>>({})
   const [expandedNoah, setExpandedNoah] = useState<Record<string, boolean>>({})
   const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
+  const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [culturalFilter, setCulturalFilter] = useState<CulturalFilter>('all')
 
@@ -98,9 +99,22 @@ export default function LineageWebSheet({
 
   const selectPerson = (id: string) => {
     if (LINEAGE_PEOPLE[id]) {
+      if (id !== activePersonId) {
+        setHistory((prev) => [...prev, activePersonId])
+      }
       setActivePersonId(id)
       setActiveTab('tree')
       setSearchQuery('')
+    }
+  }
+
+  const handleBack = () => {
+    if (history.length > 0) {
+      const prevId = history[history.length - 1]
+      setHistory((prev) => prev.slice(0, -1))
+      setActivePersonId(prevId)
+    } else {
+      onClose()
     }
   }
 
@@ -113,6 +127,7 @@ export default function LineageWebSheet({
       open={open}
       title={isEn ? 'Genealogical & Cultural Lineage Web' : 'የትውልድ ሐረግና የባህል ትሥሥር'}
       onClose={onClose}
+      onBack={handleBack}
       language={language}
     >
       <div className="sheet__body lineageSheetBody">
@@ -191,6 +206,31 @@ export default function LineageWebSheet({
 
             {/* Quick-Jump Biblical Patriarchs / Family Heads */}
             <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', padding: '6px 0 12px', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+              {history.length > 0 && (
+                <button
+                  type="button"
+                  className="lineagePillBtn"
+                  onClick={handleBack}
+                  title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
+                  style={{
+                    flexShrink: 0,
+                    fontWeight: 700,
+                    background: 'var(--ink, #1c1917)',
+                    color: 'var(--paper, #ffffff)',
+                    borderRadius: '999px',
+                    padding: '4px 12px',
+                    fontSize: '12px',
+                    border: '1px solid var(--line, rgba(0,0,0,0.2))',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <span>←</span>
+                  <span>{isEn ? `Back (${LINEAGE_PEOPLE[history[history.length - 1]]?.nameEn || 'Prev'})` : `ወደ ኋላ (${LINEAGE_PEOPLE[history[history.length - 1]]?.nameAm || 'ቀዳሚ'})`}</span>
+                </button>
+              )}
               {[
                 { id: 'adam', en: 'Adam', am: 'አዳም' },
                 { id: 'cain', en: 'Cain', am: 'ቃየል' },
@@ -229,13 +269,29 @@ export default function LineageWebSheet({
             {/* Spotlight Card */}
             <article className="lineageSpotlight">
               <header className="lineageSpotlight__header">
-                <div className="lineageBadgesRow">
-                  <span className={`lineageBadge lineageBadge--${activePerson.culturalTag}`}>
-                    {isEn ? activePerson.culturalBadgeEn : activePerson.culturalBadgeAm}
-                  </span>
-                  <span className="lineageBadge" style={{ background: 'rgba(0,0,0,0.05)', color: 'var(--text-muted)' }}>
-                    {isEn ? activePerson.tribeOrNationEn : activePerson.tribeOrNationAm}
-                  </span>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
+                  <div className="lineageBadgesRow">
+                    <span className={`lineageBadge lineageBadge--${activePerson.culturalTag}`}>
+                      {isEn ? activePerson.culturalBadgeEn : activePerson.culturalBadgeAm}
+                    </span>
+                    <span className="lineageBadge" style={{ background: 'rgba(0,0,0,0.05)', color: 'var(--text-muted)' }}>
+                      {isEn ? activePerson.tribeOrNationEn : activePerson.tribeOrNationAm}
+                    </span>
+                  </div>
+                  {history.length > 0 && (
+                    <button
+                      type="button"
+                      className="sheet__back"
+                      onClick={handleBack}
+                      style={{ height: '28px', padding: '0 10px', fontSize: '11.5px', borderRadius: '8px' }}
+                      title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
+                    >
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                      </svg>
+                      <span>{isEn ? 'Back' : 'ወደ ኋላ'}</span>
+                    </button>
+                  )}
                 </div>
                 <div className="lineageSpotlight__names">
                   <h3 className="lineageSpotlight__nameEn">{isEn ? activePerson.nameEn : activePerson.nameAm}</h3>
