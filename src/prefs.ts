@@ -31,6 +31,10 @@ export const THEMES = [
   { id: 'night', label: 'Navy', am: 'ሰማያዊ', note: 'Midnight Blue / OLED', bg: '#0B1320', ink: '#EBF0EC' },
   { id: 'dark', label: 'Mocha', am: 'ቡናማ', note: 'Warm Espresso Earth', bg: '#1D1612', ink: '#F7EDE6' },
   { id: 'paper', label: 'Paper', am: 'ንጹሕ ነጭ', note: 'Crisp White Daylight', bg: '#FFFFFF', ink: '#0F172A' },
+  { id: 'olive', label: 'Olive', am: 'ወይራ', note: 'Gethsemane Olive Grove', bg: '#151F16', ink: '#E6F0E7' },
+  { id: 'ocean', label: 'Ocean', am: 'ውቅያኖስ', note: 'Deep Galilee Sapphire', bg: '#091224', ink: '#E2EAFC' },
+  { id: 'lavender', label: 'Lavender', am: 'ሐምራዊ', note: 'Royal Amethyst Twilight', bg: '#161224', ink: '#F0EBF8' },
+  { id: 'clay', label: 'Clay', am: 'ሸክላ', note: 'Sinai Desert Terracotta', bg: '#221217', ink: '#FBEAEB' },
 ] as const
 
 export const ACCENTS = [
@@ -42,6 +46,12 @@ export const ACCENTS = [
   { id: 'blue', label: 'Sapphire', am: 'ሰንፔር', swatch: '#2563eb' },
   { id: 'plum', label: 'Amethyst', am: 'ሐምራዊ', swatch: '#7c3aed' },
   { id: 'slate', label: 'Slate', am: 'ብረት', swatch: '#64748b' },
+  { id: 'crimson', label: 'Ruby', am: 'ሩቢ ቀይ', swatch: '#dc2626' },
+  { id: 'teal', label: 'Teal', am: 'አረንጓዴ ሰማያዊ', swatch: '#0d9488' },
+  { id: 'coral', label: 'Coral', am: 'ኮራል', swatch: '#ea580c' },
+  { id: 'rose', label: 'Rose', am: 'ጽጌረዳ', swatch: '#e11d48' },
+  { id: 'violet', label: 'Violet', am: 'ቫዮሌት', swatch: '#9333ea' },
+  { id: 'emerald', label: 'Mint', am: 'ሚንት', swatch: '#059669' },
 ] as const
 
 /** How much of the two languages the reading screen shows at once. */
@@ -51,15 +61,42 @@ export const LANGUAGES = [
 ] as const
 
 export type FontId = 'serif' | 'sans' | 'traditional'
-export type ThemeId = 'light' | 'bw' | 'dark' | 'burgundy' | 'sepia' | 'gold' | 'night' | 'paper'
-export type AccentId = 'gold' | 'burgundy' | 'amber' | 'brown' | 'blue' | 'green' | 'plum' | 'slate'
+export type ThemeId =
+  | 'light'
+  | 'bw'
+  | 'dark'
+  | 'burgundy'
+  | 'sepia'
+  | 'gold'
+  | 'night'
+  | 'paper'
+  | 'olive'
+  | 'ocean'
+  | 'lavender'
+  | 'clay'
+export type AccentId =
+  | 'gold'
+  | 'burgundy'
+  | 'amber'
+  | 'brown'
+  | 'blue'
+  | 'green'
+  | 'plum'
+  | 'slate'
+  | 'crimson'
+  | 'teal'
+  | 'coral'
+  | 'rose'
+  | 'violet'
+  | 'emerald'
+  | 'custom'
 export type LanguageMode = 'am' | 'en' | 'both'
 
 export interface Prefs {
   font: 'serif' | 'sans' | 'traditional'
   sizePx: number
   theme: ThemeId
-  accent: 'gold' | 'burgundy' | 'amber' | 'brown' | 'blue' | 'green' | 'plum' | 'slate'
+  accent: AccentId
   /** Optional custom background color picked by the user */
   customColor?: string
   /** Which language the reading screen shows. */
@@ -90,8 +127,37 @@ const DEFAULTS: Prefs = {
 }
 
 const FONT_IDS = ['serif', 'sans', 'traditional'] as FontId[]
-const THEME_IDS = ['light', 'bw', 'dark', 'burgundy', 'sepia', 'gold', 'night', 'paper'] as ThemeId[]
-const ACCENT_IDS = ['gold', 'burgundy', 'amber', 'brown', 'blue', 'green', 'plum', 'slate'] as AccentId[]
+const THEME_IDS = [
+  'light',
+  'bw',
+  'dark',
+  'burgundy',
+  'sepia',
+  'gold',
+  'night',
+  'paper',
+  'olive',
+  'ocean',
+  'lavender',
+  'clay',
+] as ThemeId[]
+const ACCENT_IDS = [
+  'gold',
+  'burgundy',
+  'amber',
+  'brown',
+  'blue',
+  'green',
+  'plum',
+  'slate',
+  'crimson',
+  'teal',
+  'coral',
+  'rose',
+  'violet',
+  'emerald',
+  'custom',
+] as AccentId[]
 const LANGUAGE_IDS = ['am', 'en', 'both'] as LanguageMode[]
 
 function pick<T extends string>(value: unknown, allowed: T[], fallback: T): T {
@@ -157,12 +223,46 @@ function getSnapshot() {
   return current
 }
 
+function hexToRgba(hex: string, alpha: number): string {
+  let c = hex.replace('#', '')
+  if (c.length === 3) c = c.split('').map((x) => x + x).join('')
+  const num = parseInt(c, 16)
+  if (isNaN(num)) return `rgba(212, 175, 55, ${alpha})`
+  const r = (num >> 16) & 255
+  const g = (num >> 8) & 255
+  const b = num & 255
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+function getContrastInk(hex: string): string {
+  let c = hex.replace('#', '')
+  if (c.length === 3) c = c.split('').map((x) => x + x).join('')
+  const num = parseInt(c, 16)
+  if (isNaN(num)) return '#FFFFFF'
+  const r = (num >> 16) & 255
+  const g = (num >> 8) & 255
+  const b = num & 255
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000
+  return yiq >= 150 ? '#0E1013' : '#FFFFFF'
+}
+
 export function applyPrefs(prefs: Prefs) {
   const root = document.documentElement
   root.dataset.font = prefs.font
   root.dataset.size = String(prefs.sizePx)
   root.dataset.theme = prefs.theme
   root.dataset.accent = prefs.accent
+
+  if (prefs.accent === 'custom' && prefs.customColor) {
+    root.style.setProperty('--accent', prefs.customColor)
+    root.style.setProperty('--accent-soft', hexToRgba(prefs.customColor, 0.18))
+    root.style.setProperty('--accent-ink', getContrastInk(prefs.customColor))
+  } else {
+    root.style.removeProperty('--accent')
+    root.style.removeProperty('--accent-soft')
+    root.style.removeProperty('--accent-ink')
+  }
+
   if (typeof root.style?.removeProperty === 'function') {
     root.style.removeProperty('--bg')
   } else {

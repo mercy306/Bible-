@@ -262,7 +262,10 @@ export default function MoreSheetBody({
                     type="button"
                     className={`accentSwatchBtn ${isActive ? 'is-active' : ''}`}
                     style={{ background: item.swatch }}
-                    onClick={() => setPref('accent', item.id)}
+                    onClick={() => {
+                      setPref('accent', item.id)
+                      if (prefs.customColor) setPref('customColor', '')
+                    }}
                     role="radio"
                     aria-checked={isActive}
                     title={isEn ? item.label : item.am}
@@ -270,6 +273,42 @@ export default function MoreSheetBody({
                   />
                 )
               })}
+
+              {/* Custom Color Wheel Swatch */}
+              <label
+                className={`accentSwatchBtn accentSwatchBtn--custom ${prefs.accent === 'custom' ? 'is-active' : ''}`}
+                title={isEn ? "Custom Color Wheel (Any Color)" : "ብጁ ቀለም (የራስዎ ምርጫ)"}
+                aria-label={isEn ? "Custom Color Wheel" : "ብጁ ቀለም"}
+                style={{
+                  background: prefs.accent === 'custom' && prefs.customColor
+                    ? prefs.customColor
+                    : 'conic-gradient(from 180deg at 50% 50%, #f43f5e, #fb923c, #facc15, #4ade80, #38bdf8, #818cf8, #c084fc, #f43f5e)',
+                  position: 'relative',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <input
+                  type="color"
+                  value={prefs.customColor || '#d4af37'}
+                  style={{
+                    opacity: 0,
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    cursor: 'pointer',
+                  }}
+                  onChange={(e) => {
+                    const color = e.target.value
+                    setPref('customColor', color)
+                    setPref('accent', 'custom')
+                  }}
+                />
+                <span style={{ fontSize: '0.85rem', pointerEvents: 'none', filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.6))' }}>🎨</span>
+              </label>
             </div>
           </Row>
 

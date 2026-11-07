@@ -16418,3 +16418,253 @@ html, body {
   box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--ink);
   transform: scale(1.08);
 }
+
+
+/* ==========================================================================
+   EXPANDED COLOR PALETTES: NEW THEMES & NEW ACCENTS
+   ========================================================================== */
+
+/* 1. New Theme: Olive (Gethsemane Olive Grove) */
+:root[data-theme='olive'],
+[data-theme='olive'] {
+  --bg: #151F16;
+  --panel: #1D2A1F;
+  --panel-2: #253628;
+  --panel-sage: #2C4030;
+  --ink: #E6F0E7;
+  --ink-soft: #9BB89E;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(74, 222, 128, 0.15);
+  --forest: #4ADE80;
+  --sage: #9BB89E;
+  --terracotta: #86EFAC;
+  --terracotta-soft: rgba(74, 222, 128, 0.12);
+  --accent: #4ADE80;
+  --accent-soft: rgba(74, 222, 128, 0.15);
+  --accent-ink: #0E1013;
+  color-scheme: dark;
+}
+:root[data-theme='olive'] body { background: #0E170F !important; }
+:root[data-theme='olive'] .app { background: #151F16 !important; }
+:root[data-theme='olive'] .mountainHero { background: #151F16 !important; color: #E6F0E7 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='olive'] .mountainHero__bg, :root[data-theme='olive'] .mountainHero__overlay { display: none !important; }
+:root[data-theme='olive'] .topbar__chapterTitle { color: #E6F0E7 !important; background: #1D2A1F !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='olive'] .botbar { background: rgba(29, 42, 31, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='olive'] .botbar__btn { color: #9BB89E !important; }
+:root[data-theme='olive'] .botbar__btn.is-active { background: #4ADE80 !important; color: #0E1013 !important; }
+:root[data-theme='olive'] .botbar__btn.is-active .botbar__icon svg { color: #0E1013 !important; stroke: #0E1013 !important; }
+:root[data-theme='olive'] .botbar__btn.is-active .botbar__label { color: #0E1013 !important; }
+:root[data-theme='olive'] .readerBar { background: rgba(29, 42, 31, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='olive'] .readerBar__chapterBtn { background: #4ADE80 !important; color: #0E1013 !important; }
+:root[data-theme='olive'] .readerBar__navBtn { color: #E6F0E7 !important; }
+:root[data-theme='olive'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #E6F0E7 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
+/* 2. New Theme: Ocean (Deep Galilee Sapphire) */
+:root[data-theme='ocean'],
+[data-theme='ocean'] {
+  --bg: #091224;
+  --panel: #101C36;
+  --panel-2: #172647;
+  --panel-sage: #1F325C;
+  --ink: #E2EAFC;
+  --ink-soft: #8BA8DC;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(56, 189, 248, 0.18);
+  --forest: #38BDF8;
+  --sage: #8BA8DC;
+  --terracotta: #60A5FA;
+  --terracotta-soft: rgba(56, 189, 248, 0.15);
+  --accent: #38BDF8;
+  --accent-soft: rgba(56, 189, 248, 0.16);
+  --accent-ink: #091224;
+  color-scheme: dark;
+}
+:root[data-theme='ocean'] body { background: #050B18 !important; }
+:root[data-theme='ocean'] .app { background: #091224 !important; }
+:root[data-theme='ocean'] .mountainHero { background: #091224 !important; color: #E2EAFC !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='ocean'] .mountainHero__bg, :root[data-theme='ocean'] .mountainHero__overlay { display: none !important; }
+:root[data-theme='ocean'] .topbar__chapterTitle { color: #E2EAFC !important; background: #101C36 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='ocean'] .botbar { background: rgba(16, 28, 54, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='ocean'] .botbar__btn { color: #8BA8DC !important; }
+:root[data-theme='ocean'] .botbar__btn.is-active { background: #38BDF8 !important; color: #091224 !important; }
+:root[data-theme='ocean'] .botbar__btn.is-active .botbar__icon svg { color: #091224 !important; stroke: #091224 !important; }
+:root[data-theme='ocean'] .botbar__btn.is-active .botbar__label { color: #091224 !important; }
+:root[data-theme='ocean'] .readerBar { background: rgba(16, 28, 54, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='ocean'] .readerBar__chapterBtn { background: #38BDF8 !important; color: #091224 !important; }
+:root[data-theme='ocean'] .readerBar__navBtn { color: #E2EAFC !important; }
+:root[data-theme='ocean'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #E2EAFC !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
+/* 3. New Theme: Lavender (Royal Amethyst Twilight) */
+:root[data-theme='lavender'],
+[data-theme='lavender'] {
+  --bg: #161224;
+  --panel: #201A33;
+  --panel-2: #2B2344;
+  --panel-sage: #382D58;
+  --ink: #F0EBF8;
+  --ink-soft: #B8A8D8;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(192, 132, 252, 0.18);
+  --forest: #C084FC;
+  --sage: #B8A8D8;
+  --terracotta: #D8B4FE;
+  --terracotta-soft: rgba(192, 132, 252, 0.15);
+  --accent: #C084FC;
+  --accent-soft: rgba(192, 132, 252, 0.16);
+  --accent-ink: #161224;
+  color-scheme: dark;
+}
+:root[data-theme='lavender'] body { background: #0E0B17 !important; }
+:root[data-theme='lavender'] .app { background: #161224 !important; }
+:root[data-theme='lavender'] .mountainHero { background: #161224 !important; color: #F0EBF8 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='lavender'] .mountainHero__bg, :root[data-theme='lavender'] .mountainHero__overlay { display: none !important; }
+:root[data-theme='lavender'] .topbar__chapterTitle { color: #F0EBF8 !important; background: #201A33 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='lavender'] .botbar { background: rgba(32, 26, 51, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='lavender'] .botbar__btn { color: #B8A8D8 !important; }
+:root[data-theme='lavender'] .botbar__btn.is-active { background: #C084FC !important; color: #161224 !important; }
+:root[data-theme='lavender'] .botbar__btn.is-active .botbar__icon svg { color: #161224 !important; stroke: #161224 !important; }
+:root[data-theme='lavender'] .botbar__btn.is-active .botbar__label { color: #161224 !important; }
+:root[data-theme='lavender'] .readerBar { background: rgba(32, 26, 51, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='lavender'] .readerBar__chapterBtn { background: #C084FC !important; color: #161224 !important; }
+:root[data-theme='lavender'] .readerBar__navBtn { color: #F0EBF8 !important; }
+:root[data-theme='lavender'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #F0EBF8 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
+/* 4. New Theme: Clay (Sinai Desert Terracotta) */
+:root[data-theme='clay'],
+[data-theme='clay'] {
+  --bg: #221217;
+  --panel: #2F1A21;
+  --panel-2: #3E222B;
+  --panel-sage: #4E2C37;
+  --ink: #FBEAEB;
+  --ink-soft: #D4A7AE;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(251, 113, 133, 0.18);
+  --forest: #FB7185;
+  --sage: #D4A7AE;
+  --terracotta: #FDA4AF;
+  --terracotta-soft: rgba(251, 113, 133, 0.15);
+  --accent: #FB7185;
+  --accent-soft: rgba(251, 113, 133, 0.16);
+  --accent-ink: #221217;
+  color-scheme: dark;
+}
+:root[data-theme='clay'] body { background: #160B0E !important; }
+:root[data-theme='clay'] .app { background: #221217 !important; }
+:root[data-theme='clay'] .mountainHero { background: #221217 !important; color: #FBEAEB !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='clay'] .mountainHero__bg, :root[data-theme='clay'] .mountainHero__overlay { display: none !important; }
+:root[data-theme='clay'] .topbar__chapterTitle { color: #FBEAEB !important; background: #2F1A21 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='clay'] .botbar { background: rgba(47, 26, 33, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='clay'] .botbar__btn { color: #D4A7AE !important; }
+:root[data-theme='clay'] .botbar__btn.is-active { background: #FB7185 !important; color: #221217 !important; }
+:root[data-theme='clay'] .botbar__btn.is-active .botbar__icon svg { color: #221217 !important; stroke: #221217 !important; }
+:root[data-theme='clay'] .botbar__btn.is-active .botbar__label { color: #221217 !important; }
+:root[data-theme='clay'] .readerBar { background: rgba(47, 26, 33, 0.94) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='clay'] .readerBar__chapterBtn { background: #FB7185 !important; color: #221217 !important; }
+:root[data-theme='clay'] .readerBar__navBtn { color: #FBEAEB !important; }
+:root[data-theme='clay'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #FBEAEB !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
+/* 5. New Accent Color Rules */
+[data-accent=crimson] {
+  --accent: #dc2626;
+  --accent-soft: rgba(220, 38, 38, .15);
+  --accent-ink: #ffffff;
+}
+[data-accent=teal] {
+  --accent: #0d9488;
+  --accent-soft: rgba(13, 148, 136, .15);
+  --accent-ink: #ffffff;
+}
+[data-accent=coral] {
+  --accent: #ea580c;
+  --accent-soft: rgba(234, 88, 12, .15);
+  --accent-ink: #ffffff;
+}
+[data-accent=rose] {
+  --accent: #e11d48;
+  --accent-soft: rgba(225, 29, 72, .15);
+  --accent-ink: #ffffff;
+}
+[data-accent=violet] {
+  --accent: #9333ea;
+  --accent-soft: rgba(147, 51, 234, .15);
+  --accent-ink: #ffffff;
+}
+[data-accent=emerald] {
+  --accent: #059669;
+  --accent-soft: rgba(5, 150, 105, .15);
+  --accent-ink: #ffffff;
+}
+
+/* Dark Theme Overrides for New Accents */
+:root[data-theme='bw'] [data-accent=crimson],
+:root[data-theme='dark'] [data-accent=crimson],
+:root[data-theme='night'] [data-accent=crimson],
+:root[data-theme='olive'] [data-accent=crimson],
+:root[data-theme='ocean'] [data-accent=crimson],
+:root[data-theme='lavender'] [data-accent=crimson],
+:root[data-theme='clay'] [data-accent=crimson] {
+  --accent: #f87171;
+  --accent-soft: rgba(248, 113, 113, .18);
+  --accent-ink: #0E1013;
+}
+
+:root[data-theme='bw'] [data-accent=teal],
+:root[data-theme='dark'] [data-accent=teal],
+:root[data-theme='night'] [data-accent=teal],
+:root[data-theme='olive'] [data-accent=teal],
+:root[data-theme='ocean'] [data-accent=teal],
+:root[data-theme='lavender'] [data-accent=teal],
+:root[data-theme='clay'] [data-accent=teal] {
+  --accent: #2dd4bf;
+  --accent-soft: rgba(45, 212, 191, .18);
+  --accent-ink: #0E1013;
+}
+
+:root[data-theme='bw'] [data-accent=coral],
+:root[data-theme='dark'] [data-accent=coral],
+:root[data-theme='night'] [data-accent=coral],
+:root[data-theme='olive'] [data-accent=coral],
+:root[data-theme='ocean'] [data-accent=coral],
+:root[data-theme='lavender'] [data-accent=coral],
+:root[data-theme='clay'] [data-accent=coral] {
+  --accent: #fb923c;
+  --accent-soft: rgba(251, 146, 60, .18);
+  --accent-ink: #0E1013;
+}
+
+:root[data-theme='bw'] [data-accent=rose],
+:root[data-theme='dark'] [data-accent=rose],
+:root[data-theme='night'] [data-accent=rose],
+:root[data-theme='olive'] [data-accent=rose],
+:root[data-theme='ocean'] [data-accent=rose],
+:root[data-theme='lavender'] [data-accent=rose],
+:root[data-theme='clay'] [data-accent=rose] {
+  --accent: #fb7185;
+  --accent-soft: rgba(251, 113, 133, .18);
+  --accent-ink: #0E1013;
+}
+
+:root[data-theme='bw'] [data-accent=violet],
+:root[data-theme='dark'] [data-accent=violet],
+:root[data-theme='night'] [data-accent=violet],
+:root[data-theme='olive'] [data-accent=violet],
+:root[data-theme='ocean'] [data-accent=violet],
+:root[data-theme='lavender'] [data-accent=violet],
+:root[data-theme='clay'] [data-accent=violet] {
+  --accent: #c084fc;
+  --accent-soft: rgba(192, 132, 252, .18);
+  --accent-ink: #0E1013;
+}
+
+:root[data-theme='bw'] [data-accent=emerald],
+:root[data-theme='dark'] [data-accent=emerald],
+:root[data-theme='night'] [data-accent=emerald],
+:root[data-theme='olive'] [data-accent=emerald],
+:root[data-theme='ocean'] [data-accent=emerald],
+:root[data-theme='lavender'] [data-accent=emerald],
+:root[data-theme='clay'] [data-accent=emerald] {
+  --accent: #34d399;
+  --accent-soft: rgba(52, 211, 153, .18);
+  --accent-ink: #0E1013;
+}
