@@ -10,7 +10,6 @@ import { getPerspectiveMatrixForChapter } from '../perspectiveMatrixData'
 import EthicsSandboxSheet from './EthicsSandboxSheet'
 import { getDilemmaForChapter } from '../ethicsSandboxData'
 import LineageWebSheet from './LineageWebSheet'
-import { isLineageChapter } from '../lineageData'
 import ChronoAtlasSheet from './ChronoAtlasSheet'
 import TimeCapsuleSheet from './TimeCapsuleSheet'
 import ParallelHarmonySheet from './ParallelHarmonySheet'
@@ -101,10 +100,6 @@ export default function Reader({
 
   const dilemmaItem = useMemo(() => {
     return getDilemmaForChapter(chapter.book.nr, chapter.chapter)
-  }, [chapter.book.nr, chapter.chapter])
-
-  const isLineage = useMemo(() => {
-    return isLineageChapter(chapter.book.nr, chapter.chapter)
   }, [chapter.book.nr, chapter.chapter])
 
   const [selectedCapsuleId, setSelectedCapsuleId] = useState<string | undefined>(undefined)
@@ -1012,21 +1007,7 @@ export default function Reader({
           )
         })()}
 
-        {prefs.showStudyTools && isLineage && (
-          <>
-            <div className="readerBar__divider" aria-hidden="true" />
-            <button
-              type="button"
-              className="readerBar__lineageBtn"
-              onClick={() => setPanel('lineageWeb')}
-              title={language === 'en' ? 'Genealogical & Cultural Lineage Web' : 'የትውልድ ሐረግና የባህል ትሥሥር'}
-              aria-label={language === 'en' ? 'Genealogical & Cultural Lineage Web' : 'የትውልድ ሐረግና የባህል ትሥሥር'}
-            >
-              <span className="readerBar__matrixIcon">🌳</span>
-              <span className="readerBar__matrixLabel">{language === 'en' ? 'Lineage' : 'ትውልድ'}</span>
-            </button>
-          </>
-        )}
+
       </div>
 
       <PerspectiveMatrixSheet

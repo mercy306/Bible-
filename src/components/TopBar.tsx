@@ -24,6 +24,7 @@ interface Props {
   onBack?: () => void
   onDaily?: () => void
   onSaga?: () => void
+  onLineage?: () => void
   translation?: string
   books?: { nr: number; name: string }[]
   onNavigate?: (book: number, chapter: number, verse?: number) => void
@@ -51,6 +52,7 @@ export default function TopBar({
   onBack: _onBack,
   onDaily,
   onSaga,
+  onLineage,
   translation = 'am',
   books = [],
   onNavigate,
@@ -303,6 +305,18 @@ export default function TopBar({
                   aria-label={isEn ? "Epic Chronological Saga" : "የዘመን ታሪክ ቅደም ተከተል"}
                 >
                   <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>👑</span>
+                </button>
+              )}
+
+              {onLineage && (
+                <button
+                  type="button"
+                  className="topbar__actionBtn topbar__lineageBtn"
+                  onClick={onLineage}
+                  title={isEn ? "12 Tribes & Noah's Lineage" : "12ቱ ነገዶችና የኖኅ ልጆች"}
+                  aria-label={isEn ? "12 Tribes & Noah's Lineage" : "12ቱ ነገዶችና የኖኅ ልጆች"}
+                >
+                  <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>🌳</span>
                 </button>
               )}
 

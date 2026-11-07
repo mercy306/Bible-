@@ -719,6 +719,111 @@
   margin: 0;
 }
 
+/* ==========================================================================
+   3-Step Journey Flow (Where it came from -> Exile -> Where it is now)
+   ========================================================================== */
+.tribeJourneyFlow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  background: var(--panel-2, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+@media (min-width: 580px) {
+  .tribeJourneyFlow {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+.tribeJourneyStep {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 8px 10px;
+  border-radius: 8px;
+  border-left: 2.5px solid transparent;
+}
+
+.tribeJourneyStep--origin {
+  border-left-color: #60a5fa;
+}
+
+.tribeJourneyStep--exile {
+  border-left-color: #f87171;
+}
+
+.tribeJourneyStep--now {
+  border-left-color: #34d399;
+}
+
+.tribeJourneyStepTitle {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tribeJourneyStepTitle--origin {
+  color: #93c5fd;
+}
+
+.tribeJourneyStepTitle--exile {
+  color: #fca5a5;
+}
+
+.tribeJourneyStepTitle--now {
+  color: #6ee7b7;
+}
+
+.tribeJourneyStepContent {
+  font-size: 0.79rem;
+  line-height: 1.42;
+  color: var(--ink, #eee);
+  margin: 0;
+}
+
+/* Accordion Deep Dive Toggle */
+.tribeAccordionToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 7px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed var(--line, rgba(255, 255, 255, 0.14));
+  border-radius: 8px;
+  color: var(--ink-soft, #aaa);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tribeAccordionToggle:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--accent, #d4af37);
+  border-color: var(--accent, #d4af37);
+}
+
+.tribeAccordionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.05));
+}
+
 .tribeDetailRow {
   display: flex;
   flex-direction: column;
@@ -822,6 +927,30 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 8px;
   margin-top: 4px;
+}
+
+.noahSonsChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.noahSonChip {
+  background: var(--panel-2, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 0.76rem;
+  color: var(--ink-soft, #ccc);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.noahSonChip strong {
+  color: var(--ink, #fff);
+  font-weight: 700;
 }
 
 .noahSonItem {

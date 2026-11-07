@@ -329,6 +329,7 @@ export default function App() {
           onBack={() => openSection('read')}
           onDaily={() => openSection('daily')}
           onSaga={() => openSection('saga')}
+          onLineage={() => setSheet('lineage')}
           translation={route.translation}
           books={referenceBooks}
           onNavigate={(b, c, v) => goTo(b, c, v)}
