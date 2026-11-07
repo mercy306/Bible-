@@ -420,7 +420,8 @@ export default function App() {
         {!loading && !error && route.view === 'read' && chapter && (
           <Reader
             chapter={chapter}
-            onOpen={openChapter}
+            books={referenceBooks}
+            onOpen={(b, c, v, vEnd) => goTo(b, c, v, vEnd)}
             onAppearance={() => setSheet('more')}
             language={prefs.language}
             compare={compare}
@@ -432,6 +433,7 @@ export default function App() {
                 ? { from: route.verse, to: route.verseEnd }
                 : null
             }
+            onSearch={openSearch}
           />
         )}
       </main>

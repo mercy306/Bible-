@@ -28,7 +28,7 @@ import { useReadingPlan, toggleChapterRead } from '../readingPlan'
 
 interface Props {
   chapter: ChapterResponse
-  onOpen: (book: number, chapter: number) => void
+  onOpen: (book: number, chapter: number, verse?: number, verseEnd?: number) => void
   onAppearance?: () => void
   /** Passage limits from the route, e.g. 16 to 20. */
   passage?: { from: number; to: number } | null
@@ -37,6 +37,8 @@ interface Props {
   compare: 'off' | 'am54'
   memorize: boolean
   wordLookup: boolean
+  onSearch?: (q: string) => void
+  books?: { nr: number; name: string }[]
 }
 
 /** One verse, in whichever languages the reader asked for. */
@@ -73,13 +75,15 @@ export default function Reader({
   compare,
   memorize,
   wordLookup,
+  onSearch,
+  books,
 }: Props) {
   const [selected, setSelected] = useState<number | null>(null)
   const planInfo = useReadingPlan()
   const isChapterCompleted = planInfo.isChapterDone(chapter.book.nr, chapter.chapter)
   const [highlightedTargetVerse, setHighlightedTargetVerse] = useState<number | null>(null)
   const [panel, setPanel] = useState<Panel>('none')
-  const [word, setWord] = useState<{ text: string; verse: number } | null>(null)
+  const [word, setWord] = useState<{ text: string; verse: number; lang?: 'am' | 'en' } | null>(null)
   const [counterpart, setCounterpart] = useState<ChapterResponse | null>(null)
   const [revealed, setRevealed] = useState<Set<number>>(new Set())
   const [isChapterPlaying, setIsChapterPlaying] = useState(false)
@@ -233,9 +237,35 @@ export default function Reader({
       ? '— the Amharic text runs this verse into the ones around it —'
       : '— የአማርኛ እትም ይህንን ጥቅስ ከቀደሙት ጋር ያጣምረዋል —'
 
-  /** English words become buttons only when the reader asks for word lookup. */
+  /** Words become buttons when the reader asks for word lookup (both Amharic and English). */
   function renderLine(line: Line, verse: number) {
-    if (!wordLookup || line.lang !== 'en') return line.text
+    if (!wordLookup) return line.text
+
+    if (line.lang === 'am') {
+      return (
+        <span className="verse__amharic-interactive">
+          {line.text.split(/([\s፡፦፤።፥፧?!,.;:"'«»‹›()[\]{}]+)/).map((chunk, i) => {
+            if (!chunk) return null
+            const hasEthiopic = /[\u1200-\u137F]/.test(chunk)
+            if (!hasEthiopic) {
+              return chunk
+            }
+            return (
+              <button
+                key={i}
+                type="button"
+                className="wordtap"
+                onClick={() => setWord({ text: chunk, verse, lang: 'am' })}
+                title={`የ"${chunk}" ፍቺ ፈልግ`}
+              >
+                {chunk}
+              </button>
+            )
+          })}
+        </span>
+      )
+    }
+
     return (
       <span className="verse__english">
         {line.text.split(/(\s+)/).map((chunk, i) =>
@@ -246,7 +276,7 @@ export default function Reader({
               key={i}
               type="button"
               className="wordtap"
-              onClick={() => setWord({ text: chunk, verse })}
+              onClick={() => setWord({ text: chunk, verse, lang: 'en' })}
               title={language === 'en' ? `Look up "${chunk}"` : `የ"${chunk}" ፍቺ ፈልግ`}
             >
               {chunk}
@@ -1039,9 +1069,14 @@ export default function Reader({
       {word && (
         <WordPanel
           word={word.text}
+          verse={word.verse}
+          lang={word.lang}
           reference={`${displayBookName} ${chapter.chapter}:${word.verse}`}
           language={language}
+          books={books}
           onClose={() => setWord(null)}
+          onSearch={onSearch}
+          onNavigate={(b, c, v) => onOpen(b, c, v)}
         />
       )}
     </article>
