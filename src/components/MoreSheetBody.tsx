@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useState, useRef, type ReactNode } from 'react'
 import { useReadingPlan } from '../readingPlan'
 import {
   ACCENTS,
@@ -39,21 +39,31 @@ interface Props {
   onPrint: () => void
 }
 
-type Tab = 'read' | 'look' | 'tools'
-
-/** One labelled control on one line, so nothing needs a heading of its own. */
-function Row({ label, children }: { label: string; children: ReactNode }) {
+/** One labelled control with title, subtitle description, and right control */
+function Row({
+  label,
+  description,
+  children,
+}: {
+  label: string
+  description?: string
+  children: ReactNode
+}) {
   return (
-    <div className="mrow">
-      <span className="mrow__label">{label}</span>
-      <div className="mrow__control">{children}</div>
+    <div className="mrow settingsRow">
+      <div className="settingsRow__text">
+        <span className="mrow__label settingsRow__label">{label}</span>
+        {description && <span className="settingsRow__desc">{description}</span>}
+      </div>
+      <div className="mrow__control settingsRow__control">{children}</div>
     </div>
   )
 }
 
-/** A slider with its value shown at the end, used for every comfort setting. */
+/** Slider control with description and dynamic value display */
 function Slide({
   label,
+  description,
   min,
   max,
   step,
@@ -62,6 +72,7 @@ function Slide({
   onChange,
 }: {
   label: string
+  description?: string
   min: number
   max: number
   step: number
@@ -70,7 +81,7 @@ function Slide({
   onChange: (v: number) => void
 }) {
   return (
-    <Row label={label}>
+    <Row label={label} description={description}>
       <div className="slider__wrap slider__wrap--inline">
         <input
           type="range"
@@ -88,22 +99,24 @@ function Slide({
   )
 }
 
-/** A short Yes/No pair, used wherever a setting is simply on or off. */
+/** Segmented on/off switch with clean toggle styling */
 function OnOff({
   label,
+  description,
   on,
   onChange,
   yes = 'On',
   no = 'Off',
 }: {
   label: string
+  description?: string
   on: boolean
   onChange: (v: boolean) => void
   yes?: string
   no?: string
 }) {
   return (
-    <Row label={label}>
+    <Row label={label} description={description}>
       <div className="segbar segbar--tiny" role="group" aria-label={label}>
         <button
           type="button"
@@ -126,9 +139,41 @@ function OnOff({
   )
 }
 
+interface ToolCardProps {
+  icon: string
+  title: string
+  description: string
+  badge?: string
+  onClick: () => void
+}
+
+/** Touch-optimized feature card with icon, title, description, badge and arrow */
+function ToolCard({ icon, title, description, badge, onClick }: ToolCardProps) {
+  return (
+    <button type="button" className="settingsToolCard" onClick={onClick}>
+      <div className="settingsToolCard__iconWrap" aria-hidden="true">
+        <span className="settingsToolCard__icon">{icon}</span>
+      </div>
+      <div className="settingsToolCard__content">
+        <div className="settingsToolCard__titleRow">
+          <span className="settingsToolCard__title">{title}</span>
+          {badge && <span className="settingsToolCard__badge">{badge}</span>}
+        </div>
+        <p className="settingsToolCard__desc">{description}</p>
+      </div>
+      <div className="settingsToolCard__arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </div>
+    </button>
+  )
+}
+
 /**
- * Everything that is not reading, split into three short lists so the sheet is
- * never one long column of controls.
+ * Unified Single-Layout Settings & Appearance Panel:
+ * Every setting, reading aid, appearance preset, and newly added study tool
+ * is presented in ONE cohesive, beautifully structured layout without fragmented tabs.
  */
 export default function MoreSheetBody({
   route: _route,
@@ -156,99 +201,271 @@ export default function MoreSheetBody({
   onGoTo,
   onPrint,
 }: Props) {
-  const [tab, setTab] = useState<Tab>('read')
   const [reference, setReference] = useState('')
   const isEn = prefs.language === 'en'
   const planInfo = useReadingPlan()
 
-  const tabs: { id: Tab; label: string }[] = [
-    { id: 'read', label: isEn ? 'Reading' : 'ንባብ' },
-    { id: 'look', label: isEn ? 'Look' : 'ገጽታ' },
-    { id: 'tools', label: isEn ? 'Tools' : 'መሳሪያዎች' },
-  ]
+  const studyRef = useRef<HTMLElement>(null)
+  const aidsRef = useRef<HTMLElement>(null)
+  const lookRef = useRef<HTMLElement>(null)
+  const fontRef = useRef<HTMLElement>(null)
+
+  const scrollTo = (ref: React.RefObject<HTMLElement>) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
-    <>
-      <nav className="mtabs" aria-label={isEn ? "Settings sections" : "የማስተካከያ ክፍሎች"}>
-        {tabs.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className={`mtabs__btn ${tab === item.id ? 'is-active' : ''}`}
-            onClick={() => setTab(item.id)}
-            aria-pressed={tab === item.id}
-          >
-            {item.label}
-          </button>
-        ))}
+    <div className="settingsLayout">
+      {/* Quick Anchor Navigation Pills */}
+      <nav className="settingsPills" aria-label={isEn ? "Quick settings sections" : "የማስተካከያ አቋራጮች"}>
+        <button type="button" className="settingsPill" onClick={() => scrollTo(studyRef)}>
+          🏛️ {isEn ? 'Study Tools' : 'የጥናት መሳሪያዎች'}
+        </button>
+        <button type="button" className="settingsPill" onClick={() => scrollTo(aidsRef)}>
+          💡 {isEn ? 'Reading Aids' : 'የንባብ ድጋፍ'}
+        </button>
+        <button type="button" className="settingsPill" onClick={() => scrollTo(lookRef)}>
+          🎨 {isEn ? 'Appearance' : 'ገጽታና ቀለም'}
+        </button>
+        <button type="button" className="settingsPill" onClick={() => scrollTo(fontRef)}>
+          🔤 {isEn ? 'Typography' : 'ፊደልና መጠን'}
+        </button>
       </nav>
 
-      {tab === 'read' && (
-        <div className="mlist">
-          <Row label={isEn ? "Language" : "ቋንቋ"}>
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Language shown" : "የሚታይ ቋንቋ"}>
-              {LANGUAGES.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`segbar__btn ${prefs.language === item.id ? 'is-active' : ''}`}
-                  onClick={() => {
-                    setPref('language', item.id)
-                    onLanguage?.(item.id)
-                  }}
-                  aria-pressed={prefs.language === item.id}
-                  aria-label={item.note}
-                  title={item.note}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </Row>
-
-          
-
-
-          <Slide
-            label={isEn ? "Text size" : "የፊደል መጠን"}
-            min={SIZE_RANGE.min}
-            max={SIZE_RANGE.max}
-            step={SIZE_RANGE.step}
-            value={prefs.sizePx}
-            show={(v) => `${v}px`}
-            onChange={(v) => setPref('sizePx', v)}
-          />
-
-          <Row label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
-              {FONTS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`segbar__btn ${prefs.font === item.id ? 'is-active' : ''}`}
-                  onClick={() => setPref('font', item.id)}
-                  aria-pressed={prefs.font === item.id}
-                  data-font={item.id}
-                  aria-label={item.note}
-                  title={item.note}
-                >
-                  {isEn ? item.label : item.am}
-                </button>
-              ))}
-            </div>
-          </Row>
-
-          <p className="msample" lang={isEn ? 'en' : 'am'}>
+      {/* =====================================================================
+          SECTION 1: SACRED STUDY & HISTORY TOOLS
+          ===================================================================== */}
+      <section ref={studyRef} className="settingsSection" aria-labelledby="sec-study-title">
+        <div className="settingsSection__header">
+          <div className="settingsSection__titleRow">
+            <span className="settingsSection__icon" aria-hidden="true">🏛️</span>
+            <h3 id="sec-study-title" className="settingsSection__title">
+              {isEn ? 'Sacred Study & History Tools' : 'የጥናትና የታሪክ መሳሪያዎች'}
+            </h3>
+          </div>
+          <p className="settingsSection__subtitle">
             {isEn
-              ? 'In the beginning God created the heaven and the earth.'
-              : 'በመጀመሪያ እግዚአብሔር ሰማይንና ምድርን ፈጠረ።'}
+              ? 'Deep exploration tools: family lineages, interactive atlas, cultural timeline & saga'
+              : 'ጥልቅ የመጽሐፍ ቅዱስ ምርምር፡ የትውልድ ሐረግ፣ ሕያው ካርታ፣ የዘመን አውድና ታሪክ'}
           </p>
         </div>
-      )}
 
-      {tab === 'look' && (
-        <div className="mlist">
-          <Row label={isEn ? "Theme" : "የቀለም ገጽታ"}>
+        <div className="settingsSection__cardsGrid">
+          {onLineage && (
+            <ToolCard
+              icon="🌳"
+              title={isEn ? 'Genealogical & Cultural Web' : 'የትውልድ ሐረግና የቤተሰብ ትሥሥር'}
+              description={
+                isEn
+                  ? 'Explore biblical family trees, Adam to David, multiple families & cultural heritage'
+                  : 'የአዳም፣ የኖኅ፣ የአብርሃምና የዳዊት ቤተሰቦች ትሥሥር፣ የዘር ሐረግና ባህላዊ ቅርስ'
+              }
+              badge={isEn ? 'Roots' : 'ትሥሥር'}
+              onClick={onLineage}
+            />
+          )}
+
+          {onAtlas && (
+            <ToolCard
+              icon="🗺️"
+              title={isEn ? 'The Living Chrono-Atlas' : 'የመጽሐፍ ቅዱስ ሕያው የጉዞ ካርታ'}
+              description={
+                isEn
+                  ? 'Interactive journeys, sacred geography & historical routes on an offline map'
+                  : 'የቀደምት አባቶች ጉዞዎች፣ ቦታዎችና ታሪካዊ ክስተቶች በይነተገናኝ ካርታ'
+              }
+              badge={isEn ? 'Atlas' : 'ካርታ'}
+              onClick={onAtlas}
+            />
+          )}
+
+          {onTimeCapsule && (
+            <ToolCard
+              icon="⏳"
+              title={isEn ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና ታሪካዊ አውድ'}
+              description={
+                isEn
+                  ? 'Historical context, archaeological insights & cultural backdrop of scripture'
+                  : 'የጥቅሱ ዘመን ማኅበራዊ፣ ባህላዊና ፖለቲካዊ ዳራ በጊዜ መስመር'
+              }
+              badge={isEn ? 'Context' : 'አውድ'}
+              onClick={onTimeCapsule}
+            />
+          )}
+
+          {onSaga && (
+            <ToolCard
+              icon="👑"
+              title={isEn ? 'Epic Chronological Saga' : 'የዘመን ታሪክ ቅደም ተከተል'}
+              description={
+                isEn
+                  ? '5 grand chronological acts from Creation to Eternity unfolding the narrative'
+                  : 'ከፍጥረት እስከ ዘላለም 5ቱ ታላላቅ የመጽሐፍ ቅዱስ ምዕራፎች በቅደም ተከተል'
+              }
+              badge={isEn ? '5 Acts' : '5 ዘመናት'}
+              onClick={onSaga}
+            />
+          )}
+
+          {onPlan && (
+            <ToolCard
+              icon="📖"
+              title={isEn ? 'Annual Reading Plan & Progress' : 'የዓመት ንባብ እቅድና እድገት'}
+              description={
+                isEn
+                  ? 'Track daily scriptures, build reading streaks and complete the Bible'
+                  : 'ዕለታዊ የንባብ መርሐ ግብር፣ የንባብ ልምምድ እና የቀን እድገት'
+              }
+              badge={
+                planInfo.streak.currentStreak > 0
+                  ? `🔥 ${planInfo.streak.currentStreak}d • ${planInfo.planCompletedPercent}%`
+                  : `${planInfo.planCompletedPercent}%`
+              }
+              onClick={onPlan}
+            />
+          )}
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 2: READING AIDS & CONTROLS
+          ===================================================================== */}
+      <section ref={aidsRef} className="settingsSection" aria-labelledby="sec-aids-title">
+        <div className="settingsSection__header">
+          <div className="settingsSection__titleRow">
+            <span className="settingsSection__icon" aria-hidden="true">💡</span>
+            <h3 id="sec-aids-title" className="settingsSection__title">
+              {isEn ? 'Reading Aids & Assistance' : 'የንባብ ድጋፎችና ረዳቶች'}
+            </h3>
+          </div>
+          <p className="settingsSection__subtitle">
+            {isEn
+              ? 'Lexicon lookups, verse memorization, search and passage navigation'
+              : 'የቃላት መዝገበ ቃላት፣ ጥቅስ የማስታወስ ልምምድ፣ ፍለጋና ፈጣን አሰሳ'}
+          </p>
+        </div>
+
+        <div className="settingsSection__list">
+          <OnOff
+            label={isEn ? "Word Lookup & Strong's Lexicon" : "የቃላት ፍቺና መዝገበ ቃላት (Word Lookup)"}
+            description={
+              isEn
+                ? "Tap words while reading to view Greek/Hebrew Strong's & Ge'ez roots"
+                : "በንባብ ላይ ቃላትን ሲነኩ የግዕዝ፣ የዕብራይስጥና የግሪክ (Strong's) ፍቺ ያሳያል"
+            }
+            on={wordLookup}
+            onChange={onWordLookup}
+            yes={isEn ? "On" : "አብራ"}
+            no={isEn ? "Off" : "አጥፋ"}
+          />
+
+          <OnOff
+            label={isEn ? "Verse Memorization Mode" : "ጥቅስ የማስታወስ ልምምድ (Memorization)"}
+            description={
+              isEn
+                ? "Gradually obscure words to practice memorizing sacred scripture verses"
+                : "ቃላትን በመደበቅ ጥቅሶችን በቃለ አጋኖ ለማጥናትና ለመሸምደድ"
+            }
+            on={memorize}
+            onChange={onMemorize}
+            yes={isEn ? "On" : "አብራ"}
+            no={isEn ? "Off" : "አጥፋ"}
+          />
+
+          {/* Direct Passage Navigation */}
+          <form
+            className="mrow settingsRow"
+            onSubmit={(e) => {
+              e.preventDefault()
+              if (reference.trim()) onGoTo(reference.trim())
+            }}
+          >
+            <div className="settingsRow__text">
+              <span className="mrow__label settingsRow__label">
+                {isEn ? 'Go to Passage' : 'ወደ ጥቅስ ይሂዱ'}
+              </span>
+              <span className="settingsRow__desc">
+                {isEn ? 'Enter book, chapter and verse' : 'የመጽሐፍና ምዕራፍ ቁጥር ያስገቡ'}
+              </span>
+            </div>
+            <div className="mrow__control mrow__control--pair">
+              <input
+                className="textfield textfield--sm"
+                type="text"
+                value={reference}
+                onChange={(e) => setReference(e.target.value)}
+                placeholder={isEn ? "John 3:16" : "ዮሐንስ 3:16"}
+                aria-label={isEn ? "Go to a passage" : "ወደ ጥቅስ ይሂዱ"}
+              />
+              <button className="btn btn--accent btn--sm" type="submit">
+                {isEn ? 'Go' : 'ሂድ'}
+              </button>
+            </div>
+          </form>
+
+          {/* Quick Action Buttons */}
+          <div className="settingsActionGroup">
+            <button type="button" className="settingsActionBtn" onClick={onSearch}>
+              <div className="settingsActionBtn__text">
+                <span className="settingsActionBtn__title">
+                  🔍 {isEn ? 'Search Bible & Commentary' : 'መጽሐፍ ቅዱስንና ማብራሪያውን ፈልግ'}
+                </span>
+                <span className="settingsActionBtn__desc">
+                  {isEn
+                    ? 'Search words and phrases across all 66 books and offline commentary'
+                    : 'በሁሉም 66 መጻሕፍትና ማብራሪያዎች ውስጥ ቃላትንና ጥቅሶችን ፈልግ'}
+                </span>
+              </div>
+              <span className="settingsActionBtn__arrow" aria-hidden="true">›</span>
+            </button>
+
+            <button type="button" className="settingsActionBtn" onClick={onPrint}>
+              <div className="settingsActionBtn__text">
+                <span className="settingsActionBtn__title">
+                  🖨️ {isEn ? 'Print or Export Chapter' : 'ይህንን ምዕራፍ አትም ወይም አስቀምጥ'}
+                </span>
+                <span className="settingsActionBtn__desc">
+                  {isEn
+                    ? 'Format current scripture chapter for paper printing or clean PDF saving'
+                    : 'የአሁኑን ምዕራፍ ለህትመት ወይም ለፒዲኤፍ (PDF) ማዘጋጀት'}
+                </span>
+              </div>
+              <span className="settingsActionBtn__arrow" aria-hidden="true">›</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 3: APPEARANCE & COLOR THEMES
+          ===================================================================== */}
+      <section ref={lookRef} className="settingsSection" aria-labelledby="sec-look-title">
+        <div className="settingsSection__header">
+          <div className="settingsSection__titleRow">
+            <span className="settingsSection__icon" aria-hidden="true">🎨</span>
+            <h3 id="sec-look-title" className="settingsSection__title">
+              {isEn ? 'Appearance & Color Themes' : 'የቀለም ገጽታና ማድመቂያ'}
+            </h3>
+          </div>
+          <p className="settingsSection__subtitle">
+            {isEn
+              ? 'Curated background themes and custom accent colors for comfortable reading'
+              : 'ለዓይን ምቹ የሆኑ የቀለም ገጽታዎችና የማድመቂያ አማራጮች'}
+          </p>
+        </div>
+
+        <div className="settingsSection__list">
+          {/* Theme Palette */}
+          <div className="settingsPaletteBlock">
+            <div className="settingsPaletteBlock__header">
+              <span className="settingsPaletteBlock__label">
+                {isEn ? 'Reading Theme' : 'የንባብ ገጽታ'}
+              </span>
+              <span className="settingsPaletteBlock__desc">
+                {isEn ? 'Choose from 8 eye-comfort themes' : 'ከ 8ቱ የቀለም አማራጮች ይምረጡ'}
+              </span>
+            </div>
+
             <div className="themePaletteGrid" role="radiogroup" aria-label={isEn ? "Theme presets" : "የገጽታ አማራጮች"}>
               {THEMES.map((item) => {
                 const isActive = prefs.theme === item.id
@@ -275,9 +492,19 @@ export default function MoreSheetBody({
                 )
               })}
             </div>
-          </Row>
+          </div>
 
-          <Row label={isEn ? "Accent Color" : "የማድመቂያ ቀለም"}>
+          {/* Accent Color Row */}
+          <div className="settingsAccentBlock">
+            <div className="settingsAccentBlock__header">
+              <span className="settingsAccentBlock__label">
+                {isEn ? 'Accent & Highlight Color' : 'የማድመቂያ ቀለም'}
+              </span>
+              <span className="settingsAccentBlock__desc">
+                {isEn ? 'Highlight color for active buttons and markers' : 'ለአዝራሮችና ለማድመቂያ የሚሆን ቀለም'}
+              </span>
+            </div>
+
             <div className="accentSwatchesRow" role="radiogroup" aria-label={isEn ? "Accent color options" : "የማድመቂያ ቀለም አማራጮች"}>
               {ACCENTS.map((item) => {
                 const isActive = prefs.accent === item.id
@@ -302,7 +529,7 @@ export default function MoreSheetBody({
               {/* Custom Color Wheel Swatch */}
               <label
                 className={`accentSwatchBtn accentSwatchBtn--custom ${prefs.accent === 'custom' ? 'is-active' : ''}`}
-                title={isEn ? "Custom Color Wheel (Any Color)" : "ብጁ ቀለም (የራስዎ ምርጫ)"}
+                title={isEn ? "Custom Color Wheel (Select any color)" : "ብጁ ቀለም (የራስዎ ምርጫ)"}
                 aria-label={isEn ? "Custom Color Wheel" : "ብጁ ቀለም"}
                 style={{
                   background: prefs.accent === 'custom' && prefs.customColor
@@ -335,9 +562,71 @@ export default function MoreSheetBody({
                 <span style={{ fontSize: '0.85rem', pointerEvents: 'none', filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.6))' }}>🎨</span>
               </label>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 4: TYPOGRAPHY & READING COMFORT
+          ===================================================================== */}
+      <section ref={fontRef} className="settingsSection" aria-labelledby="sec-font-title">
+        <div className="settingsSection__header">
+          <div className="settingsSection__titleRow">
+            <span className="settingsSection__icon" aria-hidden="true">🔤</span>
+            <h3 id="sec-font-title" className="settingsSection__title">
+              {isEn ? 'Typography & Reading Comfort' : 'የፊደል ቅርጽና መጠን'}
+            </h3>
+          </div>
+          <p className="settingsSection__subtitle">
+            {isEn
+              ? 'Interface language, scripture font size, sacred typeface and live preview'
+              : 'የመተግበሪያ ቋንቋ፣ የፊደል መጠን፣ ውብ የፊደል ቅርጾችና የቀጥታ ቅድመ እይታ'}
+          </p>
+        </div>
+
+        <div className="settingsSection__list">
+          {/* Interface Language */}
+          <Row
+            label={isEn ? "Interface Language" : "የመተግበሪያው ቋንቋ"}
+            description={isEn ? "Select interface display language" : "የመተግበሪያውን ቋንቋ ይምረጡ"}
+          >
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Language shown" : "የሚታይ ቋንቋ"}>
+              {LANGUAGES.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`segbar__btn ${prefs.language === item.id ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setPref('language', item.id)
+                    onLanguage?.(item.id)
+                  }}
+                  aria-pressed={prefs.language === item.id}
+                  aria-label={item.note}
+                  title={item.note}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
           </Row>
 
-          <Row label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
+          {/* Text Size Slider */}
+          <Slide
+            label={isEn ? "Font Size" : "የፊደል መጠን"}
+            description={isEn ? "Adjust reading text size (14px – 34px)" : "የንባቡን ፊደል መጠን ከ 14px እስከ 34px ያስተካክሉ"}
+            min={SIZE_RANGE.min}
+            max={SIZE_RANGE.max}
+            step={SIZE_RANGE.step}
+            value={prefs.sizePx}
+            show={(v) => `${v}px`}
+            onChange={(v) => setPref('sizePx', v)}
+          />
+
+          {/* Typeface Selection */}
+          <Row
+            label={isEn ? "Sacred Typeface" : "የፊደል ቅርጽ"}
+            description={isEn ? "Curated fonts for Ethiopic & Latin scripts" : "ለግዕዝና ለአማርኛ የተመቻቹ ውብ ቅርጾች"}
+          >
             <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
               {FONTS.map((item) => (
                 <button
@@ -356,102 +645,19 @@ export default function MoreSheetBody({
             </div>
           </Row>
 
-          <p className="msample" lang={isEn ? 'en' : 'am'}>
-            {isEn
-              ? 'In the beginning God created the heaven and the earth.'
-              : 'በመጀመሪያ እግዚአብሔር ሰማይንና ምድርን ፈጠረ።'}
-          </p>
+          {/* Live Preview Card */}
+          <div className="settingsPreviewCard">
+            <span className="settingsPreviewCard__label">
+              {isEn ? 'Live Scripture Preview' : 'የቀጥታ ቅድመ እይታ'}
+            </span>
+            <p className="settingsPreviewCard__text" lang={isEn ? 'en' : 'am'}>
+              {isEn
+                ? '“In the beginning God created the heaven and the earth.”'
+                : '«በመጀመሪያ እግዚአብሔር ሰማይንና ምድርን ፈጠረ።»'}
+            </p>
+          </div>
         </div>
-      )}
-
-      {tab === 'tools' && (
-        <div className="mlist">
-          {onPlan && (
-            <button type="button" className="mwide" onClick={() => onPlan()}>
-              <span>📖 {isEn ? 'Reading plan & progress' : 'የንባብ እቅድ እና እድገት'}</span>
-              <span className="mwide__count">
-                {planInfo.streak.currentStreak > 0 ? `🔥 ${planInfo.streak.currentStreak}d • ` : ''}
-                {planInfo.planCompletedPercent}%
-              </span>
-            </button>
-          )}
-
-          {onSaga && (
-            <button type="button" className="mwide" onClick={() => onSaga()}>
-              <span>👑 {isEn ? 'Epic Chronological Saga' : 'የዘመን ታሪክ ቅደም ተከተል'}</span>
-              <span className="mwide__count">5 Acts</span>
-            </button>
-          )}
-
-          {onLineage && (
-            <button type="button" className="mwide" onClick={() => onLineage()}>
-              <span>🌳 {isEn ? 'Genealogical & Cultural Web' : 'የትውልድ ሐረግና የባህል ትሥሥር'}</span>
-              <span className="mwide__count">Roots</span>
-            </button>
-          )}
-
-          {onAtlas && (
-            <button type="button" className="mwide" onClick={() => onAtlas()}>
-              <span>🗺️ {isEn ? 'The Living Chrono-Atlas' : 'የመጽሐፍ ቅዱስ ሕያው የጉዞ ካርታ'}</span>
-              <span className="mwide__count">Atlas</span>
-            </button>
-          )}
-
-          {onTimeCapsule && (
-            <button type="button" className="mwide" onClick={() => onTimeCapsule()}>
-              <span>⏳ {isEn ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}</span>
-              <span className="mwide__count">Context</span>
-            </button>
-          )}
-
-          <form
-            className="mrow"
-            onSubmit={(e) => {
-              e.preventDefault()
-              if (reference.trim()) onGoTo(reference.trim())
-            }}
-          >
-            <span className="mrow__label">{isEn ? 'Go to' : 'ይሂዱ ወደ'}</span>
-            <div className="mrow__control mrow__control--pair">
-              <input
-                className="textfield textfield--sm"
-                type="text"
-                value={reference}
-                onChange={(e) => setReference(e.target.value)}
-                placeholder={isEn ? "John 3:16" : "ዮሐንስ 3:16"}
-                aria-label={isEn ? "Go to a passage" : "ወደ ጥቅስ ይሂዱ"}
-              />
-              <button className="btn btn--accent btn--sm" type="submit">
-                {isEn ? 'Go' : 'ሂድ'}
-              </button>
-            </div>
-          </form>
-
-          <button type="button" className="mwide" onClick={() => onSearch()}>
-            {isEn ? 'Search the Bible and commentary' : 'መጽሐፍ ቅዱስንና ማብራሪያውን ፈልግ'}
-          </button>
-
-          <OnOff
-            label={isEn ? "Memorise" : "የማስታወስ ልምምድ"}
-            on={memorize}
-            onChange={onMemorize}
-            yes={isEn ? "On" : "አብራ"}
-            no={isEn ? "Off" : "አጥፋ"}
-          />
-
-          <OnOff
-            label={isEn ? "Word lookup" : "የቃላት ፍቺ"}
-            on={wordLookup}
-            onChange={onWordLookup}
-            yes={isEn ? "On" : "አብራ"}
-            no={isEn ? "Off" : "አጥፋ"}
-          />
-
-          <button type="button" className="mwide" onClick={onPrint}>
-            {isEn ? 'Print this chapter' : 'ይህንን ምዕራፍ አትም'}
-          </button>
-        </div>
-      )}
-    </>
+      </section>
+    </div>
   )
 }

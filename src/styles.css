@@ -1431,7 +1431,8 @@ select {
 .btn--accent {
   background:var(--accent);
   border-color:var(--accent);
-  color:#fff
+  color:var(--accent-ink, #0E1013);
+  font-weight:600;
 }
 
 .btn--quiet {
@@ -5121,8 +5122,8 @@ select {
 }
 
 .sheet--bottom {
-  max-height:72vh;
-  max-height:72dvh
+  max-height:86vh;
+  max-height:86dvh
 }
 
 .botbar {
@@ -16973,4 +16974,351 @@ html, body {
   --accent: #34d399;
   --accent-soft: rgba(52, 211, 153, .18);
   --accent-ink: #0E1013;
+}
+
+/* ==========================================================================
+   UNIFIED SINGLE-LAYOUT SETTINGS & STUDY TOOLS
+   ========================================================================== */
+.settingsLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 4px 0 36px;
+  box-sizing: border-box;
+}
+
+/* Quick Navigation Anchor Pills */
+.settingsPills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 2px 10px;
+  scrollbar-width: none;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface, #12151a);
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  margin: -10px 0 4px;
+}
+.settingsPills::-webkit-scrollbar {
+  display: none;
+}
+
+.settingsPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--panel-2, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  color: var(--ink-soft, #a0a6b5);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.settingsPill:active {
+  background: var(--accent-soft, rgba(212, 175, 55, 0.15));
+  color: var(--accent, #d4af37);
+  border-color: var(--accent, #d4af37);
+}
+
+/* Section Container */
+.settingsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--panel-1, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  border-radius: 18px;
+  padding: 18px 16px;
+  scroll-margin-top: 55px;
+}
+
+.settingsSection__header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
+}
+
+.settingsSection__titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settingsSection__icon {
+  font-size: 1.15rem;
+}
+
+.settingsSection__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink, #ffffff);
+  letter-spacing: -0.2px;
+}
+
+.settingsSection__subtitle {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-soft, #8b92a5);
+}
+
+/* Feature Cards Grid (Study Tools) */
+.settingsSection__cardsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settingsToolCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 13px 14px;
+  background: var(--panel-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.07));
+  border-radius: 14px;
+  color: var(--ink, #ffffff);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.settingsToolCard:hover {
+  background: var(--panel-3, rgba(255, 255, 255, 0.07));
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.settingsToolCard:active {
+  transform: scale(0.985);
+  border-color: var(--accent, #d4af37);
+  background: var(--accent-soft, rgba(212, 175, 55, 0.08));
+}
+
+.settingsToolCard__iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--surface, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  flex-shrink: 0;
+}
+.settingsToolCard__icon {
+  font-size: 1.25rem;
+}
+
+.settingsToolCard__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.settingsToolCard__titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.settingsToolCard__title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink, #ffffff);
+}
+
+.settingsToolCard__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent, #d4af37);
+  background: var(--accent-soft, rgba(212, 175, 55, 0.12));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  letter-spacing: 0.02em;
+}
+
+.settingsToolCard__desc {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-soft, #8b92a5);
+}
+
+.settingsToolCard__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft, #8b92a5);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* Settings Row with Title + Description */
+.settingsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
+}
+.settingsRow:last-child {
+  border-bottom: 0;
+}
+
+.settingsRow__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.settingsRow__label {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink, #ffffff);
+}
+
+.settingsRow__desc {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--ink-soft, #8b92a5);
+}
+
+.settingsRow__control {
+  flex-shrink: 0;
+}
+
+/* Action Buttons (Search & Print) */
+.settingsActionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.settingsActionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--panel-2, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  color: var(--ink, #ffffff);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.settingsActionBtn:active {
+  background: var(--panel-3, rgba(255, 255, 255, 0.08));
+  transform: scale(0.99);
+}
+
+.settingsActionBtn__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+}
+
+.settingsActionBtn__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink, #ffffff);
+}
+
+.settingsActionBtn__desc {
+  font-size: 11.5px;
+  color: var(--ink-soft, #8b92a5);
+}
+
+.settingsActionBtn__arrow {
+  font-size: 16px;
+  color: var(--ink-soft, #8b92a5);
+  font-weight: 700;
+}
+
+/* Palette & Accent Blocks */
+.settingsPaletteBlock,
+.settingsAccentBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
+}
+.settingsAccentBlock {
+  border-bottom: 0;
+}
+
+.settingsPaletteBlock__header,
+.settingsAccentBlock__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settingsPaletteBlock__label,
+.settingsAccentBlock__label {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink, #ffffff);
+}
+
+.settingsPaletteBlock__desc,
+.settingsAccentBlock__desc {
+  font-size: 11.5px;
+  color: var(--ink-soft, #8b92a5);
+}
+
+/* Live Scripture Preview Card */
+.settingsPreviewCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--canvas, #08090A);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+.settingsPreviewCard__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent, #d4af37);
+}
+
+.settingsPreviewCard__text {
+  margin: 0;
+  font-family: var(--reader-font, inherit);
+  font-size: calc(var(--reader-size, 20px) * 0.9);
+  line-height: 1.65;
+  color: var(--ink, #ffffff);
 }
