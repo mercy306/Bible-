@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 interface Props {
+  ready?: boolean
   onFinish: () => void
 }
 
@@ -8,30 +9,51 @@ interface Props {
  * Luxury Dark Glass Launch Screen:
  * - Pure obsidian dark glass aesthetic matching DOMORE design
  * - Minimalist golden cross emblem & bilingual sacred typography
- * - Smooth 1.2s auto-fade directly into the scripture reader
+ * - Coordinates directly with offline data loading (zero double loading screen)
+ * - Smooth cubic-bezier auto-fade directly into the scripture reader
  * - Tap anywhere to skip instantly
  */
-export default function LaunchScreen({ onFinish }: Props) {
+export default function LaunchScreen({ ready = true, onFinish }: Props) {
   const [exiting, setExiting] = useState(false)
+  const [minTimeElapsed, setMinTimeElapsed] = useState(false)
 
+  // Ensure sacred brand animation plays smoothly for at least 850ms so it doesn't flash
   useEffect(() => {
-    // Start exit transition after 1100ms
-    const fadeTimer = setTimeout(() => {
-      setExiting(true)
-    }, 1100)
+    const timer = setTimeout(() => {
+      setMinTimeElapsed(true)
+    }, 850)
+    return () => clearTimeout(timer)
+  }, [])
 
-    // Complete removal after fade transition finishes (1500ms total)
-    const finishTimer = setTimeout(() => {
-      onFinish()
-    }, 1500)
+  // Once minimum duration has passed AND chapter data is ready, trigger seamless exit
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined
+
+    if (minTimeElapsed && ready && !exiting) {
+      setExiting(true)
+      timer = setTimeout(() => {
+        onFinish()
+      }, 400)
+    }
 
     return () => {
-      clearTimeout(fadeTimer)
-      clearTimeout(finishTimer)
+      if (timer) clearTimeout(timer)
     }
-  }, [onFinish])
+  }, [minTimeElapsed, ready, exiting, onFinish])
+
+  // Safety maximum duration (2400ms) to ensure the reader is never stuck
+  useEffect(() => {
+    const maxTimer = setTimeout(() => {
+      if (!exiting) {
+        setExiting(true)
+        setTimeout(onFinish, 400)
+      }
+    }, 2400)
+    return () => clearTimeout(maxTimer)
+  }, [exiting, onFinish])
 
   const handleSkip = () => {
+    if (exiting) return
     setExiting(true)
     setTimeout(onFinish, 250)
   }

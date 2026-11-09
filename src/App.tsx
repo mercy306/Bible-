@@ -373,7 +373,7 @@ export default function App() {
 
       <main className="main">
         {error && <div className="notice notice--error">{error}</div>}
-        {loading && (
+        {loading && !showLaunch && (
           <LoadingView language={prefs.language} />
         )}
 
@@ -537,7 +537,10 @@ export default function App() {
       />
 
       {showLaunch && (
-        <LaunchScreen onFinish={() => setShowLaunch(false)} />
+        <LaunchScreen
+          ready={!loading && Boolean(chapter)}
+          onFinish={() => setShowLaunch(false)}
+        />
       )}
     </div>
   )

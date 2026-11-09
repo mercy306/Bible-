@@ -11643,6 +11643,123 @@ body {
   }
 }
 
+/* ==========================================================================
+   IN-READER SCRIPTURE LOADING SKELETON (Seamless Chapter Transitions)
+   ========================================================================== */
+.readerLoading {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+  box-sizing: border-box;
+  animation: readerLoadingFadeIn 0.25s ease-out;
+}
+
+@keyframes readerLoadingFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.readerLoading__bar {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent 0%, var(--accent, #d4af37) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: readerLoadingBar 1.2s infinite ease-in-out;
+  border-radius: 999px;
+  margin-bottom: 24px;
+}
+
+@keyframes readerLoadingBar {
+  0% { background-position: -100% 0; }
+  100% { background-position: 100% 0; }
+}
+
+.readerLoading__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--surface, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  margin-bottom: 28px;
+}
+
+.readerLoading__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent, #d4af37);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+  animation: bibleLoadingDotBounce 1.2s infinite ease-in-out;
+}
+
+.readerLoading__text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft, #a0a6b5);
+  letter-spacing: 0.02em;
+}
+
+.readerLoading__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+}
+
+.readerLoading__skeletonHead {
+  width: 140px;
+  height: 24px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--surface, rgba(255, 255, 255, 0.04)) 0%, var(--surface-hover, rgba(255, 255, 255, 0.08)) 50%, var(--surface, rgba(255, 255, 255, 0.04)) 100%);
+  background-size: 200% 100%;
+  animation: readerSkeletonShimmer 1.5s infinite ease-in-out;
+  margin-bottom: 10px;
+}
+
+.readerLoading__skeletonVerse {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  padding-left: 28px;
+}
+
+.readerLoading__vNum {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent, #d4af37);
+  opacity: 0.45;
+}
+
+.readerLoading__vLine {
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--surface, rgba(255, 255, 255, 0.03)) 0%, var(--surface-hover, rgba(255, 255, 255, 0.07)) 50%, var(--surface, rgba(255, 255, 255, 0.03)) 100%);
+  background-size: 200% 100%;
+  animation: readerSkeletonShimmer 1.5s infinite ease-in-out;
+}
+
+.readerLoading__vLine--w95 { width: 95%; }
+.readerLoading__vLine--w90 { width: 90%; }
+.readerLoading__vLine--w85 { width: 85%; }
+.readerLoading__vLine--w80 { width: 80%; }
+.readerLoading__vLine--w75 { width: 75%; }
+.readerLoading__vLine--w60 { width: 60%; }
+
+@keyframes readerSkeletonShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 
 .launchScreen__bookWrapper {
   position: relative;
