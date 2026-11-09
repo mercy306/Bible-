@@ -29,7 +29,6 @@ import TimeCapsuleSheet from './components/TimeCapsuleSheet'
 import Sheet from './components/Sheet'
 import TopBar from './components/TopBar'
 import LoadingView from './components/LoadingView'
-import LaunchScreen from './components/LaunchScreen'
 
 
 const LAST_PLACE = 'bible:last-place'
@@ -90,7 +89,6 @@ export default function App() {
   const [memorize, setMemorize] = useState(false)
   const [wordLookup, setWordLookup] = useState(() => { try { return localStorage.getItem('wordLookup') === 'true' } catch { return false } })
   const handleWordLookup = (val: boolean) => { setWordLookup(val); try { localStorage.setItem('wordLookup', String(val)) } catch {} }
-  const [showLaunch, setShowLaunch] = useState(true)
 
 
   const prefs = usePrefs()
@@ -373,7 +371,7 @@ export default function App() {
 
       <main className="main">
         {error && <div className="notice notice--error">{error}</div>}
-        {loading && !showLaunch && (
+        {loading && (
           <LoadingView language={prefs.language} />
         )}
 
@@ -535,13 +533,6 @@ export default function App() {
           goTo(b, c)
         }}
       />
-
-      {showLaunch && (
-        <LaunchScreen
-          ready={!loading && Boolean(chapter)}
-          onFinish={() => setShowLaunch(false)}
-        />
-      )}
     </div>
   )
 }
