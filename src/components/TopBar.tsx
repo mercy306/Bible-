@@ -93,11 +93,11 @@ export default function TopBar({
     }
   }, [initialQuery])
 
-  // Focus input and show Amharic keyboard when search opens
+  // Focus input when search opens (phone's native keyboard is ready by default)
   useEffect(() => {
     if (isSearchOpen) {
-      setTimeout(() => inputRef.current?.focus(), 60)
-      setShowKeyboard(true)
+      setTimeout(() => inputRef.current?.focus(), 80)
+      setShowKeyboard(false)
     } else {
       setQuery('')
       setResults(null)
@@ -223,21 +223,30 @@ export default function TopBar({
             <input
               ref={inputRef}
               type="search"
+              inputMode={showKeyboard ? 'none' : 'search'}
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
               className="topbar__searchInput"
               placeholder={scope === 'commentary' ? (isEn ? 'Search commentary…' : 'ማብራሪያ ይፈልጉ…') : (isEn ? 'Search words or John 3:16…' : 'ቃል ወይም ዮሐንስ 3:16 ይፈልጉ…')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              onFocus={() => setShowKeyboard(true)}
+              onFocus={() => {
+                // If user touches the input while on-screen Fidel keyboard is shown, switch back to phone's native keyboard
+                if (showKeyboard) setShowKeyboard(false)
+              }}
               aria-label={scope === 'commentary' ? (isEn ? 'Search commentary' : 'ማብራሪያ ይፈልጉ') : (isEn ? 'Search Bible' : 'መጽሐፍ ቅዱስ ይፈልጉ')}
             />
             <button
               type="button"
               className={`topbar__kbToggleBtn ${showKeyboard ? 'is-active' : ''}`}
-              onClick={() => setShowKeyboard((prev) => !prev)}
-              title={isEn ? "Amharic & English Keyboard" : "የአማርኛ እና እንግሊዝኛ ኪቦርድ"}
-              aria-label={isEn ? "Amharic & English Keyboard" : "የአማርኛ እና እንግሊዝኛ ኪቦርድ"}
+              onClick={() => {
+                setShowKeyboard((prev) => !prev)
+              }}
+              title={showKeyboard ? (isEn ? "Switch to Phone Keyboard" : "ወደ ስልክ ኪቦርድ ቀይር") : (isEn ? "On-screen Fidel Keyboard" : "የፊደል መተየቢያ (Fidel Keyboard)")}
+              aria-label={showKeyboard ? (isEn ? "Switch to Phone Keyboard" : "ወደ ስልክ ኪቦርድ ቀይር") : (isEn ? "On-screen Fidel Keyboard" : "የፊደል መተየቢያ")}
             >
-              አማ / EN
+              {showKeyboard ? '📱 KB' : 'አማ / EN'}
             </button>
             {query && (
               <button
@@ -447,13 +456,14 @@ export default function TopBar({
         <AmharicKeyboard
           onInsert={(char) => {
             setQuery((prev) => prev + char)
-            inputRef.current?.focus()
           }}
           onBackspace={() => {
             setQuery((prev) => prev.slice(0, -1))
-            inputRef.current?.focus()
           }}
-          onClose={() => setShowKeyboard(false)}
+          onClose={() => {
+            setShowKeyboard(false)
+            setTimeout(() => inputRef.current?.focus(), 60)
+          }}
         />,
         document.body
       )}
