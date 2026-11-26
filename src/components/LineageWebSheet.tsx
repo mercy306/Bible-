@@ -576,17 +576,6 @@ export default function LineageWebSheet({
                           {isEn ? activeTribe.jacobBlessingEn : activeTribe.jacobBlessingAm}
                         </p>
                       </div>
-
-                      {activeTribe.ethiopianConnectionAm && (
-                        <div className="tribeEthiopiaHighlight">
-                          <span className="tribeEthiopiaTitle">
-                            🇪🇹 {isEn ? 'Ethiopian & Beta Israel Connection:' : 'የኢትዮጵያና የቤተ እስራኤል ትሥሥር:'}
-                          </span>
-                          <p className="tribeEthiopiaText">
-                            {isEn ? activeTribe.ethiopianConnectionEn : activeTribe.ethiopianConnectionAm}
-                          </p>
-                        </div>
-                      )}
                     </div>
                   )}
 
