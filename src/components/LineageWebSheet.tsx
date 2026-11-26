@@ -84,7 +84,6 @@ export default function LineageWebSheet({
   const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const pillsRef = useRef<HTMLDivElement>(null)
-  const tribePillsRef = useRef<HTMLDivElement>(null)
 
   const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
 
@@ -106,21 +105,6 @@ export default function LineageWebSheet({
     }
   }
 
-  useEffect(() => {
-    if (tribePillsRef.current) {
-      const activeEl = tribePillsRef.current.querySelector<HTMLElement>(`[data-tribe-id="${selectedTribeId}"]`)
-      if (activeEl) {
-        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
-      }
-    }
-  }, [selectedTribeId])
-
-  const scrollTribePills = (direction: 'left' | 'right') => {
-    if (tribePillsRef.current) {
-      const amount = direction === 'left' ? -150 : 150
-      tribePillsRef.current.scrollBy({ left: amount, behavior: 'smooth' })
-    }
-  }
 
   useEffect(() => {
     if (pillsRef.current) {
@@ -475,57 +459,7 @@ export default function LineageWebSheet({
             {/* SUB-VIEW 1: 12 TRIBES */}
             {nationsSubTab === 'tribes' && (
               <>
-                {/* Horizontal Quick-Jump Birth-Order Carousel */}
-                <div className="lineagePillsContainer" style={{ marginBottom: '14px' }}>
-                  <button
-                    type="button"
-                    className="lineageScrollArrow"
-                    onClick={() => scrollTribePills('left')}
-                    title={isEn ? 'Scroll left' : 'ወደ ኋላ ሸብሽብ'}
-                    aria-label="Scroll left"
-                  >
-                    ‹
-                  </button>
-                  <div ref={tribePillsRef} className="lineagePillsScroll">
-                    {ISRAEL_TRIBES_DATA.map((t) => (
-                      <button
-                        key={t.id}
-                        data-tribe-id={t.id}
-                        type="button"
-                        className="lineagePillBtn"
-                        onClick={() => setSelectedTribeId(t.id)}
-                        style={{
-                          flexShrink: 0,
-                          fontWeight: selectedTribeId === t.id ? 700 : 500,
-                          background: selectedTribeId === t.id ? 'var(--accent)' : 'var(--panel-2, rgba(128, 128, 128, 0.12))',
-                          color: selectedTribeId === t.id ? 'var(--accent-ink, #ffffff)' : 'var(--ink)',
-                          borderRadius: '999px',
-                          padding: '4px 10px',
-                          fontSize: '12px',
-                          border: '1px solid var(--line, rgba(0,0,0,0.1))',
-                          cursor: 'pointer',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '4px',
-                        }}
-                      >
-                        <span>{t.symbolEmoji}</span>
-                        <span>{t.order}. {isEn ? t.nameEn : t.nameAm}</span>
-                      </button>
-                    ))}
-                  </div>
-                  <button
-                    type="button"
-                    className="lineageScrollArrow"
-                    onClick={() => scrollTribePills('right')}
-                    title={isEn ? 'Scroll right' : 'ወደ ቀኝ ሸብሽብ'}
-                    aria-label="Scroll right"
-                  >
-                    ›
-                  </button>
-                </div>
-
-                {/* 3. Selected Tribe Information Card */}
+                {/* Selected Tribe Information Card */}
                 <article key={activeTribe.id} className="tribeCard">
                   {/* Header: Identity & Badges */}
                   <header className="tribeHeader">
