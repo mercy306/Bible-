@@ -38,7 +38,6 @@ export default function LineageWebSheet({
   const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
   const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
-  const [showTheology, setShowTheology] = useState(false)
 
   const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
 
@@ -352,28 +351,6 @@ export default function LineageWebSheet({
                     </div>
                   )
                 })()}
-              </div>
-
-              {/* Collapsible Theological Exegesis (Clean Accordion) */}
-              <div className="lineageTheologyCard">
-                <button
-                  type="button"
-                  className="lineageTheologyToggle"
-                  onClick={() => setShowTheology((v) => !v)}
-                  aria-expanded={showTheology}
-                >
-                  <span className="lineageTheologyTitle">
-                    ✨ {isEn ? 'Theological Significance' : 'የቤዛነትና ሥነ-መለኮታዊ ትርጉም'}
-                  </span>
-                  <span className="lineageTheologyChev">{showTheology ? '▲' : '▼'}</span>
-                </button>
-                {showTheology && (
-                  <div className="lineageTheologyBody">
-                    <p className="lineageTheologyText">
-                      {isEn ? activePerson.theologicalSignificanceEn : activePerson.theologicalSignificanceAm}
-                    </p>
-                  </div>
-                )}
               </div>
 
               <div className="lineageVersesRow">
