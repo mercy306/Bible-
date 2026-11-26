@@ -33,6 +33,10 @@ const PATRIARCH_LIST = [
   { id: 'moses', en: 'Moses', am: 'ሙሴ' },
   { id: 'david', en: 'David', am: 'ዳዊት' },
   { id: 'solomon', en: 'Solomon', am: 'ሰሎሞን' },
+  { id: 'rehoboam', en: 'Rehoboam', am: 'ሮብዓም' },
+  { id: 'hezekiah', en: 'Hezekiah', am: 'ሕዝቅያስ' },
+  { id: 'josiah', en: 'Josiah', am: 'ኢዮስያስ' },
+  { id: 'zerubbabel', en: 'Zerubbabel', am: 'ዘሩባቤል' },
   { id: 'jesus', en: 'Jesus', am: 'ኢየሱስ' },
 ]
 
