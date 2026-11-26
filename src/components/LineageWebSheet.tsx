@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import Sheet from './Sheet'
 import type { LanguageMode } from '../prefs'
 import {
@@ -22,6 +22,20 @@ interface Props {
 type TabMode = 'tree' | 'nations_tribes'
 type NationsSubTab = 'tribes' | 'noah' | 'diaspora'
 
+const PATRIARCH_LIST = [
+  { id: 'adam', en: 'Adam', am: 'አዳም' },
+  { id: 'cain', en: 'Cain', am: 'ቃየል' },
+  { id: 'seth', en: 'Seth', am: 'ሴት' },
+  { id: 'noah', en: 'Noah', am: 'ኖኅ' },
+  { id: 'abraham', en: 'Abraham', am: 'አብርሃም' },
+  { id: 'jacob', en: 'Jacob', am: 'ያዕቆብ' },
+  { id: 'amram', en: 'Amram', am: 'እንበረም' },
+  { id: 'moses', en: 'Moses', am: 'ሙሴ' },
+  { id: 'david', en: 'David', am: 'ዳዊት' },
+  { id: 'solomon', en: 'Solomon', am: 'ሰሎሞን' },
+  { id: 'jesus', en: 'Jesus', am: 'ኢየሱስ' },
+]
+
 export default function LineageWebSheet({
   open,
   onClose,
@@ -38,8 +52,37 @@ export default function LineageWebSheet({
   const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
   const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
+  const pillsRef = useRef<HTMLDivElement>(null)
 
   const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
+
+  const patriarchIndex = PATRIARCH_LIST.findIndex((p) => p.id === activePersonId)
+  const nextPerson =
+    patriarchIndex >= 0 && patriarchIndex < PATRIARCH_LIST.length - 1
+      ? PATRIARCH_LIST[patriarchIndex + 1]
+      : activePerson.childrenIds.length > 0 && LINEAGE_PEOPLE[activePerson.childrenIds[0]]
+        ? {
+            id: activePerson.childrenIds[0],
+            en: LINEAGE_PEOPLE[activePerson.childrenIds[0]].nameEn,
+            am: LINEAGE_PEOPLE[activePerson.childrenIds[0]].nameAm,
+          }
+        : null
+
+  useEffect(() => {
+    if (pillsRef.current) {
+      const activeEl = pillsRef.current.querySelector<HTMLElement>(`[data-person-id="${activePersonId}"]`)
+      if (activeEl) {
+        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+      }
+    }
+  }, [activePersonId])
+
+  const scrollPills = (direction: 'left' | 'right') => {
+    if (pillsRef.current) {
+      const amount = direction === 'left' ? -150 : 150
+      pillsRef.current.scrollBy({ left: amount, behavior: 'smooth' })
+    }
+  }
 
   // Search results
   const searchResults = useMemo(() => {
@@ -141,66 +184,83 @@ export default function LineageWebSheet({
               </div>
             )}
 
-            {/* Quick-Jump Biblical Patriarchs / Family Heads */}
-            <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', padding: '6px 0 12px', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-              {history.length > 0 && (
-                <button
-                  type="button"
-                  className="lineagePillBtn"
-                  onClick={handleBack}
-                  title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
-                  style={{
-                    flexShrink: 0,
-                    fontWeight: 700,
-                    background: 'var(--panel-2)',
-                    color: 'var(--ink)',
-                    borderRadius: '999px',
-                    padding: '4px 12px',
-                    fontSize: '12px',
-                    border: '1px solid var(--line, rgba(0,0,0,0.2))',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                  }}
-                >
-                  <span>←</span>
-                  <span>{isEn ? `Back (${LINEAGE_PEOPLE[history[history.length - 1]]?.nameEn || 'Prev'})` : `ወደ ኋላ (${LINEAGE_PEOPLE[history[history.length - 1]]?.nameAm || 'ቀዳሚ'})`}</span>
-                </button>
-              )}
-              {[
-                { id: 'adam', en: 'Adam', am: 'አዳም' },
-                { id: 'cain', en: 'Cain', am: 'ቃየል' },
-                { id: 'seth', en: 'Seth', am: 'ሴት' },
-                { id: 'noah', en: 'Noah', am: 'ኖኅ' },
-                { id: 'abraham', en: 'Abraham', am: 'አብርሃም' },
-                { id: 'jacob', en: 'Jacob', am: 'ያዕቆብ' },
-                { id: 'amram', en: 'Amram', am: 'እንበረም' },
-                { id: 'moses', en: 'Moses', am: 'ሙሴ' },
-                { id: 'david', en: 'David', am: 'ዳዊት' },
-                { id: 'solomon', en: 'Solomon', am: 'ሰሎሞን' },
-                { id: 'jesus', en: 'Jesus', am: 'ኢየሱስ' },
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className="lineagePillBtn"
-                  onClick={() => selectPerson(item.id)}
-                  style={{
-                    flexShrink: 0,
-                    fontWeight: activePersonId === item.id ? 700 : 500,
-                    background: activePersonId === item.id ? 'var(--accent)' : 'var(--panel-2, rgba(128, 128, 128, 0.12))',
-                    color: activePersonId === item.id ? 'var(--accent-ink, #ffffff)' : 'var(--ink)',
-                    borderRadius: '999px',
-                    padding: '4px 10px',
-                    fontSize: '12px',
-                    border: '1px solid var(--line, rgba(0,0,0,0.1))',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {isEn ? item.en : item.am}
-                </button>
-              ))}
+            {/* Quick-Jump Biblical Patriarchs Strip with Next / Prev buttons */}
+            <div className="lineagePillsContainer">
+              <button
+                type="button"
+                className="lineageScrollArrow"
+                onClick={() => scrollPills('left')}
+                title={isEn ? 'Scroll left' : 'ወደ ኋላ ሸብሽብ'}
+                aria-label="Scroll left"
+              >
+                ‹
+              </button>
+
+              <div ref={pillsRef} className="lineagePillsScroll">
+                {history.length > 0 && (
+                  <button
+                    type="button"
+                    className="lineagePillBtn"
+                    onClick={handleBack}
+                    title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
+                    style={{
+                      flexShrink: 0,
+                      fontWeight: 700,
+                      background: 'var(--panel-2)',
+                      color: 'var(--ink)',
+                      borderRadius: '999px',
+                      padding: '4px 10px',
+                      fontSize: '12px',
+                      border: '1px solid var(--line, rgba(0,0,0,0.2))',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    <span>←</span>
+                    <span>{isEn ? 'Back' : 'ወደ ኋላ'}</span>
+                  </button>
+                )}
+                {PATRIARCH_LIST.map((item) => (
+                  <button
+                    key={item.id}
+                    data-person-id={item.id}
+                    type="button"
+                    className="lineagePillBtn"
+                    onClick={() => selectPerson(item.id)}
+                    style={{
+                      flexShrink: 0,
+                      fontWeight: activePersonId === item.id ? 700 : 500,
+                      background: activePersonId === item.id ? 'var(--accent)' : 'var(--panel-2, rgba(128, 128, 128, 0.12))',
+                      color: activePersonId === item.id ? 'var(--accent-ink, #ffffff)' : 'var(--ink)',
+                      borderRadius: '999px',
+                      padding: '4px 10px',
+                      fontSize: '12px',
+                      border: '1px solid var(--line, rgba(0,0,0,0.1))',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {isEn ? item.en : item.am}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="lineageScrollArrow"
+                onClick={() => {
+                  if (nextPerson) {
+                    selectPerson(nextPerson.id)
+                  } else {
+                    scrollPills('right')
+                  }
+                }}
+                title={isEn ? (nextPerson ? `Next (${nextPerson.en})` : 'Scroll right') : (nextPerson ? `ቀጣይ (${nextPerson.am})` : 'ወደ ቀኝ')}
+                aria-label="Next or scroll right"
+              >
+                ›
+              </button>
             </div>
 
             {/* Spotlight Card */}
@@ -212,20 +272,36 @@ export default function LineageWebSheet({
                       {isEn ? activePerson.culturalBadgeEn : activePerson.culturalBadgeAm}
                     </span>
                   </div>
-                  {history.length > 0 && (
-                    <button
-                      type="button"
-                      className="sheet__back"
-                      onClick={handleBack}
-                      style={{ height: '28px', padding: '0 10px', fontSize: '11.5px', borderRadius: '8px' }}
-                      title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
-                    >
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                      </svg>
-                      <span>{isEn ? 'Back' : 'ወደ ኋላ'}</span>
-                    </button>
-                  )}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {history.length > 0 && (
+                      <button
+                        type="button"
+                        className="sheet__back"
+                        onClick={handleBack}
+                        style={{ height: '28px', padding: '0 10px', fontSize: '11.5px', borderRadius: '8px' }}
+                        title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
+                      >
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        <span>{isEn ? 'Back' : 'ወደ ኋላ'}</span>
+                      </button>
+                    )}
+                    {nextPerson && (
+                      <button
+                        type="button"
+                        className="sheet__back"
+                        onClick={() => selectPerson(nextPerson.id)}
+                        style={{ height: '28px', padding: '0 10px', fontSize: '11.5px', borderRadius: '8px', background: 'var(--panel-2)', color: 'var(--ink)' }}
+                        title={isEn ? `Next (${nextPerson.en})` : `ቀጣይ (${nextPerson.am})`}
+                      >
+                        <span>{isEn ? `Next (${nextPerson.en})` : `ቀጣይ (${nextPerson.am})`}</span>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="lineageSpotlight__names">
                   <h3 className="lineageSpotlight__nameEn">{isEn ? activePerson.nameEn : activePerson.nameAm}</h3>
