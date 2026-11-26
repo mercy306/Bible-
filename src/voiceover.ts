@@ -378,17 +378,12 @@ export function speakText(text: string, options: SpeakOptions = {}): () => void 
       let speechLang = targetLang === 'am' ? 'am-ET' : 'en-US'
       let speechVoice = voice
 
-      // For Amharic: if no native Amharic male voice is installed in Windows/browser,
-      // speak phonetic Latin transliteration with the native English male voice (David/Alex/Daniel)
-      if (targetLang === 'am' && (!voice || gender === 'male')) {
-        const amharicMaleVoice = await findBestVoice('am', 'male')
-        if (amharicMaleVoice && /asrat|girma|male|guy/i.test(amharicMaleVoice.name)) {
-          speechVoice = amharicMaleVoice
-        } else {
-          textToSpeak = transliterateEthiopic(cleaned)
-          speechLang = 'en-US'
-          speechVoice = await findBestVoice('en', 'male')
-        }
+      // For Amharic: if a genuine Amharic voice is installed, use it;
+      // otherwise, do not use phonetic English transliteration (which sounds robotic/fake).
+      // Instead, fall back to the authentic spoken audio stream.
+      if (targetLang === 'am' && !speechVoice) {
+        playStream()
+        return
       }
 
       if (!speechVoice && targetLang === 'en') {
@@ -522,11 +517,22 @@ export interface ChapterVoiceoverState {
   activeVerseIndex: number
   totalVerses: number
   gender: VoiceGender
+  isRealAudio: boolean
 }
 
 /**
- * Hook to coordinate reading an entire chapter verse-by-verse.
- * Highlights the current verse, auto-advances, and provides play/pause/prev/next controls.
+ * Returns the URL for genuine human narration audio for a given chapter.
+ * - Amharic (17): Authentic human Ethiopian narrator.
+ * - English (1): Renowned human English Bible narrator.
+ */
+export function getChapterAudioUrl(lang: 'am' | 'en', bookNr: number, chapterNr: number): string {
+  const langId = lang === 'en' ? 1 : 17
+  return `https://www.wordproaudio.net/bibles/app/audio/${langId}/${bookNr}/${chapterNr}.mp3`
+}
+
+/**
+ * Hook to coordinate reading an entire chapter with authentic human studio audio
+ * and synchronized verse highlighting, with smooth play/pause/prev/next controls.
  */
 export function useChapterVoiceover(
   verses: Array<{ number: number; text: string }>,
@@ -556,6 +562,20 @@ export function useChapterVoiceover(
   isActiveRef.current = isActive
 
   const cancelCurrentRef = useRef<(() => void) | null>(null)
+  const humanAudioRef = useRef<HTMLAudioElement | null>(null)
+  const pendingVerseIndexRef = useRef<number | null>(null)
+
+  // Pre-calculate verse fractional positions for instant seeking and synchronized highlighting
+  const verseFractionsRef = useRef<number[]>([])
+  useEffect(() => {
+    const totalChars = verses.reduce((sum, v) => sum + Math.max(v.text.length, 12), 0)
+    let acc = 0
+    verseFractionsRef.current = verses.map((v) => {
+      const start = totalChars > 0 ? acc / totalChars : 0
+      acc += Math.max(v.text.length, 12)
+      return start
+    })
+  }, [verses])
 
   // Scroll active verse into view
   const scrollToVerse = useCallback((verseNum: number) => {
@@ -569,9 +589,21 @@ export function useChapterVoiceover(
     }
   }, [])
 
-  const playVerseAtIndex = useCallback(
+  // Stop human audio element
+  const stopHumanAudio = useCallback(() => {
+    if (humanAudioRef.current) {
+      try {
+        humanAudioRef.current.pause()
+        humanAudioRef.current.removeAttribute('src')
+        humanAudioRef.current.load()
+      } catch {}
+      humanAudioRef.current = null
+    }
+  }, [])
+
+  // Verse-by-verse fallback for female voice or offline
+  const playVerseByVerse = useCallback(
     (index: number) => {
-      // Cancel previous utterance if running
       if (cancelCurrentRef.current) {
         cancelCurrentRef.current()
         cancelCurrentRef.current = null
@@ -600,9 +632,8 @@ export function useChapterVoiceover(
         onEnd: () => {
           if (!isActiveRef.current) return
           if (index + 1 < versesRef.current.length) {
-            playVerseAtIndex(index + 1)
+            playVerseByVerse(index + 1)
           } else {
-            // Chapter reading finished
             setIsActive(false)
             setIsPlaying(false)
             setIsPaused(false)
@@ -610,7 +641,6 @@ export function useChapterVoiceover(
         },
         onError: () => {
           if (!isActiveRef.current) return
-          // Keep bar open in paused state instead of closing
           setIsPlaying(false)
           setIsPaused(true)
         },
@@ -619,15 +649,97 @@ export function useChapterVoiceover(
     [scrollToVerse],
   )
 
-  const toggleGender = useCallback(() => {
-    const next: VoiceGender = genderRef.current === 'male' ? 'female' : 'male'
-    genderRef.current = next
-    setGender(next)
-    setPreferredVoiceGender(next)
-    if (isActiveRef.current) {
-      playVerseAtIndex(activeIndexRef.current)
-    }
-  }, [playVerseAtIndex])
+  // Real human audio player
+  const playRealHumanAudio = useCallback(
+    (startIdx = 0) => {
+      stopAllSpeech()
+      stopHumanAudio()
+
+      if (cancelCurrentRef.current) {
+        cancelCurrentRef.current()
+        cancelCurrentRef.current = null
+      }
+
+      const currentVerses = versesRef.current
+      if (currentVerses.length === 0) return
+
+      const safeStartIdx = Math.max(0, Math.min(startIdx, currentVerses.length - 1))
+      setActiveVerseIndex(safeStartIdx)
+      setIsActive(true)
+      setIsPlaying(true)
+      setIsPaused(false)
+      scrollToVerse(currentVerses[safeStartIdx].number)
+
+      const url = getChapterAudioUrl(langRef.current, bookNr, chapterNr)
+      const audio = new Audio()
+      audio.preload = 'auto'
+      try {
+        ;(audio as any).referrerPolicy = 'no-referrer'
+      } catch {}
+
+      humanAudioRef.current = audio
+      pendingVerseIndexRef.current = safeStartIdx
+
+      const applySeekToVerse = (idx: number) => {
+        if (!audio.duration || !isFinite(audio.duration) || audio.duration <= 0) return
+        const frac = verseFractionsRef.current[idx] ?? 0
+        audio.currentTime = Math.max(0, frac * audio.duration)
+      }
+
+      audio.onloadedmetadata = () => {
+        if (pendingVerseIndexRef.current !== null) {
+          applySeekToVerse(pendingVerseIndexRef.current)
+          pendingVerseIndexRef.current = null
+        }
+      }
+
+      audio.oncanplay = () => {
+        if (isActiveRef.current && !isPaused) {
+          audio.play().catch(() => {})
+        }
+      }
+
+      audio.ontimeupdate = () => {
+        if (!isActiveRef.current || !audio.duration || !isFinite(audio.duration)) return
+        const currentProgress = audio.currentTime / audio.duration
+        const fractions = verseFractionsRef.current
+
+        let matchedIdx = 0
+        for (let i = 0; i < fractions.length; i++) {
+          if (currentProgress >= fractions[i]) {
+            matchedIdx = i
+          } else {
+            break
+          }
+        }
+
+        if (matchedIdx !== activeIndexRef.current) {
+          setActiveVerseIndex(matchedIdx)
+          if (versesRef.current[matchedIdx]) {
+            scrollToVerse(versesRef.current[matchedIdx].number)
+          }
+        }
+      }
+
+      audio.onended = () => {
+        setIsActive(false)
+        setIsPlaying(false)
+        setIsPaused(false)
+      }
+
+      audio.onerror = () => {
+        // Fall back to verse-by-verse synthesis if network fails
+        stopHumanAudio()
+        playVerseByVerse(activeIndexRef.current)
+      }
+
+      audio.src = url
+      audio.play().catch(() => {
+        // Auto-play was prevented or waiting for interaction
+      })
+    },
+    [bookNr, chapterNr, playVerseByVerse, scrollToVerse, stopHumanAudio, isPaused],
+  )
 
   const start = useCallback(
     (startVerseNum?: number) => {
@@ -641,12 +753,17 @@ export function useChapterVoiceover(
       }
 
       setIsActive(true)
-      playVerseAtIndex(startIdx)
+      if (genderRef.current === 'male') {
+        playRealHumanAudio(startIdx)
+      } else {
+        playVerseByVerse(startIdx)
+      }
     },
-    [playVerseAtIndex],
+    [playRealHumanAudio, playVerseByVerse],
   )
 
   const stop = useCallback(() => {
+    stopHumanAudio()
     if (cancelCurrentRef.current) {
       cancelCurrentRef.current()
       cancelCurrentRef.current = null
@@ -655,36 +772,84 @@ export function useChapterVoiceover(
     setIsPlaying(false)
     setIsPaused(false)
     stopAllSpeech()
-  }, [])
+  }, [stopHumanAudio])
 
   const pause = useCallback(() => {
-    if (!isPlaying) return
+    if (humanAudioRef.current) {
+      humanAudioRef.current.pause()
+    }
     pauseSpeech()
     setIsPaused(true)
     setIsPlaying(false)
-  }, [isPlaying])
+  }, [])
 
   const resume = useCallback(() => {
-    if (!isPaused) return
-    resumeSpeech()
+    if (humanAudioRef.current) {
+      humanAudioRef.current.play().catch(() => {})
+    } else {
+      resumeSpeech()
+    }
     setIsPaused(false)
     setIsPlaying(true)
-  }, [isPaused])
+  }, [])
+
+  const seekToVerseIndex = useCallback(
+    (targetIdx: number) => {
+      const currentVerses = versesRef.current
+      const safeIdx = Math.max(0, Math.min(targetIdx, currentVerses.length - 1))
+      setActiveVerseIndex(safeIdx)
+      scrollToVerse(currentVerses[safeIdx].number)
+
+      if (humanAudioRef.current) {
+        const audio = humanAudioRef.current
+        if (audio.duration && isFinite(audio.duration) && audio.duration > 0) {
+          const frac = verseFractionsRef.current[safeIdx] ?? 0
+          audio.currentTime = Math.max(0, frac * audio.duration + 0.05)
+          if (!isPlaying) {
+            audio.play().catch(() => {})
+            setIsPlaying(true)
+            setIsPaused(false)
+          }
+        } else {
+          pendingVerseIndexRef.current = safeIdx
+        }
+      } else {
+        playVerseByVerse(safeIdx)
+      }
+    },
+    [isPlaying, playVerseByVerse, scrollToVerse],
+  )
 
   const next = useCallback(() => {
-    const currentVerses = versesRef.current
-    if (activeVerseIndex + 1 < currentVerses.length) {
-      playVerseAtIndex(activeVerseIndex + 1)
+    if (activeVerseIndex + 1 < versesRef.current.length) {
+      seekToVerseIndex(activeVerseIndex + 1)
     } else {
       stop()
     }
-  }, [activeVerseIndex, playVerseAtIndex, stop])
+  }, [activeVerseIndex, seekToVerseIndex, stop])
 
   const prev = useCallback(() => {
     if (activeVerseIndex > 0) {
-      playVerseAtIndex(activeVerseIndex - 1)
+      seekToVerseIndex(activeVerseIndex - 1)
     }
-  }, [activeVerseIndex, playVerseAtIndex])
+  }, [activeVerseIndex, seekToVerseIndex])
+
+  const toggleGender = useCallback(() => {
+    const nextGender: VoiceGender = genderRef.current === 'male' ? 'female' : 'male'
+    genderRef.current = nextGender
+    setGender(nextGender)
+    setPreferredVoiceGender(nextGender)
+
+    if (isActiveRef.current) {
+      const currentIdx = activeIndexRef.current
+      if (nextGender === 'male') {
+        playRealHumanAudio(currentIdx)
+      } else {
+        stopHumanAudio()
+        playVerseByVerse(currentIdx)
+      }
+    }
+  }, [playRealHumanAudio, playVerseByVerse, stopHumanAudio])
 
   // Stop when book or chapter changes
   useEffect(() => {
@@ -694,9 +859,10 @@ export function useChapterVoiceover(
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      stopHumanAudio()
       stopAllSpeech()
     }
-  }, [])
+  }, [stopHumanAudio])
 
   const activeVerseNumber =
     isActive && verses[activeVerseIndex] ? verses[activeVerseIndex].number : null
@@ -706,6 +872,7 @@ export function useChapterVoiceover(
     isPlaying,
     isPaused,
     gender,
+    isRealAudio: gender === 'male',
     activeVerseNumber,
     activeVerseIndex,
     totalVerses: verses.length,

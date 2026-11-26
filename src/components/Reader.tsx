@@ -910,9 +910,11 @@ export default function Reader({
                 {language === 'en'
                   ? `Verse ${voiceover.activeVerseIndex + 1} of ${voiceover.totalVerses}`
                   : `ጥቅስ ${voiceover.activeVerseIndex + 1} ከ ${voiceover.totalVerses}`}
-                {chapterVoiceLang === 'am' && (
-                  <span className="voiceoverBar__tag">HD</span>
-                )}
+                <span className="voiceoverBar__tag">
+                  {voiceover.isRealAudio
+                    ? (language === 'en' ? '🎙️ REAL AUDIO' : '🎙️ እውነተኛ ኦዲዮ')
+                    : 'HD'}
+                </span>
               </span>
             </div>
           </div>
@@ -964,17 +966,17 @@ export default function Reader({
               onClick={voiceover.toggleGender}
               title={
                 voiceover.gender === 'male'
-                  ? (language === 'en' ? 'Voice: Male (click for Female)' : 'ድምጽ፡ ወንድ (ወደ ሴት ለመቀየር ይንኩ)')
-                  : (language === 'en' ? 'Voice: Female (click for Male)' : 'ድምጽ፡ ሴት (ወደ ወንድ ለመቀየር ይንኩ)')
+                  ? (language === 'en' ? 'Voice: Real Human (click for Female)' : 'ድምጽ፡ እውነተኛ ወንድ (ወደ ሴት ለመቀየር ይንኩ)')
+                  : (language === 'en' ? 'Voice: Female (click for Real Voice)' : 'ድምጽ፡ ሴት (ወደ እውነተኛ ድምፅ ለመቀየር ይንኩ)')
               }
               aria-label={
                 voiceover.gender === 'male'
-                  ? (language === 'en' ? 'Voice: Male (click for Female)' : 'ድምጽ፡ ወንድ (ወደ ሴት ለመቀየር ይንኩ)')
-                  : (language === 'en' ? 'Voice: Female (click for Male)' : 'ድምጽ፡ ሴት (ወደ ወንድ ለመቀየር ይንኩ)')
+                  ? (language === 'en' ? 'Voice: Real Human (click for Female)' : 'ድምጽ፡ እውነተኛ ወንድ (ወደ ሴት ለመቀየር ይንኩ)')
+                  : (language === 'en' ? 'Voice: Female (click for Real Voice)' : 'ድምጽ፡ ሴት (ወደ እውነተኛ ድምፅ ለመቀየር ይንኩ)')
               }
             >
               {voiceover.gender === 'male'
-                ? (language === 'en' ? '👨 Male' : '👨 ወንድ')
+                ? (language === 'en' ? '🎙️ Real Voice' : '🎙️ እውነተኛ ድምፅ')
                 : (language === 'en' ? '👩 Female' : '👩 ሴት')}
             </button>
 
