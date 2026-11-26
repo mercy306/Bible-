@@ -6,7 +6,7 @@ import { getGreeting } from './GreetingHero'
 import { useBookNames } from './useBookNames'
 import { fetchCommentarySearch, fetchSearch } from '../api'
 import { parseReference } from '../route'
-import { usePrefs, setPref, LANGUAGES, type LanguageMode } from '../prefs'
+import { usePrefs, setPref, type LanguageMode } from '../prefs'
 import type { Route } from '../route'
 import type { CommentarySearchResponse, SearchResponse } from '../types'
 
@@ -26,8 +26,6 @@ interface Props {
   onSaga?: () => void
   onLineage?: () => void
   translation?: string
-  translations?: { id: string; name: string }[]
-  onTranslation?: (id: string) => void
   books?: { nr: number; name: string }[]
   onNavigate?: (book: number, chapter: number, verse?: number) => void
   searchOpen?: boolean
@@ -48,7 +46,7 @@ export default function TopBar({
   view,
   moreOpen: _moreOpen,
   language,
-  onLanguage,
+  onLanguage: _onLanguage,
   onBooks,
   onMore: _onMore,
   onBack: _onBack,
@@ -56,8 +54,6 @@ export default function TopBar({
   onSaga: _onSaga,
   onLineage,
   translation = 'am',
-  translations = [],
-  onTranslation,
   books = [],
   onNavigate,
   searchOpen,
@@ -278,13 +274,7 @@ export default function TopBar({
               onClick={onBooks}
               title={isEn ? "Choose Book or Chapter" : "መጽሐፍ ወይም ምዕራፍ ይምረጡ"}
             >
-              <h1 className="topbar__chapterTitle">
-                <span className="topbar__bookName">{lead}</span>
-                <span className="topbar__chapNo">
-                  {isEn ? `Chapter ${chapter}` : `ምዕራፍ ${chapter}`}
-                  <span className="topbar__chev">▾</span>
-                </span>
-              </h1>
+              <h1 className="topbar__chapterTitle">{lead} {chapter} <span style={{ opacity: 0.6, fontSize: "0.85em" }}>▾</span></h1>
             </button>
 
             <div className="topbar__rightActions">
@@ -304,39 +294,6 @@ export default function TopBar({
               
 
               
-
-              {onLanguage && (
-                <div className="topbar__langToggle">
-                  {LANGUAGES.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      className={`topbar__langBtn ${language === item.id ? 'is-active' : ''}`}
-                      onClick={() => {
-                        onLanguage(item.id as LanguageMode)
-                      }}
-                      title={item.note}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {translations.length > 0 && onTranslation && (
-                <select
-                  className="topbar__versionSelect"
-                  value={translation}
-                  onChange={(e) => onTranslation(e.target.value)}
-                  aria-label={isEn ? "Bible version" : "የመጽሐፍ ቅዱስ እትም"}
-                >
-                  {translations.map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.name}
-                    </option>
-                  ))}
-                </select>
-              )}
 
               {onLineage && (
                 <button

@@ -361,8 +361,6 @@ export default function App() {
           onSaga={() => openSection('saga')}
           onLineage={() => setSheet('lineage')}
           translation={route.translation}
-          translations={translations}
-          onTranslation={(id) => go({ ...route, translation: id })}
           books={referenceBooks}
           onNavigate={(b, c, v) => goTo(b, c, v)}
           searchOpen={inPlaceSearch}
@@ -475,6 +473,8 @@ export default function App() {
         language={prefs.language}
       >
         <MoreSheetBody
+          route={route}
+          translations={translations}
           prefs={prefs}
           setPref={setPref}
           compare={compare}
@@ -483,6 +483,8 @@ export default function App() {
           onMemorize={setMemorize}
           wordLookup={wordLookup}
           onWordLookup={handleWordLookup}
+          onTranslation={(id) => go({ ...route, translation: id })}
+          onLanguage={handleLanguage}
           onSearch={openSearch}
           onSaved={() => openSection('bookmarks')}
           onPrayers={() => openSection('prayers')}

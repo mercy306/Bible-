@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import './styles.css'
-import './mezmur-theme.css'
 import { installOfflineApi } from './offline'
 
 // Inside the Android package there is no server, so the reader's own data is

@@ -20,7 +20,7 @@ export const SIZE_RANGE = { min: 15, max: 30, step: 1 } as const
 
 /** Reading comfort: how open the lines sit and how far apart verses are. */
 export const LEADING_RANGE = { min: 1.5, max: 2.2, step: 0.05 } as const
-export const PARAGRAPH_RANGE = { min: 0, max: 20, step: 1 } as const
+export const PARAGRAPH_RANGE = { min: 4, max: 20, step: 2 } as const
 
 export const THEMES = [
   { id: 'bw', label: 'Black', am: 'ጥቁር', note: 'Soft Black / Obsidian', bg: '#0E1013', ink: '#FFFFFF' },
@@ -114,14 +114,14 @@ export interface Prefs {
 const KEY = 'bible:prefs'
 
 const DEFAULTS: Prefs = {
-  font: 'sans',
+  font: 'serif',
   sizePx: 20,
-  theme: 'light',
+  theme: 'bw',
   accent: 'brown',
   customColor: '',
   language: 'am',
   leading: 1.9,
-  paragraphGap: 2,
+  paragraphGap: 7,
   verseNumbers: true,
   showStudyTools: false,
 }
@@ -171,41 +171,24 @@ function numberIn(value: unknown, min: number, max: number, fallback: number) {
 function read(): Prefs {
   try {
     const raw = localStorage.getItem(KEY)
-    const parsed = raw
-      ? (JSON.parse(raw) as Partial<Record<keyof Prefs, unknown>> & { mz?: number })
-      : {}
-
-    // One-time move to the Mezmur look: cream canvas and clean sans type.
-    // Once the flag is stored, any theme or typeface the reader picks is kept.
-    const migrated = parsed.mz === 1
-    const theme = migrated ? pick(parsed.theme, THEME_IDS, DEFAULTS.theme) : DEFAULTS.theme
-    const font = migrated ? pick(parsed.font, FONT_IDS, DEFAULTS.font) : DEFAULTS.font
-    const paragraphGap = migrated
-      ? numberIn(parsed.paragraphGap, PARAGRAPH_RANGE.min, PARAGRAPH_RANGE.max, DEFAULTS.paragraphGap)
-      : DEFAULTS.paragraphGap
-
-    const prefs: Prefs = {
-      font,
+    const parsed = raw ? (JSON.parse(raw) as Partial<Record<keyof Prefs, unknown>>) : {}
+    return {
+      font: pick(parsed.font, FONT_IDS, DEFAULTS.font),
       sizePx: numberIn(parsed.sizePx, SIZE_RANGE.min, SIZE_RANGE.max, DEFAULTS.sizePx),
-      theme,
+      theme: pick(parsed.theme, THEME_IDS, DEFAULTS.theme),
       accent: pick(parsed.accent, ACCENT_IDS, DEFAULTS.accent),
       customColor: typeof parsed.customColor === 'string' ? parsed.customColor : DEFAULTS.customColor,
       language: pick(parsed.language, LANGUAGE_IDS, DEFAULTS.language),
       leading: numberIn(parsed.leading, LEADING_RANGE.min, LEADING_RANGE.max, DEFAULTS.leading),
-      paragraphGap,
+      paragraphGap: numberIn(
+        parsed.paragraphGap,
+        PARAGRAPH_RANGE.min,
+        PARAGRAPH_RANGE.max,
+        DEFAULTS.paragraphGap,
+      ),
       verseNumbers: typeof parsed.verseNumbers === 'boolean' ? parsed.verseNumbers : DEFAULTS.verseNumbers,
       showStudyTools: typeof parsed.showStudyTools === 'boolean' ? parsed.showStudyTools : DEFAULTS.showStudyTools,
     }
-
-    if (!migrated) {
-      try {
-        localStorage.setItem(KEY, JSON.stringify({ ...parsed, theme, font, paragraphGap: 2, mz: 1 }))
-      } catch {
-        // A full or blocked store just means the migration runs again next time.
-      }
-    }
-
-    return prefs
   } catch {
     return { ...DEFAULTS }
   }
