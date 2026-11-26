@@ -960,6 +960,26 @@ export default function Reader({
 
             <button
               type="button"
+              className="voiceoverBar__genderBtn"
+              onClick={voiceover.toggleGender}
+              title={
+                voiceover.gender === 'male'
+                  ? (language === 'en' ? 'Voice: Male (click for Female)' : 'ድምጽ፡ ወንድ (ወደ ሴት ለመቀየር ይንኩ)')
+                  : (language === 'en' ? 'Voice: Female (click for Male)' : 'ድምጽ፡ ሴት (ወደ ወንድ ለመቀየር ይንኩ)')
+              }
+              aria-label={
+                voiceover.gender === 'male'
+                  ? (language === 'en' ? 'Voice: Male (click for Female)' : 'ድምጽ፡ ወንድ (ወደ ሴት ለመቀየር ይንኩ)')
+                  : (language === 'en' ? 'Voice: Female (click for Male)' : 'ድምጽ፡ ሴት (ወደ ወንድ ለመቀየር ይንኩ)')
+              }
+            >
+              {voiceover.gender === 'male'
+                ? (language === 'en' ? '👨 Male' : '👨 ወንድ')
+                : (language === 'en' ? '👩 Female' : '👩 ሴት')}
+            </button>
+
+            <button
+              type="button"
               className="voiceoverBar__btn voiceoverBar__btn--close"
               onClick={voiceover.stop}
               title={language === 'en' ? 'Close audio' : 'ማዳመጫውን ዝጋ'}

@@ -1092,6 +1092,28 @@ select {
   transform: scale(1.08) !important;
 }
 
+.voiceoverBar__genderBtn {
+  background: var(--mz-mint-soft, rgba(0, 0, 0, 0.08)) !important;
+  color: var(--ink, #1f2937) !important;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12)) !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 3px 7px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: all 0.15s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+.voiceoverBar__genderBtn:hover {
+  background: var(--accent, #e8654a) !important;
+  color: #ffffff !important;
+  border-color: var(--accent, #e8654a) !important;
+}
+
 .voiceoverBar__btn--close {
   color: var(--mz-muted, #9ca3af) !important;
   font-size: 11px !important;
