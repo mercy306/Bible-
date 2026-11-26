@@ -38,6 +38,7 @@ export default function LineageWebSheet({
   const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
   const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [showTheology, setShowTheology] = useState(false)
 
   const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
 
@@ -239,41 +240,88 @@ export default function LineageWebSheet({
                 </span>
               </header>
 
-              {/* Kinship Connections (Parents, Spouses, Children) */}
+              {/* Kinship Connections (Parents, Spouses, Children, Siblings) */}
               <div className="lineageKinshipBox">
                 {/* Parents */}
-                <div className="lineageKinshipRow">
-                  <span className="lineageKinshipLabel">
-                    {isEn ? 'Parents:' : 'ወላጆች:'}
-                  </span>
-                  <div className="lineageKinshipLinks">
-                    {activePerson.fatherId && LINEAGE_PEOPLE[activePerson.fatherId] && (
-                      <button
-                        type="button"
-                        className="lineagePillBtn"
-                        onClick={() => selectPerson(activePerson.fatherId!)}
-                      >
-                        <span>⬆️</span>
-                        <span>{isEn ? LINEAGE_PEOPLE[activePerson.fatherId].nameEn : LINEAGE_PEOPLE[activePerson.fatherId].nameAm}</span>
-                        <small style={{ opacity: 0.6 }}>({isEn ? 'Father' : 'አባት'})</small>
-                      </button>
-                    )}
-                    {activePerson.motherId && LINEAGE_PEOPLE[activePerson.motherId] && (
-                      <button
-                        type="button"
-                        className="lineagePillBtn"
-                        onClick={() => selectPerson(activePerson.motherId!)}
-                      >
-                        <span>⬆️</span>
-                        <span>{isEn ? LINEAGE_PEOPLE[activePerson.motherId].nameEn : LINEAGE_PEOPLE[activePerson.motherId].nameAm}</span>
-                        <small style={{ opacity: 0.6 }}>({isEn ? 'Mother' : 'እናት'})</small>
-                      </button>
-                    )}
-                    {!activePerson.fatherId && !activePerson.motherId && (
-                      <span className="lineagePillNone">{isEn ? 'Earliest recorded origin' : 'የመጀመሪያ መነሻ'}</span>
-                    )}
+                {(activePerson.fatherId || activePerson.motherId) && (
+                  <div className="lineageKinshipRow">
+                    <span className="lineageKinshipLabel">
+                      {isEn ? 'Parents:' : 'ወላጆች:'}
+                    </span>
+                    <div className="lineageKinshipLinks">
+                      {activePerson.fatherId && LINEAGE_PEOPLE[activePerson.fatherId] && (
+                        <button
+                          type="button"
+                          className="lineagePillBtn"
+                          onClick={() => selectPerson(activePerson.fatherId!)}
+                        >
+                          <span>{isEn ? LINEAGE_PEOPLE[activePerson.fatherId].nameEn : LINEAGE_PEOPLE[activePerson.fatherId].nameAm}</span>
+                          <small className="lineagePillRole">({isEn ? 'Father' : 'አባት'})</small>
+                        </button>
+                      )}
+                      {activePerson.motherId && LINEAGE_PEOPLE[activePerson.motherId] && (
+                        <button
+                          type="button"
+                          className="lineagePillBtn"
+                          onClick={() => selectPerson(activePerson.motherId!)}
+                        >
+                          <span>{isEn ? LINEAGE_PEOPLE[activePerson.motherId].nameEn : LINEAGE_PEOPLE[activePerson.motherId].nameAm}</span>
+                          <small className="lineagePillRole">({isEn ? 'Mother' : 'እናት'})</small>
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {/* Spouses */}
+                {activePerson.spouseIds.length > 0 && (
+                  <div className="lineageKinshipRow">
+                    <span className="lineageKinshipLabel">
+                      {isEn ? 'Spouse(s):' : 'የትዳር አጋር:'}
+                    </span>
+                    <div className="lineageKinshipLinks">
+                      {activePerson.spouseIds.map((sId) => {
+                        const sp = LINEAGE_PEOPLE[sId]
+                        if (!sp) return null
+                        return (
+                          <button
+                            key={sId}
+                            type="button"
+                            className="lineagePillBtn"
+                            onClick={() => selectPerson(sId)}
+                          >
+                            <span>{isEn ? sp.nameEn : sp.nameAm}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Children */}
+                {activePerson.childrenIds.length > 0 && (
+                  <div className="lineageKinshipRow">
+                    <span className="lineageKinshipLabel">
+                      {isEn ? 'Children:' : 'ልጆች:'}
+                    </span>
+                    <div className="lineageKinshipLinks">
+                      {activePerson.childrenIds.map((cId) => {
+                        const child = LINEAGE_PEOPLE[cId]
+                        if (!child) return null
+                        return (
+                          <button
+                            key={cId}
+                            type="button"
+                            className="lineagePillBtn"
+                            onClick={() => selectPerson(cId)}
+                          >
+                            <span>{isEn ? child.nameEn : child.nameAm}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {/* Siblings (brothers & sisters) */}
                 {(() => {
@@ -297,7 +345,6 @@ export default function LineageWebSheet({
                             className="lineagePillBtn"
                             onClick={() => selectPerson(sib.id)}
                           >
-                            <span>↔️</span>
                             <span>{isEn ? sib.nameEn : sib.nameAm}</span>
                           </button>
                         ))}
@@ -305,78 +352,34 @@ export default function LineageWebSheet({
                     </div>
                   )
                 })()}
-
-                {/* Spouses */}
-                <div className="lineageKinshipRow">
-                  <span className="lineageKinshipLabel">
-                    {isEn ? 'Spouse(s):' : 'የትዳር አጋር:'}
-                  </span>
-                  <div className="lineageKinshipLinks">
-                    {activePerson.spouseIds.length > 0 ? (
-                      activePerson.spouseIds.map((sId) => {
-                        const sp = LINEAGE_PEOPLE[sId]
-                        if (!sp) return null
-                        return (
-                          <button
-                            key={sId}
-                            type="button"
-                            className="lineagePillBtn"
-                            onClick={() => selectPerson(sId)}
-                          >
-                            <span>💍</span>
-                            <span>{isEn ? sp.nameEn : sp.nameAm}</span>
-                          </button>
-                        )
-                      })
-                    ) : (
-                      <span className="lineagePillNone">{isEn ? 'None recorded' : 'አልተጠቀሰም'}</span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Children */}
-                <div className="lineageKinshipRow">
-                  <span className="lineageKinshipLabel">
-                    {isEn ? 'Children:' : 'ልጆች:'}
-                  </span>
-                  <div className="lineageKinshipLinks">
-                    {activePerson.childrenIds.length > 0 ? (
-                      activePerson.childrenIds.map((cId) => {
-                        const child = LINEAGE_PEOPLE[cId]
-                        if (!child) return null
-                        return (
-                          <button
-                            key={cId}
-                            type="button"
-                            className="lineagePillBtn"
-                            onClick={() => selectPerson(cId)}
-                          >
-                            <span>⬇️</span>
-                            <span>{isEn ? child.nameEn : child.nameAm}</span>
-                          </button>
-                        )
-                      })
-                    ) : (
-                      <span className="lineagePillNone">{isEn ? 'Climax of Lineage or not recorded' : 'የሐረጉ ፍጻሜ ወይም አልተጠቀሰም'}</span>
-                    )}
-                  </div>
-                </div>
               </div>
 
-              {/* Theological Exegesis */}
-              <div className="lineageTheologyBox">
-                <span className="lineageTheologyTitle">
-                  {isEn ? 'Redemptive & Theological Significance' : 'የቤዛነትና ሥነ-መለኮታዊ ትርጉም'}
-                </span>
-                <p className="lineageTheologyText">
-                  {isEn ? activePerson.theologicalSignificanceEn : activePerson.theologicalSignificanceAm}
-                </p>
-              </div>
-
-              {/* Bio & Key Verses */}
+              {/* Bio Summary */}
               <p className="lineageBioText">
                 {isEn ? activePerson.bioEn : activePerson.bioAm}
               </p>
+
+              {/* Collapsible Theological Exegesis (Clean Accordion) */}
+              <div className="lineageTheologyCard">
+                <button
+                  type="button"
+                  className="lineageTheologyToggle"
+                  onClick={() => setShowTheology((v) => !v)}
+                  aria-expanded={showTheology}
+                >
+                  <span className="lineageTheologyTitle">
+                    ✨ {isEn ? 'Theological Significance' : 'የቤዛነትና ሥነ-መለኮታዊ ትርጉም'}
+                  </span>
+                  <span className="lineageTheologyChev">{showTheology ? '▲' : '▼'}</span>
+                </button>
+                {showTheology && (
+                  <div className="lineageTheologyBody">
+                    <p className="lineageTheologyText">
+                      {isEn ? activePerson.theologicalSignificanceEn : activePerson.theologicalSignificanceAm}
+                    </p>
+                  </div>
+                )}
+              </div>
 
               <div className="lineageVersesRow">
                 <span style={{ fontSize: '0.74rem', fontWeight: 700, color: 'var(--text-muted)' }}>
@@ -514,45 +517,13 @@ export default function LineageWebSheet({
                           </div>
                         </header>
 
-                        {/* Visual 3-Step Journey Flow (Where it came from -> Exile -> Where it is now) */}
-                        <div className="tribeJourneyFlow">
-                          <div className="tribeJourneyStep tribeJourneyStep--origin">
-                            <span className="tribeJourneyStepTitle tribeJourneyStepTitle--origin">
-                              📍 {isEn ? '1. Origin & Role' : '1. መነሻና ርስት'}
-                            </span>
-                            <p className="tribeJourneyStepContent">
-                              {isEn ? t.historicalRoleEn : t.historicalRoleAm}
-                            </p>
-                          </div>
-                          <div className="tribeJourneyStep tribeJourneyStep--exile">
-                            <span className="tribeJourneyStepTitle tribeJourneyStepTitle--exile">
-                              ⚔️ {isEn ? '2. Exile & Dispersion' : '2. ስደትና መበተን'}
-                            </span>
-                            <p className="tribeJourneyStepContent">
-                              {isEn ? t.exileFateEn : t.exileFateAm}
-                            </p>
-                          </div>
-                          <div className="tribeJourneyStep tribeJourneyStep--now">
-                            <span className="tribeJourneyStepTitle tribeJourneyStepTitle--now">
-                              🌍 {isEn ? '3. Where They Are Today' : '3. አሁን የት አሉ?'}
-                            </span>
-                            <p className="tribeJourneyStepContent">
-                              {isEn ? t.modernLocationEn : t.modernLocationAm}
-                            </p>
-                          </div>
+                        {/* Clean Quick Summary */}
+                        <div className="tribeQuickSummary">
+                          <span className="tribeQuickIcon">🌍</span>
+                          <span className="tribeQuickText">
+                            {isEn ? t.modernLocationEn : t.modernLocationAm}
+                          </span>
                         </div>
-
-                        {/* Ethiopian Connection (if exists) */}
-                        {t.ethiopianConnectionAm && (
-                          <div className="tribeEthiopiaHighlight">
-                            <span className="tribeEthiopiaTitle">
-                              🇪🇹 {isEn ? 'Ethiopian & Beta Israel Connection:' : 'የኢትዮጵያና የቤተ እስራኤል ትሥሥር:'}
-                            </span>
-                            <p className="tribeEthiopiaText">
-                              {isEn ? t.ethiopianConnectionEn : t.ethiopianConnectionAm}
-                            </p>
-                          </div>
-                        )}
 
                         {/* Collapsible Deep-Dive Details */}
                         <button
@@ -561,12 +532,52 @@ export default function LineageWebSheet({
                           onClick={() => setExpandedTribes(prev => ({ ...prev, [t.id]: !prev[t.id] }))}
                           aria-expanded={isExpanded}
                         >
-                          <span>📜 {isEn ? 'Biblical Blessings & Prophetic Role' : 'የያዕቆብና የሙሴ ትንቢታዊ ምርቃት'}</span>
+                          <span>📜 {isEn ? 'History, Prophecies & Blessings' : 'የስደት ታሪክ፣ ምርቃትና ትንቢት'}</span>
                           <span>{isExpanded ? '▲' : '▼'}</span>
                         </button>
 
                         {isExpanded && (
                           <div className="tribeAccordionContent">
+                            {/* Visual 3-Step Journey Flow */}
+                            <div className="tribeJourneyFlow">
+                              <div className="tribeJourneyStep tribeJourneyStep--origin">
+                                <span className="tribeJourneyStepTitle tribeJourneyStepTitle--origin">
+                                  📍 {isEn ? '1. Origin & Role' : '1. መነሻና ርስት'}
+                                </span>
+                                <p className="tribeJourneyStepContent">
+                                  {isEn ? t.historicalRoleEn : t.historicalRoleAm}
+                                </p>
+                              </div>
+                              <div className="tribeJourneyStep tribeJourneyStep--exile">
+                                <span className="tribeJourneyStepTitle tribeJourneyStepTitle--exile">
+                                  ⚔️ {isEn ? '2. Exile & Dispersion' : '2. ስደትና መበተን'}
+                                </span>
+                                <p className="tribeJourneyStepContent">
+                                  {isEn ? t.exileFateEn : t.exileFateAm}
+                                </p>
+                              </div>
+                              <div className="tribeJourneyStep tribeJourneyStep--now">
+                                <span className="tribeJourneyStepTitle tribeJourneyStepTitle--now">
+                                  🌍 {isEn ? '3. Dispersion Heritage' : '3. የታሪክ ውርስ'}
+                                </span>
+                                <p className="tribeJourneyStepContent">
+                                  {isEn ? t.modernLocationEn : t.modernLocationAm}
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Ethiopian Connection (if exists) */}
+                            {t.ethiopianConnectionAm && (
+                              <div className="tribeEthiopiaHighlight">
+                                <span className="tribeEthiopiaTitle">
+                                  🇪🇹 {isEn ? 'Ethiopian & Beta Israel Connection:' : 'የኢትዮጵያና የቤተ እስራኤል ትሥሥር:'}
+                                </span>
+                                <p className="tribeEthiopiaText">
+                                  {isEn ? t.ethiopianConnectionEn : t.ethiopianConnectionAm}
+                                </p>
+                              </div>
+                            )}
+
                             {/* Jacob's Prophecy */}
                             <div className="tribeProphecyBox">
                               <span className="tribeProphecyTitle">
