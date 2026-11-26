@@ -5,17 +5,6 @@
  * cinematic historical and spiritual saga interlaced across 5 Epic Acts.
  */
 
-export interface GeopoliticalInterlude {
-  titleAm: string
-  titleEn: string
-  empire: 'ancient' | 'egypt' | 'canaan' | 'assyria' | 'babylon' | 'persia' | 'greece' | 'rome'
-  empireNameAm: string
-  empireNameEn: string
-  bodyAm: string
-  bodyEn: string
-  historicalDate: string
-}
-
 export interface InterwovenPassage {
   bookNr: number
   bookNameAm: string
@@ -39,7 +28,6 @@ export interface SagaScene {
   summaryEn: string
   narrativeFlowAm: string
   narrativeFlowEn: string
-  geopolitical?: GeopoliticalInterlude
   passages: InterwovenPassage[]
 }
 

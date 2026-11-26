@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { AMHARIC_HUMAN_AUDIO } from './amharicAudioMap'
 
 /**
  * Voiceover and Text-to-Speech Engine for Amharic and English.
@@ -526,6 +527,12 @@ export interface ChapterVoiceoverState {
  * - English (1): Renowned human English Bible narrator.
  */
 export function getChapterAudioUrl(lang: 'am' | 'en', bookNr: number, chapterNr: number): string {
+  if (lang === 'am') {
+    const key = `${bookNr}_${chapterNr}`
+    if (AMHARIC_HUMAN_AUDIO[key]) {
+      return AMHARIC_HUMAN_AUDIO[key]
+    }
+  }
   const langId = lang === 'en' ? 1 : 17
   return `https://www.wordproaudio.net/bibles/app/audio/${langId}/${bookNr}/${chapterNr}.mp3`
 }
