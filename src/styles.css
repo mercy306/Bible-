@@ -5000,25 +5000,26 @@ select {
 }
 
 .mtabs {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:3px;
-  margin-bottom:14px;
-  padding:3px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:var(--panel-2)
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel-2);
 }
 
 .mtabs__btn {
-  padding:9px 6px;
-  border:0;
-  border-radius:9px;
-  background:transparent;
-  color:var(--ink-soft);
-  font-size:13.5px;
-  font-weight:600;
-  cursor:pointer
+  flex: 1 1 0;
+  text-align: center;
+  padding: 9px 6px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .mtabs__btn.is-active {
@@ -5391,6 +5392,101 @@ select {
   font-size: 11.5px;
   line-height: 1.35;
   color: var(--ink-soft);
+}
+
+.toolsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.toolCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--panel-2, rgba(128, 128, 128, 0.08));
+  border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.15));
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  min-height: 48px;
+  color: var(--ink);
+}
+
+.toolCard:hover {
+  background: var(--panel-3, rgba(128, 128, 128, 0.14));
+}
+
+.toolCard:active {
+  transform: scale(0.98);
+}
+
+.toolCard__icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.toolCard__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: 2px;
+}
+
+.toolCard__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toolCard__badge {
+  font-size: 10.5px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.toolsSectionLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 10px 0 6px;
+  display: block;
+}
+
+.compactRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--panel-2, rgba(128, 128, 128, 0.05));
+  border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.12));
+  margin-bottom: 6px;
+  min-height: 40px;
+  box-sizing: border-box;
+}
+
+.compactRow:hover {
+  background: var(--panel-3, rgba(128, 128, 128, 0.09));
+}
+
+.compactRow__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .mrow__text {

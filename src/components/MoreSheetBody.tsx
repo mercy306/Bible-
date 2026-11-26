@@ -410,99 +410,95 @@ export default function MoreSheetBody({
           ===================================================================== */}
       {tab === 'tools' && (
         <div className="mlist">
-          {/* Annual Reading Plan */}
-          {onPlan && (
-            <button type="button" className="mwide mwide--rich" onClick={() => onPlan()}>
-              <div className="mwide__body">
-                <span className="mwide__title">📖 {isEn ? 'Annual Reading Plan & Progress' : 'የዓመት ንባብ እቅድና እድገት'}</span>
-                <span className="mwide__subtitle">
-                  {isEn
-                    ? 'Track daily scriptures, build reading streaks & complete the Bible'
-                    : 'ዕለታዊ የንባብ መርሐ ግብር፣ የንባብ ልምምድ እና የቀን እድገት'}
-                </span>
-              </div>
-              <span className="mwide__count">
-                {planInfo.streak.currentStreak > 0 ? `🔥 ${planInfo.streak.currentStreak}d • ` : ''}
-                {planInfo.planCompletedPercent}%
-              </span>
-            </button>
-          )}
+          <span className="toolsSectionLabel">
+            {isEn ? 'Interactive Study Aids' : 'የጥናት ክፍሎች'}
+          </span>
 
-          {/* Epic Chronological Saga */}
-          {onSaga && (
-            <button type="button" className="mwide mwide--rich" onClick={() => onSaga()}>
-              <div className="mwide__body">
-                <span className="mwide__title">👑 {isEn ? 'Epic Chronological Saga' : 'የዘመን ታሪክ ቅደም ተከተል'}</span>
-                <span className="mwide__subtitle">
-                  {isEn
-                    ? '5 grand chronological acts from Creation to Eternity unfolding the narrative'
-                    : 'ከፍጥረት እስከ ዘላለም 5ቱ ታላላቅ የመጽሐፍ ቅዱስ ምዕራፎች በቅደም ተከተል'}
-                </span>
-              </div>
-              <span className="mwide__count">{isEn ? '5 Acts' : '5 ዘመናት'}</span>
-            </button>
-          )}
+          <div className="toolsGrid">
+            {/* Annual Reading Plan */}
+            {onPlan && (
+              <button type="button" className="toolCard" onClick={() => onPlan()}>
+                <span className="toolCard__icon">📖</span>
+                <div className="toolCard__info">
+                  <span className="toolCard__title">{isEn ? 'Reading Plan' : 'የዓመት ንባብ'}</span>
+                  <span className="toolCard__badge">
+                    {planInfo.streak.currentStreak > 0 ? `🔥 ${planInfo.streak.currentStreak}d • ` : ''}
+                    {planInfo.planCompletedPercent}%
+                  </span>
+                </div>
+              </button>
+            )}
 
-          {/* Genealogical & Cultural Web */}
-          {onLineage && (
-            <button type="button" className="mwide mwide--rich" onClick={() => onLineage()}>
-              <div className="mwide__body">
-                <span className="mwide__title">🌳 {isEn ? 'Genealogical & Cultural Web' : 'የትውልድ ሐረግና የቤተሰብ ትሥሥር'}</span>
-                <span className="mwide__subtitle">
-                  {isEn
-                    ? 'Explore biblical family trees, Adam to David, multiple families & cultural heritage'
-                    : 'የአዳም፣ የኖኅ፣ የአብርሃምና የዳዊት ቤተሰቦች ትሥሥር፣ የዘር ሐረግና ባህላዊ ቅርስ'}
-                </span>
-              </div>
-              <span className="mwide__count">{isEn ? 'Roots' : 'ትሥሥር'}</span>
-            </button>
-          )}
+            {/* Epic Chronological Saga */}
+            {onSaga && (
+              <button type="button" className="toolCard" onClick={() => onSaga()}>
+                <span className="toolCard__icon">👑</span>
+                <div className="toolCard__info">
+                  <span className="toolCard__title">{isEn ? 'Chrono Saga' : 'የዘመን ታሪክ'}</span>
+                  <span className="toolCard__badge">{isEn ? '5 Acts' : '5 ዘመናት'}</span>
+                </div>
+              </button>
+            )}
 
-          {/* Living Chrono-Atlas */}
-          {onAtlas && (
-            <button type="button" className="mwide mwide--rich" onClick={() => onAtlas()}>
-              <div className="mwide__body">
-                <span className="mwide__title">🗺️ {isEn ? 'The Living Chrono-Atlas' : 'የመጽሐፍ ቅዱስ ሕያው የጉዞ ካርታ'}</span>
-                <span className="mwide__subtitle">
-                  {isEn
-                    ? 'Interactive journeys, sacred geography & historical routes on an offline map'
-                    : 'የቀደምት አባቶች ጉዞዎች፣ ቦታዎችና ታሪካዊ ክስተቶች በይነተገናኝ ካርታ'}
-                </span>
-              </div>
-              <span className="mwide__count">{isEn ? 'Atlas' : 'ካርታ'}</span>
-            </button>
-          )}
+            {/* Genealogical & Cultural Web */}
+            {onLineage && (
+              <button type="button" className="toolCard" onClick={() => onLineage()}>
+                <span className="toolCard__icon">🌳</span>
+                <div className="toolCard__info">
+                  <span className="toolCard__title">{isEn ? 'Family Web' : 'የትውልድ ሐረግ'}</span>
+                  <span className="toolCard__badge">{isEn ? '12 Tribes' : '12ቱ ነገዶች'}</span>
+                </div>
+              </button>
+            )}
 
-          {/* Generation Time-Capsule */}
-          {onTimeCapsule && (
-            <button type="button" className="mwide mwide--rich" onClick={() => onTimeCapsule()}>
-              <div className="mwide__body">
-                <span className="mwide__title">⏳ {isEn ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና ታሪካዊ አውድ'}</span>
-                <span className="mwide__subtitle">
-                  {isEn
-                    ? 'Historical context, archaeological insights & cultural backdrop of scripture'
-                    : 'የጥቅሱ ዘመን ማኅበራዊ፣ ባህላዊና ፖለቲካዊ ዳራ በጊዜ መስመር'}
-                </span>
+            {/* Living Chrono-Atlas */}
+            {onAtlas && (
+              <button type="button" className="toolCard" onClick={() => onAtlas()}>
+                <span className="toolCard__icon">🗺️</span>
+                <div className="toolCard__info">
+                  <span className="toolCard__title">{isEn ? 'Chrono-Atlas' : 'የጉዞ ካርታ'}</span>
+                  <span className="toolCard__badge">{isEn ? 'Map' : 'ካርታ'}</span>
+                </div>
+              </button>
+            )}
+
+            {/* Generation Time-Capsule */}
+            {onTimeCapsule && (
+              <button type="button" className="toolCard" onClick={() => onTimeCapsule()}>
+                <span className="toolCard__icon">⏳</span>
+                <div className="toolCard__info">
+                  <span className="toolCard__title">{isEn ? 'Time-Capsule' : 'የዘመኑ አውድ'}</span>
+                  <span className="toolCard__badge">{isEn ? 'History' : 'አውድ'}</span>
+                </div>
+              </button>
+            )}
+
+            {/* Search Bible & Commentary */}
+            <button type="button" className="toolCard" onClick={() => onSearch()}>
+              <span className="toolCard__icon">🔍</span>
+              <div className="toolCard__info">
+                <span className="toolCard__title">{isEn ? 'Search Bible' : 'መጽሐፍ ቅዱስ ፈልግ'}</span>
+                <span className="toolCard__badge">{isEn ? 'Search' : 'ፈልግ'}</span>
               </div>
-              <span className="mwide__count">{isEn ? 'Context' : 'አውድ'}</span>
             </button>
-          )}
+          </div>
+
+          <span className="toolsSectionLabel">
+            {isEn ? 'Quick Jump & Navigation' : 'ወደ ጥቅስ መሄጃ'}
+          </span>
 
           {/* Direct Passage Navigation */}
           <form
-            className="mrow"
+            className="compactRow"
             onSubmit={(e) => {
               e.preventDefault()
               if (reference.trim()) onGoTo(reference.trim())
             }}
           >
-            <div className="mrow__text">
-              <span className="mrow__label">{isEn ? 'Go to Passage' : 'ወደ ጥቅስ ይሂዱ'}</span>
-              <span className="mrow__desc">
-                {isEn ? 'Enter book, chapter and verse' : 'የመጽሐፍና ምዕራፍ ቁጥር ያስገቡ (ምሳሌ፦ ዮሐንስ 3:16)'}
-              </span>
-            </div>
-            <div className="mrow__control mrow__control--pair">
+            <span className="compactRow__label">
+              📖 {isEn ? 'Go to Passage' : 'ወደ ጥቅስ ይሂዱ'}
+            </span>
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
               <input
                 className="textfield textfield--sm"
                 type="text"
@@ -510,66 +506,75 @@ export default function MoreSheetBody({
                 onChange={(e) => setReference(e.target.value)}
                 placeholder={isEn ? "John 3:16" : "ዮሐንስ 3:16"}
                 aria-label={isEn ? "Go to a passage" : "ወደ ጥቅስ ይሂዱ"}
+                style={{ width: '120px', height: '30px', padding: '4px 8px', fontSize: '12.5px' }}
               />
-              <button className="btn btn--accent btn--sm" type="submit">
+              <button className="btn btn--accent btn--sm" type="submit" style={{ height: '30px', padding: '0 12px', fontSize: '12.5px' }}>
                 {isEn ? 'Go' : 'ሂድ'}
               </button>
             </div>
           </form>
 
-          {/* Search Bible & Commentary */}
-          <button type="button" className="mwide mwide--rich" onClick={() => onSearch()}>
-            <div className="mwide__body">
-              <span className="mwide__title">🔍 {isEn ? 'Search Bible & Commentary' : 'መጽሐፍ ቅዱስንና ማብራሪያውን ፈልግ'}</span>
-              <span className="mwide__subtitle">
-                {isEn
-                  ? 'Search words and phrases across all 66 books and offline commentary'
-                  : 'በሁሉም 66 መጻሕፍትና ማብራሪያዎች ውስጥ ቃላትንና ጥቅሶችን ፈልግ'}
-              </span>
-            </div>
-            <span className="mwide__count">›</span>
-          </button>
+          <span className="toolsSectionLabel">
+            {isEn ? 'Reading Preferences' : 'የንባብ ምርጫዎች'}
+          </span>
 
           {/* Verse Memorization Mode */}
-          <OnOff
-            label={isEn ? "Verse Memorization Mode" : "ጥቅስ የማስታወስ ልምምድ (Memorization)"}
-            description={
-              isEn
-                ? "Gradually obscure words to practice memorizing sacred scripture verses"
-                : "ቃላትን በመደበቅ ጥቅሶችን በቃለ አጋኖ ለማጥናትና ለመሸምደድ"
-            }
-            on={memorize}
-            onChange={onMemorize}
-            yes={isEn ? "On" : "አብራ"}
-            no={isEn ? "Off" : "አጥፋ"}
-          />
+          <div className="compactRow">
+            <span className="compactRow__label">
+              🧠 {isEn ? 'Verse Memorization' : 'ጥቅስ የማስታወስ ልምምድ'}
+            </span>
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Verse Memorization" : "ጥቅስ የማስታወስ ልምምድ"}>
+              <button
+                type="button"
+                className={`segbar__btn ${!memorize ? 'is-active' : ''}`}
+                onClick={() => onMemorize(false)}
+                aria-pressed={!memorize}
+              >
+                {isEn ? 'Off' : 'አጥፋ'}
+              </button>
+              <button
+                type="button"
+                className={`segbar__btn ${memorize ? 'is-active' : ''}`}
+                onClick={() => onMemorize(true)}
+                aria-pressed={memorize}
+              >
+                {isEn ? 'On' : 'አብራ'}
+              </button>
+            </div>
+          </div>
 
           {/* Word Lookup & Lexicon */}
-          <OnOff
-            label={isEn ? "Word Lookup & Strong's Lexicon" : "የቃላት ፍቺና መዝገበ ቃላት (Word Lookup)"}
-            description={
-              isEn
-                ? "Tap words while reading to view Greek/Hebrew Strong's & Ge'ez roots"
-                : "በንባብ ላይ ቃላትን ሲነኩ የግዕዝ፣ የዕብራይስጥና የግሪክ (Strong's) ፍቺ ያሳያል"
-            }
-            on={wordLookup}
-            onChange={onWordLookup}
-            yes={isEn ? "On" : "አብራ"}
-            no={isEn ? "Off" : "አጥፋ"}
-          />
+          <div className="compactRow">
+            <span className="compactRow__label">
+              🔤 {isEn ? "Word Lookup (Strong's)" : 'የቃላት ፍቺና መዝገበ ቃላት'}
+            </span>
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Word Lookup" : "የቃላት ፍቺ"}>
+              <button
+                type="button"
+                className={`segbar__btn ${!wordLookup ? 'is-active' : ''}`}
+                onClick={() => onWordLookup(false)}
+                aria-pressed={!wordLookup}
+              >
+                {isEn ? 'Off' : 'አጥፋ'}
+              </button>
+              <button
+                type="button"
+                className={`segbar__btn ${wordLookup ? 'is-active' : ''}`}
+                onClick={() => onWordLookup(true)}
+                aria-pressed={wordLookup}
+              >
+                {isEn ? 'On' : 'አብራ'}
+              </button>
+            </div>
+          </div>
 
           {/* Print / Save Chapter */}
-          <button type="button" className="mwide mwide--rich" onClick={onPrint}>
-            <div className="mwide__body">
-              <span className="mwide__title">🖨️ {isEn ? 'Print or Export Chapter' : 'ይህንን ምዕራፍ አትም ወይም አስቀምጥ'}</span>
-              <span className="mwide__subtitle">
-                {isEn
-                  ? 'Format current scripture chapter for paper printing or clean PDF saving'
-                  : 'የአሁኑን ምዕራፍ ለህትመት ወይም ለፒዲኤፍ (PDF) ማዘጋጀት'}
-              </span>
-            </div>
-            <span className="mwide__count">›</span>
-          </button>
+          <div className="compactRow" onClick={onPrint} style={{ cursor: 'pointer' }}>
+            <span className="compactRow__label">
+              🖨️ {isEn ? 'Print or Export Chapter' : 'ይህንን ምዕራፍ አትም / አስቀምጥ'}
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: 600 }}>PDF / Print ›</span>
+          </div>
         </div>
       )}
     </>
