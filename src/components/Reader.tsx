@@ -25,6 +25,7 @@ import {
 import type { LanguageMode } from '../prefs'
 import type { ChapterResponse } from '../types'
 import { useReadingPlan, toggleChapterRead } from '../readingPlan'
+import { useChapterVoiceover } from '../voiceover'
 
 interface Props {
   chapter: ChapterResponse
@@ -86,7 +87,6 @@ export default function Reader({
   const [word, setWord] = useState<{ text: string; verse: number; lang?: 'am' | 'en' } | null>(null)
   const [counterpart, setCounterpart] = useState<ChapterResponse | null>(null)
   const [revealed, setRevealed] = useState<Set<number>>(new Set())
-  const [isChapterPlaying, setIsChapterPlaying] = useState(false)
   const [currentNoteText, setCurrentNoteText] = useState('')
   const [isNoteOpen, setIsNoteOpen] = useState(false)
   const [noteSavedFeedback, setNoteSavedFeedback] = useState<number | null>(null)
@@ -98,39 +98,33 @@ export default function Reader({
     return getTimeCapsuleForChapter(chapter.book.nr, chapter.chapter)
   }, [chapter.book.nr, chapter.chapter])
 
-  function handleChapterListen() {
-    if (!('speechSynthesis' in window)) return
-    if (isChapterPlaying) {
-      window.speechSynthesis.cancel()
-      setIsChapterPlaying(false)
-      return
-    }
-    window.speechSynthesis.cancel()
-    const isEn = language === 'en'
-    const isAm = language === 'am'
-    const textToSpeak = isEn
-      ? (readingAmharic ? counterpart?.verses.map((v) => v.text).join('. ') : chapter.verses.map((v) => v.text).join('. ')) || chapter.verses.map((v) => v.text).join('. ')
-      : (readingAmharic ? chapter.verses.map((v) => v.text).join('. ') : counterpart?.verses.map((v) => v.text).join('. ')) || chapter.verses.map((v) => v.text).join('. ')
-    const utterance = new SpeechSynthesisUtterance(textToSpeak)
-    utterance.lang = isEn || (!readingAmharic && !isAm) ? 'en-US' : 'am-ET'
-    utterance.rate = 0.95
-    utterance.onend = () => setIsChapterPlaying(false)
-    utterance.onerror = () => setIsChapterPlaying(false)
-    setIsChapterPlaying(true)
-    window.speechSynthesis.speak(utterance)
-  }
+  const readingAmharic = chapter.translation.lang === 'am'
+  const chapterVoiceLang = readingAmharic ? 'am' : 'en'
 
-  useEffect(() => {
-    return () => {
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel()
-      setIsChapterPlaying(false)
+  const voiceVerses = useMemo(() => {
+    return chapter.verses.map((v) => ({
+      number: v.verse,
+      text: v.text,
+    }))
+  }, [chapter.verses])
+
+  const voiceover = useChapterVoiceover(
+    voiceVerses,
+    chapterVoiceLang,
+    chapter.book.nr,
+    chapter.chapter,
+  )
+
+  function handleChapterListen() {
+    if (voiceover.isActive) {
+      voiceover.stop()
+    } else {
+      voiceover.start(selected ?? undefined)
     }
-  }, [chapter.book.nr, chapter.chapter])
+  }
 
   const bookmarks = useBookmarks()
   const highlights = useHighlights()
-
-  const readingAmharic = chapter.translation.lang === 'am'
 
   useEffect(() => {
     setSelected(null)
@@ -523,6 +517,8 @@ export default function Reader({
             (n === highlightedTargetVerse ||
               (folded && row.from <= highlightedTargetVerse && highlightedTargetVerse <= row.to))
 
+          const isSpeaking = voiceover.isActive && n === voiceover.activeVerseNumber
+
           return (
             <li
               key={n}
@@ -530,7 +526,9 @@ export default function Reader({
                 starred ? 'is-starred' : ''
               } ${missing ? 'verse--grouped' : ''} ${folded ? 'verse--run' : ''} ${
                 hidden ? 'verse--hidden' : ''
-              } ${isSearchTarget ? 'verse--searchTarget is-searchTarget' : ''}`}
+              } ${isSearchTarget ? 'verse--searchTarget is-searchTarget' : ''} ${
+                isSpeaking ? 'is-speaking verse--speaking' : ''
+              }`}
               id={`v${n}`}
               onClick={(e) => {
                 // Tapping the row selects it, unless text is being selected.
@@ -721,6 +719,30 @@ export default function Reader({
                     <div className="verse__inlineActionsRow">
                       <button
                         type="button"
+                        className={`verse__inlineActionBtn ${isSpeaking ? 'is-active' : ''}`}
+                        onClick={() => {
+                          if (voiceover.isActive && voiceover.activeVerseNumber === n) {
+                            voiceover.stop()
+                          } else {
+                            voiceover.start(n)
+                          }
+                        }}
+                        title={
+                          language === 'en'
+                            ? (isSpeaking ? 'Stop audio' : 'Listen to verse')
+                            : (isSpeaking ? 'ማዳመጥ አቁም' : 'ጥቅሱን አዳምጥ')
+                        }
+                      >
+                        <span className="verse__inlineActionIcon">{isSpeaking ? '⏹' : '🔊'}</span>
+                        <span>
+                          {language === 'en'
+                            ? (isSpeaking ? 'Stop' : 'Listen')
+                            : (isSpeaking ? 'አቁም' : 'አዳምጥ')}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
                         className={`verse__inlineActionBtn ${lit ? 'is-active' : ''}`}
                         onClick={() => toggleHighlight(highlights, ref)}
                         title={language === 'en' ? 'Highlight' : 'አድምቅ'}
@@ -874,6 +896,81 @@ export default function Reader({
         </button>
       </div>
 
+      {voiceover.isActive && (
+        <div className="voiceoverBar" role="region" aria-label="Audio voiceover controls">
+          <div className="voiceoverBar__info">
+            <span className="voiceoverBar__wave" aria-hidden="true">
+              {voiceover.isPlaying ? '🔊' : '⏸️'}
+            </span>
+            <div className="voiceoverBar__details">
+              <span className="voiceoverBar__title">
+                {displayBookName} {chapter.chapter}:{voiceover.activeVerseNumber ?? ''}
+              </span>
+              <span className="voiceoverBar__meta">
+                {language === 'en'
+                  ? `Verse ${voiceover.activeVerseIndex + 1} of ${voiceover.totalVerses}`
+                  : `ጥቅስ ${voiceover.activeVerseIndex + 1} ከ ${voiceover.totalVerses}`}
+                {chapterVoiceLang === 'am' && (
+                  <span className="voiceoverBar__tag">HD</span>
+                )}
+              </span>
+            </div>
+          </div>
+
+          <div className="voiceoverBar__controls">
+            <button
+              type="button"
+              className="voiceoverBar__btn"
+              onClick={voiceover.prev}
+              disabled={voiceover.activeVerseIndex <= 0}
+              title={language === 'en' ? 'Previous verse' : 'ቀዳሚ ጥቅስ'}
+              aria-label={language === 'en' ? 'Previous verse' : 'ቀዳሚ ጥቅስ'}
+            >
+              ⏮
+            </button>
+
+            <button
+              type="button"
+              className="voiceoverBar__btn voiceoverBar__btn--main"
+              onClick={voiceover.isPlaying ? voiceover.pause : voiceover.resume}
+              title={
+                voiceover.isPlaying
+                  ? (language === 'en' ? 'Pause' : 'አፍታ አቁም')
+                  : (language === 'en' ? 'Resume' : 'ቀጥል')
+              }
+              aria-label={
+                voiceover.isPlaying
+                  ? (language === 'en' ? 'Pause' : 'አፍታ አቁም')
+                  : (language === 'en' ? 'Resume' : 'ቀጥል')
+              }
+            >
+              {voiceover.isPlaying ? '⏸' : '▶'}
+            </button>
+
+            <button
+              type="button"
+              className="voiceoverBar__btn"
+              onClick={voiceover.next}
+              disabled={voiceover.activeVerseIndex >= voiceover.totalVerses - 1}
+              title={language === 'en' ? 'Next verse' : 'ቀጣይ ጥቅስ'}
+              aria-label={language === 'en' ? 'Next verse' : 'ቀጣይ ጥቅስ'}
+            >
+              ⏭
+            </button>
+
+            <button
+              type="button"
+              className="voiceoverBar__btn voiceoverBar__btn--close"
+              onClick={voiceover.stop}
+              title={language === 'en' ? 'Close audio' : 'ማዳመጫውን ዝጋ'}
+              aria-label={language === 'en' ? 'Close audio' : 'ማዳመጫውን ዝጋ'}
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="readerBar" role="toolbar"  aria-label={language === 'en' ? 'Reader controls' : 'የንባብ መቆጣጠሪያ'}>
         <button
           type="button"
@@ -918,20 +1015,20 @@ export default function Reader({
 
         <button
           type="button"
-          className={`readerBar__listenBtn ${isChapterPlaying ? 'is-playing' : ''}`}
+          className={`readerBar__listenBtn ${voiceover.isActive ? 'is-playing' : ''}`}
           title={
-            isChapterPlaying
+            voiceover.isActive
               ? (language === 'en' ? 'Stop listening' : 'ማዳመጥ አቁም')
               : (language === 'en' ? 'Listen to chapter' : 'ምዕራፉን አዳምጥ')
           }
           aria-label={
-            isChapterPlaying
+            voiceover.isActive
               ? (language === 'en' ? 'Stop listening' : 'ማዳመጥ አቁም')
               : (language === 'en' ? 'Listen to chapter' : 'ምዕራፉን አዳምጥ')
           }
           onClick={handleChapterListen}
         >
-          {isChapterPlaying ? (
+          {voiceover.isActive ? (
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
               <rect x="6" y="5" width="4" height="14" rx="1.5" />
               <rect x="14" y="5" width="4" height="14" rx="1.5" />

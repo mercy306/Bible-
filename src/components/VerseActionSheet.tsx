@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { fetchAmharicCommentary, fetchGuideVerse } from '../api'
 import { AmharicBody, CommentaryBody } from './commentaryParts'
+import { speakText, stopAllSpeech, isAmharicText } from '../voiceover'
 import {
   findBookmark,
   saveNote,
@@ -113,30 +114,33 @@ export default function VerseActionSheet({
     }
   }, [chapter.translation.id, chapter.book.nr, chapter.chapter, verse])
 
-  // Web Speech API text-to-speech for Listen action
+  const cancelSpeakRef = useRef<(() => void) | null>(null)
+
+  // Voiceover playback for Listen action
   function handleListen() {
-    if (!('speechSynthesis' in window)) return
     if (isPlaying) {
-      window.speechSynthesis.cancel()
+      if (cancelSpeakRef.current) cancelSpeakRef.current()
+      stopAllSpeech()
       setIsPlaying(false)
       return
     }
-    window.speechSynthesis.cancel()
-    const utterance = new SpeechSynthesisUtterance(text)
-    utterance.lang = isEn ? 'en-US' : 'am-ET'
-    utterance.rate = 0.95
-    utterance.onend = () => setIsPlaying(false)
-    utterance.onerror = () => setIsPlaying(false)
 
+    const isAm = chapter.translation.lang === 'am' || isAmharicText(text)
     setIsPlaying(true)
-    window.speechSynthesis.speak(utterance)
+    cancelSpeakRef.current = speakText(text, {
+      lang: isAm ? 'am' : 'en',
+      onEnd: () => setIsPlaying(false),
+      onError: () => setIsPlaying(false),
+    })
   }
 
   useEffect(() => {
     return () => {
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel()
+      if (cancelSpeakRef.current) cancelSpeakRef.current()
+      stopAllSpeech()
+      setIsPlaying(false)
     }
-  }, [])
+  }, [reference, text])
 
   function handleCopy() {
     onCopy()

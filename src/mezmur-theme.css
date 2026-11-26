@@ -951,3 +951,165 @@ select {
 .accentSwatchBtn:hover { transform: none !important; }
 .accentSwatchBtn.is-active { transform: none !important; border-color: var(--mz-cream) !important; }
 
+/* ==========================================================================
+   Voiceover / Audio Reader Bar & Speaking Verse Highlights
+   ========================================================================== */
+
+.voiceoverBar {
+  position: fixed !important;
+  bottom: calc(108px + env(safe-area-inset-bottom, 0px)) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  background: var(--mz-card, var(--panel, #ffffff)) !important;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12)) !important;
+  border-radius: 999px !important;
+  padding: 3px 8px 3px 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16) !important;
+  z-index: 65 !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  max-width: min(92vw, 380px) !important;
+  width: auto !important;
+  animation: voiceoverSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes voiceoverSlideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.voiceoverBar__info {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+}
+
+.voiceoverBar__wave {
+  font-size: 14px !important;
+  line-height: 1 !important;
+  animation: voicePulse 1.2s infinite ease-in-out !important;
+}
+
+@keyframes voicePulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+.voiceoverBar__details {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+}
+
+.voiceoverBar__title {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: var(--ink, #1f2937) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.voiceoverBar__meta {
+  font-size: 10px !important;
+  color: var(--mz-muted, var(--ink-muted, #6b7280)) !important;
+  white-space: nowrap !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.voiceoverBar__tag {
+  background: var(--accent, #e8654a) !important;
+  color: #fff !important;
+  font-size: 8.5px !important;
+  font-weight: 800 !important;
+  padding: 0.5px 4px !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.5px !important;
+}
+
+.voiceoverBar__controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  flex-shrink: 0 !important;
+}
+
+.voiceoverBar__btn {
+  background: transparent !important;
+  border: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--ink, #1f2937) !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  padding: 0 !important;
+}
+
+.voiceoverBar__btn:hover:not(:disabled) {
+  background: var(--mz-mint-soft, rgba(0, 0, 0, 0.08)) !important;
+  transform: scale(1.08) !important;
+}
+
+.voiceoverBar__btn:disabled {
+  opacity: 0.28 !important;
+  cursor: not-allowed !important;
+}
+
+.voiceoverBar__btn--main,
+.voiceoverBar__btn--main:focus,
+.voiceoverBar__btn--main:active {
+  background: var(--accent, #e8654a) !important;
+  color: #ffffff !important;
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  opacity: 1 !important;
+}
+
+.voiceoverBar__btn--main:hover {
+  filter: brightness(1.1) !important;
+  transform: scale(1.08) !important;
+}
+
+.voiceoverBar__btn--close {
+  color: var(--mz-muted, #9ca3af) !important;
+  font-size: 11px !important;
+  margin-left: 2px !important;
+}
+
+.voiceoverBar__btn--close:hover {
+  color: #ef4444 !important;
+}
+
+/* Active Speaking Verse Highlight */
+.verse.is-speaking,
+li.verse.is-speaking {
+  background: rgba(232, 101, 74, 0.12) !important;
+  border-left: 3.5px solid var(--accent, #e8654a) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 12px rgba(232, 101, 74, 0.08) !important;
+  transition: background 0.25s ease, border-left 0.25s ease !important;
+}
+
+
