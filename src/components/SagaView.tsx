@@ -1,7 +1,5 @@
 import { useState, useMemo } from 'react'
 import MountainHero from './MountainHero'
-import PerspectiveMatrixSheet from './PerspectiveMatrixSheet'
-import EthicsSandboxSheet from './EthicsSandboxSheet'
 import {
   SAGA_ACTS,
   type SagaAct,
@@ -10,14 +8,6 @@ import {
   getActProgress,
   getTotalSagaProgress,
 } from '../sagaData'
-import {
-  getPerspectiveMatrixForScene,
-  type PerspectiveMatrixItem,
-} from '../perspectiveMatrixData'
-import {
-  getDilemmaForScene,
-  type DilemmaCase,
-} from '../ethicsSandboxData'
 import type { LanguageMode } from '../prefs'
 
 interface Props {
@@ -36,8 +26,6 @@ export default function SagaView({
   const [progressState, setProgressState] = useState(() => getSagaProgress())
   const [expandedScenes, setExpandedScenes] = useState<Record<string, boolean>>({})
   const [expandedInterludes, setExpandedInterludes] = useState<Record<string, boolean>>({})
-  const [selectedMatrix, setSelectedMatrix] = useState<PerspectiveMatrixItem | null>(null)
-  const [selectedDilemma, setSelectedDilemma] = useState<DilemmaCase | null>(null)
 
   const totalProgress = useMemo(() => getTotalSagaProgress(), [progressState])
 
@@ -143,7 +131,6 @@ export default function SagaView({
         {/* Compact Act Bar */}
         <div className="sagaMobileActSummaryBar">
           <div className="sagaMobileActSummaryBar__left">
-            <span className="sagaMobileActSummaryBar__badge">{isEn ? 'Act' : 'ክፍል'} {selectedAct.romanNr}</span>
             <span className="sagaMobileActSummaryBar__title">
               {isEn ? selectedAct.titleEn.split('(')[0].trim() : selectedAct.titleAm.split('-')[0].trim()}
             </span>
@@ -159,8 +146,6 @@ export default function SagaView({
             const isDone = progressState.completedScenes.includes(scene.id)
             const isExpanded = !!expandedScenes[scene.id]
             const isInterludeOpen = !!expandedInterludes[scene.id]
-            const matrixItem = getPerspectiveMatrixForScene(scene.id)
-            const dilemmaItem = getDilemmaForScene(scene.id)
 
             return (
               <article
@@ -195,12 +180,6 @@ export default function SagaView({
                   <div className="sagaMobileCard__info">
                     <div className="sagaMobileCard__tags">
                       <span className="sagaMobileCard__eraTag">{cleanEra(scene.eraEstimate, isEn)}</span>
-                      {matrixItem && (
-                        <span className="sagaMobileCard__matrixTag">4D POV</span>
-                      )}
-                      {dilemmaItem && (
-                        <span className="sagaMobileCard__dilemmaTag">{isEn ? '⚖️ Dilemma' : '⚖️ ውሳኔ'}</span>
-                      )}
                       {scene.geopolitical && (
                         <span className="sagaMobileCard__geoTag">
                           {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}
@@ -265,64 +244,6 @@ export default function SagaView({
                       </div>
                     </div>
 
-                    {/* Multidimensional Perspective Matrix (POV Bible) */}
-                    {matrixItem && (
-                      <div className="sagaMobileMatrixSection">
-                        <button
-                          type="button"
-                          className="sagaMobileMatrixBtn"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setSelectedMatrix(matrixItem)
-                          }}
-                        >
-                          <div className="sagaMobileMatrixBtn__lead">
-                            <span className="sagaMobileMatrixBtn__badge">4D POV</span>
-                            <div className="sagaMobileMatrixBtn__titles">
-                              <span className="sagaMobileMatrixBtn__title">
-                                {isEn ? 'Perspective Matrix (4 Lenses)' : 'የእይታ ማትሪክስ (4 ዕይታዎች)'}
-                              </span>
-                              <span className="sagaMobileMatrixBtn__subtitle">
-                                {isEn
-                                  ? 'Geopolitical • Covenant • Roots • Psychology'
-                                  : 'ፖለቲካ • ኪዳን • ሥነ-ቃል • ስነ-ልቦና'}
-                              </span>
-                            </div>
-                          </div>
-                          <span className="sagaMobileMatrixBtn__arrow">›</span>
-                        </button>
-                      </div>
-                    )}
-
-                    {/* Living Ethics & Ancient Wisdom Sandbox */}
-                    {dilemmaItem && (
-                      <div className="sagaMobileDilemmaSection">
-                        <button
-                          type="button"
-                          className="sagaMobileDilemmaBtn"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setSelectedDilemma(dilemmaItem)
-                          }}
-                        >
-                          <div className="sagaMobileMatrixBtn__lead">
-                            <span className="sagaMobileDilemmaBtn__badge">⚖️ {isEn ? 'Dilemma' : 'ውሳኔ'}</span>
-                            <div className="sagaMobileMatrixBtn__titles">
-                              <span className="sagaMobileMatrixBtn__title">
-                                {isEn ? dilemmaItem.titleEn : dilemmaItem.titleAm}
-                              </span>
-                              <span className="sagaMobileMatrixBtn__subtitle">
-                                {isEn
-                                  ? 'Ethical Node • Moral Stakes • Consequence Engine'
-                                  : 'የሥነ-ምግባር አጣብቂኝ • የውሳኔ መስቀለኛ መንገድ • ውጤት'}
-                              </span>
-                            </div>
-                          </div>
-                          <span className="sagaMobileMatrixBtn__arrow">›</span>
-                        </button>
-                      </div>
-                    )}
-
                     {/* Collapsible Geopolitical Box */}
                     {scene.geopolitical && (
                       <div className="sagaMobileGeoBox">
@@ -369,7 +290,7 @@ export default function SagaView({
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
             >
-              ‹ {isEn ? 'Act' : 'ክፍል'} {selectedActId - 1}
+              ‹ {isEn ? 'Act' : 'ክፍል'} {SAGA_ACTS[selectedActId - 2]?.romanNr}
             </button>
           )}
 
@@ -384,27 +305,11 @@ export default function SagaView({
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
             >
-              {isEn ? 'Act' : 'ክፍል'} {selectedActId + 1} ›
+              {isEn ? 'Act' : 'ክፍል'} {SAGA_ACTS[selectedActId]?.romanNr} ›
             </button>
           )}
         </div>
       </main>
-
-      <PerspectiveMatrixSheet
-        open={Boolean(selectedMatrix)}
-        item={selectedMatrix}
-        language={language}
-        onClose={() => setSelectedMatrix(null)}
-        onOpenPassage={onOpenPassage}
-      />
-
-      <EthicsSandboxSheet
-        open={Boolean(selectedDilemma)}
-        dilemma={selectedDilemma}
-        language={language}
-        onClose={() => setSelectedDilemma(null)}
-        onOpenPassage={onOpenPassage}
-      />
     </div>
   )
 }
