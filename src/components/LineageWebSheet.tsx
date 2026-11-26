@@ -657,7 +657,7 @@ export default function LineageWebSheet({
                           📜 {isEn ? 'Noah’s Blessing (Gen 9:26-27)' : 'የኖኅ ምርቃት (ዘፍጥረት 9:26-27)'}
                         </span>
                         <p className="tribeProphecyText">
-                          "{isEn ? s.blessingEn : s.blessingAm}"
+                          {isEn ? s.blessingEn : s.blessingAm}
                         </p>
                       </div>
                     </article>
