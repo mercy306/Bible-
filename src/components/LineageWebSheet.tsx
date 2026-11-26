@@ -80,7 +80,6 @@ export default function LineageWebSheet({
   const [nationsSubTab, setNationsSubTab] = useState<NationsSubTab>('tribes')
   const [tribeFilter, setTribeFilter] = useState<'all' | 'southern' | 'northern'>('all')
   const [expandedTribes, setExpandedTribes] = useState<Record<string, boolean>>({})
-  const [expandedNoah, setExpandedNoah] = useState<Record<string, boolean>>({})
   const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
   const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -441,18 +440,6 @@ export default function LineageWebSheet({
             {/* SUB-VIEW 1: 12 TRIBES */}
             {nationsSubTab === 'tribes' && (
               <>
-                <div className="nationsHeroBanner">
-                  <div className="nationsHeroTitle">
-                    <span>👑</span>
-                    <span>{isEn ? 'The 12 Tribes of Israel (Sons of Jacob)' : 'የእስራኤል 12ቱ ነገዶች (የያዕቆብ ልጆች)'}</span>
-                  </div>
-                  <p className="nationsHeroDesc">
-                    {isEn
-                      ? 'The covenant bloodline divided among Jacob’s 12 sons by 4 mothers (Leah, Rachel, Bilhah, Zilpah), fulfilling ancient patriarchal blessings and prophetic destinies culminating in the Messiah.'
-                      : 'ያዕቆብ ከ4ቱ እናቶች (ልያ፣ ራሔል፣ ቢልሃና ዚልጳ) የወለዳቸው 12 ልጆች፤ የበረከታቸው ሚስጥር፣ የተሰጣቸው ርስት፣ የስደታቸው ታሪክና እስከ ክርስቶስ ድረስ ያለው የመዳን ጉዞ።'}
-                  </p>
-                </div>
-
                 {/* Kingdom Filter */}
                 <div className="lineageFilterRow" style={{ marginTop: 0 }}>
                   <button
@@ -506,62 +493,35 @@ export default function LineageWebSheet({
                                 ? (isEn ? 'Southern (Judah)' : 'የደቡብ መንግሥት')
                                 : (isEn ? 'Northern (Israel)' : 'የሰሜን መንግሥት')}
                             </span>
-                            <span className="tribeBadge">
-                              💎 {isEn ? t.gemstoneEn : t.gemstoneAm}
-                            </span>
                           </div>
                         </header>
 
-                        {/* Clean Quick Summary */}
+                        {/* Biblical Role & Summary */}
                         <div className="tribeQuickSummary">
-                          <span className="tribeQuickIcon">🌍</span>
                           <span className="tribeQuickText">
-                            {isEn ? t.modernLocationEn : t.modernLocationAm}
+                            {isEn ? t.historicalRoleEn : t.historicalRoleAm}
                           </span>
                         </div>
 
-                        {/* Collapsible Deep-Dive Details */}
+                        {/* Collapsible Jacob's Blessing */}
                         <button
                           type="button"
                           className="tribeAccordionToggle"
                           onClick={() => setExpandedTribes(prev => ({ ...prev, [t.id]: !prev[t.id] }))}
                           aria-expanded={isExpanded}
                         >
-                          <span>📜 {isEn ? 'History, Prophecies & Blessings' : 'የስደት ታሪክ፣ ምርቃትና ትንቢት'}</span>
+                          <span>📜 {isEn ? 'Jacob’s Blessing (Gen 49)' : 'የያዕቆብ ምርቃት (ዘፍጥረት 49)'}</span>
                           <span>{isExpanded ? '▲' : '▼'}</span>
                         </button>
 
                         {isExpanded && (
                           <div className="tribeAccordionContent">
-                            {/* Visual 3-Step Journey Flow */}
-                            <div className="tribeJourneyFlow">
-                              <div className="tribeJourneyStep tribeJourneyStep--origin">
-                                <span className="tribeJourneyStepTitle tribeJourneyStepTitle--origin">
-                                  📍 {isEn ? '1. Origin & Role' : '1. መነሻና ርስት'}
-                                </span>
-                                <p className="tribeJourneyStepContent">
-                                  {isEn ? t.historicalRoleEn : t.historicalRoleAm}
-                                </p>
-                              </div>
-                              <div className="tribeJourneyStep tribeJourneyStep--exile">
-                                <span className="tribeJourneyStepTitle tribeJourneyStepTitle--exile">
-                                  ⚔️ {isEn ? '2. Exile & Dispersion' : '2. ስደትና መበተን'}
-                                </span>
-                                <p className="tribeJourneyStepContent">
-                                  {isEn ? t.exileFateEn : t.exileFateAm}
-                                </p>
-                              </div>
-                              <div className="tribeJourneyStep tribeJourneyStep--now">
-                                <span className="tribeJourneyStepTitle tribeJourneyStepTitle--now">
-                                  🌍 {isEn ? '3. Dispersion Heritage' : '3. የታሪክ ውርስ'}
-                                </span>
-                                <p className="tribeJourneyStepContent">
-                                  {isEn ? t.modernLocationEn : t.modernLocationAm}
-                                </p>
-                              </div>
+                            <div className="tribeProphecyBox">
+                              <p className="tribeProphecyText">
+                                {isEn ? t.jacobBlessingEn : t.jacobBlessingAm}
+                              </p>
                             </div>
 
-                            {/* Ethiopian Connection (if exists) */}
                             {t.ethiopianConnectionAm && (
                               <div className="tribeEthiopiaHighlight">
                                 <span className="tribeEthiopiaTitle">
@@ -572,36 +532,6 @@ export default function LineageWebSheet({
                                 </p>
                               </div>
                             )}
-
-                            {/* Jacob's Prophecy */}
-                            <div className="tribeProphecyBox">
-                              <span className="tribeProphecyTitle">
-                                📜 {isEn ? 'Jacob’s Blessing (Gen 49)' : 'የያዕቆብ ምርቃት (ዘፍጥረት 49)'}
-                              </span>
-                              <p className="tribeProphecyText">
-                                {isEn ? t.jacobBlessingEn : t.jacobBlessingAm}
-                              </p>
-                            </div>
-
-                            {/* Moses' Blessing */}
-                            <div className="tribeProphecyBox" style={{ borderLeftColor: '#60a5fa' }}>
-                              <span className="tribeProphecyTitle" style={{ color: '#93c5fd' }}>
-                                🕊️ {isEn ? 'Moses’ Blessing (Deut 33)' : 'የሙሴ ምርቃት (ዘዳግም 33)'}
-                              </span>
-                              <p className="tribeProphecyText">
-                                {isEn ? t.mosesBlessingEn : t.mosesBlessingAm}
-                              </p>
-                            </div>
-
-                            {/* Messianic Fulfillment */}
-                            <div className="tribeDetailRow">
-                              <span className="tribeDetailLabel">
-                                ✝️ {isEn ? 'Messianic Fulfillment:' : 'መሲሐዊ ፍጻሜ:'}
-                              </span>
-                              <p className="tribeDetailText">
-                                {isEn ? t.messianicFulfillmentEn : t.messianicFulfillmentAm}
-                              </p>
-                            </div>
                           </div>
                         )}
 
@@ -624,11 +554,12 @@ export default function LineageWebSheet({
                               type="button"
                               className="tribeJumpBtn"
                               onClick={() => {
-                                if (t.id === 'reuben' || t.id === 'simeon' || t.id === 'judah') onOpenPassage(1, 49)
-                                else if (t.id === 'dan') onOpenPassage(1, 30)
-                                else if (t.id === 'joseph') onOpenPassage(1, 37)
-                                else if (t.id === 'benjamin') onOpenPassage(1, 35)
-                                else onOpenPassage(1, 49)
+                                const parsed = parsePassageRef(t.keyVerses[0])
+                                if (parsed) {
+                                  onOpenPassage(parsed.book, parsed.chapter)
+                                } else {
+                                  onOpenPassage(1, 49)
+                                }
                                 onClose()
                               }}
                             >
@@ -646,18 +577,6 @@ export default function LineageWebSheet({
             {/* SUB-VIEW 2: NOAH'S 3 BRANCHES */}
             {nationsSubTab === 'noah' && (
               <>
-                <div className="nationsHeroBanner">
-                  <div className="nationsHeroTitle">
-                    <span>🌍</span>
-                    <span>{isEn ? 'Table of Nations: Noah’s 3 Sons (Genesis 10)' : 'የአሕዛብ መሠረት፡ የኖኅ 3 ልጆች (ዘፍጥረት 10)'}</span>
-                  </div>
-                  <p className="nationsHeroDesc">
-                    {isEn
-                      ? 'The entire human race after the Great Deluge branched from Shem (Middle East & Asia), Ham (Africa & Canaan), and Japheth (Europe & Eurasia), preserving the messianic bloodline down to Abraham.'
-                      : 'ከታላቁ የጥፋት ውሃ በኋላ የሰው ልጆች ሁሉ ከሦስቱ የኖኅ ልጆች ተነሥተው ምድርን ሞሉ፦ ሴም (መካከለኛው ምሥራቅና እስያ)፣ ካም (አፍሪካና ከነዓን)፣ ያፌት (አውሮፓና ዩራሲያ)፤ ይህም ወደ አብርሃም የሚያደርሰውን የቃል ኪዳን የደም መስመር ጠብቋል።'}
-                  </p>
-                </div>
-
                 {/* Bloodline Stepper */}
                 <div className="lineageBreadcrumb" style={{ overflowX: 'auto', padding: '10px 14px' }}>
                   <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent)' }}>
@@ -694,100 +613,55 @@ export default function LineageWebSheet({
 
                 {/* Noah Branches */}
                 <div className="tribeCardsGrid">
-                  {NOAH_SONS_DATA.map((s) => {
-                    const isNoahExpanded = Boolean(expandedNoah[s.id])
-                    return (
-                      <article key={s.id} className="noahBranchCard">
-                        <div className="noahBranchHeader">
-                          <div>
-                            <h3 className="noahBranchTitle">
-                              {s.id === 'shem' ? '🕊️ ' : s.id === 'ham' ? '☀️ ' : '🌊 '}
-                              {isEn ? s.nameEn : s.nameAm}
-                            </h3>
-                            <span className="tribeMeaning">{isEn ? s.meaningEn : s.meaningAm} — {isEn ? s.progenitorTitleEn : s.progenitorTitleAm}</span>
-                          </div>
-                          {LINEAGE_PEOPLE[s.id] && (
-                            <button
-                              type="button"
-                              className="tribeJumpBtn"
-                              onClick={() => {
-                                setActiveTab('tree')
-                                selectPerson(s.id)
-                              }}
-                            >
-                              🌳 {isEn ? 'View in Tree' : 'በዛፉ ላይ እይ'}
-                            </button>
-                          )}
+                  {NOAH_SONS_DATA.map((s) => (
+                    <article key={s.id} className="noahBranchCard">
+                      <div className="noahBranchHeader">
+                        <div>
+                          <h3 className="noahBranchTitle">
+                            {s.id === 'shem' ? '🕊️ ' : s.id === 'ham' ? '☀️ ' : '🌊 '}
+                            {isEn ? s.nameEn : s.nameAm}
+                          </h3>
+                          <span className="tribeMeaning">{isEn ? s.meaningEn : s.meaningAm} — {isEn ? s.progenitorTitleEn : s.progenitorTitleAm}</span>
                         </div>
-
-                        {/* 2-Step Journey Box */}
-                        <div className="tribeJourneyFlow" style={{ gridTemplateColumns: '1fr 1fr' }}>
-                          <div className="tribeJourneyStep tribeJourneyStep--origin">
-                            <span className="tribeJourneyStepTitle tribeJourneyStepTitle--origin">
-                              📍 {isEn ? 'Biblical Territories' : 'ዋና መኖሪያና ግዛቶች'}
-                            </span>
-                            <p className="tribeJourneyStepContent">
-                              {isEn ? s.biblicalTerritoriesEn : s.biblicalTerritoriesAm}
-                            </p>
-                          </div>
-                          <div className="tribeJourneyStep tribeJourneyStep--now">
-                            <span className="tribeJourneyStepTitle tribeJourneyStepTitle--now">
-                              🌍 {isEn ? 'Modern Descendant Peoples' : 'የዘመናችን ተወላጆችና ሕዝቦች'}
-                            </span>
-                            <p className="tribeJourneyStepContent">
-                              {isEn ? s.modernPeoplesEn : s.modernPeoplesAm}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Sons of this branch as clean visual tags */}
-                        <div style={{ marginTop: 2 }}>
-                          <span className="tribeDetailLabel">
-                            👥 {isEn ? 'Direct Sons & Nations (Gen 10):' : 'ቀጥተኛ ልጆችና ሕዝቦች (ዘፍጥረት 10):'}
-                          </span>
-                          <div className="noahSonsChips">
-                            {s.primarySons.map((sn) => (
-                              <span key={sn.nameAm} className="noahSonChip">
-                                <strong>{isEn ? sn.nameEn : sn.nameAm}</strong> ({isEn ? sn.nationsEn : sn.nationsAm})
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Collapsible Blessing & Theology */}
-                        <button
-                          type="button"
-                          className="tribeAccordionToggle"
-                          onClick={() => setExpandedNoah(prev => ({ ...prev, [s.id]: !prev[s.id] }))}
-                          aria-expanded={isNoahExpanded}
-                        >
-                          <span>📜 {isEn ? 'Prophecy & Role in Salvation History' : 'የኖኅ ምርቃትና የመዳን ታሪክ'}</span>
-                          <span>{isNoahExpanded ? '▲' : '▼'}</span>
-                        </button>
-
-                        {isNoahExpanded && (
-                          <div className="tribeAccordionContent">
-                            <div className="tribeProphecyBox">
-                              <span className="tribeProphecyTitle">
-                                📜 {isEn ? 'Noah’s Blessing/Prophecy (Gen 9:26-27)' : 'የኖኅ ምርቃት (ዘፍጥረት 9:26-27)'}
-                              </span>
-                              <p className="tribeProphecyText">
-                                "{isEn ? s.blessingEn : s.blessingAm}"
-                              </p>
-                            </div>
-                            <div className="tribeDetailRow">
-                              <span className="tribeDetailLabel">
-                                ✝️ {isEn ? 'Role in Salvation History:' : 'በማዳን ታሪክ ውስጥ ያለው ድርሻ:'}
-                              </span>
-                              <p className="tribeDetailText">
-                                {isEn ? s.theologicalRoleEn : s.theologicalRoleAm}
-                              </p>
-                            </div>
-                          </div>
+                        {LINEAGE_PEOPLE[s.id] && (
+                          <button
+                            type="button"
+                            className="tribeJumpBtn"
+                            onClick={() => {
+                              setActiveTab('tree')
+                              selectPerson(s.id)
+                            }}
+                          >
+                            🌳 {isEn ? 'View in Tree' : 'በዛፉ ላይ እይ'}
+                          </button>
                         )}
-                      </article>
-                    )
-                  })}
+                      </div>
+
+                      {/* Direct Sons */}
+                      <div style={{ marginTop: 2 }}>
+                        <span className="tribeDetailLabel">
+                          👥 {isEn ? 'Direct Sons & Nations (Gen 10):' : 'ቀጥተኛ ልጆችና ሕዝቦች (ዘፍጥረት 10):'}
+                        </span>
+                        <div className="noahSonsChips">
+                          {s.primarySons.map((sn) => (
+                            <span key={sn.nameAm} className="noahSonChip">
+                              <strong>{isEn ? sn.nameEn : sn.nameAm}</strong> ({isEn ? sn.nationsEn : sn.nationsAm})
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Noah's Blessing */}
+                      <div className="tribeProphecyBox" style={{ marginTop: 8 }}>
+                        <span className="tribeProphecyTitle">
+                          📜 {isEn ? 'Noah’s Blessing (Gen 9:26-27)' : 'የኖኅ ምርቃት (ዘፍጥረት 9:26-27)'}
+                        </span>
+                        <p className="tribeProphecyText">
+                          "{isEn ? s.blessingEn : s.blessingAm}"
+                        </p>
+                      </div>
+                    </article>
+                  ))}
                 </div>
               </>
             )}
@@ -795,31 +669,15 @@ export default function LineageWebSheet({
             {/* SUB-VIEW 3: DIASPORA & WHERE ARE THEY NOW? */}
             {nationsSubTab === 'diaspora' && (
               <div className="diasporaBox">
-                <div className="nationsHeroBanner">
-                  <div className="nationsHeroTitle">
-                    <span>📍</span>
-                    <span>{isEn ? 'Where Are They Now? The Diaspora & Modern Bloodlines' : 'አሁን የት ይገኛሉ? የስደቱ ታሪክና የዘመናችን ትሥሥር'}</span>
-                  </div>
-                  <p className="nationsHeroDesc">
-                    {isEn
-                      ? 'Tracing the dispersion of the Southern Kingdom (Judah, Benjamin, Levi) through Rome and Europe, and the Northern 10 Lost Tribes through Assyrian exile into Africa, Asia, and beyond.'
-                      : 'የደቡብ ይሁዳ መንግሥት በባቢሎንና በሮማ ስደት ውስጥ እንዴት እንደተጠበቀ፤ እንዲሁም በ722 ቅ.ዓ በደብረ ሰማርያ የተማረኩት 10ሩ የሰሜን ነገዶች ወደ አፍሪካ፣ እስያና ልዩ ልዩ አህጉራት የተበተኑበት እውነተኛ የታሪክ መስመር።'}
-                  </p>
-                </div>
-
                 {/* Southern Kingdom Preservation */}
                 <article className="diasporaCard">
                   <h3 className="diasporaHeader">
                     <span>🦁</span>
                     <span>{isEn ? DIASPORA_DISCOVERY_SUMMARY.southernKingdomTitleEn : DIASPORA_DISCOVERY_SUMMARY.southernKingdomTitleAm}</span>
                   </h3>
-                  <div className="tribeJourneyFlow" style={{ gridTemplateColumns: '1fr' }}>
-                    <div className="tribeJourneyStep tribeJourneyStep--now">
-                      <p className="tribeJourneyStepContent" style={{ fontSize: '0.84rem' }}>
-                        {isEn ? DIASPORA_DISCOVERY_SUMMARY.southernKingdomDescEn : DIASPORA_DISCOVERY_SUMMARY.southernKingdomDescAm}
-                      </p>
-                    </div>
-                  </div>
+                  <p className="diasporaText" style={{ fontSize: '0.84rem' }}>
+                    {isEn ? DIASPORA_DISCOVERY_SUMMARY.southernKingdomDescEn : DIASPORA_DISCOVERY_SUMMARY.southernKingdomDescAm}
+                  </p>
                 </article>
 
                 {/* Ten Lost Tribes Discoveries */}
