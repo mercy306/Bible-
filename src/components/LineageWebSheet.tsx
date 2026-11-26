@@ -197,31 +197,6 @@ export default function LineageWebSheet({
               </button>
 
               <div ref={pillsRef} className="lineagePillsScroll">
-                {history.length > 0 && (
-                  <button
-                    type="button"
-                    className="lineagePillBtn"
-                    onClick={handleBack}
-                    title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
-                    style={{
-                      flexShrink: 0,
-                      fontWeight: 700,
-                      background: 'var(--panel-2)',
-                      color: 'var(--ink)',
-                      borderRadius: '999px',
-                      padding: '4px 10px',
-                      fontSize: '12px',
-                      border: '1px solid var(--line, rgba(0,0,0,0.2))',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
-                    <span>←</span>
-                    <span>{isEn ? 'Back' : 'ወደ ኋላ'}</span>
-                  </button>
-                )}
                 {PATRIARCH_LIST.map((item) => (
                   <button
                     key={item.id}
