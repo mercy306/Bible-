@@ -78,14 +78,49 @@ export default function LineageWebSheet({
   const isEn = language === 'en'
   const [activeTab, setActiveTab] = useState<TabMode>('tree')
   const [nationsSubTab, setNationsSubTab] = useState<NationsSubTab>('tribes')
-  const [tribeFilter, setTribeFilter] = useState<'all' | 'southern' | 'northern'>('all')
   const [expandedTribes, setExpandedTribes] = useState<Record<string, boolean>>({})
+  const [selectedTribeId, setSelectedTribeId] = useState<string>('reuben')
   const [activePersonId, setActivePersonId] = useState<string>(initialPersonId || 'adam')
   const [history, setHistory] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const pillsRef = useRef<HTMLDivElement>(null)
+  const tribePillsRef = useRef<HTMLDivElement>(null)
 
   const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
+
+  const currentTribeIndex = ISRAEL_TRIBES_DATA.findIndex((t) => t.id === selectedTribeId)
+  const activeTribe = ISRAEL_TRIBES_DATA[currentTribeIndex] || ISRAEL_TRIBES_DATA[0]
+  const prevTribe = currentTribeIndex > 0 ? ISRAEL_TRIBES_DATA[currentTribeIndex - 1] : null
+  const nextTribe = currentTribeIndex < ISRAEL_TRIBES_DATA.length - 1 ? ISRAEL_TRIBES_DATA[currentTribeIndex + 1] : null
+
+  const getGenerationBadge = (order: number) => {
+    if (isEn) {
+      if (order === 1) return '🥇 1st Born (Firstborn)'
+      if (order === 12) return '👑 12th Born (Youngest)'
+      const suffix = order === 2 ? 'nd' : order === 3 ? 'rd' : 'th'
+      return `${order}${suffix} Son of Jacob`
+    } else {
+      if (order === 1) return '🥇 1ኛ ልጅ (የያዕቆብ በኩር)'
+      if (order === 12) return '👑 12ኛ ልጅ (የያዕቆብ ታናሽ)'
+      return `${order}ኛ የያዕቆብ ልጅ`
+    }
+  }
+
+  useEffect(() => {
+    if (tribePillsRef.current) {
+      const activeEl = tribePillsRef.current.querySelector<HTMLElement>(`[data-tribe-id="${selectedTribeId}"]`)
+      if (activeEl) {
+        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+      }
+    }
+  }, [selectedTribeId])
+
+  const scrollTribePills = (direction: 'left' | 'right') => {
+    if (tribePillsRef.current) {
+      const amount = direction === 'left' ? -150 : 150
+      tribePillsRef.current.scrollBy({ left: amount, behavior: 'smooth' })
+    }
+  }
 
   useEffect(() => {
     if (pillsRef.current) {
@@ -440,137 +475,214 @@ export default function LineageWebSheet({
             {/* SUB-VIEW 1: 12 TRIBES */}
             {nationsSubTab === 'tribes' && (
               <>
-                {/* Kingdom Filter */}
-                <div className="lineageFilterRow" style={{ marginTop: 0 }}>
+                {/* 1. Generation Dropdown Selector (Oldest to Youngest) */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                    <label htmlFor="tribe-dropdown" style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--ink)' }}>
+                      👑 {isEn ? 'Select by Generation (Oldest to Youngest):' : 'ነገድ ይምረጡ (ከትልቁ ወደ ታናሹ 1–12)፦'}
+                    </label>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+                      {activeTribe.order} / 12
+                    </span>
+                  </div>
+                  <select
+                    id="tribe-dropdown"
+                    value={selectedTribeId}
+                    onChange={(e) => setSelectedTribeId(e.target.value)}
+                    style={{
+                      padding: '9px 12px',
+                      borderRadius: '10px',
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
+                      background: 'var(--panel-2, rgba(128,128,128,0.12))',
+                      color: 'var(--ink)',
+                      border: '1px solid var(--line, rgba(0,0,0,0.15))',
+                      cursor: 'pointer',
+                      width: '100%',
+                    }}
+                  >
+                    {ISRAEL_TRIBES_DATA.map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {t.order}. {isEn ? t.nameEn : t.nameAm} — {getGenerationBadge(t.order)} ({isEn ? t.motherNameEn : t.motherNameAm})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* 2. Horizontal Quick-Jump Birth-Order Carousel */}
+                <div className="lineagePillsContainer" style={{ marginBottom: '14px' }}>
                   <button
                     type="button"
-                    className={`lineageFilterChip ${tribeFilter === 'all' ? 'is-active' : ''}`}
-                    onClick={() => setTribeFilter('all')}
+                    className="lineageScrollArrow"
+                    onClick={() => scrollTribePills('left')}
+                    title={isEn ? 'Scroll left' : 'ወደ ኋላ ሸብሽብ'}
+                    aria-label="Scroll left"
                   >
-                    {isEn ? 'All 12 Tribes + Sons' : 'ሁሉም ነገዶች (14)'}
+                    ‹
                   </button>
+                  <div ref={tribePillsRef} className="lineagePillsScroll">
+                    {ISRAEL_TRIBES_DATA.map((t) => (
+                      <button
+                        key={t.id}
+                        data-tribe-id={t.id}
+                        type="button"
+                        className="lineagePillBtn"
+                        onClick={() => setSelectedTribeId(t.id)}
+                        style={{
+                          flexShrink: 0,
+                          fontWeight: selectedTribeId === t.id ? 700 : 500,
+                          background: selectedTribeId === t.id ? 'var(--accent)' : 'var(--panel-2, rgba(128, 128, 128, 0.12))',
+                          color: selectedTribeId === t.id ? 'var(--accent-ink, #ffffff)' : 'var(--ink)',
+                          borderRadius: '999px',
+                          padding: '4px 10px',
+                          fontSize: '12px',
+                          border: '1px solid var(--line, rgba(0,0,0,0.1))',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                        }}
+                      >
+                        <span>{t.symbolEmoji}</span>
+                        <span>{t.order}. {isEn ? t.nameEn : t.nameAm}</span>
+                      </button>
+                    ))}
+                  </div>
                   <button
                     type="button"
-                    className={`lineageFilterChip ${tribeFilter === 'southern' ? 'is-active' : ''}`}
-                    onClick={() => setTribeFilter('southern')}
+                    className="lineageScrollArrow"
+                    onClick={() => scrollTribePills('right')}
+                    title={isEn ? 'Scroll right' : 'ወደ ቀኝ ሸብሽብ'}
+                    aria-label="Scroll right"
                   >
-                    🦁 {isEn ? 'Southern Kingdom (Judah/Benjamin/Levi)' : 'የደቡብ ይሁዳ መንግሥት'}
-                  </button>
-                  <button
-                    type="button"
-                    className={`lineageFilterChip ${tribeFilter === 'northern' ? 'is-active' : ''}`}
-                    onClick={() => setTribeFilter('northern')}
-                  >
-                    🌾 {isEn ? 'Northern 10 Tribes (Exiled 722 BC)' : 'የሰሜን 10 ነገዶች (የተበተኑት)'}
+                    ›
                   </button>
                 </div>
 
-                {/* Tribe Cards Grid */}
-                <div className="tribeCardsGrid">
-                  {ISRAEL_TRIBES_DATA.filter((t) => {
-                    if (tribeFilter === 'southern') return t.kingdom === 'southern'
-                    if (tribeFilter === 'northern') return t.kingdom === 'northern'
-                    return true
-                  }).map((t) => {
-                    const isExpanded = Boolean(expandedTribes[t.id])
-                    return (
-                      <article key={t.id} className="tribeCard">
-                        {/* Header: Identity & Badges */}
-                        <header className="tribeHeader">
-                          <div className="tribeHeaderLeft">
-                            <span className="tribeSymbol">{t.symbolEmoji}</span>
-                            <div className="tribeTitles">
-                              <h3 className="tribeName">{isEn ? t.nameEn : t.nameAm}</h3>
-                              <span className="tribeMeaning">{isEn ? t.meaningEn : t.meaningAm} ({isEn ? t.symbolNameEn : t.symbolNameAm})</span>
-                            </div>
-                          </div>
-                          <div className="tribeBadges">
-                            <span className="tribeBadge tribeBadge--mother">
-                              👩 {isEn ? t.motherNameEn : t.motherNameAm}
-                            </span>
-                            <span className="tribeBadge tribeBadge--kingdom">
-                              {t.kingdom === 'southern'
-                                ? (isEn ? 'Southern (Judah)' : 'የደቡብ መንግሥት')
-                                : (isEn ? 'Northern (Israel)' : 'የሰሜን መንግሥት')}
-                            </span>
-                          </div>
-                        </header>
+                {/* 3. Selected Tribe Information Card */}
+                <article key={activeTribe.id} className="tribeCard">
+                  {/* Header: Identity & Badges */}
+                  <header className="tribeHeader">
+                    <div className="tribeHeaderLeft">
+                      <span className="tribeSymbol">{activeTribe.symbolEmoji}</span>
+                      <div className="tribeTitles">
+                        <h3 className="tribeName">{isEn ? activeTribe.nameEn : activeTribe.nameAm}</h3>
+                        <span className="tribeMeaning">{isEn ? activeTribe.meaningEn : activeTribe.meaningAm} ({isEn ? activeTribe.symbolNameEn : activeTribe.symbolNameAm})</span>
+                      </div>
+                    </div>
+                    <div className="tribeBadges">
+                      <span className="tribeBadge" style={{ background: 'var(--panel-2)', fontWeight: 800 }}>
+                        {getGenerationBadge(activeTribe.order)}
+                      </span>
+                      <span className="tribeBadge tribeBadge--mother">
+                        👩 {isEn ? activeTribe.motherNameEn : activeTribe.motherNameAm}
+                      </span>
+                      <span className="tribeBadge tribeBadge--kingdom">
+                        {activeTribe.kingdom === 'southern'
+                          ? (isEn ? 'Southern (Judah)' : 'የደቡብ መንግሥት')
+                          : (isEn ? 'Northern (Israel)' : 'የሰሜን መንግሥት')}
+                      </span>
+                    </div>
+                  </header>
 
-                        {/* Biblical Role & Summary */}
-                        <div className="tribeQuickSummary">
-                          <span className="tribeQuickText">
-                            {isEn ? t.historicalRoleEn : t.historicalRoleAm}
+                  {/* Biblical Role & Summary */}
+                  <div className="tribeQuickSummary">
+                    <span className="tribeQuickText">
+                      {isEn ? activeTribe.historicalRoleEn : activeTribe.historicalRoleAm}
+                    </span>
+                  </div>
+
+                  {/* Collapsible Dropdown for Jacob's Blessing */}
+                  <button
+                    type="button"
+                    className="tribeAccordionToggle"
+                    onClick={() => setExpandedTribes(prev => ({ ...prev, [activeTribe.id]: !prev[activeTribe.id] }))}
+                    aria-expanded={Boolean(expandedTribes[activeTribe.id])}
+                  >
+                    <span>📜 {isEn ? 'Jacob’s Blessing (Gen 49)' : 'የያዕቆብ ምርቃት (ዘፍጥረት 49)'}</span>
+                    <span>{expandedTribes[activeTribe.id] ? '▲' : '▼'}</span>
+                  </button>
+
+                  {expandedTribes[activeTribe.id] && (
+                    <div className="tribeAccordionContent">
+                      <div className="tribeProphecyBox">
+                        <p className="tribeProphecyText">
+                          {isEn ? activeTribe.jacobBlessingEn : activeTribe.jacobBlessingAm}
+                        </p>
+                      </div>
+
+                      {activeTribe.ethiopianConnectionAm && (
+                        <div className="tribeEthiopiaHighlight">
+                          <span className="tribeEthiopiaTitle">
+                            🇪🇹 {isEn ? 'Ethiopian & Beta Israel Connection:' : 'የኢትዮጵያና የቤተ እስራኤል ትሥሥር:'}
                           </span>
+                          <p className="tribeEthiopiaText">
+                            {isEn ? activeTribe.ethiopianConnectionEn : activeTribe.ethiopianConnectionAm}
+                          </p>
                         </div>
+                      )}
+                    </div>
+                  )}
 
-                        {/* Collapsible Jacob's Blessing */}
+                  {/* Jump Actions & Previous/Next Navigation */}
+                  <div className="tribeActions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                      {LINEAGE_PEOPLE[activeTribe.id] && (
                         <button
                           type="button"
-                          className="tribeAccordionToggle"
-                          onClick={() => setExpandedTribes(prev => ({ ...prev, [t.id]: !prev[t.id] }))}
-                          aria-expanded={isExpanded}
+                          className="tribeJumpBtn"
+                          onClick={() => {
+                            setActiveTab('tree')
+                            selectPerson(activeTribe.id)
+                          }}
                         >
-                          <span>📜 {isEn ? 'Jacob’s Blessing (Gen 49)' : 'የያዕቆብ ምርቃት (ዘፍጥረት 49)'}</span>
-                          <span>{isExpanded ? '▲' : '▼'}</span>
+                          🌳 {isEn ? 'View in Family Tree' : 'በትውልድ ዛፍ እይ'}
                         </button>
+                      )}
+                      {onOpenPassage && activeTribe.keyVerses.length > 0 && (
+                        <button
+                          type="button"
+                          className="tribeJumpBtn"
+                          onClick={() => {
+                            const parsed = parsePassageRef(activeTribe.keyVerses[0])
+                            if (parsed) {
+                              onOpenPassage(parsed.book, parsed.chapter)
+                            } else {
+                              onOpenPassage(1, 49)
+                            }
+                            onClose()
+                          }}
+                        >
+                          📖 {activeTribe.keyVerses[0]}
+                        </button>
+                      )}
+                    </div>
 
-                        {isExpanded && (
-                          <div className="tribeAccordionContent">
-                            <div className="tribeProphecyBox">
-                              <p className="tribeProphecyText">
-                                {isEn ? t.jacobBlessingEn : t.jacobBlessingAm}
-                              </p>
-                            </div>
-
-                            {t.ethiopianConnectionAm && (
-                              <div className="tribeEthiopiaHighlight">
-                                <span className="tribeEthiopiaTitle">
-                                  🇪🇹 {isEn ? 'Ethiopian & Beta Israel Connection:' : 'የኢትዮጵያና የቤተ እስራኤል ትሥሥር:'}
-                                </span>
-                                <p className="tribeEthiopiaText">
-                                  {isEn ? t.ethiopianConnectionEn : t.ethiopianConnectionAm}
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        )}
-
-                        {/* Jump Actions */}
-                        <div className="tribeActions">
-                          {LINEAGE_PEOPLE[t.id] && (
-                            <button
-                              type="button"
-                              className="tribeJumpBtn"
-                              onClick={() => {
-                                setActiveTab('tree')
-                                selectPerson(t.id)
-                              }}
-                            >
-                              🌳 {isEn ? 'View in Family Tree' : 'በትውልድ ዛፍ እይ'}
-                            </button>
-                          )}
-                          {onOpenPassage && t.keyVerses.length > 0 && (
-                            <button
-                              type="button"
-                              className="tribeJumpBtn"
-                              onClick={() => {
-                                const parsed = parsePassageRef(t.keyVerses[0])
-                                if (parsed) {
-                                  onOpenPassage(parsed.book, parsed.chapter)
-                                } else {
-                                  onOpenPassage(1, 49)
-                                }
-                                onClose()
-                              }}
-                            >
-                              📖 {t.keyVerses[0]}
-                            </button>
-                          )}
-                        </div>
-                      </article>
-                    )
-                  })}
-                </div>
+                    {/* Prev / Next tribe buttons to click one after another */}
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      {prevTribe && (
+                        <button
+                          type="button"
+                          className="tribeJumpBtn"
+                          onClick={() => setSelectedTribeId(prevTribe.id)}
+                          title={isEn ? `Previous: ${prevTribe.nameEn}` : `ቀዳሚ፦ ${prevTribe.nameAm}`}
+                        >
+                          ‹ {prevTribe.order}. {isEn ? prevTribe.nameEn : prevTribe.nameAm}
+                        </button>
+                      )}
+                      {nextTribe && (
+                        <button
+                          type="button"
+                          className="tribeJumpBtn"
+                          onClick={() => setSelectedTribeId(nextTribe.id)}
+                          title={isEn ? `Next: ${nextTribe.nameEn}` : `ቀጣይ፦ ${nextTribe.nameAm}`}
+                        >
+                          {nextTribe.order}. {isEn ? nextTribe.nameEn : nextTribe.nameAm} ›
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </article>
               </>
             )}
 
