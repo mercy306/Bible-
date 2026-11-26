@@ -33,6 +33,7 @@ interface Props {
   searchOpen?: boolean
   onToggleSearch?: (open: boolean) => void
   initialQuery?: string
+  onAssistant?: () => void
 }
 
 /**
@@ -55,6 +56,7 @@ export default function TopBar({
   onDaily,
   onSaga: _onSaga,
   onLineage,
+  onAssistant,
   translation = 'am',
   translations = [],
   onTranslation,
@@ -347,6 +349,18 @@ export default function TopBar({
                   aria-label={isEn ? "12 Tribes & Noah's Lineage" : "12ቱ ነገዶችና የኖኅ ልጆች"}
                 >
                   <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>🌳</span>
+                </button>
+              )}
+
+              {onAssistant && (
+                <button
+                  type="button"
+                  className="topbar__actionBtn topbar__assistantBtn"
+                  onClick={onAssistant}
+                  title={isEn ? "Bible Study Assistant (AI)" : "የመጽሐፍ ቅዱስ ጥናት ረዳት"}
+                  aria-label={isEn ? "Bible Study Assistant" : "የመጽሐፍ ቅዱስ ጥናት ረዳት"}
+                >
+                  <span style={{ fontSize: '1.15rem', lineHeight: 1 }}>✨</span>
                 </button>
               )}
 
