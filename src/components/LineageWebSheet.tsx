@@ -475,41 +475,7 @@ export default function LineageWebSheet({
             {/* SUB-VIEW 1: 12 TRIBES */}
             {nationsSubTab === 'tribes' && (
               <>
-                {/* 1. Generation Dropdown Selector (Oldest to Youngest) */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '10px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
-                    <label htmlFor="tribe-dropdown" style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--ink)' }}>
-                      👑 {isEn ? 'Select by Generation (Oldest to Youngest):' : 'ነገድ ይምረጡ (ከትልቁ ወደ ታናሹ 1–12)፦'}
-                    </label>
-                    <span style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-                      {activeTribe.order} / 12
-                    </span>
-                  </div>
-                  <select
-                    id="tribe-dropdown"
-                    value={selectedTribeId}
-                    onChange={(e) => setSelectedTribeId(e.target.value)}
-                    style={{
-                      padding: '9px 12px',
-                      borderRadius: '10px',
-                      fontSize: '0.9rem',
-                      fontWeight: 700,
-                      background: 'var(--panel-2, rgba(128,128,128,0.12))',
-                      color: 'var(--ink)',
-                      border: '1px solid var(--line, rgba(0,0,0,0.15))',
-                      cursor: 'pointer',
-                      width: '100%',
-                    }}
-                  >
-                    {ISRAEL_TRIBES_DATA.map((t) => (
-                      <option key={t.id} value={t.id}>
-                        {t.order}. {isEn ? t.nameEn : t.nameAm} — {getGenerationBadge(t.order)} ({isEn ? t.motherNameEn : t.motherNameAm})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* 2. Horizontal Quick-Jump Birth-Order Carousel */}
+                {/* Horizontal Quick-Jump Birth-Order Carousel */}
                 <div className="lineagePillsContainer" style={{ marginBottom: '14px' }}>
                   <button
                     type="button"
