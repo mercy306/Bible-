@@ -3,18 +3,13 @@ import { useReadingPlan } from '../readingPlan'
 import {
   ACCENTS,
   FONTS,
-  LANGUAGES,
+  PARAGRAPH_RANGE,
   SIZE_RANGE,
   THEMES,
-  type LanguageMode,
   type Prefs,
 } from '../prefs'
-import type { Route } from '../route'
-import type { Translation } from '../types'
 
 interface Props {
-  route: Route
-  translations: Translation[]
   prefs: Prefs
   setPref: <K extends keyof Prefs>(key: K, value: Prefs[K]) => void
   compare: 'off' | 'am54'
@@ -23,8 +18,6 @@ interface Props {
   onMemorize: (value: boolean) => void
   wordLookup: boolean
   onWordLookup: (value: boolean) => void
-  onTranslation: (id: string) => void
-  onLanguage?: (lang: LanguageMode) => void
   onSearch: () => void
   onSaved: () => void
   onPrayers: () => void
@@ -39,7 +32,7 @@ interface Props {
   onPrint: () => void
 }
 
-type Tab = 'read' | 'look' | 'tools'
+type Tab = 'look' | 'tools'
 
 /** One labelled control on one row with optional description */
 function Row({
@@ -142,13 +135,118 @@ function OnOff({
 }
 
 /**
+ * Reading Preferences — one expandable card containing the reading
+ * customization controls (font size, verse spacing, verse numbers, typeface).
+ */
+function ReadingPreferences({
+  prefs,
+  setPref,
+  isEn,
+}: {
+  prefs: Prefs
+  setPref: <K extends keyof Prefs>(key: K, value: Prefs[K]) => void
+  isEn: boolean
+}) {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <div
+      className="rpcard"
+      role="region"
+      aria-label={isEn ? 'Reading Preferences' : 'የማንበብ ምርጫዎች'}
+    >
+      <button
+        type="button"
+        className={`rpcard__header ${expanded ? 'is-expanded' : ''}`}
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+      >
+        <span className="rpcard__headLeft">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 12h18M3 6h18M3 18h18" />
+          </svg>
+          <span className="rpcard__title">{isEn ? 'Reading Preferences' : 'የማንበብ ምርጫዎች'}</span>
+        </span>
+        <span className="rpcard__subtitle">{isEn ? 'Customize your reading experience' : 'የአንበሳን ንባብ እንዲሁም እህትዎትን ያስለውምን'}</span>
+        <svg
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          className={`rpcard__chev ${expanded ? 'is-open' : ''}`}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      {expanded && (
+        <div className={`rpcard__body ${expanded ? 'is-visible' : ''}`}>
+          <Slide
+            label={isEn ? "Font Size" : "የፊደል መጠን"}
+            description={isEn ? "Adjust reading text size (14px – 34px)" : "የንባቡን ፊደል መጠን ከ 14px እስከ 34px ያስተካክሉ"}
+            min={SIZE_RANGE.min}
+            max={SIZE_RANGE.max}
+            step={SIZE_RANGE.step}
+            value={prefs.sizePx}
+            show={(v) => `${v}px`}
+            onChange={(v) => setPref('sizePx', v)}
+          />
+          <Slide
+            label={isEn ? "Verse Spacing" : "የጥቅሶች ክፍተት"}
+            description={isEn ? "Shrink the gap between verses (0 = tightest)" : "በጥቅሶች መካከል ያለውን ክፍተት ይቀንሱ (0 = በጣም የተጠጋ)"}
+            min={PARAGRAPH_RANGE.min}
+            max={PARAGRAPH_RANGE.max}
+            step={PARAGRAPH_RANGE.step}
+            value={prefs.paragraphGap}
+            show={(v) => `${v}px`}
+            onChange={(v) => setPref('paragraphGap', v)}
+          />
+          <OnOff
+            label={isEn ? "Verse Numbers" : "የጥቅስ ቁጥሮች"}
+            description={isEn ? "Hide the numbers for clean centred text" : "ለንጹሕ መሃከለኛ ጽሑፍ ቁጥሮቹን ደብቅ"}
+            on={prefs.verseNumbers}
+            onChange={(v) => setPref('verseNumbers', v)}
+            yes={isEn ? 'Show' : 'አሳይ'}
+            no={isEn ? 'Hide' : 'ደብቅ'}
+          />
+          <Row
+            label={isEn ? "Sacred Typeface" : "የፊደል ቅርጽ"}
+            description={isEn ? "Curated fonts for Ethiopic & Latin scripts" : "ለግዕዝና ለአማርኛ የተመቻቹ ውብ ቅርጾች"}
+          >
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
+              {FONTS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`segbar__btn ${prefs.font === item.id ? 'is-active' : ''}`}
+                  onClick={() => setPref('font', item.id)}
+                  aria-pressed={prefs.font === item.id}
+                  data-font={item.id}
+                  aria-label={item.note}
+                  title={item.note}
+                >
+                  {isEn ? item.label : item.am}
+                </button>
+              ))}
+            </div>
+          </Row>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/**
  * Settings & Appearance Body:
- * Organized into 3 classic tabs (Reading, Look, Tools) as requested,
+ * Organized into 2 classic tabs (Look, Tools) as requested,
  * with thoroughly fixed, polished, and descriptive inside texts in Amharic & English.
  */
 export default function MoreSheetBody({
-  route: _route,
-  translations: _translations,
   prefs,
   setPref,
   compare: _compare,
@@ -157,8 +255,6 @@ export default function MoreSheetBody({
   onMemorize,
   wordLookup,
   onWordLookup,
-  onTranslation: _onTranslation,
-  onLanguage,
   onSearch,
   onSaved: _onSaved,
   onPrayers: _onPrayers,
@@ -172,13 +268,12 @@ export default function MoreSheetBody({
   onGoTo,
   onPrint,
 }: Props) {
-  const [tab, setTab] = useState<Tab>('read')
+  const [tab, setTab] = useState<Tab>('look')
   const [reference, setReference] = useState('')
   const isEn = prefs.language === 'en'
   const planInfo = useReadingPlan()
 
   const tabs: { id: Tab; label: string }[] = [
-    { id: 'read', label: isEn ? 'Reading' : 'ንባብ' },
     { id: 'look', label: isEn ? 'Look' : 'ገጽታ' },
     { id: 'tools', label: isEn ? 'Tools' : 'መሳሪያዎች' },
   ]
@@ -203,79 +298,8 @@ export default function MoreSheetBody({
       {/* =====================================================================
           TAB 1: READING (ንባብ)
           ===================================================================== */}
-      {tab === 'read' && (
-        <div className="mlist">
-          {/* Language Selection */}
-          <Row
-            label={isEn ? "Interface Language" : "የመተግበሪያው ቋንቋ"}
-            description={isEn ? "Select display language" : "የመተግበሪያውን ቋንቋ ይምረጡ"}
-          >
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Language shown" : "የሚታይ ቋንቋ"}>
-              {LANGUAGES.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`segbar__btn ${prefs.language === item.id ? 'is-active' : ''}`}
-                  onClick={() => {
-                    setPref('language', item.id)
-                    onLanguage?.(item.id)
-                  }}
-                  aria-pressed={prefs.language === item.id}
-                  aria-label={item.note}
-                  title={item.note}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </Row>
-
-          {/* Text Size Slider */}
-          <Slide
-            label={isEn ? "Font Size" : "የፊደል መጠን"}
-            description={isEn ? "Adjust reading text size (14px – 34px)" : "የንባቡን ፊደል መጠን ከ 14px እስከ 34px ያስተካክሉ"}
-            min={SIZE_RANGE.min}
-            max={SIZE_RANGE.max}
-            step={SIZE_RANGE.step}
-            value={prefs.sizePx}
-            show={(v) => `${v}px`}
-            onChange={(v) => setPref('sizePx', v)}
-          />
-
-          {/* Typeface Selection */}
-          <Row
-            label={isEn ? "Sacred Typeface" : "የፊደል ቅርጽ"}
-            description={isEn ? "Curated fonts for Ethiopic & Latin scripts" : "ለግዕዝና ለአማርኛ የተመቻቹ ውብ ቅርጾች"}
-          >
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Typeface" : "የፊደል ቅርጽ"}>
-              {FONTS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`segbar__btn ${prefs.font === item.id ? 'is-active' : ''}`}
-                  onClick={() => setPref('font', item.id)}
-                  aria-pressed={prefs.font === item.id}
-                  data-font={item.id}
-                  aria-label={item.note}
-                  title={item.note}
-                >
-                  {isEn ? item.label : item.am}
-                </button>
-              ))}
-            </div>
-          </Row>
-
-          {/* Live Sample Reading Text */}
-          <p className="msample" lang={isEn ? 'en' : 'am'}>
-            {isEn
-              ? '“In the beginning God created the heaven and the earth.”'
-              : '«በመጀመሪያ እግዚአብሔር ሰማይንና ምድርን ፈጠረ።»'}
-          </p>
-        </div>
-      )}
-
       {/* =====================================================================
-          TAB 2: LOOK / APPEARANCE (ገጽታ)
+          TAB 1: LOOK / APPEARANCE (ገጽታ)
           ===================================================================== */}
       {tab === 'look' && (
         <div className="mlist">
@@ -375,6 +399,9 @@ export default function MoreSheetBody({
               </label>
             </div>
           </Row>
+
+          {/* Reading Preferences (Font Size, Verse Spacing, Verse Numbers, Typeface) */}
+          <ReadingPreferences prefs={prefs} setPref={setPref} isEn={isEn} />
         </div>
       )}
 

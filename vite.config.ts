@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
+  base: './',
   plugins: [react()],
   // Stamped into the bundle so the running page can report which build it is.
   // Useful when a stale browser cache is suspected.
