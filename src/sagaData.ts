@@ -207,16 +207,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'Human pride at Babel; God confuses human language and scatters nations across the earth.',
         narrativeFlowAm: 'ሰዎች በሰናዖር ሜዳ ስማቸውን ለማስጠራት ግንብ ገነቡ፤ እግዚአብሔር ቋንቋቸውን ደበላልቆ በምድር ሁሉ ላይ በተናቸው።',
         narrativeFlowEn: 'Human pride at Babel; God confuses human language and scatters nations across the earth.',
-        geopolitical: {
-          titleAm: 'ጥንታዊት መስጴጦምያ (ሰናዖር)',
-          titleEn: 'Ancient Mesopotamia (Plain of Shinar)',
-          empire: 'ancient',
-          empireNameAm: 'ጥንታዊት መስጴጦምያ',
-          empireNameEn: 'Ancient Mesopotamia',
-          bodyAm: 'በጤግሮስና በኤፍራጥስ ወንዞች መካከል የሰው ልጅ የመጀመሪያዎቹን ከተሞችና ግንቦች መገንባት ጀመረ። የሰናዖር ሰዎች በራሳቸው ኃይል ታምነው የእግዚአብሔርን ሉዓላዊነት ተገዳደሩ።',
-          bodyEn: 'Between the Tigris and Euphrates rivers, early humanity established urban civilization. The tower of Babel marked human pride seeking self-exaltation against God.',
-          historicalDate: '~2200 BC',
-        },
         passages: [
           {
             bookNr: 1,
