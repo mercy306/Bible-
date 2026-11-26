@@ -478,7 +478,7 @@ export default function LineageWebSheet({
                 className={`nationsSubTabBtn ${nationsSubTab === 'diaspora' ? 'is-active' : ''}`}
                 onClick={() => setNationsSubTab('diaspora')}
               >
-                📍 {isEn ? 'Where Are They Today?' : 'አሁን የት አሉ? (Diaspora)'}
+                📍 {isEn ? 'Biblical Dispersion (Diaspora)' : 'የነገዶቹ መበተን (በመጽሐፍ ቅዱስ)'}
               </button>
             </div>
 
@@ -736,10 +736,49 @@ export default function LineageWebSheet({
               </article>
             )}
 
-            {/* SUB-VIEW 3: DIASPORA & WHERE ARE THEY NOW? */}
+            {/* SUB-VIEW 3: DIASPORA & BIBLICAL DISPERSION */}
             {nationsSubTab === 'diaspora' && (
               <div className="diasporaBox">
-                {/* Southern Kingdom Preservation */}
+                {/* 1. Northern 10 Tribes Exile */}
+                <article className="diasporaCard">
+                  <h3 className="diasporaHeader">
+                    <span>🧭</span>
+                    <span>{isEn ? DIASPORA_DISCOVERY_SUMMARY.northernKingdomTitleEn : DIASPORA_DISCOVERY_SUMMARY.northernKingdomTitleAm}</span>
+                  </h3>
+                  <p className="diasporaText" style={{ fontSize: '0.84rem', marginBottom: 8 }}>
+                    {isEn ? DIASPORA_DISCOVERY_SUMMARY.northernKingdomDescEn : DIASPORA_DISCOVERY_SUMMARY.northernKingdomDescAm}
+                  </p>
+                  <div className="diasporaGrid">
+                    {DIASPORA_DISCOVERY_SUMMARY.points.map((pt) => (
+                      <div key={pt.titleAm} className="diasporaSubCard">
+                        <span className="diasporaSubTitle">
+                          📖 {isEn ? pt.titleEn : pt.titleAm}
+                        </span>
+                        <p className="diasporaSubDesc">
+                          {isEn ? pt.descEn : pt.descAm}
+                        </p>
+                        {pt.verse && onOpenPassage && (
+                          <button
+                            type="button"
+                            className="tribeJumpBtn"
+                            style={{ marginTop: 6, fontSize: '11px', padding: '3px 8px' }}
+                            onClick={() => {
+                              const parsed = parsePassageRef(pt.verse)
+                              if (parsed) {
+                                onOpenPassage(parsed.book, parsed.chapter)
+                                onClose()
+                              }
+                            }}
+                          >
+                            📖 {pt.verse} {isEn ? 'Read Chapter' : 'ምዕራፉን አንብብ'}
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </article>
+
+                {/* 2. Southern Kingdom (Judah & Benjamin) Captivity and Return */}
                 <article className="diasporaCard">
                   <h3 className="diasporaHeader">
                     <span>🦁</span>
@@ -748,41 +787,43 @@ export default function LineageWebSheet({
                   <p className="diasporaText" style={{ fontSize: '0.84rem' }}>
                     {isEn ? DIASPORA_DISCOVERY_SUMMARY.southernKingdomDescEn : DIASPORA_DISCOVERY_SUMMARY.southernKingdomDescAm}
                   </p>
+                  {onOpenPassage && (
+                    <button
+                      type="button"
+                      className="tribeJumpBtn"
+                      style={{ marginTop: 8, fontSize: '11px', padding: '3px 8px' }}
+                      onClick={() => {
+                        onOpenPassage(15, 1) // Ezra 1
+                        onClose()
+                      }}
+                    >
+                      📖 Ezra 1 {isEn ? 'Read Chapter' : 'ዕዝራ 1 አንብብ'}
+                    </button>
+                  )}
                 </article>
 
-                {/* Ten Lost Tribes Discoveries */}
-                <article className="diasporaCard">
-                  <h3 className="diasporaHeader">
-                    <span>🧭</span>
-                    <span>{isEn ? DIASPORA_DISCOVERY_SUMMARY.northernKingdomTitleEn : DIASPORA_DISCOVERY_SUMMARY.northernKingdomTitleAm}</span>
-                  </h3>
-                  <p className="diasporaText" style={{ fontSize: '0.82rem', marginBottom: 4 }}>
-                    {isEn ? DIASPORA_DISCOVERY_SUMMARY.northernKingdomDescEn : DIASPORA_DISCOVERY_SUMMARY.northernKingdomDescAm}
-                  </p>
-                  <div className="diasporaGrid">
-                    {DIASPORA_DISCOVERY_SUMMARY.points.map((pt) => (
-                      <div key={pt.titleAm} className="diasporaSubCard">
-                        <span className="diasporaSubTitle">
-                          {pt.titleAm.includes('ቤተ እስራኤል') ? '🇪🇹 ' : '📍 '}
-                          {isEn ? pt.titleEn : pt.titleAm}
-                        </span>
-                        <p className="diasporaSubDesc">
-                          {isEn ? pt.descEn : pt.descAm}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-
-                {/* Spiritual & Messianic Fulfillment */}
+                {/* 3. Spiritual & Biblical Gathering in Jesus Christ */}
                 <article className="diasporaCard" style={{ borderColor: 'var(--lineage-card-border, var(--line))', background: 'var(--lineage-card-bg-sub, var(--panel-2))' }}>
                   <h3 className="diasporaHeader">
                     <span>✝️</span>
                     <span>{isEn ? DIASPORA_DISCOVERY_SUMMARY.spiritualFulfillmentTitleEn : DIASPORA_DISCOVERY_SUMMARY.spiritualFulfillmentTitleAm}</span>
                   </h3>
-                  <p className="diasporaText" style={{ fontSize: '0.83rem' }}>
+                  <p className="diasporaText" style={{ fontSize: '0.84rem', lineHeight: 1.5 }}>
                     {isEn ? DIASPORA_DISCOVERY_SUMMARY.spiritualFulfillmentDescEn : DIASPORA_DISCOVERY_SUMMARY.spiritualFulfillmentDescAm}
                   </p>
+                  {onOpenPassage && (
+                    <button
+                      type="button"
+                      className="tribeJumpBtn"
+                      style={{ marginTop: 8, fontSize: '11px', padding: '3px 8px' }}
+                      onClick={() => {
+                        onOpenPassage(43, 11) // John 11
+                        onClose()
+                      }}
+                    >
+                      📖 John 11:51-52 {isEn ? 'Read Chapter' : 'ዮሐንስ 11 አንብብ'}
+                    </button>
+                  )}
                 </article>
               </div>
             )}
