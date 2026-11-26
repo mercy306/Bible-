@@ -5563,6 +5563,60 @@ select {
   background: var(--panel-3, rgba(128, 128, 128, 0.1));
 }
 
+.compactAccentCard {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--panel-2, rgba(128, 128, 128, 0.05));
+  border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.12));
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.compactSliderCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--panel-2, rgba(128, 128, 128, 0.05));
+  border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.12));
+  margin-bottom: 8px;
+  min-height: 40px;
+  box-sizing: border-box;
+}
+
+.compactSliderCard__label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.compactSliderCard__controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 260px;
+}
+
+.compactSliderCard__badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--panel);
+  border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.15));
+  padding: 2px 7px;
+  border-radius: 6px;
+  min-width: 38px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
 .mrow__text {
   display: flex;
   flex-direction: column;
@@ -16811,9 +16865,9 @@ html, body {
 .themePaletteGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 6px;
   width: 100%;
-  margin-top: 6px;
+  margin-bottom: 10px;
 }
 
 .themePaletteCard {
@@ -16821,14 +16875,14 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 8px 4px 6px;
-  border-radius: 14px;
-  border: 1.5px solid var(--line);
-  background: var(--panel-2);
+  gap: 4px;
+  padding: 6px 4px 5px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-subtle, var(--line));
+  background: var(--panel-2, rgba(128, 128, 128, 0.05));
   cursor: pointer;
-  transition: all 0.18s ease;
-  min-height: 62px;
+  transition: all 0.15s ease;
+  min-height: 52px;
 }
 
 .themePaletteCard:hover {
@@ -16843,21 +16897,21 @@ html, body {
 }
 
 .themePalettePreview {
-  width: 34px;
-  height: 22px;
-  border-radius: 6px;
+  width: 28px;
+  height: 18px;
+  border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .themePaletteLabel {
   font-size: 10.5px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
   text-align: center;
   line-height: 1.1;
@@ -16870,21 +16924,22 @@ html, body {
 .accentSwatchesRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
-  padding: 6px 0;
+  padding: 2px 0;
 }
 
 .accentSwatchBtn {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
   padding: 0;
   position: relative;
   transition: all 0.16s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
 .accentSwatchBtn:hover {

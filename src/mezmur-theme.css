@@ -670,7 +670,7 @@ h6,
 }
 
 .mrow__label {
-  flex: 0 0 104px !important;
+  flex: 0 0 auto !important;
   font-weight: 600 !important;
   font-size: 13.5px !important;
   color: var(--ink) !important;
