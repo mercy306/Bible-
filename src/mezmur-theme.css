@@ -1,0 +1,964 @@
+/* ==========================================================================
+   MEZMUR THEME — warm cream canvas, deep burgundy, soft rose highlights.
+   Loaded after styles.css so it restyles the app chrome without touching
+   the reader's own typeface preference (--reader-font stays user-controlled).
+   ========================================================================== */
+
+/* ---------- Palette (light) ---------- */
+:root,
+:root[data-theme='light'],
+:root[data-theme='paper'],
+:root[data-theme='sepia'],
+:root[data-theme='gold'] {
+  --bg: #faf3ea !important;
+  --panel: #ffffff !important;
+  --panel-2: #fbecea !important;
+  --panel-sage: #f5d9d8 !important;
+  --ink: #291a20 !important;
+  --ink-soft: #7a5a62 !important;
+  --line: rgba(74, 16, 40, 0.10) !important;
+  --highlight: #f5d9d8 !important;
+  --forest: #4a1028 !important;
+  --sage: #e9a6ad !important;
+  --terracotta: #e9a6ad !important;
+  --terracotta-soft: #fbecea !important;
+  --accent: #4a1028 !important;
+  --accent-soft: #f5d9d8 !important;
+  --accent-ink: #ffffff !important;
+  --primary-blue: #4a1028 !important;
+  --sand: #fbecea !important;
+  --mz-cream: #faf3ea;
+  --mz-card: #ffffff;
+  --mz-green: #4a1028;
+  --mz-green-2: #6b1d3a;
+  --mz-mint: #f5d9d8;
+  --mz-mint-soft: #fbecea;
+  --mz-muted: #7a5a62;
+  --mz-shadow: 0 10px 30px rgba(74, 16, 40, 0.09);
+  --mz-shadow-sm: 0 4px 14px rgba(74, 16, 40, 0.07);
+  color-scheme: light !important;
+}
+
+/* ---------- Palette (dark) ---------- */
+:root[data-theme='bw'],
+:root[data-theme='dark'],
+:root[data-theme='night'],
+:root[data-theme='olive'],
+:root[data-theme='ocean'],
+:root[data-theme='lavender'],
+:root[data-theme='clay'],
+:root[data-theme='burgundy'] {
+  --bg: #1a0a10 !important;
+  --panel: #2a1218 !important;
+  --panel-2: #3a1a22 !important;
+  --panel-sage: #3a1a22 !important;
+  --ink: #faf3ea !important;
+  --ink-soft: #c9a8ae !important;
+  --line: rgba(250, 243, 234, 0.10) !important;
+  --highlight: rgba(233, 166, 173, 0.14) !important;
+  --forest: #faf3ea !important;
+  --sage: #c9a8ae !important;
+  --terracotta: #e9a6ad !important;
+  --terracotta-soft: rgba(233, 166, 173, 0.12) !important;
+  --accent: #e9a6ad !important;
+  --accent-soft: rgba(233, 166, 173, 0.16) !important;
+  --accent-ink: #1a0a10 !important;
+  --primary-blue: #e9a6ad !important;
+  --sand: #3a1a22 !important;
+  --mz-cream: #1a0a10;
+  --mz-card: #2a1218;
+  --mz-green: #e9a6ad;
+  --mz-green-2: #f0b8be;
+  --mz-mint: rgba(233, 166, 173, 0.16);
+  --mz-mint-soft: rgba(233, 166, 173, 0.09);
+  --mz-muted: #c9a8ae;
+  --mz-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --mz-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.28);
+  color-scheme: dark !important;
+}
+
+/* ---------- Type ---------- */
+body {
+  background: var(--mz-cream) !important;
+  font-family: 'Noto Sans Ethiopic', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  letter-spacing: 0.005em;
+}
+
+button,
+input,
+select,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.mrow__label,
+.mrow__desc,
+.botbar__label,
+.mtabs__btn,
+.dailyScreen__title,
+.savedScreen__title,
+.sheet__title {
+  font-family: 'Noto Sans Ethiopic', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+.app {
+  background: var(--mz-cream) !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme] body {
+  background: var(--mz-cream) !important;
+}
+
+:root[data-theme] .app {
+  background: var(--mz-cream) !important;
+  box-shadow: none !important;
+}
+
+.main {
+  background: var(--mz-cream);
+}
+
+/* ---------- Top bar (reading screen) ---------- */
+:root[data-theme] .topbar.topbar--compact .mountainHero,
+:root[data-theme] .topbar.topbar--compact .topbar__hero,
+:root[data-theme] .topbar__hero.topbar__hero--compact {
+  background: linear-gradient(160deg, #3a0e1e 0%, #4a1028 55%, #1a0509 100%) !important;
+  border-radius: 0 0 26px 26px !important;
+  border-bottom: 0 !important;
+  padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 16px !important;
+  box-shadow: 0 12px 28px rgba(74, 16, 40, 0.18) !important;
+  min-height: auto !important;
+}
+
+:root[data-theme] .topbar.topbar--compact .mountainHero__bg,
+:root[data-theme] .topbar.topbar--compact .mountainHero__overlay,
+:root[data-theme] .topbar__hero.topbar__hero--compact .mountainHero__bg,
+:root[data-theme] .topbar__hero.topbar__hero--compact .mountainHero__overlay {
+  display: none !important;
+}
+
+.topbar.topbar--compact .topbar__mainRow {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  min-height: 34px !important;
+}
+
+.topbar.topbar--compact .topbar__titleBtn {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  text-align: left !important;
+  min-width: 0;
+}
+
+:root[data-theme] .topbar.topbar--compact .topbar__chapterTitle {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 2px !important;
+  color: #faf3ea !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.topbar.topbar--compact .topbar__bookName {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar.topbar--compact .topbar__chapNo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(250, 243, 234, 0.62) !important;
+}
+
+.topbar.topbar--compact .topbar__chev {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.topbar.topbar--compact .topbar__rightActions {
+  gap: 6px !important;
+  flex-shrink: 0;
+}
+
+.topbar.topbar--compact .topbar__actionBtn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: rgba(250, 243, 234, 0.12) !important;
+  border: 1px solid rgba(250, 243, 234, 0.16) !important;
+  color: #faf3ea !important;
+}
+
+.topbar.topbar--compact .topbar__actionBtn svg {
+  width: 16px !important;
+  height: 16px !important;
+  stroke-width: 2 !important;
+}
+
+/* Search row inside the green header */
+.topbar.topbar--compact .topbar__searchRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar.topbar--compact .topbar__backBtn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 243, 234, 0.16);
+  background: rgba(250, 243, 234, 0.12);
+  color: #faf3ea;
+  flex-shrink: 0;
+}
+
+.topbar.topbar--compact .topbar__searchForm {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(250, 243, 234, 0.12);
+  border: 1px solid rgba(250, 243, 234, 0.16);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #faf3ea;
+}
+
+.topbar.topbar--compact .topbar__versionSelect {
+  height: 30px !important;
+  padding: 0 8px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(250, 243, 234, 0.35) !important;
+  background: rgba(250, 243, 234, 0.12) !important;
+  color: var(--mz-cream) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  max-width: 150px !important;
+  outline: none !important;
+}
+
+.topbar__langToggle {
+  display: inline-flex !important;
+  gap: 2px !important;
+  padding: 2px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(250, 243, 234, 0.35) !important;
+  background: rgba(250, 243, 234, 0.12) !important;
+}
+
+.topbar__langBtn {
+  height: 26px !important;
+  min-width: 30px !important;
+  padding: 0 8px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: rgba(250, 243, 234, 0.75) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+}
+
+.topbar__langBtn.is-active {
+  background: var(--mz-cream) !important;
+  color: var(--mz-green) !important;
+}
+  height: 30px !important;
+  padding: 0 8px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(250, 243, 234, 0.35) !important;
+  background: rgba(250, 243, 234, 0.12) !important;
+  color: var(--mz-cream) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  max-width: 150px !important;
+  outline: none !important;
+}
+.topbar__searchInput {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #faf3ea;
+  font-size: 14px;
+}
+
+.topbar.topbar--compact .topbar__searchInput::placeholder {
+  color: rgba(250, 243, 234, 0.6);
+}
+
+.topbar.topbar--compact .topbar__kbToggleBtn {
+  border: 1px solid rgba(250, 243, 234, 0.2);
+  background: rgba(250, 243, 234, 0.1);
+  color: #faf3ea;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.topbar.topbar--compact .topbar__clearBtn {
+  border: 0;
+  background: transparent;
+  color: rgba(250, 243, 234, 0.75);
+  font-size: 14px;
+  padding: 0 2px;
+}
+
+/* ---------- Big scenic heroes on other screens ---------- */
+:root[data-theme] .mountainHero {
+  background: linear-gradient(160deg, #3a0e1e 0%, #4a1028 55%, #1a0509 100%) !important;
+  border-radius: 0 0 28px 28px !important;
+  border-bottom: 0 !important;
+  box-shadow: 0 12px 30px rgba(74, 16, 40, 0.18) !important;
+  color: #faf3ea !important;
+}
+
+:root[data-theme] .mountainHero .mountainHero__bg,
+:root[data-theme] .mountainHero .mountainHero__overlay {
+  display: none !important;
+}
+
+.mountainHero__content {
+  color: #faf3ea;
+}
+
+/* ---------- Reader ---------- */
+.read {
+  max-width: 720px !important;
+  padding: 18px 16px calc(126px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.verses {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.verse {
+  padding: var(--reader-gap, 7px) 10px !important;
+  border-radius: 16px;
+  transition: background 0.15s ease;
+}
+
+.verse__n {
+  display: inline-block;
+  margin-right: 0.4em;
+  margin-top: 2px !important;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--mz-green-2);
+  font-family: 'Noto Sans Ethiopic', system-ui, sans-serif;
+  font-size: 0.62em;
+  font-weight: 700;
+  line-height: 1.2;
+  vertical-align: top;
+}
+
+/* Beat the base stylesheet's tall line-height for Amharic numbers. */
+:root[data-lang=am] .verse__n,
+:root[data-lang=tig] .verse__n {
+  line-height: 1.2 !important;
+}
+
+.verse.is-on,
+.verse:target {
+  background: var(--mz-mint-soft);
+}
+
+.verse.is-lit {
+  background: var(--mz-mint);
+}
+
+.verse--searchTarget {
+  background: var(--mz-mint) !important;
+}
+
+.verse__text {
+  font-size: 1.08rem !important;
+  line-height: 1.85 !important;
+}
+
+/* Centered scripture text, like the lyrics on the reference player screen. */
+.verse,
+.verse__body,
+.verse__line,
+.verse__text,
+.verse__line--missing,
+.verse__reveal {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word;
+}
+
+.verse__line {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+  position: relative !important;
+  padding-left: 34px !important;
+}
+
+/* Verse numbers form a parallel column on the left edge. */
+.verse__line > .verse__n {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0.15em !important;
+  width: 30px !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Hide the gutter when verse numbers are turned off. */
+:root[data-numbers=off] .verse__line {
+  padding-left: 4px !important;
+}
+
+.verse__english,
+.verse__compare {
+  text-align: justify !important;
+  text-align-last: left !important;
+}
+
+/* Keep the tap-to-reveal and search badges centered too */
+.verse__searchTargetBadge,
+.verse__edition {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Chapter-end card */
+.readerChapterEndCard,
+.readerChapterEndCard__top {
+  background: var(--mz-card) !important;
+  border-radius: 22px !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: var(--mz-shadow-sm) !important;
+}
+
+/* Notices */
+.notice {
+  border-radius: 16px !important;
+  border: 1px solid var(--line) !important;
+  background: var(--mz-card) !important;
+  box-shadow: var(--mz-shadow-sm) !important;
+  padding: 12px 14px !important;
+}
+
+.notice--passage {
+  background: var(--mz-mint-soft) !important;
+  border-color: transparent !important;
+  color: var(--mz-green-2) !important;
+}
+
+/* Floating reader controls */
+.readerBar {
+  background: var(--mz-card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 12px 32px rgba(74, 16, 40, 0.16) !important;
+  padding: 6px 10px !important;
+}
+
+.readerBar__chapterBtn {
+  background: var(--mz-mint-soft) !important;
+  color: var(--mz-green-2) !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+}
+
+.readerBar__navBtn {
+  border-radius: 50% !important;
+  color: var(--mz-green) !important;
+}
+
+/* ---------- Bottom navigation ---------- */
+.botbar {
+  background: var(--mz-card) !important;
+  border-top: 0 !important;
+  border-radius: 24px 24px 0 0 !important;
+  box-shadow: 0 -8px 28px rgba(74, 16, 40, 0.1) !important;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) !important;
+}
+
+.botbar__btn {
+  border-radius: 18px !important;
+  color: var(--mz-muted) !important;
+  gap: 4px;
+  padding: 6px 2px !important;
+}
+
+.botbar__btn.is-active {
+  background: var(--mz-mint) !important;
+  color: var(--mz-green) !important;
+}
+
+.botbar__label {
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+}
+
+.botbar__badge {
+  background: var(--mz-green) !important;
+  color: var(--mz-cream) !important;
+  font-weight: 700;
+}
+
+/* ---------- Sheets ---------- */
+:root[data-theme] .sheet {
+  background: var(--mz-cream) !important;
+}
+
+.sheet--bottom {
+  border-radius: 26px 26px 0 0 !important;
+  box-shadow: 0 -14px 44px rgba(74, 16, 40, 0.2) !important;
+}
+
+.sheet__head {
+  border-bottom: 1px solid var(--line) !important;
+  padding: 14px 18px !important;
+}
+
+.sheet__title {
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+}
+
+.sheet__close {
+  background: var(--mz-mint-soft) !important;
+  border-radius: 50% !important;
+  color: var(--mz-green) !important;
+}
+
+.sheet__body {
+  padding: 10px 14px calc(12px + env(safe-area-inset-bottom)) !important;
+}
+
+/* Settings tabs */
+.mtabs {
+  background: var(--mz-card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+  padding: 3px !important;
+  gap: 3px !important;
+}
+
+.mtabs__btn {
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  padding: 7px 4px !important;
+}
+
+.mtabs__btn.is-active {
+  background: var(--mz-green) !important;
+  color: var(--mz-cream) !important;
+}
+
+.mlist {
+  gap: 2px !important;
+}
+
+.mrow {
+  background: var(--mz-card) !important;
+  border: 0 !important;
+  border-bottom: 0 !important;
+  border-radius: 0 !important;
+  padding: 4px 0 !important;
+  min-height: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Two-column compact layout for the Reading tab */
+.mlist--2col {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 4px 6px !important;
+}
+
+.mlist--2col .mrow {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 3px !important;
+  border-bottom: 0 !important;
+  padding: 4px 6px !important;
+  min-height: 90px !important;
+  background: var(--mz-card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+}
+
+.mlist--2col .mrow__label {
+  flex: 0 0 auto !important;
+  font-size: 11px !important;
+  line-height: 1.2;
+}
+
+.mlist--2col .mrow__desc {
+  font-size: 10.5px !important;
+  line-height: 1.3;
+}
+
+.mlist--2col .mrow__control {
+  width: 100% !important;
+}
+
+.mlist--2col .mrow:has(select) {
+  grid-column: 1 / -1 !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+
+.mlist--2col .mrow:has(select) .mrow__text {
+  flex: 1 1 100% !important;
+}
+
+.mlist--2col .mrow:has(select) .mrow__control {
+  flex: 1 1 100% !important;
+  width: 100% !important;
+}
+
+.mlist--2col .mrow:has(select) select {
+  width: 100% !important;
+}
+
+.mlist--2col .mrow__desc {
+  display: none !important;
+}
+
+.mlist--2col .msample {
+  display: none !important;
+}
+
+.mrow {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  padding: 4px 2px !important;
+  min-height: 32px !important;
+  box-shadow: none !important;
+}
+
+.mrow__label {
+  flex: 0 0 104px !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  color: var(--ink) !important;
+  line-height: 1.3;
+}
+
+.mrow__desc {
+  font-size: 11px !important;
+  color: var(--mz-muted) !important;
+  line-height: 1.35;
+}
+
+/* Rows holding a dropdown stack the label above the control */
+.mrow__control {
+  min-width: 0;
+}
+
+.mrow__control select {
+  max-width: 100%;
+}
+
+.mrow:has(select),
+.mrow:has(.themePaletteGrid),
+.mrow:has(.accentSwatchesRow) {
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.mrow:has(select) .mrow__text,
+.mrow:has(.themePaletteGrid) .mrow__text,
+.mrow:has(.accentSwatchesRow) .mrow__text {
+  flex: 1 1 100%;
+}
+
+.mrow:has(select) .mrow__control,
+.mrow:has(.themePaletteGrid) .mrow__control,
+.mrow:has(.accentSwatchesRow) .mrow__control {
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+.mrow:has(select) select {
+  width: 100%;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+.msample {
+  background: var(--mz-mint-soft) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 18px !important;
+  padding: 16px !important;
+  color: var(--ink) !important;
+}
+
+/* Wide action cards in More > Tools */
+.mwide {
+  background: var(--mz-card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--mz-shadow-sm) !important;
+}
+
+.mwide:active {
+  background: var(--mz-mint-soft) !important;
+}
+
+/* Segmented controls */
+.segbar {
+  background: var(--mz-mint-soft) !important;
+  border-radius: 999px !important;
+  padding: 3px !important;
+  border: 0 !important;
+}
+
+.segbar__btn {
+  border-radius: 999px !important;
+  font-weight: 600;
+}
+
+.segbar__btn.is-active {
+  background: var(--mz-green) !important;
+  color: var(--mz-cream) !important;
+}
+
+/* Selects */
+.daily__select,
+select {
+  border-radius: 999px !important;
+}
+
+.daily__select {
+  background: var(--mz-mint-soft) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--ink) !important;
+  font-weight: 600;
+  padding: 8px 14px !important;
+}
+
+/* ---------- Daily / Saved screens ---------- */
+.dailyScreen,
+.savedScreen {
+  background: var(--mz-cream);
+}
+
+.dailyScreen__hero,
+.dailyScreen__body,
+.dailyScreen__tabBarWrap,
+.savedScreen__hero,
+.savedScreen__body {
+  flex-shrink: 0 !important;
+}
+
+.dailyScreen__card,
+.dailyScreen__planTeaser,
+.savedScreen__card,
+.savedScreen__empty {
+  background: var(--mz-card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--mz-shadow-sm) !important;
+}
+
+.dailyScreen__amharicBanner {
+  background: var(--mz-mint) !important;
+  border-radius: 16px !important;
+  color: var(--mz-green) !important;
+}
+
+.dailyScreen__readBtn {
+  background: var(--mz-green) !important;
+  color: var(--mz-cream) !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 10px 24px rgba(74, 16, 40, 0.22) !important;
+}
+
+.dailyScreen__tabBar,
+.savedScreen__tabs {
+  background: var(--mz-card) !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--line) !important;
+  padding: 4px !important;
+  box-shadow: var(--mz-shadow-sm);
+}
+
+.dailyScreen__tabBtn.is-active,
+.savedScreen__tab.is-active {
+  background: var(--mz-green) !important;
+  color: var(--mz-cream) !important;
+  border-radius: 999px !important;
+}
+
+.dailyScreen__title,
+.savedScreen__title {
+  color: #faf3ea !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Greeting block on heroes */
+:root[data-theme] .mountainHero .homeScreen__greeting,
+:root[data-theme] .mountainHero .dailyScreen__title,
+:root[data-theme] .mountainHero .savedScreen__title {
+  color: #faf3ea !important;
+  font-weight: 700 !important;
+}
+
+:root[data-theme] .mountainHero .homeScreen__quote {
+  background: var(--mz-card) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--mz-shadow-sm) !important;
+}
+
+:root[data-theme] .mountainHero .homeScreen__quoteText {
+  color: var(--ink) !important;
+}
+
+:root[data-theme] .mountainHero .homeScreen__quoteRef {
+  color: var(--mz-muted) !important;
+  opacity: 1 !important;
+}
+
+:root[data-theme] .mountainHero .dailyScreen__backBtn,
+:root[data-theme] .mountainHero .dailyScreen__calBtn {
+  color: #faf3ea !important;
+  background: rgba(250, 243, 234, 0.12) !important;
+}
+
+/* Chips / pills used around the app */
+.pill,
+.chip {
+  border-radius: 999px !important;
+}
+
+/* Print/export and other primary buttons */
+.linkbutton {
+  color: var(--mz-green-2) !important;
+  font-weight: 700;
+}
+
+/* Scrollbar-free, soft focus */
+:focus-visible {
+  outline: 2px solid var(--mz-green-2);
+  outline-offset: 2px;
+}
+
+/* Compact theme palette grid */
+.themePaletteGrid { gap: 6px !important; margin-top: 4px !important; }
+.themePaletteCard { padding: 4px 2px 4px !important; min-height: 46px !important; border-radius: 10px !important; }
+.themePalettePreview { width: 26px !important; height: 16px !important; font-size: 9px !important; }
+.themePaletteLabel { font-size: 10px !important; }
+
+
+/* Reading Preferences — one expandable card */
+.rpcard {
+  margin-top: 4px !important;
+}
+
+.rpcard__header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  width: 100% !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  background: var(--mz-card) !important;
+  padding: 6px 10px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: var(--ink) !important;
+  cursor: pointer !important;
+  transition: background 0.15s ease !important;
+}
+
+.rpcard__header:hover {
+  background: var(--panel-2) !important;
+}
+
+.rpcard__headLeft {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+  color: var(--mz-green) !important;
+}
+
+.rpcard__title {
+  white-space: nowrap !important;
+}
+
+.rpcard__subtitle {
+  flex: 1 1 100% !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  color: var(--mz-muted) !important;
+}
+
+.rpcard__chev {
+  flex: 0 0 auto !important;
+  transition: transform 0.2s ease !important;
+  color: var(--mz-muted) !important;
+}
+
+.rpcard__chev.is-open {
+  transform: rotate(180deg) !important;
+}
+
+.rpcard__body {
+  display: grid !important;
+  gap: 2px !important;
+}
+
+.rpcard__body > * {
+  min-width: 0 !important;
+}
+.accentSwatchBtn { width: 18px !important; height: 18px !important; border-radius: 50% !important; border: 1px solid rgba(255,255,255,0.2) !important; }
+.accentSwatchBtn:hover { transform: none !important; }
+.accentSwatchBtn.is-active { transform: none !important; border-color: var(--mz-cream) !important; }
+
