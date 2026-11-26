@@ -483,98 +483,84 @@ export default function MoreSheetBody({
             </button>
           </div>
 
-          <span className="toolsSectionLabel">
-            {isEn ? 'Quick Jump & Navigation' : 'ወደ ጥቅስ መሄጃ'}
-          </span>
-
-          {/* Direct Passage Navigation */}
+          {/* Quick Jump Bar */}
           <form
-            className="compactRow"
+            className="quickJumpBar"
             onSubmit={(e) => {
               e.preventDefault()
               if (reference.trim()) onGoTo(reference.trim())
             }}
           >
-            <span className="compactRow__label">
-              📖 {isEn ? 'Go to Passage' : 'ወደ ጥቅስ ይሂዱ'}
-            </span>
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-              <input
-                className="textfield textfield--sm"
-                type="text"
-                value={reference}
-                onChange={(e) => setReference(e.target.value)}
-                placeholder={isEn ? "John 3:16" : "ዮሐንስ 3:16"}
-                aria-label={isEn ? "Go to a passage" : "ወደ ጥቅስ ይሂዱ"}
-                style={{ width: '120px', height: '30px', padding: '4px 8px', fontSize: '12.5px' }}
-              />
-              <button className="btn btn--accent btn--sm" type="submit" style={{ height: '30px', padding: '0 12px', fontSize: '12.5px' }}>
-                {isEn ? 'Go' : 'ሂድ'}
-              </button>
-            </div>
+            <span className="quickJumpBar__icon">📖</span>
+            <input
+              className="quickJumpBar__input"
+              type="text"
+              value={reference}
+              onChange={(e) => setReference(e.target.value)}
+              placeholder={isEn ? "Go to passage (e.g. John 3:16)..." : "ወደ ጥቅስ ይሂዱ (ምሳሌ፦ ዮሐንስ 3:16)..."}
+              aria-label={isEn ? "Go to a passage" : "ወደ ጥቅስ ይሂዱ"}
+            />
+            <button className="quickJumpBar__btn" type="submit">
+              {isEn ? 'Go ›' : 'ሂድ ›'}
+            </button>
           </form>
 
-          <span className="toolsSectionLabel">
-            {isEn ? 'Reading Preferences' : 'የንባብ ምርጫዎች'}
-          </span>
-
-          {/* Verse Memorization Mode */}
-          <div className="compactRow">
-            <span className="compactRow__label">
-              🧠 {isEn ? 'Verse Memorization' : 'ጥቅስ የማስታወስ ልምምድ'}
-            </span>
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Verse Memorization" : "ጥቅስ የማስታወስ ልምምድ"}>
-              <button
-                type="button"
-                className={`segbar__btn ${!memorize ? 'is-active' : ''}`}
-                onClick={() => onMemorize(false)}
-                aria-pressed={!memorize}
-              >
-                {isEn ? 'Off' : 'አጥፋ'}
-              </button>
-              <button
-                type="button"
-                className={`segbar__btn ${memorize ? 'is-active' : ''}`}
-                onClick={() => onMemorize(true)}
-                aria-pressed={memorize}
-              >
-                {isEn ? 'On' : 'አብራ'}
-              </button>
+          {/* 2-Column Toggle Grid for Memorization & Word Lookup */}
+          <div className="toggleGrid">
+            <div className="toggleCard">
+              <span className="toggleCard__label">
+                🧠 {isEn ? 'Memorize' : 'ጥቅስ ማስታወስ'}
+              </span>
+              <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Verse Memorization" : "ጥቅስ የማስታወስ ልምምድ"}>
+                <button
+                  type="button"
+                  className={`segbar__btn ${!memorize ? 'is-active' : ''}`}
+                  onClick={() => onMemorize(false)}
+                  aria-pressed={!memorize}
+                >
+                  {isEn ? 'Off' : 'አጥፋ'}
+                </button>
+                <button
+                  type="button"
+                  className={`segbar__btn ${memorize ? 'is-active' : ''}`}
+                  onClick={() => onMemorize(true)}
+                  aria-pressed={memorize}
+                >
+                  {isEn ? 'On' : 'አብራ'}
+                </button>
+              </div>
             </div>
-          </div>
 
-          {/* Word Lookup & Lexicon */}
-          <div className="compactRow">
-            <span className="compactRow__label">
-              🔤 {isEn ? "Word Lookup (Strong's)" : 'የቃላት ፍቺና መዝገበ ቃላት'}
-            </span>
-            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Word Lookup" : "የቃላት ፍቺ"}>
-              <button
-                type="button"
-                className={`segbar__btn ${!wordLookup ? 'is-active' : ''}`}
-                onClick={() => onWordLookup(false)}
-                aria-pressed={!wordLookup}
-              >
-                {isEn ? 'Off' : 'አጥፋ'}
-              </button>
-              <button
-                type="button"
-                className={`segbar__btn ${wordLookup ? 'is-active' : ''}`}
-                onClick={() => onWordLookup(true)}
-                aria-pressed={wordLookup}
-              >
-                {isEn ? 'On' : 'አብራ'}
-              </button>
+            <div className="toggleCard">
+              <span className="toggleCard__label">
+                🔤 {isEn ? 'Lexicon' : 'የቃላት ፍቺ'}
+              </span>
+              <div className="segbar segbar--tiny" role="group" aria-label={isEn ? "Word Lookup" : "የቃላት ፍቺ"}>
+                <button
+                  type="button"
+                  className={`segbar__btn ${!wordLookup ? 'is-active' : ''}`}
+                  onClick={() => onWordLookup(false)}
+                  aria-pressed={!wordLookup}
+                >
+                  {isEn ? 'Off' : 'አጥፋ'}
+                </button>
+                <button
+                  type="button"
+                  className={`segbar__btn ${wordLookup ? 'is-active' : ''}`}
+                  onClick={() => onWordLookup(true)}
+                  aria-pressed={wordLookup}
+                >
+                  {isEn ? 'On' : 'አብራ'}
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Print / Save Chapter */}
-          <div className="compactRow" onClick={onPrint} style={{ cursor: 'pointer' }}>
-            <span className="compactRow__label">
-              🖨️ {isEn ? 'Print or Export Chapter' : 'ይህንን ምዕራፍ አትም / አስቀምጥ'}
-            </span>
-            <span style={{ fontSize: '12px', color: 'var(--accent)', fontWeight: 600 }}>PDF / Print ›</span>
-          </div>
+          <button type="button" className="compactPrintBtn" onClick={onPrint}>
+            <span>🖨️ {isEn ? 'Print or Export Chapter' : 'ይህንን ምዕራፍ አትም / አስቀምጥ'}</span>
+            <span style={{ fontSize: '11.5px', color: 'var(--accent)', fontWeight: 700 }}>PDF / Print ›</span>
+          </button>
         </div>
       )}
     </>

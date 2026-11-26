@@ -5463,30 +5463,104 @@ select {
   display: block;
 }
 
-.compactRow {
+.quickJumpBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 12px;
+  border-radius: 12px;
+  background: var(--panel-2, rgba(128, 128, 128, 0.06));
+  border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.15));
+  margin: 10px 0 8px;
+  box-sizing: border-box;
+  min-height: 42px;
+}
+
+.quickJumpBar__icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}
+
+.quickJumpBar__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  font-size: 13.5px !important;
+  padding: 4px 0 !important;
+  outline: none !important;
+}
+
+.quickJumpBar__btn {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink, #ffffff);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.quickJumpBar__btn:active {
+  opacity: 0.85;
+}
+
+.toggleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.toggleCard {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: 10px;
   background: var(--panel-2, rgba(128, 128, 128, 0.05));
   border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.12));
-  margin-bottom: 6px;
   min-height: 40px;
   box-sizing: border-box;
 }
 
-.compactRow:hover {
-  background: var(--panel-3, rgba(128, 128, 128, 0.09));
-}
-
-.compactRow__label {
-  font-size: 13px;
+.toggleCard__label {
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 6px;
+}
+
+.compactPrintBtn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--panel-2, rgba(128, 128, 128, 0.05));
+  border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.12));
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-height: 38px;
+  box-sizing: border-box;
+}
+
+.compactPrintBtn:hover {
+  background: var(--panel-3, rgba(128, 128, 128, 0.1));
 }
 
 .mrow__text {
