@@ -231,9 +231,6 @@ export default function LineageWebSheet({
                   <h3 className="lineageSpotlight__nameEn">{isEn ? activePerson.nameEn : activePerson.nameAm}</h3>
                   <span className="lineageSpotlight__nameAm">({isEn ? activePerson.nameAm : activePerson.nameEn})</span>
                 </div>
-                <span className="lineageSpotlight__era">
-                  ⏳ {isEn ? activePerson.eraEn : activePerson.eraAm}
-                </span>
               </header>
 
               {/* Kinship Connections (Parents, Spouses, Children, Siblings) */}
