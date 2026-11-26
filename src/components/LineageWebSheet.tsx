@@ -354,11 +354,6 @@ export default function LineageWebSheet({
                 })()}
               </div>
 
-              {/* Bio Summary */}
-              <p className="lineageBioText">
-                {isEn ? activePerson.bioEn : activePerson.bioAm}
-              </p>
-
               {/* Collapsible Theological Exegesis (Clean Accordion) */}
               <div className="lineageTheologyCard">
                 <button
