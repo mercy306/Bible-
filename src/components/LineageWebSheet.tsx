@@ -105,6 +105,32 @@ export default function LineageWebSheet({
     }
   }
 
+  const [selectedNoahId, setSelectedNoahId] = useState<string>('shem')
+  const [expandedNoah, setExpandedNoah] = useState<Record<string, boolean>>({})
+
+  const currentNoahIndex = NOAH_SONS_DATA.findIndex((s) => s.id === selectedNoahId)
+  const activeNoah = NOAH_SONS_DATA[currentNoahIndex] || NOAH_SONS_DATA[0]
+  const prevNoah = currentNoahIndex > 0 ? NOAH_SONS_DATA[currentNoahIndex - 1] : null
+  const nextNoah = currentNoahIndex < NOAH_SONS_DATA.length - 1 ? NOAH_SONS_DATA[currentNoahIndex + 1] : null
+
+  const getNoahGenerationBadge = (index: number) => {
+    if (isEn) {
+      if (index === 0) return '🥇 1st Son (Firstborn)'
+      if (index === 2) return '👑 3rd Son (Youngest)'
+      return '🥈 2nd Son of Noah'
+    } else {
+      if (index === 0) return '🥇 1ኛ ልጅ (የኖኅ በኩር)'
+      if (index === 2) return '👑 3ኛ ልጅ (የኖኅ ታናሽ)'
+      return '🥈 2ኛ የኖኅ ልጅ'
+    }
+  }
+
+  const getNoahSymbol = (id: string) => {
+    if (id === 'shem') return '🕊️'
+    if (id === 'ham') return '☀️'
+    return '🌊'
+  }
+
 
   useEffect(() => {
     if (pillsRef.current) {
@@ -577,94 +603,137 @@ export default function LineageWebSheet({
 
             {/* SUB-VIEW 2: NOAH'S 3 BRANCHES */}
             {nationsSubTab === 'noah' && (
-              <>
-                {/* Bloodline Stepper */}
-                <div className="lineageBreadcrumb" style={{ overflowX: 'auto', padding: '10px 14px' }}>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent)' }}>
-                    {isEn ? 'Direct Covenant Bloodline:' : 'ቀጥተኛው የቃል ኪዳን የደም መስመር:'}
+              <article key={activeNoah.id} className="tribeCard">
+                {/* Header: Identity & Badges */}
+                <header className="tribeHeader">
+                  <div className="tribeHeaderLeft">
+                    <span className="tribeSymbol">{getNoahSymbol(activeNoah.id)}</span>
+                    <div className="tribeTitles">
+                      <h3 className="tribeName">{isEn ? activeNoah.nameEn : activeNoah.nameAm}</h3>
+                      <span className="tribeMeaning">{isEn ? activeNoah.meaningEn : activeNoah.meaningAm}</span>
+                    </div>
+                  </div>
+                  <div className="tribeBadges">
+                    <span className="tribeBadge" style={{ background: 'var(--panel-2)', fontWeight: 800 }}>
+                      {getNoahGenerationBadge(currentNoahIndex)}
+                    </span>
+                    <span className="tribeBadge" style={{ background: 'rgba(212, 175, 55, 0.15)', color: 'var(--accent)', fontWeight: 700 }}>
+                      🌍 {isEn ? activeNoah.progenitorTitleEn : activeNoah.progenitorTitleAm}
+                    </span>
+                  </div>
+                </header>
+
+                {/* Theological Role & Summary */}
+                <div className="tribeQuickSummary">
+                  <span className="tribeQuickText">
+                    {isEn ? activeNoah.theologicalRoleEn : activeNoah.theologicalRoleAm}
                   </span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 700, flexWrap: 'wrap', marginTop: 4 }}>
-                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ኖኅ (Noah)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ሴም (Shem)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>አርፋክስድ (Arpachshad)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>ሳላ (Shelah)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ዔቦር (Eber / ዕብራዊ)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>ፋሌቅ (Peleg)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>ራግው (Reu)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>ሴሮህ (Serug)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>ናኮር (Nahor)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>ታራ (Terah)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>አብርሃም (Abraham)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span>ይስሐቅ (Isaac)</span>
-                    <span style={{ color: 'var(--text-muted)' }}>➔</span>
-                    <span style={{ color: 'var(--ink)', fontWeight: 800 }}>ያዕቆብ/እስራኤል (Jacob)</span>
+                </div>
+
+                {/* Collapsible Dropdown for Noah's Blessing */}
+                <button
+                  type="button"
+                  className="tribeAccordionToggle"
+                  onClick={() => setExpandedNoah(prev => ({ ...prev, [`blessing_${activeNoah.id}`]: !prev[`blessing_${activeNoah.id}`] }))}
+                  aria-expanded={Boolean(expandedNoah[`blessing_${activeNoah.id}`])}
+                >
+                  <span>📜 {isEn ? 'Noah’s Blessing (Gen 9:26-27)' : 'የኖኅ ምርቃት (ዘፍጥረት 9:26-27)'}</span>
+                  <span>{expandedNoah[`blessing_${activeNoah.id}`] ? '▲' : '▼'}</span>
+                </button>
+
+                {expandedNoah[`blessing_${activeNoah.id}`] && (
+                  <div className="tribeAccordionContent">
+                    <div className="tribeProphecyBox">
+                      <p className="tribeProphecyText">
+                        {isEn ? activeNoah.blessingEn : activeNoah.blessingAm}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Collapsible Dropdown for Direct Sons & Nations */}
+                <button
+                  type="button"
+                  className="tribeAccordionToggle"
+                  onClick={() => setExpandedNoah(prev => ({ ...prev, [`sons_${activeNoah.id}`]: !prev[`sons_${activeNoah.id}`] }))}
+                  aria-expanded={expandedNoah[`sons_${activeNoah.id}`] !== false}
+                  style={{ marginTop: 4 }}
+                >
+                  <span>👥 {isEn ? 'Direct Sons & Nations (Gen 10)' : 'ቀጥተኛ ልጆችና ሕዝቦች (ዘፍጥረት 10)'} ({activeNoah.primarySons.length})</span>
+                  <span>{expandedNoah[`sons_${activeNoah.id}`] === false ? '▼' : '▲'}</span>
+                </button>
+
+                {expandedNoah[`sons_${activeNoah.id}`] !== false && (
+                  <div className="tribeAccordionContent">
+                    <div className="noahSonsChips" style={{ marginTop: 4 }}>
+                      {activeNoah.primarySons.map((sn) => (
+                        <span key={sn.nameAm} className="noahSonChip">
+                          <strong>{isEn ? sn.nameEn : sn.nameAm}</strong> ({isEn ? sn.nationsEn : sn.nationsAm})
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Jump Actions & Previous/Next Navigation */}
+                <div className="tribeActions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                    {LINEAGE_PEOPLE[activeNoah.id] && (
+                      <button
+                        type="button"
+                        className="tribeJumpBtn"
+                        onClick={() => {
+                          setActiveTab('tree')
+                          selectPerson(activeNoah.id)
+                        }}
+                      >
+                        🌳 {isEn ? 'View in Family Tree' : 'በትውልድ ዛፍ እይ'}
+                      </button>
+                    )}
+                    {onOpenPassage && activeNoah.keyVerses.length > 0 && (
+                      <button
+                        type="button"
+                        className="tribeJumpBtn"
+                        onClick={() => {
+                          const parsed = parsePassageRef(activeNoah.keyVerses[0])
+                          if (parsed) {
+                            onOpenPassage(parsed.book, parsed.chapter)
+                          } else {
+                            onOpenPassage(1, 10)
+                          }
+                          onClose()
+                        }}
+                      >
+                        📖 {activeNoah.keyVerses[0]}
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Prev / Next son buttons to click one after another */}
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    {prevNoah && (
+                      <button
+                        type="button"
+                        className="tribeJumpBtn"
+                        onClick={() => setSelectedNoahId(prevNoah.id)}
+                        title={isEn ? `Previous: ${prevNoah.nameEn}` : `ቀዳሚ፦ ${prevNoah.nameAm}`}
+                      >
+                        ‹ {currentNoahIndex}. {isEn ? prevNoah.nameEn : prevNoah.nameAm}
+                      </button>
+                    )}
+                    {nextNoah && (
+                      <button
+                        type="button"
+                        className="tribeJumpBtn"
+                        onClick={() => setSelectedNoahId(nextNoah.id)}
+                        title={isEn ? `Next: ${nextNoah.nameEn}` : `ቀጣይ፦ ${nextNoah.nameAm}`}
+                      >
+                        {currentNoahIndex + 2}. {isEn ? nextNoah.nameEn : nextNoah.nameAm} ›
+                      </button>
+                    )}
                   </div>
                 </div>
-
-                {/* Noah Branches */}
-                <div className="tribeCardsGrid">
-                  {NOAH_SONS_DATA.map((s) => (
-                    <article key={s.id} className="noahBranchCard">
-                      <div className="noahBranchHeader">
-                        <div>
-                          <h3 className="noahBranchTitle">
-                            {s.id === 'shem' ? '🕊️ ' : s.id === 'ham' ? '☀️ ' : '🌊 '}
-                            {isEn ? s.nameEn : s.nameAm}
-                          </h3>
-                          <span className="tribeMeaning">{isEn ? s.meaningEn : s.meaningAm} — {isEn ? s.progenitorTitleEn : s.progenitorTitleAm}</span>
-                        </div>
-                        {LINEAGE_PEOPLE[s.id] && (
-                          <button
-                            type="button"
-                            className="tribeJumpBtn"
-                            onClick={() => {
-                              setActiveTab('tree')
-                              selectPerson(s.id)
-                            }}
-                          >
-                            🌳 {isEn ? 'View in Tree' : 'በዛፉ ላይ እይ'}
-                          </button>
-                        )}
-                      </div>
-
-                      {/* Direct Sons */}
-                      <div style={{ marginTop: 2 }}>
-                        <span className="tribeDetailLabel">
-                          👥 {isEn ? 'Direct Sons & Nations (Gen 10):' : 'ቀጥተኛ ልጆችና ሕዝቦች (ዘፍጥረት 10):'}
-                        </span>
-                        <div className="noahSonsChips">
-                          {s.primarySons.map((sn) => (
-                            <span key={sn.nameAm} className="noahSonChip">
-                              <strong>{isEn ? sn.nameEn : sn.nameAm}</strong> ({isEn ? sn.nationsEn : sn.nationsAm})
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Noah's Blessing */}
-                      <div className="tribeProphecyBox" style={{ marginTop: 8 }}>
-                        <span className="tribeProphecyTitle">
-                          📜 {isEn ? 'Noah’s Blessing (Gen 9:26-27)' : 'የኖኅ ምርቃት (ዘፍጥረት 9:26-27)'}
-                        </span>
-                        <p className="tribeProphecyText">
-                          {isEn ? s.blessingEn : s.blessingAm}
-                        </p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </>
+              </article>
             )}
 
             {/* SUB-VIEW 3: DIASPORA & WHERE ARE THEY NOW? */}
