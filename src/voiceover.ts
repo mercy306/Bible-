@@ -247,20 +247,39 @@ export function getAvailableVoices(): Promise<SpeechSynthesisVoice[]> {
 }
 
 /**
- * Find the best native voice for the given language.
+ * Find the best native male voice for the given language.
  */
 export async function findBestVoice(lang: 'am' | 'en'): Promise<SpeechSynthesisVoice | null> {
   const voices = await getAvailableVoices()
   if (lang === 'am') {
+    // Look for male Amharic voices (e.g. Asrat, Girma, Male) or any Amharic voice
     return (
+      voices.find(
+        (v) =>
+          v.lang.toLowerCase().startsWith('am') &&
+          /asrat|girma|male|guy|man|boy/i.test(v.name),
+      ) ??
       voices.find((v) => v.lang.toLowerCase().startsWith('am') || /amharic/i.test(v.name)) ??
       null
     )
   }
-  // English: prefer natural/local default voices
+
+  // English: specifically prefer male voices (David, Mark, Alex, Daniel, Guy, etc.)
+  const maleKeywords = /david|mark|alex|daniel|guy|male|fred|george|oliver|tom|james|richard|brian|aaron/i
+  const femaleKeywords = /zira|female|woman|samantha|victoria|karen|susan|hazel|catherine|linda/i
+
   return (
-    voices.find((v) => v.lang.toLowerCase().startsWith('en') && (v.name.includes('Natural') || v.default)) ??
-    voices.find((v) => v.lang.toLowerCase().startsWith('en-us')) ??
+    voices.find(
+      (v) =>
+        v.lang.toLowerCase().startsWith('en') &&
+        maleKeywords.test(v.name) &&
+        !femaleKeywords.test(v.name),
+    ) ??
+    voices.find(
+      (v) =>
+        v.lang.toLowerCase().startsWith('en') &&
+        !femaleKeywords.test(v.name),
+    ) ??
     voices.find((v) => v.lang.toLowerCase().startsWith('en')) ??
     null
   )
@@ -324,7 +343,9 @@ export function speakText(text: string, options: SpeakOptions = {}): () => void 
       const utt = new SpeechSynthesisUtterance(textToSpeak)
       if (speechVoice) utt.voice = speechVoice
       utt.lang = speechLang
-      utt.rate = options.rate ?? (targetLang === 'am' && !voice ? 0.88 : 0.94)
+      utt.rate = options.rate ?? (targetLang === 'am' && !voice ? 0.88 : 0.92)
+      // Deeper masculine pitch resonance (range 0 to 2, 1 is default)
+      utt.pitch = 0.84
 
       utt.onstart = () => {
         if (!cancelled) options.onStart?.()
@@ -358,6 +379,11 @@ export function speakText(text: string, options: SpeakOptions = {}): () => void 
     const audio = new Audio()
     try {
       (audio as any).referrerPolicy = 'no-referrer'
+      // Deeper masculine formant pitch shift for stream audio
+      audio.preservesPitch = false
+      ;(audio as any).mozPreservesPitch = false
+      ;(audio as any).webkitPreservesPitch = false
+      audio.playbackRate = 0.90
     } catch {
       // ignore
     }
@@ -379,6 +405,14 @@ export function speakText(text: string, options: SpeakOptions = {}): () => void 
       )}`
 
       audio.src = url
+      try {
+        audio.preservesPitch = false
+        ;(audio as any).mozPreservesPitch = false
+        ;(audio as any).webkitPreservesPitch = false
+        audio.playbackRate = 0.90
+      } catch {
+        // ignore
+      }
       audio.onended = () => {
         chunkIndex++
         playNextChunk()
