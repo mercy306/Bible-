@@ -26,7 +26,6 @@ import SagaView from './components/SagaView'
 import LineageWebSheet from './components/LineageWebSheet'
 import ChronoAtlasSheet from './components/ChronoAtlasSheet'
 import TimeCapsuleSheet from './components/TimeCapsuleSheet'
-import BibleAssistantSheet from './components/BibleAssistantSheet'
 import Sheet from './components/Sheet'
 import TopBar from './components/TopBar'
 import LoadingView from './components/LoadingView'
@@ -85,7 +84,7 @@ export default function App() {
   const [englishBooks, setEnglishBooks] = useState<BooksResponse['books']>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(() => initialData === null && route.view === 'read')
-  const [sheet, setSheet] = useState<'none' | 'books' | 'more' | 'lineage' | 'atlas' | 'capsule' | 'assistant'>('none')
+  const [sheet, setSheet] = useState<'none' | 'books' | 'more' | 'lineage' | 'atlas' | 'capsule'>('none')
   const [compare, setCompare] = useState<'off' | 'am54'>('off')
   const [memorize, setMemorize] = useState(false)
   const [wordLookup, setWordLookup] = useState(() => { try { return localStorage.getItem('wordLookup') === 'true' } catch { return false } })
@@ -361,7 +360,6 @@ export default function App() {
           onDaily={() => openSection('daily')}
           onSaga={() => openSection('saga')}
           onLineage={() => setSheet('lineage')}
-          onAssistant={() => setSheet('assistant')}
           translation={route.translation}
           translations={translations}
           onTranslation={(id) => go({ ...route, translation: id })}
@@ -493,7 +491,6 @@ export default function App() {
           onLineage={() => setSheet('lineage')}
           onAtlas={() => setSheet('atlas')}
           onTimeCapsule={() => setSheet('capsule')}
-          onAssistant={() => setSheet('assistant')}
           prayerCount={readPrayers().length}
           savedCount={bookmarks.length + highlights.length}
           onGoTo={(text) => {
@@ -532,17 +529,6 @@ export default function App() {
         onOpenPassage={(b, c) => {
           setSheet('none')
           goTo(b, c)
-        }}
-      />
-
-      <BibleAssistantSheet
-        open={sheet === 'assistant'}
-        language={prefs.language}
-        translation={route.translation}
-        onClose={() => setSheet('none')}
-        onOpenPassage={(b, c, v) => {
-          setSheet('none')
-          goTo(b, c, v)
         }}
       />
     </div>

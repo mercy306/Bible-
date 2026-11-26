@@ -26,7 +26,6 @@ interface Props {
   onLineage?: () => void
   onAtlas?: () => void
   onTimeCapsule?: () => void
-  onAssistant?: () => void
   savedCount: number
   prayerCount: number
   onGoTo: (reference: string) => void
@@ -264,7 +263,6 @@ export default function MoreSheetBody({
   onLineage,
   onAtlas,
   onTimeCapsule,
-  onAssistant,
   savedCount: _savedCount,
   prayerCount: _prayerCount,
   onGoTo,
@@ -412,21 +410,6 @@ export default function MoreSheetBody({
           ===================================================================== */}
       {tab === 'tools' && (
         <div className="mlist">
-          {/* Bible Study Assistant */}
-          {onAssistant && (
-            <button type="button" className="mwide mwide--rich" onClick={() => onAssistant()}>
-              <div className="mwide__body">
-                <span className="mwide__title">✨ {isEn ? 'Bible Study Assistant' : 'የመጽሐፍ ቅዱስ ጥናት ረዳት'}</span>
-                <span className="mwide__subtitle">
-                  {isEn
-                    ? '100% offline Scripture-grounded assistant — explore passages, people, and deep biblical connections'
-                    : 'ሙሉ በሙሉ ከመስመር ውጭ የሚሠራ — ክፍሎችን፣ ታሪኮችን እና የብሉይና ሐዲስ ኪዳን ትሥሥርን አጥኑ'}
-                </span>
-              </div>
-              <span className="mwide__count">{isEn ? 'Offline' : 'ከመስመር ውጭ'}</span>
-            </button>
-          )}
-
           {/* Annual Reading Plan */}
           {onPlan && (
             <button type="button" className="mwide mwide--rich" onClick={() => onPlan()}>
