@@ -407,16 +407,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'Sold into slavery by envious brothers, framed, and imprisoned, Joseph rises to rule Egypt. God turns intended evil into salvation for nations.',
         narrativeFlowAm: 'ባለ ብዙ ቀለም ቀሚስ፣ በግብፅ መሸጥ፣ የፈርዖን ህልም እና የቤተሰብ እርቅ።',
         narrativeFlowEn: 'Torn tunic, Potiphar’s house, dungeon dreams, and Goshen sanctuary.',
-        geopolitical: {
-          titleAm: 'የጥንቷ ግብፅ እና የፈርዖን መንግሥት',
-          titleEn: 'Middle Kingdom Egypt & The Nile Delta',
-          empire: 'egypt',
-          empireNameAm: 'የፈርዖን ግብፅ ሥልጣኔ',
-          empireNameEn: 'Pharaonic Egypt (Middle / Hyksos Era)',
-          bodyAm: 'ግብፅ በናይል ወንዝ ፍሬያማነት የበለጸገች፣ ግዙፍ ፒራሚዶችንና እህል ማከማቻዎችን የገነባች የዓለም ኃያል መንግሥት ነበረች። እግዚአብሔር እስራኤልን በጎሼን ምድር እንደ ታላቅ ሕዝብ አበዛቸው።',
-          bodyEn: 'Fueled by the annual inundation of the Nile, Egypt was the breadbasket of the ancient Near East. The fertile Goshen pastures allowed Israel to multiply from 70 souls into millions.',
-          historicalDate: '~1870 BC',
-        },
         passages: [
           {
             bookNr: 1,
@@ -626,16 +616,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'Joshua leads Israel through the parted Jordan River. The Commander of Yahweh’s army appears. Jericho’s fortress walls crumble under trumpet blasts.',
         narrativeFlowAm: 'የዮርዳኖስ ድንጋዮች፣ የኢያሪኮ ሰልፍ፣ እምነት እና የከነዓን ድል አድራጊነት።',
         narrativeFlowEn: 'Ark of the Covenant at Jordan, Rahab’s scarlet cord, seven circuits, and walls collapsing flat.',
-        geopolitical: {
-          titleAm: 'የከነዓን ከተሞችና የጣዖት አምልኮ',
-          titleEn: 'Canaanite City-States & The Levant',
-          empire: 'canaan',
-          empireNameAm: 'የከነዓን የተመሸጉ ከተሞች',
-          empireNameEn: 'Bronze Age Canaanite City-States',
-          bodyAm: 'ከነዓን በበርካታ ራሳቸውን በሚያስተዳድሩ ኃያላን ከተሞች (ኢያሪኮ፣ ጋይ፣ ኢየሩሳሌም) የተከፋፈለችና በሞሎክና በበዓል ርኩስ አምልኮ የተሞላች ነበረች። የእስራኤል ወረራ የእግዚአብሔር ቅዱስ ፍርድ ነበር።',
-          bodyEn: 'Canaan was a mosaic of fortified, independent city-states dominated by brutal cults (Baal, Asherah, child sacrifice to Molech). Israel entered as an instrument of divine judgment and covenant fulfillment.',
-          historicalDate: '~1406 BC',
-        },
         passages: [
           {
             bookNr: 6,
@@ -995,16 +975,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'Amos roars for justice for the oppressed; Hosea embodies God’s relentless heartbreak through his marriage to unfaithful Gomer. The Northern Kingdom refuses to repent, falling to the Assyrian war machine in 722 BC.',
         narrativeFlowAm: 'የአሞጽ የጽድቅ ወንዝ፣ የሆሴዕ የፍቅር መከራ፣ የአሦር ከበባ እና የሰማርያ መማረክ።',
         narrativeFlowEn: 'Plumb line of justice, Hosea redeeming his wife, Shalmaneser besieging Samaria, ten tribes scattered.',
-        geopolitical: {
-          titleAm: 'የጨካኟ አሦር ግዛት እና የሰማርያ ጥፋት',
-          titleEn: 'The Neo-Assyrian War Machine',
-          empire: 'assyria',
-          empireNameAm: 'የአሦር ንጉሠ ነገሥት (ነነዌ)',
-          empireNameEn: 'Neo-Assyrian Empire (Nineveh)',
-          bodyAm: 'አሦር በዓለም ታሪክ ታይቶ በማይታወቅ የጦር ጭካኔ፣ በብረት ሠረገላና ሕዝቦችን በማፈናቀል የምዕራብ እስያ ኃያል መንግሥት ሆነች። በ722 ዓ.ዓ ሰማርያን አጠፋች፤ ሕዝቡንም ወደ ባዕድ አገር አጋዘች።',
-          bodyEn: 'Known for brutal siege warfare and psychological terror, the Assyrian Empire swept through the Levant. In 722 BC, Sargon II conquered Samaria, deporting the northern tribes.',
-          historicalDate: '~722 BC',
-        },
         passages: [
           {
             bookNr: 30,
@@ -1087,16 +1057,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'Jeremiah warns Judah of imminent judgment, enduring dungeon chains and mockery. In 586 BC Nebuchadnezzar razes Jerusalem, sets the Temple ablaze, and marches survivors in chains. Jeremiah pens Lamentations upon the ashes.',
         narrativeFlowAm: 'የሸክላ ሠሪው ቤት፣ የጉድጓድ እስር ቤት፣ የባቢሎን ሠራዊት፣ የእሳት ነበልባልና የሰቆቃው ዕንባ።',
         narrativeFlowEn: 'Potter’s clay, cistern mud, battering rams breaching walls, Solomon’s temple incinerated, and tears over desolate Zion.',
-        geopolitical: {
-          titleAm: 'የባቢሎን ኃያል መንግሥት እና የኢየሩሳሌም ጥፋት',
-          titleEn: 'The Neo-Babylonian Empire',
-          empire: 'babylon',
-          empireNameAm: 'የባቢሎን ንጉሠ ነገሥት (ናቡከደነፆር)',
-          empireNameEn: 'Neo-Babylonian Empire (Nebuchadnezzar II)',
-          bodyAm: 'ባቢሎን አሦርን ድል አድርጋ የዓለምን ዙፋን ያዘች። ናቡከደነፆር ታላቋን ከተማ በወርቅና በተንጠለጠሉ አትክልቶች አጌጠ። ሦስት ጊዜ ኢየሩሳሌምን ወረረ፤ በመጨረሻም በ586 ዓ.ዓ መቅደሱን አቃጠለ።',
-          bodyEn: 'Ascending over the ruins of Nineveh, Babylon under Nebuchadnezzar conquered the Near East. The Ishtar Gate and Hanging Gardens were built, and in 586 BC Jerusalem and its Solomon Temple were destroyed.',
-          historicalDate: '~586 BC',
-        },
         passages: [
           {
             bookNr: 24,
@@ -1147,16 +1107,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'Exiled by the rivers of Babylon, Ezekiel sees the celestial chariot and dry bones coming to life. Daniel interprets imperial dreams and survives the lions’ den. In Persian Susa, Queen Esther risks her life to save her nation.',
         narrativeFlowAm: 'የደረቁ አጥንቶች፣ የአንበሶች ጉድጓድ፣ የፋርስ ቤተ መንግሥት እና የአስቴር ድፍረት።',
         narrativeFlowEn: 'Ezekiel by Chebar canal, fiery furnace, handwriting on the wall, and Esther: “If I perish, I perish.”',
-        geopolitical: {
-          titleAm: 'የፋርስና የሜዶን ግዛት - የቂሮስ አዋጅ',
-          titleEn: 'The Achaemenid Persian Empire',
-          empire: 'persia',
-          empireNameAm: 'የፋርስ ንጉሠ ነገሥት (ቂሮስ እና ዳርዮስ)',
-          empireNameEn: 'Persian Empire (Cyrus the Great & Darius)',
-          bodyAm: 'ታላቁ ቂሮስ በ539 ዓ.ዓ ባቢሎንን በአንድ ሌሊት ያዘ። በታሪክ ለመጀመሪያ ጊዜ የታወጀው የሰብዓዊ ነፃነት አዋጅ (የቂሮስ ሲሊንደር) የተማረኩ ሕዝቦች ወደ አገራቸው ተመልሰው አምላካቸውን እንዲያመልኩ ፈቀደ።',
-          bodyEn: 'In 539 BC Cyrus captured Babylon without a siege. Known for cultural tolerance, Cyrus issued his famous decree permitting conquered peoples, including the Jews, to return and rebuild their sanctuaries.',
-          historicalDate: '~539 BC',
-        },
         passages: [
           {
             bookNr: 26,
@@ -1266,16 +1216,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'John’s theological prologue unveils the eternal Word. Gabriel visits Mary in Nazareth. Caesar Augustus decrees a census, bringing the holy family to Bethlehem where Christ is born in a manger.',
         narrativeFlowAm: 'የዘላለም ቃል፣ የገብርኤል ብሥራት፣ የቤተልሔም ግርግም፣ የመላእክት ዝማሬና የሰብአ ሰገል ስጦታ።',
         narrativeFlowEn: 'Light shining in darkness, Magnificat, angelic choir over shepherd fields, and magi bearing gold, frankincense, and myrrh.',
-        geopolitical: {
-          titleAm: 'የሮማ ግዛት እና የቄሣር አውግስጦስ አዋጅ',
-          titleEn: 'Pax Romana & The Roman Province of Judea',
-          empire: 'rome',
-          empireNameAm: 'የሮማ ንጉሠ ነገሥት (ቄሣር አውግስጦስ)',
-          empireNameEn: 'Imperial Rome (Caesar Augustus)',
-          bodyAm: 'ሮም መላውን የሜዲትራንያን ዓለም በብረት እጇ ገዛች። ሰላመ-ሮማ (Pax Romana) በዘረጋው ሰፊ የመንገድ መረብና በሕዝብ ቆጠራ አዋጅ አማካኝነት ክርስቶስ በቤተልሔም እንዲወለድ ታሪካዊው መድረክ ተዘጋጀ።',
-          bodyEn: 'Under Caesar Augustus, Rome ruled the Mediterranean. Standardized coinage, paved imperial roads, and universal administrative censuses providentially set the stage for the Messiah’s birth in Bethlehem.',
-          historicalDate: '~4 BC',
-        },
         passages: [
           {
             bookNr: 43,
@@ -1831,16 +1771,6 @@ export const SAGA_ACTS: SagaAct[] = [
         summaryEn: 'Arrested in Jerusalem and appealing to Caesar, Paul endures a catastrophic shipwreck off Malta. Under house arrest chained to Roman guards, he pens Ephesians, Philippians (“Rejoice always”), Colossians, and Philemon.',
         narrativeFlowAm: 'የኢየሩሳሌም እስራት፣ የማልታ ማዕበል፣ የሮማ ሰንሰለት፣ የፊልጵስዩስ የደስታ መልእክትና የመንፈሳዊ ዕቃ ጦር።',
         narrativeFlowEn: 'Mob at Antonia Fortress, Euroclydon storm, viper shaken into fire, and letters composed while bound: Ephesians whole armor of God, Phil 4 joy.',
-        geopolitical: {
-          titleAm: 'የቄሣር ኔሮ ዘመን እና የሮም ግዛት ማዕከል',
-          titleEn: 'The Court of Nero & Imperial Rome',
-          empire: 'rome',
-          empireNameAm: 'የሮማ ንጉሠ ነገሥት (ኔሮ)',
-          empireNameEn: 'Imperial Rome (Emperor Nero)',
-          bodyAm: 'ጳውሎስ ይግባኝ ያለው ወደ ጨካኙ የሮማ ንጉሥ ኔሮ ነበር። በሮም እምብርት ውስጥ ወንጌል በቄሣር ቤተ መንግሥትና በቤተ ጠባቂዎች መካከል ሰረፀ፤ ወንጌል በሰንሰለት አልታሰረም።',
-          bodyEn: 'Paul appealed to Emperor Nero. Even under house arrest in the imperial capital, the Gospel penetrated the Praetorian guard and Caesar’s household: “God’s word is not chained.”',
-          historicalDate: '~60–62 AD',
-        },
         passages: [
           {
             bookNr: 44,

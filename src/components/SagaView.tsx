@@ -25,7 +25,6 @@ export default function SagaView({
   const [selectedActId, setSelectedActId] = useState<number>(1)
   const [progressState, setProgressState] = useState(() => getSagaProgress())
   const [expandedScenes, setExpandedScenes] = useState<Record<string, boolean>>({})
-  const [expandedInterludes, setExpandedInterludes] = useState<Record<string, boolean>>({})
 
   const totalProgress = useMemo(() => getTotalSagaProgress(), [progressState])
 
@@ -45,14 +44,6 @@ export default function SagaView({
 
   function toggleSceneExpanded(sceneId: string) {
     setExpandedScenes((prev) => ({
-      ...prev,
-      [sceneId]: !prev[sceneId],
-    }))
-  }
-
-  function toggleInterlude(sceneId: string, e: React.MouseEvent) {
-    e.stopPropagation()
-    setExpandedInterludes((prev) => ({
       ...prev,
       [sceneId]: !prev[sceneId],
     }))
@@ -145,7 +136,6 @@ export default function SagaView({
           {selectedAct.scenes.map((scene) => {
             const isDone = progressState.completedScenes.includes(scene.id)
             const isExpanded = !!expandedScenes[scene.id]
-            const isInterludeOpen = !!expandedInterludes[scene.id]
 
             return (
               <article
@@ -180,11 +170,6 @@ export default function SagaView({
                   <div className="sagaMobileCard__info">
                     <div className="sagaMobileCard__tags">
                       <span className="sagaMobileCard__eraTag">{cleanEra(scene.eraEstimate, isEn)}</span>
-                      {scene.geopolitical && (
-                        <span className="sagaMobileCard__geoTag">
-                          {isEn ? scene.geopolitical.empireNameEn.split('(')[0].trim() : scene.geopolitical.empireNameAm.split('(')[0].trim()}
-                        </span>
-                      )}
                     </div>
 
                     <h3 className="sagaMobileCard__title">
@@ -243,35 +228,6 @@ export default function SagaView({
                         })}
                       </div>
                     </div>
-
-                    {/* Collapsible Geopolitical Box */}
-                    {scene.geopolitical && (
-                      <div className="sagaMobileGeoBox">
-                        <button
-                          type="button"
-                          className="sagaMobileGeoBox__header"
-                          onClick={(e) => toggleInterlude(scene.id, e)}
-                        >
-                          <div className="sagaMobileGeoBox__title">
-                            {isEn ? scene.geopolitical.titleEn : scene.geopolitical.titleAm}
-                          </div>
-                          <span className="sagaMobileGeoBox__icon">
-                            {isInterludeOpen ? '▲' : '▼'}
-                          </span>
-                        </button>
-
-                        {isInterludeOpen && (
-                          <div className="sagaMobileGeoBox__body">
-                            <div className="sagaMobileGeoBox__date">
-                              {isEn ? 'Period' : 'ዘመን'}: <strong>{scene.geopolitical.historicalDate}</strong>
-                            </div>
-                            <p className="sagaMobileGeoBox__text">
-                              {isEn ? scene.geopolitical.bodyEn : scene.geopolitical.bodyAm}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    )}
                   </div>
                 )}
               </article>
