@@ -52,3 +52,19 @@ export interface ExegesisResponse {
   isSilentOrUncertain?: boolean
   language: LanguageMode
 }
+
+export interface ConversationTurn {
+  role: 'user' | 'assistant'
+  text: string
+  referencedPassages?: BibleReference[]
+  primaryVerses?: BibleVerse[]
+  topic?: string
+}
+
+export interface AssistantQueryContext {
+  history?: ConversationTurn[]
+  lastTopic?: string
+  lastReferences?: BibleReference[]
+  lastBookNr?: number
+  lastChapter?: number
+}

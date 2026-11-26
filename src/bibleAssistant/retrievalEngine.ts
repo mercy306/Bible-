@@ -421,14 +421,30 @@ export async function getCrossReferencesForVerse(
   return links
 }
 
+const BIBLE_STOP_WORDS = new Set([
+  'ማን', 'ነበር', 'ነበረች', 'ነበሩ', 'ምን', 'የት', 'እንዴት', 'ነው', 'ናት', 'ናቸው', 'ጋር', 'ውስጥ', 'ላይ', 'ስለ', 'ይህ', 'ያ', 'እርሱ', 'እርሷ', 'እነርሱ', 'ከእርሷስ', 'ከእርሱ', 'እስቲ', 'አብራራልኝ', 'ንገረኝ', 'አሳየኝ', 'ጥቅስ', 'መጽሐፍ', 'ቅዱስ',
+  'who', 'what', 'where', 'when', 'why', 'how', 'was', 'were', 'is', 'are', 'the', 'a', 'an', 'in', 'on', 'at', 'to', 'from', 'her', 'him', 'his', 'their', 'she', 'he', 'they', 'tell', 'me', 'about', 'explain', 'bible', 'scripture',
+])
+
+function cleanTokenVariants(token: string): string[] {
+  const res = [token]
+  const strippedPref = token.replace(/^(?:የ|በ|ለ|ከ|እንደ|ስለ)/, '')
+  if (strippedPref && strippedPref.length >= 2) res.push(strippedPref)
+  const strippedSuff = strippedPref.replace(/(?:ው|ውን|ች|ችን|ላት|ለት|ም|ና|ስ|ዬ)$/, '')
+  if (strippedSuff && strippedSuff.length >= 2) res.push(strippedSuff)
+  return res
+}
+
 /**
  * Performs full-text search across all 31,102 verses in the entire 66 books of the Bible.
+ * Optionally filters to specific target books or testaments.
  */
 export async function searchBibleConcordance(
   query: string,
   translation: string = 'am',
   limit: number = 10,
   filterTestament?: 'OT' | 'NT',
+  filterBookNrs?: number[],
 ): Promise<BibleVerse[]> {
   const needle = query.trim().toLowerCase()
   if (needle.length < 2) return []
@@ -444,40 +460,55 @@ export async function searchBibleConcordance(
   }
 
   const rows = searchRowsCache[transKey]
-  const matches: BibleVerse[] = []
+  const rawWords = needle.split(/[\s,.;:!?።፤፣፦?]+/).filter((w) => w.length > 1)
+  const contentWords = rawWords.filter((w) => !BIBLE_STOP_WORDS.has(w))
+  const searchTokens = contentWords.length > 0 ? contentWords : rawWords
 
-  // Words for multi-term matching
-  const words = needle.split(/\s+/).filter((w) => w.length > 1)
+  const scoredMatches: { verse: BibleVerse; score: number }[] = []
 
   for (const row of rows) {
     const [bookNr, , testament, chapterNr, verseNr, text] = row
     if (filterTestament && testament !== filterTestament) continue
+    if (filterBookNrs && filterBookNrs.length > 0 && !filterBookNrs.includes(bookNr)) continue
 
     const lowerText = text.toLowerCase()
+    let score = 0
 
-    // Match all keywords or direct phrase
-    let isMatch = false
     if (lowerText.includes(needle)) {
-      isMatch = true
-    } else if (words.length > 1 && words.every((w) => lowerText.includes(w))) {
-      isMatch = true
+      score += 100
     }
 
-    if (isMatch) {
-      const book = CANONICAL_BOOKS[bookNr - 1]
-      matches.push({
-        bookNr,
-        bookName: translation.startsWith('am') ? (book ? book.nameAm : row[1]) : (book ? book.nameEn : row[1]),
-        testament: testament as 'OT' | 'NT',
-        chapter: chapterNr,
-        verse: verseNr,
-        text,
-        translation,
-      })
+    let matchedTokensCount = 0
+    for (const token of searchTokens) {
+      const variants = cleanTokenVariants(token)
+      if (variants.some((v) => lowerText.includes(v))) {
+        matchedTokensCount++
+      }
+    }
 
-      if (matches.length >= limit) break
+    if (matchedTokensCount === searchTokens.length && searchTokens.length > 0) {
+      score += 50
+    } else if (matchedTokensCount > 0) {
+      score += matchedTokensCount * 10
+    }
+
+    if (score > 0) {
+      const book = CANONICAL_BOOKS[bookNr - 1]
+      scoredMatches.push({
+        score,
+        verse: {
+          bookNr,
+          bookName: translation.startsWith('am') ? (book ? book.nameAm : row[1]) : (book ? book.nameEn : row[1]),
+          testament: testament as 'OT' | 'NT',
+          chapter: chapterNr,
+          verse: verseNr,
+          text,
+          translation,
+        },
+      })
     }
   }
 
-  return matches
+  scoredMatches.sort((a, b) => b.score - a.score)
+  return scoredMatches.slice(0, limit).map((m) => m.verse)
 }

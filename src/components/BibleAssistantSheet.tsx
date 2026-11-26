@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import Sheet from './Sheet'
 import AmharicKeyboard from './AmharicKeyboard'
 import type { LanguageMode } from '../prefs'
-import { answerBibleQuestion, type AssistantQueryContext } from '../bibleAssistant/synthesisEngine'
-import type { ExegesisResponse } from '../bibleAssistant/types'
+import { answerBibleQuestion } from '../bibleAssistant/synthesisEngine'
+import type { ExegesisResponse, AssistantQueryContext, ConversationTurn } from '../bibleAssistant/types'
 
 interface Props {
   open: boolean
@@ -24,21 +24,21 @@ interface ChatItem {
 const STORAGE_KEY = 'bible:assistant-chat-history'
 
 const SUGGESTIONS_AM = [
+  'ስለ ሩትና ቦዔዝ የመጽሐፍ ቅዱስ ታሪክ ንገረኝ',
+  'ኢዮስያስ የሕጉን መጽሐፍ ሲያገኝ ምን አደረገ?',
+  'የሮሜ መልእክት ምዕራፍ 8 ዋና መልእክት ምንድን ነው?',
   'ስለ ይቅርታ መጽሐፍ ቅዱስ ምን ያስተምራል?',
-  'ሙሴ ማን ነበር? ምንስ ሠራ?',
-  'ዮሐንስ 3:16ን አብራራልኝ',
-  'በአዳምና በክርስቶስ መካከል ያለው ትሥሥር ምንድን ነው?',
-  'እምነት በመጽሐፍ ቅዱስ መሠረት ምንድን ነው?',
-  'መዝሙር 23 ምን ያስተምራል?',
+  'ዮሐንስ 3:16ን በአውዱ አብራራልኝ',
+  'በዕብራውያን 11 መሠረት እምነት ምንድን ነው?',
 ]
 
 const SUGGESTIONS_EN = [
+  'Tell me the story of Ruth and Boaz',
+  'What did King Josiah do when the Book of the Law was found?',
+  'What is the main message of Romans 8?',
   'What does the Bible teach about forgiveness?',
-  'Who was Moses and what was his calling?',
   'Explain John 3:16 in its biblical context',
-  'What is the connection between Adam and Christ?',
   'What is faith according to Hebrews 11?',
-  'Explain Psalm 23',
 ]
 
 export default function BibleAssistantSheet({
@@ -103,13 +103,23 @@ export default function BibleAssistantSheet({
       }
       setMessages((prev) => [...prev, assistantMsg])
 
-      // Update contextual memory
-      if (resp.primaryPassages.length > 0) {
-        const first = resp.primaryPassages[0]
-        setContext({
-          lastReference: `${first.bookName} ${first.chapter}`,
-        })
-      }
+      // Update contextual memory with full multi-turn conversation thread
+      const updatedHistory: ConversationTurn[] = [
+        ...(context.history || []),
+        { role: 'user', text: q },
+        {
+          role: 'assistant',
+          text: resp.directAnswer,
+          primaryVerses: resp.primaryPassages,
+        },
+      ]
+
+      setContext({
+        history: updatedHistory.slice(-10),
+        lastTopic: resp.primaryPassages[0]?.bookName,
+        lastBookNr: resp.primaryPassages[0]?.bookNr,
+        lastChapter: resp.primaryPassages[0]?.chapter,
+      })
     } catch (err) {
       console.error('Failed to answer bible question:', err)
       const errorMsg: ChatItem = {
@@ -191,7 +201,7 @@ export default function BibleAssistantSheet({
 
               <div style={{ textAlign: 'left', maxWidth: '440px', margin: '0 auto' }}>
                 <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-muted)', display: 'block', marginBottom: '8px' }}>
-                  💡 {isEn ? 'Suggested Questions:' : 'የተጠቆሙ ጥያቄዎች፦'}
+                  💡 {isEn ? 'Optional example questions (you can type any question below):' : 'አማራጭ ምሳሌ ጥያቄዎች (ከታች ማንኛውንም የመጽሐፍ ቅዱስ ጥያቄ መተየብ ይችላሉ)፦'}
                 </span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   {suggestions.map((s) => (
@@ -426,7 +436,7 @@ export default function BibleAssistantSheet({
                 cursor: input.trim() && !loading ? 'pointer' : 'default',
               }}
             >
-              {isEn ? 'Ask' : 'ጠይቅ'}
+              {isEn ? 'Send' : 'ላክ'}
             </button>
           </form>
 

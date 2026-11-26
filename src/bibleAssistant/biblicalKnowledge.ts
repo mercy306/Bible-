@@ -1,271 +1,544 @@
-// Canonical Scripture-Grounded Bible Knowledge Base
-// Every record is directly tethered to the 66 canonical books with verified citations.
+/**
+ * Canonical Biblical Index & Scripture Coordinate Catalog
+ * Maps natural language queries (Amharic & English) to exact canonical Scripture locations
+ * across ALL 66 books of the Bible.
+ *
+ * ZERO hardcoded answers: Only canonical book/chapter/verse coordinates.
+ * All answers are synthesized dynamically from actual retrieved Scripture text!
+ */
 
-export interface BiblicalEntity {
+export interface CanonicalBiblicalTopic {
   id: string
-  aliasesEn: string[]
-  aliasesAm: string[]
-  titleEn: string
-  titleAm: string
+  nameEn: string
+  nameAm: string
   testament: 'OT' | 'NT' | 'Both'
-  summaryEn: string
-  summaryAm: string
-  keyChapters: { book: number; chapter: number; labelEn: string; labelAm: string }[]
-  keyVerses: string[]
-  otNtConnectionsEn?: string
-  otNtConnectionsAm?: string
-  reflectionQuestionsEn: string[]
-  reflectionQuestionsAm: string[]
+  keywordsEn: string[]
+  keywordsAm: string[]
+  primaryPassages: {
+    book: number
+    chapter: number
+    verseStart?: number
+    verseEnd?: number
+    descriptionEn?: string
+    descriptionAm?: string
+  }[]
+  searchTerms: string[]
 }
 
-export const BIBLICAL_ENTITIES: BiblicalEntity[] = [
-  // --- PEOPLE ---
+export const CANONICAL_TOPICS: CanonicalBiblicalTopic[] = [
+  // ==========================================
+  // OLD TESTAMENT FIGURES
+  // ==========================================
   {
-    id: 'moses',
-    aliasesEn: ['moses'],
-    aliasesAm: ['ሙሴ'],
-    titleEn: 'Moses — Prophet, Lawgiver, and Deliverer',
-    titleAm: 'ሙሴ — ነቢይ፣ ሕግ ሰጪና ነፃ አውጪ',
+    id: 'adam_eve',
+    nameEn: 'Adam and Eve',
+    nameAm: 'አዳምና ሔዋን',
     testament: 'Both',
-    summaryEn: 'Called by God at the burning bush (Exodus 3), Moses led the children of Israel out of Egyptian bondage, mediated the Law at Mount Sinai (Exodus 19-20), and led them 40 years through the wilderness. Deuteronomy 34:10 notes that no prophet arose in Israel like Moses, whom the Lord knew face to face.',
-    summaryAm: 'በሚነደው ቍጥቋጦ ውስጥ እግዚአብሔር የጠራው (ዘጸ 3)፤ የእስራኤልን ልጆች ከግብፅ ባርነት አውጥቶ በሲና ተራራ የሕጉ መካከለኛ ሆኖ ያገለገለና ለ40 ዓመታት በምድረ በዳ የመራ ታላቅ ነቢይ ነው። ዘዳግም 34፥10 "እግዚአብሔር ፊት ለፊት እንዳወቀው እንደ ሙሴ ያለ ነቢይ ከዚያ ወዲህ በእስራኤል አልተነሣም" በማለት ይመሰክርለታል።',
-    keyChapters: [
-      { book: 2, chapter: 3, labelEn: 'Exodus 3 (The Burning Bush & Call)', labelAm: 'ዘጸአት 3 (የሚነደው ቍጥቋጦና ጥሪ)' },
-      { book: 2, chapter: 14, labelEn: 'Exodus 14 (Crossing the Red Sea)', labelAm: 'ዘጸአት 14 (የቀይ ባሕር መከፈል)' },
-      { book: 2, chapter: 20, labelEn: 'Exodus 20 (The Ten Commandments)', labelAm: 'ዘጸአት 20 (ዐሥርቱ ቃላት)' },
-      { book: 5, chapter: 34, labelEn: 'Deuteronomy 34 (Death & Honor of Moses)', labelAm: 'ዘዳግም 34 (የሙሴ ማረፍ)' },
+    keywordsEn: ['adam', 'eve', 'first man', 'garden of eden', 'fall of man'],
+    keywordsAm: ['አዳም', 'ሔዋን', 'የመጀመሪያው ሰው', 'የኤደን ገነት'],
+    primaryPassages: [
+      { book: 1, chapter: 1, verseStart: 26, verseEnd: 31 },
+      { book: 1, chapter: 2, verseStart: 7, verseEnd: 25 },
+      { book: 1, chapter: 3, verseStart: 1, verseEnd: 24 },
+      { book: 45, chapter: 5, verseStart: 12, verseEnd: 19, descriptionEn: 'Adam and Christ parallel', descriptionAm: 'አዳምና ክርስቶስ' },
+      { book: 46, chapter: 15, verseStart: 21, verseEnd: 22, descriptionEn: 'In Adam all die, in Christ all made alive', descriptionAm: 'በአዳም ሁሉ እንደሚሞቱ በክርስቶስ ሁሉ ሕያዋን ይሆናሉ' },
     ],
-    keyVerses: ['Exodus 3:14', 'Exodus 20:1-17', 'Deuteronomy 34:10', 'John 1:17', 'Hebrews 3:5-6'],
-    otNtConnectionsEn: 'Moses foreshadowed Jesus the Messiah: Deuteronomy 18:15 prophesied "The Lord thy God will raise up unto thee a Prophet from the midst of thee, of thy brethren, like unto me." Hebrews 3:5-6 reveals that while Moses was faithful in all God’s house as a servant, Christ is faithful as a Son over His own house. John 1:17 contrasts: "For the law was given by Moses, but grace and truth came by Jesus Christ."',
-    otNtConnectionsAm: 'ሙሴ የመሲሑ የክርስቶስ ጥላ ነበር፦ ዘዳግም 18፥15 "አምላክህ እግዚአብሔር ከአንተ መካከል ከወንድሞችህ እንደ እኔ ያለ ነቢይ ያስነሣልሃል" ተብሎ ተነገረ። ዕብራውያን 3፥5-6 ሙሴ በእግዚአብሔር ቤት ሁሉ እንደ አገልጋይ ታማኝ እንደነበር፣ ክርስቶስ ግን እንደ ልጅ በቤቱ ላይ የተሾመ መሆኑን ያሳያል። ዮሐንስ 1፥17 "ሕግ በሙሴ ተሰጥቶ ነበርና፤ ጸጋና እውነት ግን በኢየሱስ ክርስቶስ ሆነ" ይላል።',
-    reflectionQuestionsEn: [
-      'How does Moses’ obedience to God inspire your trust in difficult callings?',
-      'What is the difference between living under the Law given through Moses and the grace given in Christ (John 1:17)?',
+    searchTerms: ['Adam', 'Eve', 'Eden', 'አዳም', 'ሔዋን', 'ኤደን'],
+  },
+  {
+    id: 'noah',
+    nameEn: 'Noah and the Ark',
+    nameAm: 'ኖኅና መርከቡ',
+    testament: 'Both',
+    keywordsEn: ['noah', 'ark', 'flood', 'rainbow', 'covenant with noah'],
+    keywordsAm: ['ኖኅ', 'መርከብ', 'የጥፋት ውኃ', 'ቀስተ ደመና'],
+    primaryPassages: [
+      { book: 1, chapter: 6, verseStart: 5, verseEnd: 22 },
+      { book: 1, chapter: 7, verseStart: 1, verseEnd: 24 },
+      { book: 1, chapter: 8, verseStart: 1, verseEnd: 22 },
+      { book: 1, chapter: 9, verseStart: 8, verseEnd: 17, descriptionEn: 'Rainbow covenant', descriptionAm: 'የቀስተ ደመና ኪዳን' },
+      { book: 58, chapter: 11, verseStart: 7, verseEnd: 7, descriptionEn: 'Noah by faith', descriptionAm: 'ኖኅ በእምነት' },
+      { book: 60, chapter: 3, verseStart: 20, verseEnd: 21 },
     ],
-    reflectionQuestionsAm: [
-      'የሙሴ ለእግዚአብሔር መታዘዝ ፈታኝ በሆኑ የሕይወት መንገዶች ላይ ለመታመን ምን ያስተምረናል?',
-      'በሙሴ በኩል በተሰጠው ሕግና በክርስቶስ በተገለጠው ጸጋ መካከል ያለው ልዩነት ምንድን ነው (ዮሐ 1፥17)?',
-    ],
+    searchTerms: ['Noah', 'ark', 'flood', 'ኖኅ', 'መርከብ', 'የጥፋት ውኃ'],
   },
   {
     id: 'abraham',
-    aliasesEn: ['abraham', 'abram'],
-    aliasesAm: ['አብርሃም', 'አብራም'],
-    titleEn: 'Abraham — Father of Faith & the Covenant of Blessing',
-    titleAm: 'አብርሃም — የእምነት አባትና የኪዳን ሰው',
+    nameEn: 'Abraham (Father of Faith)',
+    nameAm: 'አብርሃም (የእምነት አባት)',
     testament: 'Both',
-    summaryEn: 'Called by God to leave Ur of the Chaldees to go to a land God would show him (Genesis 12:1-3). God made an unconditional covenant with him promising a land, numerous descendants, and that through his seed all nations of the earth would be blessed. Genesis 15:6 declares: "And he believed in the Lord; and he counted it to him for righteousness."',
-    summaryAm: 'ከከለዳውያን ዑር ወጥቶ እግዚአብሔር ወደሚያሳየው ምድር እንዲሄድ የተጠራ (ዘፍ 12፥1-3)። እግዚአብሔር ምድርን፣ የበዛ ዘርንና በዘሩ የምድር አሕዛብ ሁሉ እንዲባረኩ የቃል ኪዳን ተስፋ ሰጠው። ዘፍጥረት 15፥6 "አብራምም በእግዚአብሔር አመነ፤ ጽድቅም ሆኖ ተቆጠረለት" ይላል።',
-    keyChapters: [
-      { book: 1, chapter: 12, labelEn: 'Genesis 12 (The Call of Abram)', labelAm: 'ዘፍጥረት 12 (የአብራም ጥሪ)' },
-      { book: 1, chapter: 15, labelEn: 'Genesis 15 (Covenant & Faith Counted as Righteousness)', labelAm: 'ዘፍጥረት 15 (ኪዳኑና እምነት ጽድቅ ሆኖ መቆጠሩ)' },
-      { book: 1, chapter: 22, labelEn: 'Genesis 22 (The Offering of Isaac on Moriah)', labelAm: 'ዘፍጥረት 22 (ይስሐቅን በመሰዊያ ላይ ማቅረብ)' },
-      { book: 45, chapter: 4, labelEn: 'Romans 4 (Abraham Justified by Faith)', labelAm: 'ሮሜ 4 (አብርሃም በእምነት ጸደቀ)' },
+    keywordsEn: ['abraham', 'abram', 'sarah', 'isaac', 'covenant', 'call of abraham'],
+    keywordsAm: ['አብርሃም', 'አብራም', 'ሣራ', 'ይስሐቅ', 'የአብርሃም ኪዳን'],
+    primaryPassages: [
+      { book: 1, chapter: 12, verseStart: 1, verseEnd: 9 },
+      { book: 1, chapter: 15, verseStart: 1, verseEnd: 6 },
+      { book: 1, chapter: 17, verseStart: 1, verseEnd: 10 },
+      { book: 1, chapter: 22, verseStart: 1, verseEnd: 18 },
+      { book: 45, chapter: 4, verseStart: 1, verseEnd: 12, descriptionEn: 'Abraham justified by faith', descriptionAm: 'አብርሃም በእምነት ጸደቀ' },
+      { book: 48, chapter: 3, verseStart: 6, verseEnd: 9 },
+      { book: 58, chapter: 11, verseStart: 8, verseEnd: 19 },
     ],
-    keyVerses: ['Genesis 12:1-3', 'Genesis 15:6', 'Romans 4:3', 'Galatians 3:7-9', 'Hebrews 11:8-10'],
-    otNtConnectionsEn: 'The covenant with Abraham is the bedrock of New Testament salvation: Galatians 3:16 explains that the promised "seed" is Christ. Galatians 3:29 declares: "And if ye be Christ’s, then are ye Abraham’s seed, and heirs according to the promise." Genesis 22 (offering of Isaac) was a prophetic portrait of God the Father giving His only begotten Son at Calvary.',
-    otNtConnectionsAm: 'ከአብርሃም ጋር የተገባው ኪዳን የአዲስ ኪዳን መዳን መሠረት ነው፦ ገላትያ 3፥16 የተሰጠው "ዘር" የተባለው ተስፋ ክርስቶስ እንደሆነ ያብራራል። ገላትያ 3፥29 "የክርስቶስ ከሆናችሁ እንኪያስ የአብርሃም ዘር እንደ ተስፋውም ቃል ወራሾች ናችሁ" ይላል። ዘፍጥረት 22 (ይስሐቅን ማቅረብ) አብ አንድያ ልጁን በመስቀል ላይ የመስጠቱ ትንቢታዊ ምሳሌ ነበር።',
-    reflectionQuestionsEn: [
-      'What does it mean for your daily life that Abraham believed God and it was credited to him as righteousness?',
-      'How does knowing you are an heir of Abraham’s promise in Christ encourage your faith?',
+    searchTerms: ['Abraham', 'Abram', 'covenant', 'አብርሃም', 'አብራም', 'ኪዳን'],
+  },
+  {
+    id: 'joseph',
+    nameEn: 'Joseph (Son of Jacob)',
+    nameAm: 'ዮሴፍ (የያዕቆብ ልጅ)',
+    testament: 'Both',
+    keywordsEn: ['joseph', 'coat of many colors', 'egypt', 'pharaoh', 'dreams', 'potiphar'],
+    keywordsAm: ['ዮሴፍ', 'የቀለመ ሸሚዝ', 'ግብፅ', 'ፈርዖን', 'ሕልም', 'ጲጥፋራ'],
+    primaryPassages: [
+      { book: 1, chapter: 37, verseStart: 1, verseEnd: 36 },
+      { book: 1, chapter: 39, verseStart: 1, verseEnd: 23 },
+      { book: 1, chapter: 41, verseStart: 1, verseEnd: 45 },
+      { book: 1, chapter: 45, verseStart: 1, verseEnd: 15 },
+      { book: 1, chapter: 50, verseStart: 15, verseEnd: 21 },
+      { book: 44, chapter: 7, verseStart: 9, verseEnd: 14 },
+      { book: 58, chapter: 11, verseStart: 22, verseEnd: 22 },
     ],
-    reflectionQuestionsAm: [
-      'አብርሃም በእግዚአብሔር አምኖ ጽድቅ ሆኖ መቆጠሩ ለእኛ የዕለት ተዕለት እምነት ምን ትርጉም አለው?',
-      'በክርስቶስ አማካኝነት የአብርሃም የተስፋው ቃል ወራሽ መሆንዎን ማወቅ ምን ዓይነት መንፈሳዊ ብርታት ይሰጥዎታል?',
+    searchTerms: ['Joseph', 'Egypt', 'dreams', 'ዮሴፍ', 'ግብፅ', 'ሕልም'],
+  },
+  {
+    id: 'moses',
+    nameEn: 'Moses the Prophet and Deliverer',
+    nameAm: 'ሙሴ (ነቢይና ነፃ አውጪ)',
+    testament: 'Both',
+    keywordsEn: ['moses', 'burning bush', 'red sea', 'ten commandments', 'mount sinai', 'exodus', 'pharaoh'],
+    keywordsAm: ['ሙሴ', 'የሚነደው ቍጥቋጦ', 'ቀይ ባሕር', 'አሥሩ ቃላት', 'ሲና ተራራ', 'ዘጸአት'],
+    primaryPassages: [
+      { book: 2, chapter: 3, verseStart: 1, verseEnd: 15 },
+      { book: 2, chapter: 14, verseStart: 13, verseEnd: 31 },
+      { book: 2, chapter: 20, verseStart: 1, verseEnd: 17 },
+      { book: 5, chapter: 18, verseStart: 15, verseEnd: 19, descriptionEn: 'A Prophet like unto me', descriptionAm: 'እንደ እኔ ያለ ነቢይ' },
+      { book: 5, chapter: 34, verseStart: 1, verseEnd: 12 },
+      { book: 43, chapter: 1, verseStart: 17, verseEnd: 17 },
+      { book: 58, chapter: 3, verseStart: 1, verseEnd: 6 },
     ],
+    searchTerms: ['Moses', 'Sinai', 'burning bush', 'ሙሴ', 'ሲና', 'ቍጥቋጦ'],
+  },
+  {
+    id: 'joshua',
+    nameEn: 'Joshua and the Promised Land',
+    nameAm: 'ኢያሱና የተስፋይቱ ምድር',
+    testament: 'Both',
+    keywordsEn: ['joshua', 'jericho', 'jordan river', 'promised land', 'canaan', 'be strong and of good courage'],
+    keywordsAm: ['ኢያሱ', 'ኢያሪኮ', 'ዮርዳኖስ', 'የተስፋይቱ ምድር', 'በርታ ጠንክር'],
+    primaryPassages: [
+      { book: 6, chapter: 1, verseStart: 1, verseEnd: 9 },
+      { book: 6, chapter: 3, verseStart: 1, verseEnd: 17 },
+      { book: 6, chapter: 6, verseStart: 1, verseEnd: 21 },
+      { book: 6, chapter: 24, verseStart: 14, verseEnd: 28 },
+      { book: 58, chapter: 4, verseStart: 8, verseEnd: 11 },
+    ],
+    searchTerms: ['Joshua', 'Jericho', 'Jordan', 'ኢያሱ', 'ኢያሪኮ', 'ዮርዳኖስ'],
+  },
+  {
+    id: 'gideon',
+    nameEn: 'Gideon (Mighty Man of Valour)',
+    nameAm: 'ጌዴዎን (ጽኑዕ ኃያል ሰው)',
+    testament: 'Both',
+    keywordsEn: ['gideon', 'jerubbaal', 'midianites', 'fleece', '300 men', 'trumpets and pitchers'],
+    keywordsAm: ['ጌዴዎን', 'ይሩበኣል', 'ምድያማውያን', 'የበግ ጠጉር', '300 ሰዎች'],
+    primaryPassages: [
+      { book: 7, chapter: 6, verseStart: 11, verseEnd: 24 },
+      { book: 7, chapter: 6, verseStart: 36, verseEnd: 40 },
+      { book: 7, chapter: 7, verseStart: 1, verseEnd: 23 },
+      { book: 58, chapter: 11, verseStart: 32, verseEnd: 34 },
+    ],
+    searchTerms: ['Gideon', 'fleece', 'Midian', 'ጌዴዎን', 'ምድያም', 'ጠጉር'],
+  },
+  {
+    id: 'ruth',
+    nameEn: 'Ruth and Boaz (The Kinsman Redeemer)',
+    nameAm: 'ሩትና ቦዔዝ (ዋጅ ዘመድ)',
+    testament: 'Both',
+    keywordsEn: ['ruth', 'boaz', 'naomi', 'moab', 'gleaning', 'kinsman redeemer', 'lineage of david'],
+    keywordsAm: ['ሩት', 'ቦዔዝ', 'ኑኃሚን', 'ሞዓብ', 'ቃርሚያ', 'የዳዊት ትውልድ'],
+    primaryPassages: [
+      { book: 8, chapter: 1, verseStart: 14, verseEnd: 18, descriptionEn: 'Ruth clings to Naomi', descriptionAm: 'ሩት ከኑኃሚን ጋር ተጣበቀች' },
+      { book: 8, chapter: 2, verseStart: 10, verseEnd: 13, descriptionEn: 'Boaz shows kindness to Ruth', descriptionAm: 'ቦዔዝ ለሩት ቸርነት አደረገ' },
+      { book: 8, chapter: 4, verseStart: 13, verseEnd: 17, descriptionEn: 'Birth of Obed, grandfather of David', descriptionAm: 'ኢዮቤድ ተወለደ (የዳዊት አያት)' },
+      { book: 40, chapter: 1, verseStart: 5, verseEnd: 6, descriptionEn: 'Ruth in genealogy of Jesus', descriptionAm: 'ሩት በክርስቶስ የትውልድ ሐረግ ውስጥ' },
+    ],
+    searchTerms: ['Ruth', 'Boaz', 'Naomi', 'Obed', 'ሩት', 'ቦዔዝ', 'ኑኃሚን', 'ኢዮቤድ'],
   },
   {
     id: 'david',
-    aliasesEn: ['david'],
-    aliasesAm: ['ዳዊት'],
-    titleEn: 'David — Anointed King and a Man after God’s Own Heart',
-    titleAm: 'ዳዊት — የተቀባው ንጉሥና እንደ እግዚአብሔር ልብ የሆነ ሰው',
+    nameEn: 'David (King of Israel)',
+    nameAm: 'ዳዊት (የእስራኤል ንጉሥ)',
     testament: 'Both',
-    summaryEn: 'Anointed by Samuel as a young shepherd (1 Samuel 16), defeated Goliath with faith in God’s name (1 Samuel 17), and became the greatest king of Israel. Author of many Psalms. God established the Davidic Covenant with him in 2 Samuel 7, promising an eternal throne through his lineage.',
-    summaryAm: 'በእረኝነቱ ሳለ በሳሙኤል የተቀባ (1 ሳሙ 16)፤ በእግዚአብሔር ስም ታምኖ ጎልያድን ድል ያደረገ (1 ሳሙ 17) እና ታላቁ የእስራኤል ንጉሥ የሆነ ሰው። በርካታ መዝሙራትን ጽፏል። በ2ኛ ሳሙኤል 7 እግዚአብሔር ከዘሩ ለዘላለም የሚቆም መንግሥት እንደሚያስነሣ የኪዳን ቃል ገብቶለታል።',
-    keyChapters: [
-      { book: 9, chapter: 16, labelEn: '1 Samuel 16 (Anointed as King)', labelAm: '1 ሳሙኤል 16 (ለንጉሥነት መቀባቱ)' },
-      { book: 9, chapter: 17, labelEn: '1 Samuel 17 (Victory over Goliath)', labelAm: '1 ሳሙኤል 17 (በጎልያድ ላይ የተገኘው ድል)' },
-      { book: 10, chapter: 7, labelEn: '2 Samuel 7 (The Eternal Davidic Covenant)', labelAm: '2 ሳሙኤል 7 (የዳዊት ዘላለማዊ ኪዳን)' },
-      { book: 19, chapter: 23, labelEn: 'Psalm 23 (The Lord is my Shepherd)', labelAm: 'መዝሙር 23 (እግዚአብሔር እረኛዬ ነው)' },
-      { book: 19, chapter: 51, labelEn: 'Psalm 51 (Prayer of True Repentance)', labelAm: 'መዝሙር 51 (የእውነተኛ ንስሐ ጸሎት)' },
+    keywordsEn: ['david', 'goliath', 'shepherd', 'psalms', 'saul', 'jonathan', 'davidic covenant'],
+    keywordsAm: ['ዳዊት', 'ጎልያድ', 'እረኛ', 'መዝሙር', 'ሳኦል', 'ዮናታን', 'የዳዊት ኪዳን'],
+    primaryPassages: [
+      { book: 9, chapter: 16, verseStart: 1, verseEnd: 13 },
+      { book: 9, chapter: 17, verseStart: 32, verseEnd: 51 },
+      { book: 10, chapter: 7, verseStart: 11, verseEnd: 17, descriptionEn: 'God’s everlasting covenant with David', descriptionAm: 'እግዚአብሔር ከዳዊት ጋር የገባው ዘላለማዊ ኪዳን' },
+      { book: 19, chapter: 23, verseStart: 1, verseEnd: 6 },
+      { book: 19, chapter: 51, verseStart: 1, verseEnd: 12 },
+      { book: 44, chapter: 2, verseStart: 29, verseEnd: 32 },
     ],
-    keyVerses: ['1 Samuel 16:7', '2 Samuel 7:12-16', 'Psalm 23:1-6', 'Acts 2:29-32', 'Revelation 22:16'],
-    otNtConnectionsEn: 'Jesus Christ is the ultimate "Son of David" and King of Kings (Matthew 1:1, Luke 1:32-33). Peter in Acts 2:29-31 shows that David, being a prophet, spoke in Psalm 16 of the resurrection of Christ. In Revelation 22:16, Jesus proclaims: "I am the root and the offspring of David, and the bright and morning star."',
-    otNtConnectionsAm: 'ኢየሱስ ክርስቶስ የመጨረሻውና እውነተኛው "የዳዊት ልጅ" እና የነገሥታት ንጉሥ ነው (ማቴ 1፥1፣ ሉቃ 1፥32-33)። ጴጥሮስ በሐዋርያት ሥራ 2፥29-31 ዳዊት ነቢይ ሆኖ በመዝሙር 16 ላይ የተናገረው ስለ ክርስቶስ ትንሣኤ እንደሆነ ይመሰክራል። በራእይ 22፥16 ኢየሱስ "እኔ የዳዊት ሥርና ዘር ነኝ" ብሎ ራሱን ገልጿል።',
-    reflectionQuestionsEn: [
-      'What can we learn from David’s heart of repentance in Psalm 51 when he fell into sin?',
-      'How does trusting the Good Shepherd in Psalm 23 bring peace in difficult seasons?',
+    searchTerms: ['David', 'Goliath', 'Psalms', 'ዳዊት', 'ጎልያድ', 'መዝሙር'],
+  },
+  {
+    id: 'elijah',
+    nameEn: 'Elijah the Prophet',
+    nameAm: 'ነቢዩ ኤልያስ',
+    testament: 'Both',
+    keywordsEn: ['elijah', 'elias', 'mount carmel', 'baal', 'prophets of baal', 'chariot of fire', 'still small voice'],
+    keywordsAm: ['ኤልያስ', 'ቀርሜሎስ', 'በኣል', 'የእሳት ሰረገላ', 'ቀጭን ድምፅ'],
+    primaryPassages: [
+      { book: 11, chapter: 17, verseStart: 1, verseEnd: 24 },
+      { book: 11, chapter: 18, verseStart: 20, verseEnd: 39 },
+      { book: 11, chapter: 19, verseStart: 9, verseEnd: 18 },
+      { book: 12, chapter: 2, verseStart: 9, verseEnd: 14 },
+      { book: 39, chapter: 4, verseStart: 5, verseEnd: 6 },
+      { book: 40, chapter: 17, verseStart: 1, verseEnd: 13 },
+      { book: 59, chapter: 5, verseStart: 17, verseEnd: 18 },
     ],
-    reflectionQuestionsAm: [
-      'ዳዊት በበደለ ጊዜ በመዝሙር 51 ላይ ካቀረበው ልባዊ የንስሐ ጸሎት ምን እንማራለን?',
-      'በመዝሙር 23 ላይ እግዚአብሔር እረኛችን እንደሆነ ማመን በጭንቀት ጊዜ ምን ዓይነት ሰላም ይሰጠናል?',
+    searchTerms: ['Elijah', 'Carmel', 'chariot of fire', 'ኤልያስ', 'ቀርሜሎስ', 'የእሳት ሰረገላ'],
+  },
+  {
+    id: 'elisha',
+    nameEn: 'Elisha the Prophet',
+    nameAm: 'ነቢዩ ኤልሳዕ',
+    testament: 'OT',
+    keywordsEn: ['elisha', 'double portion', 'naaman', 'shunammite', 'axe head', 'chariots of fire'],
+    keywordsAm: ['ኤልሳዕ', 'እጥፍ መንፈስ', 'ንዕማን', 'ሱነማዊት', 'ምሳር'],
+    primaryPassages: [
+      { book: 12, chapter: 2, verseStart: 9, verseEnd: 15 },
+      { book: 12, chapter: 4, verseStart: 1, verseEnd: 37 },
+      { book: 12, chapter: 5, verseStart: 1, verseEnd: 19 },
+      { book: 12, chapter: 6, verseStart: 8, verseEnd: 18 },
     ],
+    searchTerms: ['Elisha', 'Naaman', 'ኤልሳዕ', 'ንዕማን'],
+  },
+  {
+    id: 'josiah',
+    nameEn: 'King Josiah (The Reformation of the Word)',
+    nameAm: 'ንጉሥ ኢዮስያስ (የቃሉ ተሃድሶ)',
+    testament: 'OT',
+    keywordsEn: ['josiah', 'book of the law', 'temple repair', 'hilkiah', 'passover', 'reformation'],
+    keywordsAm: ['ኢዮስያስ', 'የሕጉ መጽሐፍ', 'የቤተ መቅደስ ጥገና', 'ፋሲካ', 'ተሃድሶ'],
+    primaryPassages: [
+      { book: 12, chapter: 22, verseStart: 1, verseEnd: 20 },
+      { book: 12, chapter: 23, verseStart: 1, verseEnd: 25 },
+      { book: 14, chapter: 34, verseStart: 1, verseEnd: 21 },
+    ],
+    searchTerms: ['Josiah', 'book of the law', 'Hilkiah', 'ኢዮስያስ', 'የሕጉ መጽሐፍ'],
+  },
+  {
+    id: 'nehemiah',
+    nameEn: 'Nehemiah (Rebuilding the Walls)',
+    nameAm: 'ነህምያ (የቅጥር አደሳ)',
+    testament: 'OT',
+    keywordsEn: ['nehemiah', 'jerusalem walls', 'sanballat', 'tobiah', 'rebuilding', 'cupbearer'],
+    keywordsAm: ['ነህምያ', 'የኢየሩሳሌም ቅጥር', 'ሰንባላት', 'ጦቢያ', 'መጠጥ አቅራቢ'],
+    primaryPassages: [
+      { book: 16, chapter: 1, verseStart: 1, verseEnd: 11 },
+      { book: 16, chapter: 2, verseStart: 1, verseEnd: 18 },
+      { book: 16, chapter: 4, verseStart: 1, verseEnd: 23 },
+      { book: 16, chapter: 6, verseStart: 15, verseEnd: 16 },
+      { book: 16, chapter: 8, verseStart: 1, verseEnd: 12 },
+    ],
+    searchTerms: ['Nehemiah', 'wall', 'Jerusalem', 'ነህምያ', 'ቅጥር', 'ኢየሩሳሌም'],
+  },
+  {
+    id: 'esther',
+    nameEn: 'Queen Esther and Mordecai',
+    nameAm: 'አስቴርና መርዶክዮስ',
+    testament: 'OT',
+    keywordsEn: ['esther', 'mordecai', 'haman', 'ahasuerus', 'purim', 'for such a time as this'],
+    keywordsAm: ['አስቴር', 'መርዶክዮስ', 'ሐማ', 'አሀሽዌሮስ', 'ፉሪም', 'እንደዚህ ላለው ጊዜ'],
+    primaryPassages: [
+      { book: 17, chapter: 2, verseStart: 15, verseEnd: 20 },
+      { book: 17, chapter: 4, verseStart: 10, verseEnd: 17 },
+      { book: 17, chapter: 7, verseStart: 1, verseEnd: 10 },
+      { book: 17, chapter: 9, verseStart: 20, verseEnd: 32 },
+    ],
+    searchTerms: ['Esther', 'Mordecai', 'Haman', 'አስቴር', 'መርዶክዮስ', 'ሐማ'],
+  },
+  {
+    id: 'job',
+    nameEn: 'Job (Perseverance and Trust in God)',
+    nameAm: 'ኢዮብ (ጽናትና በእግዚአብሔር መታመን)',
+    testament: 'Both',
+    keywordsEn: ['job', 'suffering', 'perseverance', 'whirlwind', 'redeemer liveth', 'patience of job'],
+    keywordsAm: ['ኢዮብ', 'መከራ', 'ትዕግሥት', 'ተዋጅ', 'አውሎ ነፋስ'],
+    primaryPassages: [
+      { book: 18, chapter: 1, verseStart: 13, verseEnd: 22 },
+      { book: 18, chapter: 19, verseStart: 23, verseEnd: 27 },
+      { book: 18, chapter: 38, verseStart: 1, verseEnd: 18 },
+      { book: 18, chapter: 42, verseStart: 1, verseEnd: 12 },
+      { book: 59, chapter: 5, verseStart: 11, verseEnd: 11 },
+    ],
+    searchTerms: ['Job', 'whirlwind', 'redeemer', 'ኢዮብ', 'መከራ', 'ተዋጅ'],
+  },
+  {
+    id: 'daniel',
+    nameEn: 'Daniel the Prophet',
+    nameAm: 'ነቢዩ ዳንኤል',
+    testament: 'Both',
+    keywordsEn: ['daniel', 'lions den', 'shadrach', 'meshach', 'abednego', 'fiery furnace', 'nebuchadnezzar', 'belshazzar', 'writing on wall'],
+    keywordsAm: ['ዳንኤል', 'የአንበሶች ጉድጓድ', 'ሲድራቅ', 'ሚሳቅ', 'አብደናጎ', 'የእሳት እቶን', 'ናቡከደነፆር'],
+    primaryPassages: [
+      { book: 27, chapter: 1, verseStart: 8, verseEnd: 17 },
+      { book: 27, chapter: 3, verseStart: 16, verseEnd: 28 },
+      { book: 27, chapter: 6, verseStart: 10, verseEnd: 23 },
+      { book: 27, chapter: 7, verseStart: 13, verseEnd: 14, descriptionEn: 'Son of Man kingdom', descriptionAm: 'የሰው ልጅ ዘላለማዊ መንግሥት' },
+      { book: 40, chapter: 24, verseStart: 15, verseEnd: 15 },
+      { book: 58, chapter: 11, verseStart: 33, verseEnd: 33 },
+    ],
+    searchTerms: ['Daniel', 'lions', 'furnace', 'ዳንኤል', 'አንበሳ', 'እቶን'],
+  },
+
+  // ==========================================
+  // NEW TESTAMENT FIGURES & APOSTLES
+  // ==========================================
+  {
+    id: 'john_baptist',
+    nameEn: 'John the Baptist (The Forerunner)',
+    nameAm: 'መጥምቁ ዮሐንስ (መንገድ ጠራጊው)',
+    testament: 'Both',
+    keywordsEn: ['john the baptist', 'forerunner', 'voice in wilderness', 'baptism of jesus', 'repentance'],
+    keywordsAm: ['መጥምቁ ዮሐንስ', 'ዮሐንስ መጥምቅ', 'የምድረ በዳ ድምፅ', 'የኢየሱስ ጥምቀት'],
+    primaryPassages: [
+      { book: 23, chapter: 40, verseStart: 3, verseEnd: 5 },
+      { book: 39, chapter: 3, verseStart: 1, verseEnd: 3 },
+      { book: 40, chapter: 3, verseStart: 1, verseEnd: 17 },
+      { book: 42, chapter: 1, verseStart: 13, verseEnd: 17 },
+      { book: 43, chapter: 1, verseStart: 19, verseEnd: 34 },
+    ],
+    searchTerms: ['John the Baptist', 'wilderness', 'baptism', 'መጥምቁ ዮሐንስ', 'ጥምቀት', 'ምድረ በዳ'],
+  },
+  {
+    id: 'jesus_christ',
+    nameEn: 'Jesus Christ the Messiah',
+    nameAm: 'ኢየሱስ ክርስቶስ መሲሑ',
+    testament: 'Both',
+    keywordsEn: ['jesus', 'christ', 'messiah', 'son of god', 'savior', 'gospel', 'cross', 'resurrection'],
+    keywordsAm: ['ኢየሱስ', 'ክርስቶስ', 'መሲሕ', 'የእግዚአብሔር ልጅ', 'አዳኝ', 'መስቀል', 'ትንሣኤ'],
+    primaryPassages: [
+      { book: 23, chapter: 53, verseStart: 1, verseEnd: 12, descriptionEn: 'Suffering Servant prophecy', descriptionAm: 'የመከራው አገልጋይ ትንቢት' },
+      { book: 40, chapter: 5, verseStart: 1, verseEnd: 12, descriptionEn: 'Sermon on the Mount', descriptionAm: 'የተራራው ስብከት' },
+      { book: 43, chapter: 1, verseStart: 1, verseEnd: 14, descriptionEn: 'The Word became flesh', descriptionAm: 'ቃሉ ሥጋ ሆነ' },
+      { book: 43, chapter: 3, verseStart: 14, verseEnd: 18 },
+      { book: 43, chapter: 14, verseStart: 6, verseEnd: 6 },
+      { book: 46, chapter: 15, verseStart: 1, verseEnd: 8, descriptionEn: 'Death and Resurrection according to Scriptures', descriptionAm: 'ሞትና ትንሣኤ እንደ መጻሕፍት ቃል' },
+      { book: 51, chapter: 1, verseStart: 15, verseEnd: 20 },
+      { book: 58, chapter: 1, verseStart: 1, verseEnd: 4 },
+      { book: 66, chapter: 1, verseStart: 17, verseEnd: 18 },
+    ],
+    searchTerms: ['Jesus', 'Christ', 'Messiah', 'ኢየሱስ', 'ክርስቶስ', 'መሲሕ'],
+  },
+  {
+    id: 'peter',
+    nameEn: 'Peter the Apostle (Cephas)',
+    nameAm: 'ሐዋርያው ጴጥሮስ (ኬፋ)',
+    testament: 'NT',
+    keywordsEn: ['peter', 'simon peter', 'cephas', 'keys of kingdom', 'denial', 'feed my sheep', 'pentecost sermon'],
+    keywordsAm: ['ጴጥሮስ', 'ስምዖን ጴጥሮስ', 'ኬፋ', 'የመንግሥተ ሰማያት መክፈቻ', 'ግልገሎቼን አሰማራ'],
+    primaryPassages: [
+      { book: 40, chapter: 16, verseStart: 13, verseEnd: 19 },
+      { book: 42, chapter: 22, verseStart: 54, verseEnd: 62 },
+      { book: 43, chapter: 21, verseStart: 15, verseEnd: 19 },
+      { book: 44, chapter: 2, verseStart: 14, verseEnd: 41 },
+      { book: 44, chapter: 10, verseStart: 34, verseEnd: 43 },
+      { book: 60, chapter: 1, verseStart: 3, verseEnd: 9 },
+    ],
+    searchTerms: ['Peter', 'Simon', 'Cephas', 'ጴጥሮስ', 'ስምዖን', 'ኬፋ'],
   },
   {
     id: 'paul',
-    aliasesEn: ['paul', 'saul of tarsus'],
-    aliasesAm: ['ጳውሎስ', 'ሳውል'],
-    titleEn: 'Apostle Paul — Vessel of Grace to the Nations',
-    titleAm: 'ሐዋርያው ጳውሎስ — ለአሕዛብ የተመረጠ የጸጋ ዕቃ',
+    nameEn: 'Paul the Apostle (Saul of Tarsus)',
+    nameAm: 'ሐዋርያው ጳውሎስ (የጠርሴሱ ሳውል)',
     testament: 'NT',
-    summaryEn: 'Originally Saul of Tarsus, a strict Pharisee of the tribe of Benjamin who fiercely persecuted the church (Acts 8:3, Philippians 3:5). Miraculously transformed by the risen Jesus on the road to Damascus (Acts 9). Became the apostle to the Gentiles, planting churches across the Roman world and penning 14 Epistles under the inspiration of the Holy Spirit.',
-    summaryAm: 'ቀድሞ የቤተክርስቲያን አሳዳጅና የብንያም ነገድ የሆነው ጠንካራ ፈሪሳዊ ሳውል ነበረ (የሐዋ 8፥3፣ ፊል 3፥5)። ወደ ደማስቆ ሲሄድ በትንሣኤው ጌታ በኢየሱስ ተገለጠለትና ተለወጠ (የሐዋ 9)። ወደ አሕዛብ ተልኮ ወንጌልን በሮማ ግዛት አስፋፋ፤ በመንፈስ ቅዱስ ተመርቶ በርካታ መልእክታትን ጻፈ።',
-    keyChapters: [
-      { book: 44, chapter: 9, labelEn: 'Acts 9 (The Damascus Road Encounter)', labelAm: 'የሐዋርያት ሥራ 9 (የደማስቆ መንገድ መለወጥ)' },
-      { book: 45, chapter: 8, labelEn: 'Romans 8 (Life in the Spirit & No Condemnation)', labelAm: 'ሮሜ 8 (የመንፈስ ሕይወትና ኩነኔ የሌለበት ጸጋ)' },
-      { book: 46, chapter: 13, labelEn: '1 Corinthians 13 (The Way of Divine Love)', labelAm: '1 ቆሮንቶስ 13 (የመለኮታዊ ፍቅር መንገድ)' },
-      { book: 55, chapter: 4, labelEn: '2 Timothy 4 (Finished the Race with Faith)', labelAm: '2 ጢሞቴዎስ 4 (መልካሙን ገድል ተጋድዬአለሁ)' },
+    keywordsEn: ['paul', 'saul', 'tarsus', 'damascus', 'apostle to gentiles', 'epistles'],
+    keywordsAm: ['ጳውሎስ', 'ሳውል', 'ጠርሴስ', 'ደማስቆ', 'የአሕዛብ ሐዋርያ', 'መልእክታት'],
+    primaryPassages: [
+      { book: 44, chapter: 9, verseStart: 1, verseEnd: 22 },
+      { book: 45, chapter: 1, verseStart: 16, verseEnd: 17 },
+      { book: 45, chapter: 8, verseStart: 28, verseEnd: 39 },
+      { book: 48, chapter: 2, verseStart: 20, verseEnd: 20 },
+      { book: 50, chapter: 3, verseStart: 7, verseEnd: 14 },
+      { book: 55, chapter: 4, verseStart: 6, verseEnd: 8 },
     ],
-    keyVerses: ['Acts 9:3-6', 'Romans 1:16', 'Romans 8:28-39', 'Galatians 2:20', '2 Timothy 4:7-8'],
-    otNtConnectionsEn: 'Paul mastered the Hebrew Scriptures and demonstrated throughout Romans and Galatians that the Gospel was not a novelty, but the fulfillment of the Law and the Prophets promised in the Old Testament through Abraham, Habakkuk ("the just shall live by faith"), and Isaiah.',
-    otNtConnectionsAm: 'ጳውሎስ የቀደመውን ቅዱሳት መጻሕፍት ጠንቅቆ ያወቀ እንደመሆኑ፣ ወንጌል አዲስ ፈጠራ ሳይሆን በብሉይ ኪዳን በአብርሃም፣ በዕንባቆም ("ጻድቅ በእምነት ይኖራል") እና በኢሳይያስ የተነገረው ትንቢት ፍጻሜ መሆኑን በሮሜና በገላትያ መልእክቱ አረጋግጧል።',
-    reflectionQuestionsEn: [
-      'How does Paul’s dramatic transformation encourage you about God’s power to change any life?',
-      'What does "I have been crucified with Christ, nevertheless I live" (Galatians 2:20) mean for your personal walk?',
-    ],
-    reflectionQuestionsAm: [
-      'የጳውሎስ መለወጥ የእግዚአብሔር ጸጋ ማንኛውንም ሰው የመለወጥ ኃይል እንዳለው ምን ያህል ያረጋግጥልናል?',
-      'ከክርስቶስ ጋር ተሰቅያለሁ እኔም አሁን ሕያው ሆኜ አልኖርም (ገላ 2፥20) የሚለው ቃል በሕይወታችን እንዴት ይገለጣል?',
-    ],
-  },
-
-  // --- EVENTS ---
-  {
-    id: 'creation',
-    aliasesEn: ['creation', 'the beginning'],
-    aliasesAm: ['ፍጥረት', 'የዓለም ፍጥረት'],
-    titleEn: 'The Creation of Heaven and Earth',
-    titleAm: 'የሰማይና የምድር አፈጣጠር',
-    testament: 'Both',
-    summaryEn: 'Genesis 1:1 opens the Bible with: "In the beginning God created the heaven and the earth." God formed the cosmos out of nothing by the power of His word in six days, created mankind in His own image and likeness on the sixth day, and rested on the seventh day.',
-    summaryAm: 'ዘፍጥረት 1፥1 "በመጀመሪያ እግዚአብሔር ሰማይንና ምድርን ፈጠረ" በማለት ይጀምራል። እግዚአብሔር ዓለማትን በቃሉ ኃይል ከምንም ፈጠረ፤ በስድስተኛው ቀን ሰውን በራሱ መልክና አምሳል አበጀ፤ በሰባተኛውም ቀን ከሥራው ሁሉ ዐረፈ።',
-    keyChapters: [
-      { book: 1, chapter: 1, labelEn: 'Genesis 1 (The Six Days of Creation)', labelAm: 'ዘፍጥረት 1 (ስድስቱ የፍጥረት ቀናት)' },
-      { book: 1, chapter: 2, labelEn: 'Genesis 2 (Man in Eden & Seventh Day)', labelAm: 'ዘፍጥረት 2 (ሰው በዔድንና ሰባተኛው ቀን)' },
-      { book: 19, chapter: 104, labelEn: 'Psalm 104 (Praise to the Creator God)', labelAm: 'መዝሙር 104 (ፈጣሪን የሚያመሰግን መዝሙር)' },
-      { book: 43, chapter: 1, labelEn: 'John 1:1-3 (Creation by the Eternal Word)', labelAm: 'ዮሐንስ 1:1-3 (በዘላለማዊው ቃል መፈጠሩ)' },
-    ],
-    keyVerses: ['Genesis 1:1', 'Genesis 1:26-27', 'Psalm 33:6-9', 'John 1:1-3', 'Colossians 1:16-17', 'Hebrews 11:3'],
-    otNtConnectionsEn: 'The New Testament reveals that the Son of God, Jesus Christ, was the active agent of creation: John 1:3 declares: "All things were made by him; and without him was not any thing made that was made." Colossians 1:16 confirms: "For by him were all things created, that are in heaven, and that are in earth... all things were created by him, and for him."',
-    otNtConnectionsAm: 'አዲስ ኪዳን የእግዚአብሔር ልጅ ኢየሱስ ክርስቶስ በፍጥረት ሥራ ውስጥ የነበረው ቃል እንደሆነ ይገልጻል፦ ዮሐንስ 1፥3 "ሁሉ በእርሱ ሆነ፥ ከሆነውም አንዳች ስንኳ ያለ እርሱ አልሆነም" ይላል። ቆላስይስ 1፥16 "ሁሉ በእርሱና ለእርሱ ተፈጥሮአል" በማለት ያረጋግጣል።',
-    reflectionQuestionsEn: [
-      'What does being made in the image of God (Genesis 1:27) tell you about human dignity and purpose?',
-      'How does knowing God framed the universe by His word (Hebrews 11:3) strengthen your prayer life?',
-    ],
-    reflectionQuestionsAm: [
-      'በእግዚአብሔር መልክ መፈጠርዎ (ዘፍ 1፥27) ስለ ሰው ክብርና ዓላማ ምን ያስተምርዎታል?',
-      'እግዚአብሔር ዓለማትን በቃሉ እንዳጸና ማወቅ (ዕብ 11፥3) በጸሎት ሕይወትዎ ላይ ምን እምነት ያሳድርብዎታል?',
-    ],
+    searchTerms: ['Paul', 'Saul', 'Damascus', 'ጳውሎስ', 'ሳውል', 'ደማስቆ'],
   },
   {
-    id: 'resurrection',
-    aliasesEn: ['resurrection of jesus', 'easter', 'resurrection'],
-    aliasesAm: ['ትንሣኤ', 'የኢየሱስ ትንሣኤ', 'ትንሣኤው'],
-    titleEn: 'The Resurrection of Jesus Christ',
-    titleAm: 'የጌታ የኢየሱስ ክርስቶስ ትንሣኤ',
-    testament: 'Both',
-    summaryEn: 'Crucified and buried in a tomb, Jesus Christ rose bodily from the dead on the third day according to the Scriptures. The stone was rolled away, the tomb was empty, and He appeared alive to Mary Magdalene, the Apostles, and over 500 witnesses (1 Corinthians 15:3-6). The resurrection is the foundational guarantee of Christian faith, eternal life, and victory over death.',
-    summaryAm: 'ተሰቅሎና ተቀብሮ በሦስተኛው ቀን በመጽሐፍ ቅዱስ መሠረት በክብር ከሙታን ተነሣ። መቃብሩ ባዶ ሆነ፤ ለማርያም መግደላዊት፣ ለሐዋርያትና ከ500 ለሚበልጡ ሰዎች በሕይወት ታየ (1 ቆሮ 15፥3-6)። የክርስቶስ ትንሣኤ የክርስትና እምነት፣ የድነትና በሞት ላይ የተገኘው የዘላለም ድል ዋስትና ነው።',
-    keyChapters: [
-      { book: 40, chapter: 28, labelEn: 'Matthew 28 (The Empty Tomb & Great Commission)', labelAm: 'ማቴዎስ 28 (ባዶው መቃብርና ታላቁ ተልእኮ)' },
-      { book: 42, chapter: 24, labelEn: 'Luke 24 (Road to Emmaus & Bodily Appearance)', labelAm: 'ሉቃስ 24 (የኤማሁስ መንገድና መገለጡ)' },
-      { book: 43, chapter: 20, labelEn: 'John 20 (I Have Seen the Lord!)', labelAm: 'ዮሐንስ 20 (ጌታን አይቼዋለሁ)' },
-      { book: 46, chapter: 15, labelEn: '1 Corinthians 15 (The Resurrection Chapter)', labelAm: '1 ቆሮንቶስ 15 (የትንሣኤው ታላቅ ምዕራፍ)' },
+    id: 'stephen',
+    nameEn: 'Stephen (First Christian Martyr)',
+    nameAm: 'እስጢፋኖስ (የመጀመሪያው ሰማዕት)',
+    testament: 'NT',
+    keywordsEn: ['stephen', 'martyr', 'stoning', 'full of holy spirit', 'acts 7 sermon'],
+    keywordsAm: ['እስጢፋኖስ', 'ሰማዕት', 'በድንጋይ መወገር', 'መንፈስ ቅዱስ'],
+    primaryPassages: [
+      { book: 44, chapter: 6, verseStart: 8, verseEnd: 15 },
+      { book: 44, chapter: 7, verseStart: 51, verseEnd: 60 },
     ],
-    keyVerses: ['Matthew 28:5-6', 'John 11:25', 'Romans 1:4', '1 Corinthians 15:3-4', '1 Corinthians 15:20-22', '1 Peter 1:3'],
-    otNtConnectionsEn: 'The Old Testament foresaw the resurrection: David declared in Psalm 16:10: "For thou wilt not leave my soul in hell; neither wilt thou suffer thine Holy One to see corruption." Jesus also pointed to Jonah 1:17 as a sign (Matthew 12:40). Christ is the "Firstfruits of them that slept" (1 Corinthians 15:20), guaranteeing that all believers will also be raised.',
-    otNtConnectionsAm: 'ብሉይ ኪዳን ትንሣኤውን አስቀድሞ ተንብዮ ነበር፦ ዳዊት በመዝሙር 16፥10 "ነፍሴን በሲኦል አትተዋትምና፥ ቅዱስህንም መበስበስን ያይ ዘንድ አትሰጠውም" በማለት ተናገረ። ኢየሱስም የዮናስን ምልክት ጠቅሶ ነበር (ማቴ 12፥40)። ክርስቶስ ለሞቱት ሰዎች "የበኩራት ፍሬ" ሆኖ ተነሥቷል፤ በእርሱ የሚያምኑ ሁሉ እንደሚነሡ ያረጋግጣል (1 ቆሮ 15፥20)።',
-    reflectionQuestionsEn: [
-      'Because Christ is risen, how does that give you victory over the fear of death?',
-      'What does Jesus’ statement "I am the resurrection and the life" (John 11:25) mean to you personally?',
-    ],
-    reflectionQuestionsAm: [
-      'ክርስቶስ ከሞት ስለተነሣ፣ ይህ እውነት ከሞት ፍርሃት ነፃ የሚያወጣን እንዴት ነው?',
-      'ኢየሱስ "ትንሣኤና ሕይወት እኔ ነኝ" (ዮሐ 11፥25) ሲል በግል ሕይወትዎ ምን ተስፋ ይሰጥዎታል?',
-    ],
+    searchTerms: ['Stephen', 'martyr', 'እስጢፋኖስ', 'ሰማዕት'],
   },
 
-  // --- TEACHINGS / TOPICS ---
+  // ==========================================
+  // CORE BIBLICAL TOPICS & DOCTRINES
+  // ==========================================
   {
     id: 'forgiveness',
-    aliasesEn: ['forgiveness', 'forgive', 'reconciliation'],
-    aliasesAm: ['ይቅርታ', 'ይቅር'],
-    titleEn: 'Forgiveness According to Scripture',
-    titleAm: 'ይቅርታ በመጽሐፍ ቅዱስ ትምህርት መሠረት',
+    nameEn: 'Forgiveness and Reconciliation',
+    nameAm: 'ይቅርታና እርቅ በመጽሐፍ ቅዱስ',
     testament: 'Both',
-    summaryEn: 'Forgiveness is rooted in God’s holy and gracious character. Psalm 103:12 states: "As far as the east is from the west, so far hath he removed our transgressions from us." In the New Covenant, believers are commanded to forgive one another freely because God in Christ has forgiven them (Ephesians 4:32).',
-    summaryAm: 'ይቅርታ በእግዚአብሔር ምሕረትና ጸጋ ላይ የተመሠረተ ነው። መዝሙር 103፥12 "ምሥራቅ ከምዕራብ እንደሚርቅ፥ እንዲሁ ኃጢአታችንን ከእኛ አራቀ" ይላል። በአዲስ ኪዳን ደግሞ እግዚአብሔር በክርስቶስ ይቅር እንዳለን እኛም እርስ በርሳችን ይቅር እንድንባባል ታዝዘናል (ኤፌ 4፥32)።',
-    keyChapters: [
-      { book: 19, chapter: 103, labelEn: 'Psalm 103 (God Who Forgives All Iniquities)', labelAm: 'መዝሙር 103 (ኃጢአትን ሁሉ ይቅር የሚል)' },
-      { book: 40, chapter: 18, labelEn: 'Matthew 18 (The Unforgiving Servant Parable)', labelAm: 'ማቴዎስ 18 (ምሕረት የሌለው አገልጋይ ምሳሌ)' },
-      { book: 49, chapter: 4, labelEn: 'Ephesians 4:31-32 (Forgiving as God Forgave You)', labelAm: 'ኤፌሶን 4:31-32 (እግዚአብሔር ይቅር እንዳላችሁ ይቅር ተባባሉ)' },
-      { book: 62, chapter: 1, labelEn: '1 John 1:8-9 (Faithful and Just to Forgive)', labelAm: '1 ዮሐንስ 1:8-9 (ኃጢአታችንን ይቅር ሊለን የታመነ ነው)' },
+    keywordsEn: ['forgiveness', 'forgive', 'reconciliation', 'remission of sins', 'mercy', 'pardon'],
+    keywordsAm: ['ይቅርታ', 'ይቅር', 'እርቅ', 'የኃጢአት ስርየት', 'ምሕረት'],
+    primaryPassages: [
+      { book: 19, chapter: 103, verseStart: 8, verseEnd: 13 },
+      { book: 23, chapter: 1, verseStart: 18, verseEnd: 18 },
+      { book: 40, chapter: 6, verseStart: 12, verseEnd: 15 },
+      { book: 40, chapter: 18, verseStart: 21, verseEnd: 35 },
+      { book: 49, chapter: 4, verseStart: 31, verseEnd: 32 },
+      { book: 51, chapter: 3, verseStart: 12, verseEnd: 14 },
+      { book: 62, chapter: 1, verseStart: 8, verseEnd: 9 },
     ],
-    keyVerses: ['Matthew 6:14-15', 'Matthew 18:21-22', 'Ephesians 4:32', 'Colossians 3:13', '1 John 1:9'],
-    otNtConnectionsEn: 'In the Old Testament, the Day of Atonement (Leviticus 16) foreshadowed the complete remission of sins through the blood of Christ. Hebrews 9:22 states: "without shedding of blood is no remission." Jesus shed His blood on the cross for the forgiveness of sins once for all (Matthew 26:28, Hebrews 10:12).',
-    otNtConnectionsAm: 'በብሉይ ኪዳን የስርየት ቀን (ዘሌ 16) በክርስቶስ ደም ለሚገኘው ፍጹም የኃጢአት ስርየት ጥላ ነበር። ዕብራውያን 9፥22 "ያለ ደም ማፍሰስ ስርየት የለም" ይላል። ኢየሱስ ለብዙዎች የኃጢአት ስርየት ደሙን በመስቀል ላይ አፈሰሰ (ማቴ 26፥28)።',
-    reflectionQuestionsEn: [
-      'Is there someone God is calling you to forgive today as Christ forgave you?',
-      'How does 1 John 1:9 assure you when you stumble and confess your sins to God?',
-    ],
-    reflectionQuestionsAm: [
-      'ክርስቶስ ይቅር እንዳለዎት ዛሬ ይቅር እንዲሉ እግዚአብሔር የሚጠይቅዎት ሰው አለ?',
-      '1 ዮሐንስ 1፥9 ኃጢአታችንን ብንናዘዝ ይቅር ሊለን የታመነና ጻድቅ መሆኑን ማወቅ ምን ዓይነት እረፍት ይሰጥዎታል?',
-    ],
+    searchTerms: ['forgiveness', 'forgive', 'sins', 'ይቅርታ', 'ስርየት', 'ምሕረት'],
   },
   {
     id: 'faith',
-    aliasesEn: ['faith', 'believing', 'trust'],
-    aliasesAm: ['እምነት', 'ማመን'],
-    titleEn: 'Faith According to Scripture',
-    titleAm: 'እምነት በመጽሐፍ ቅዱስ ትምህርት መሠረት',
+    nameEn: 'Faith (According to Scripture)',
+    nameAm: 'እምነት በመጽሐፍ ቅዱስ መሠረት',
     testament: 'Both',
-    summaryEn: 'Hebrews 11:1 defines faith: "Now faith is the substance of things hoped for, the evidence of things not seen." Hebrews 11:6 adds that without faith it is impossible to please God. Faith is not blind optimism; it is confident reliance upon God’s character and His written promises. Ephesians 2:8-9 teaches that salvation is by grace through faith, a gift of God.',
-    summaryAm: 'ዕብራውያን 11፥1 "እምነትም ተስፋ ስለምናደርገው ነገር የሚያስረግጥ፥ የማናየውንም ነገር የሚያስረዳ ነው" በማለት ይተረጉመዋል። ዕብራውያን 11፥6 "ያለ እምነት ደግሞ እግዚአብሔርን ደስ ማሰኘት አይቻልም" ይላል። እምነት በእግዚአብሔር ማንነትና በተስፋው ቃል ላይ መደገፍ ነው። ኤፌሶን 2፥8-9 መዳን በጸጋ በእምነት እንደሆነ ያስተምራል።',
-    keyChapters: [
-      { book: 58, chapter: 11, labelEn: 'Hebrews 11 (The Great Hall of Faith)', labelAm: 'ዕብራውያን 11 (የታላላቆቹ የእምነት ሰዎች ምዕራፍ)' },
-      { book: 45, chapter: 10, labelEn: 'Romans 10 (Faith Comes by Hearing the Word)', labelAm: 'ሮሜ 10 (እምነት ከመስማት ነው)' },
-      { book: 59, chapter: 2, labelEn: 'James 2:14-26 (Living Faith & Works)', labelAm: 'ያዕቆብ 2:14-26 (ሕያው እምነትና ሥራ)' },
-      { book: 49, chapter: 2, labelEn: 'Ephesians 2:8-10 (Saved by Grace Through Faith)', labelAm: 'ኤፌሶን 2:8-10 (በጸጋው በእምነት ድናችኋል)' },
+    keywordsEn: ['faith', 'believe', 'trust in god', 'righteous shall live by faith', 'assurance', 'substance'],
+    keywordsAm: ['እምነት', 'ማመን', 'በእግዚአብሔር መታመን', 'ጻድቅ በእምነት ይኖራል'],
+    primaryPassages: [
+      { book: 1, chapter: 15, verseStart: 6, verseEnd: 6 },
+      { book: 35, chapter: 2, verseStart: 4, verseEnd: 4, descriptionEn: 'The just shall live by faith', descriptionAm: 'ጻድቅ በእምነቱ ይኖራል' },
+      { book: 45, chapter: 10, verseStart: 9, verseEnd: 17 },
+      { book: 49, chapter: 2, verseStart: 8, verseEnd: 9 },
+      { book: 58, chapter: 11, verseStart: 1, verseEnd: 6 },
+      { book: 59, chapter: 2, verseStart: 14, verseEnd: 26 },
     ],
-    keyVerses: ['Hebrews 11:1', 'Hebrews 11:6', 'Romans 1:17', 'Romans 10:17', 'Ephesians 2:8-9', 'James 2:22'],
-    otNtConnectionsEn: 'The core biblical doctrine of justification by faith was first revealed in the Old Testament: Habakkuk 2:4 proclaimed: "the just shall live by his faith." The Apostle Paul in Romans 1:17 and Galatians 3:11 takes this exact Old Testament verse as the foundation of the New Testament Gospel.',
-    otNtConnectionsAm: 'በእምነት የመጽደቅ መጽሐፍ ቅዱሳዊ ትምህርት በመጀመሪያ በብሉይ ኪዳን ተገልጧል፦ ዕንባቆም 2፥4 "ጻድቅ ግን በእምነቱ በሕይወት ይኖራል" ተብሎ ተጽፏል። ሐዋርያው ጳውሎስ በሮሜ 1፥17 እና በገላትያ 3፥11 ላይ ይህንን የብሉይ ኪዳን ቃል የወንጌል እምብርት አድርጎ ይጠቅሰዋል።',
-    reflectionQuestionsEn: [
-      'Since faith comes by hearing the word of God (Romans 10:17), how can you increase your intake of Scripture?',
-      'How does your faith show itself in active love and obedience according to James 2?',
-    ],
-    reflectionQuestionsAm: [
-      'እምነት የእግዚአብሔርን ቃል ከመስማት የሚመጣ ከሆነ (ሮሜ 10፥17)፣ የመጽሐፍ ቅዱስ ንባብዎን እንዴት ያሳድጋሉ?',
-      'በያዕቆብ 2 መሠረት እምነትዎ በተግባራዊ ፍቅርና በመታዘዝ የሚገለጠው እንዴት ነው?',
-    ],
+    searchTerms: ['faith', 'believe', 'trust', 'እምነት', 'ማመን', 'መታመን'],
   },
   {
     id: 'love',
-    aliasesEn: ['love', 'agape', 'charity'],
-    aliasesAm: ['ፍቅር'],
-    titleEn: 'Divine Love (Agape) According to Scripture',
-    titleAm: 'ፍቅር በመጽሐፍ ቅዱስ መሠረት',
+    nameEn: 'God’s Love and Brotherly Love',
+    nameAm: 'የእግዚአብሔር ፍቅርና የወንድማማች ፍቅር',
     testament: 'Both',
-    summaryEn: '1 John 4:8 declares that "God is love." Biblical love is not merely an emotion, but a sacrificial commitment to the highest good of another. John 3:16 demonstrates that God so loved the world that He gave His only begotten Son. In 1 Corinthians 13, love is described as patient, kind, never failing, and greater than faith and hope.',
-    summaryAm: '1 ዮሐንስ 4፥8 "እግዚአብሔር ፍቅር ነው" ይላል። መጽሐፍ ቅዱሳዊ ፍቅር ስሜት ብቻ ሳይሆን ራስን አሳልፎ የሚሰጥ መሥዋዕትነት ነው። ዮሐንስ 3፥16 "እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና" ይላል። 1 ቆሮንቶስ 13 ፍቅር ታጋሽ፣ ቸር፣ የማይቀናና ከሁሉ የሚበልጥ እንደሆነ ይገልጻል።',
-    keyChapters: [
-      { book: 46, chapter: 13, labelEn: '1 Corinthians 13 (The Love Chapter)', labelAm: '1 ቆሮንቶስ 13 (የፍቅር ታላቅ ምዕራፍ)' },
-      { book: 62, chapter: 4, labelEn: '1 John 4:7-21 (God is Love)', labelAm: '1 ዮሐንስ 4:7-21 (እግዚአብሔር ፍቅር ነው)' },
-      { book: 43, chapter: 13, labelEn: 'John 13:34-35 (A New Commandment: Love One Another)', labelAm: 'ዮሐንስ 13:34-35 (እርስ በርሳችሁ ተዋደዱ)' },
-      { book: 45, chapter: 5, labelEn: 'Romans 5:6-8 (God Demonstrates His Love at the Cross)', labelAm: 'ሮሜ 5:6-8 (እግዚአብሔር ፍቅሩን በመስቀል ላይ አሳይቷል)' },
+    keywordsEn: ['love', 'agape', 'god is love', 'great commandment', 'charity', 'compassion'],
+    keywordsAm: ['ፍቅር', 'እግዚአብሔር ፍቅር ነው', 'ዋነኛ ትእዛዝ', 'ፍቅር ታጋሽ ነው'],
+    primaryPassages: [
+      { book: 5, chapter: 6, verseStart: 4, verseEnd: 5 },
+      { book: 3, chapter: 19, verseStart: 18, verseEnd: 18 },
+      { book: 40, chapter: 22, verseStart: 36, verseEnd: 40 },
+      { book: 43, chapter: 3, verseStart: 16, verseEnd: 16 },
+      { book: 43, chapter: 13, verseStart: 34, verseEnd: 35 },
+      { book: 45, chapter: 5, verseStart: 6, verseEnd: 8 },
+      { book: 46, chapter: 13, verseStart: 1, verseEnd: 13 },
+      { book: 62, chapter: 4, verseStart: 7, verseEnd: 21 },
     ],
-    keyVerses: ['John 3:16', 'Romans 5:8', '1 Corinthians 13:4-8', '1 Corinthians 13:13', '1 John 4:10', '1 John 4:19'],
-    otNtConnectionsEn: 'The Great Commandment in Deuteronomy 6:5 ("Thou shalt love the Lord thy God with all thine heart") and Leviticus 19:18 ("Thou shalt love thy neighbour as thyself") were cited by Jesus in Matthew 22:37-40 as the two commandments on which hang all the Law and the Prophets.',
-    otNtConnectionsAm: 'በዘዳግም 6፥5 "አምላክህን እግዚአብሔርን በፍጹም ልብህ ውደድ" እና በዘሌዋውያን 19፥18 "ባልንጀራህን እንደ ራስህ ውደድ" የተባሉት የብሉይ ኪዳን ትእዛዛት በኢየሱስ ክርስቶስ የማቴዎስ 22፥37-40 የሕግ ሁሉ ማጠቃለያ ሆነው ተሰጥተዋል።',
-    reflectionQuestionsEn: [
-      'How does knowing that God loved you while you were still a sinner (Romans 5:8) transform how you treat difficult people?',
-      'Which characteristic of love in 1 Corinthians 13:4-7 do you need the Holy Spirit to develop in you today?',
+    searchTerms: ['love', 'commandment', 'ፍቅር', 'ትእዛዝ', 'አጋፔ'],
+  },
+  {
+    id: 'salvation',
+    nameEn: 'Salvation and Grace',
+    nameAm: 'መዳንና ጸጋ',
+    testament: 'Both',
+    keywordsEn: ['salvation', 'saved', 'grace', 'redemption', 'born again', 'eternal life'],
+    keywordsAm: ['መዳን', 'ደኅንነት', 'ጸጋ', 'ቤዛነት', 'ዳግመኛ መወለድ', 'የዘላለም ሕይወት'],
+    primaryPassages: [
+      { book: 23, chapter: 53, verseStart: 4, verseEnd: 6 },
+      { book: 43, chapter: 3, verseStart: 3, verseEnd: 8 },
+      { book: 44, chapter: 4, verseStart: 12, verseEnd: 12 },
+      { book: 44, chapter: 16, verseStart: 30, verseEnd: 31 },
+      { book: 45, chapter: 3, verseStart: 21, verseEnd: 26 },
+      { book: 45, chapter: 6, verseStart: 23, verseEnd: 23 },
+      { book: 49, chapter: 2, verseStart: 1, verseEnd: 10 },
+      { book: 56, chapter: 3, verseStart: 4, verseEnd: 7 },
     ],
-    reflectionQuestionsAm: [
-      'እኛ ገና ኃጢአተኞች ሳለን እግዚአብሔር እንደወደደን ማወቅ (ሮሜ 5፥8) ሌሎችን በምንይዝበት መንገድ ላይ ምን ለውጥ ያመጣል?',
-      'በ1 ቆሮንቶስ 13፥4-7 ከተዘረዘሩት የፍቅር ባሕርያት መካከል ዛሬ በሕይወትዎ እንዲያድግ የሚፈልጉት የትኛው ነው?',
+    searchTerms: ['salvation', 'saved', 'grace', 'መዳን', 'ደኅንነት', 'ጸጋ'],
+  },
+  {
+    id: 'prayer',
+    nameEn: 'Prayer and Intercession',
+    nameAm: 'ጸሎትና ምልጃ',
+    testament: 'Both',
+    keywordsEn: ['prayer', 'pray', 'lords prayer', 'supplication', 'intercession', 'ask and it shall be given'],
+    keywordsAm: ['ጸሎት', 'መጸለይ', 'አባታችን ሆይ', 'ምልጃ', 'ለምኑ ይሰጣችኋል'],
+    primaryPassages: [
+      { book: 14, chapter: 7, verseStart: 14, verseEnd: 14 },
+      { book: 19, chapter: 5, verseStart: 1, verseEnd: 3 },
+      { book: 27, chapter: 9, verseStart: 3, verseEnd: 19 },
+      { book: 40, chapter: 6, verseStart: 5, verseEnd: 15 },
+      { book: 40, chapter: 7, verseStart: 7, verseEnd: 11 },
+      { book: 50, chapter: 4, verseStart: 6, verseEnd: 7 },
+      { book: 52, chapter: 5, verseStart: 16, verseEnd: 18 },
+      { book: 59, chapter: 5, verseStart: 13, verseEnd: 16 },
     ],
+    searchTerms: ['prayer', 'pray', 'ጸሎት', 'መጸለይ'],
+  },
+  {
+    id: 'repentance',
+    nameEn: 'Repentance and Turning to God',
+    nameAm: 'ንስሐና ወደ እግዚአብሔር መመለስ',
+    testament: 'Both',
+    keywordsEn: ['repentance', 'repent', 'turn', 'confession', 'broken heart', 'contrite spirit'],
+    keywordsAm: ['ንስሐ', 'መመለስ', 'የተሰበረ ልብ', 'መናዘዝ'],
+    primaryPassages: [
+      { book: 19, chapter: 51, verseStart: 1, verseEnd: 17 },
+      { book: 23, chapter: 55, verseStart: 6, verseEnd: 7 },
+      { book: 26, chapter: 18, verseStart: 30, verseEnd: 32 },
+      { book: 29, chapter: 2, verseStart: 12, verseEnd: 13 },
+      { book: 40, chapter: 4, verseStart: 17, verseEnd: 17 },
+      { book: 42, chapter: 15, verseStart: 11, verseEnd: 24, descriptionEn: 'Prodigal son', descriptionAm: 'የጠፋው ልጅ' },
+      { book: 44, chapter: 3, verseStart: 19, verseEnd: 20 },
+      { book: 47, chapter: 7, verseStart: 9, verseEnd: 10 },
+    ],
+    searchTerms: ['repentance', 'repent', 'ንስሐ', 'መመለስ'],
+  },
+  {
+    id: 'resurrection_eternity',
+    nameEn: 'Resurrection and Eternal Life',
+    nameAm: 'ትንሣኤና የዘላለም ሕይወት',
+    testament: 'Both',
+    keywordsEn: ['resurrection', 'eternal life', 'heaven', 'new jerusalem', 'life after death', 'second coming'],
+    keywordsAm: ['ትንሣኤ', 'የዘላለም ሕይወት', 'መንግሥተ ሰማያት', 'አዲሲቱ ኢየሩሳሌም', 'ዳግም ምጽአት'],
+    primaryPassages: [
+      { book: 27, chapter: 12, verseStart: 1, verseEnd: 3 },
+      { book: 43, chapter: 5, verseStart: 24, verseEnd: 29 },
+      { book: 43, chapter: 11, verseStart: 25, verseEnd: 27 },
+      { book: 46, chapter: 15, verseStart: 12, verseEnd: 57 },
+      { book: 52, chapter: 4, verseStart: 13, verseEnd: 18 },
+      { book: 66, chapter: 21, verseStart: 1, verseEnd: 7 },
+      { book: 66, chapter: 22, verseStart: 1, verseEnd: 5 },
+    ],
+    searchTerms: ['resurrection', 'eternal life', 'ትንሣኤ', 'የዘላለም ሕይወት'],
   },
 ]
+
+/**
+ * Searches the canonical catalog for relevant Scripture coordinates without any canned text.
+ */
+export function findCanonicalTopics(query: string): CanonicalBiblicalTopic[] {
+  const q = query.toLowerCase().trim()
+  const results: CanonicalBiblicalTopic[] = []
+
+  for (const topic of CANONICAL_TOPICS) {
+    let matchScore = 0
+
+    // English keywords
+    for (const kw of topic.keywordsEn) {
+      if (q.includes(kw.toLowerCase())) matchScore += 3
+    }
+    // Amharic keywords
+    for (const kw of topic.keywordsAm) {
+      if (q.includes(kw)) matchScore += 3
+    }
+    // Search terms
+    for (const st of topic.searchTerms) {
+      if (q.includes(st.toLowerCase())) matchScore += 2
+    }
+
+    if (matchScore > 0) {
+      results.push(topic)
+    }
+  }
+
+  return results
+}
