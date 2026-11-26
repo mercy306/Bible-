@@ -211,9 +211,6 @@ export default function LineageWebSheet({
                     <span className={`lineageBadge lineageBadge--${activePerson.culturalTag}`}>
                       {isEn ? activePerson.culturalBadgeEn : activePerson.culturalBadgeAm}
                     </span>
-                    <span className="lineageBadge" style={{ background: 'var(--panel-2)', color: 'var(--ink)' }}>
-                      {isEn ? activePerson.tribeOrNationEn : activePerson.tribeOrNationAm}
-                    </span>
                   </div>
                   {history.length > 0 && (
                     <button
