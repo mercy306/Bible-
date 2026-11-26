@@ -241,42 +241,10 @@ export default function LineageWebSheet({
             {/* Spotlight Card */}
             <article className="lineageSpotlight">
               <header className="lineageSpotlight__header">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
-                  <div className="lineageBadgesRow">
-                    <span className={`lineageBadge lineageBadge--${activePerson.culturalTag}`}>
-                      {isEn ? activePerson.culturalBadgeEn : activePerson.culturalBadgeAm}
-                    </span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    {history.length > 0 && (
-                      <button
-                        type="button"
-                        className="sheet__back"
-                        onClick={handleBack}
-                        style={{ height: '28px', padding: '0 10px', fontSize: '11.5px', borderRadius: '8px' }}
-                        title={isEn ? 'Back to previous person' : 'ወደ ቀዳሚው ሰው ተመለስ'}
-                      >
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <path d="M19 12H5M12 19l-7-7 7-7" />
-                        </svg>
-                        <span>{isEn ? 'Back' : 'ወደ ኋላ'}</span>
-                      </button>
-                    )}
-                    {nextPerson && (
-                      <button
-                        type="button"
-                        className="sheet__back"
-                        onClick={() => selectPerson(nextPerson.id)}
-                        style={{ height: '28px', padding: '0 10px', fontSize: '11.5px', borderRadius: '8px', background: 'var(--panel-2)', color: 'var(--ink)' }}
-                        title={isEn ? `Next (${nextPerson.en})` : `ቀጣይ (${nextPerson.am})`}
-                      >
-                        <span>{isEn ? `Next (${nextPerson.en})` : `ቀጣይ (${nextPerson.am})`}</span>
-                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </button>
-                    )}
-                  </div>
+                <div className="lineageBadgesRow">
+                  <span className={`lineageBadge lineageBadge--${activePerson.culturalTag}`}>
+                    {isEn ? activePerson.culturalBadgeEn : activePerson.culturalBadgeAm}
+                  </span>
                 </div>
                 <div className="lineageSpotlight__names">
                   <h3 className="lineageSpotlight__nameEn">{isEn ? activePerson.nameEn : activePerson.nameAm}</h3>
