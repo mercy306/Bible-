@@ -22,6 +22,34 @@ interface Props {
 type TabMode = 'tree' | 'nations_tribes'
 type NationsSubTab = 'tribes' | 'noah' | 'diaspora'
 
+const BOOK_NAME_TO_NR: Record<string, number> = {
+  genesis: 1, exodus: 2, leviticus: 3, numbers: 4, deuteronomy: 5,
+  joshua: 6, judges: 7, ruth: 8, '1 samuel': 9, '2 samuel': 10,
+  '1 kings': 11, '2 kings': 12, '1 chronicles': 13, '2 chronicles': 14,
+  ezra: 15, nehemiah: 16, esther: 17, job: 18, psalm: 19, psalms: 19,
+  proverbs: 20, ecclesiastes: 21, 'song of solomon': 22, 'song of songs': 22,
+  isaiah: 23, jeremiah: 24, lamentations: 25, ezekiel: 26, daniel: 27,
+  hosea: 28, joel: 29, amos: 30, obadiah: 31, jonah: 32,
+  micah: 33, nahum: 34, habakkuk: 35, zephaniah: 36, haggai: 37,
+  zechariah: 38, malachi: 39, matthew: 40, mark: 41, luke: 42,
+  john: 43, acts: 44, romans: 45, '1 corinthians': 46, '2 corinthians': 47,
+  galatians: 48, ephesians: 49, philippians: 50, colossians: 51,
+  '1 thessalonians': 52, '2 thessalonians': 53, '1 timothy': 54, '2 timothy': 55,
+  titus: 56, philemon: 57, hebrews: 58, james: 59, '1 peter': 60,
+  '2 peter': 61, '1 john': 62, '2 john': 63, '3 john': 64, jude: 65,
+  revelation: 66,
+}
+
+function parsePassageRef(refStr: string): { book: number; chapter: number } | null {
+  const match = refStr.match(/^(\d?\s*[a-zA-Z]+(?:\s+of\s+[a-zA-Z]+)?)\s+(\d+)/)
+  if (!match) return null
+  const bookKey = match[1].trim().toLowerCase().replace(/\s+/g, ' ')
+  const bookNr = BOOK_NAME_TO_NR[bookKey]
+  const chapter = parseInt(match[2], 10)
+  if (bookNr && chapter >= 1) return { book: bookNr, chapter }
+  return null
+}
+
 const PATRIARCH_LIST = [
   { id: 'adam', en: 'Adam', am: 'አዳም' },
   { id: 'cain', en: 'Cain', am: 'ቃየል' },
@@ -59,18 +87,6 @@ export default function LineageWebSheet({
   const pillsRef = useRef<HTMLDivElement>(null)
 
   const activePerson = LINEAGE_PEOPLE[activePersonId] || LINEAGE_PEOPLE['adam']
-
-  const patriarchIndex = PATRIARCH_LIST.findIndex((p) => p.id === activePersonId)
-  const nextPerson =
-    patriarchIndex >= 0 && patriarchIndex < PATRIARCH_LIST.length - 1
-      ? PATRIARCH_LIST[patriarchIndex + 1]
-      : activePerson.childrenIds.length > 0 && LINEAGE_PEOPLE[activePerson.childrenIds[0]]
-        ? {
-            id: activePerson.childrenIds[0],
-            en: LINEAGE_PEOPLE[activePerson.childrenIds[0]].nameEn,
-            am: LINEAGE_PEOPLE[activePerson.childrenIds[0]].nameAm,
-          }
-        : null
 
   useEffect(() => {
     if (pillsRef.current) {
@@ -228,15 +244,9 @@ export default function LineageWebSheet({
               <button
                 type="button"
                 className="lineageScrollArrow"
-                onClick={() => {
-                  if (nextPerson) {
-                    selectPerson(nextPerson.id)
-                  } else {
-                    scrollPills('right')
-                  }
-                }}
-                title={isEn ? (nextPerson ? `Next (${nextPerson.en})` : 'Scroll right') : (nextPerson ? `ቀጣይ (${nextPerson.am})` : 'ወደ ቀኝ')}
-                aria-label="Next or scroll right"
+                onClick={() => scrollPills('right')}
+                title={isEn ? 'Scroll right' : 'ወደ ቀኝ ሸብሽብ'}
+                aria-label="Scroll right"
               >
                 ›
               </button>
@@ -382,15 +392,11 @@ export default function LineageWebSheet({
                     style={{ border: 'none', cursor: onOpenPassage ? 'pointer' : 'default' }}
                     onClick={() => {
                       if (onOpenPassage) {
-                        if (v.startsWith('Matthew 1')) onOpenPassage(40, 1)
-                        else if (v.startsWith('Luke 3')) onOpenPassage(42, 3)
-                        else if (v.startsWith('Ruth 4')) onOpenPassage(8, 4)
-                        else if (v.startsWith('Genesis 12')) onOpenPassage(1, 12)
-                        else if (v.startsWith('Genesis 22')) onOpenPassage(1, 22)
-                        else if (v.startsWith('Acts 8')) onOpenPassage(44, 8)
-                        else if (v.startsWith('Acts 10')) onOpenPassage(44, 10)
-                        else if (v.startsWith('Hebrews 7')) onOpenPassage(58, 7)
-                        onClose()
+                        const parsed = parsePassageRef(v)
+                        if (parsed) {
+                          onOpenPassage(parsed.book, parsed.chapter)
+                          onClose()
+                        }
                       }
                     }}
                   >
