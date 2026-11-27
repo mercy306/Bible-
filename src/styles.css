@@ -6189,9 +6189,11 @@ html {
 }
 
 .main {
-  scroll-padding-top:72px;
-  scroll-padding-bottom:80px;
-  overscroll-behavior-y:contain
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 84px;
+  scroll-padding-bottom: 96px;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 button,
@@ -6370,6 +6372,9 @@ button:active:not(:disabled) {
     flex:1 1 auto;
     min-height:0;
     overflow-y:auto;
+    scroll-behavior:smooth !important;
+    scroll-padding-top:84px;
+    scroll-padding-bottom:96px;
     -webkit-overflow-scrolling:touch;
     overscroll-behavior-y:contain;
     touch-action:pan-y;

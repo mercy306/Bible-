@@ -77,6 +77,25 @@
   color-scheme: dark !important;
 }
 
+/* ---------- Smooth Scrolling & Momentum Inertia ---------- */
+html {
+  scroll-behavior: smooth !important;
+}
+
+body,
+#root,
+.app,
+.main,
+.read {
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.main {
+  scroll-padding-top: 84px !important;
+  scroll-padding-bottom: 96px !important;
+}
+
 /* ---------- Type ---------- */
 body {
   background: var(--mz-cream) !important;

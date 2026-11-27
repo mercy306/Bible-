@@ -461,6 +461,15 @@ export default function Reader({
     }
   }, [targetVerse, chapter.book.nr, chapter.chapter, rows])
 
+  // Smoothly scroll the active spoken verse into view during audio playback
+  useEffect(() => {
+    if (!voiceover.isActive || !voiceover.activeVerseNumber) return
+    const el = document.getElementById('v' + voiceover.activeVerseNumber)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }, [voiceover.isActive, voiceover.activeVerseNumber])
+
   return (
     <article className="read">
       {/* The numbers the 2009 text does not separate are folded into the verse
