@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import MountainHero from './MountainHero'
-import { getGreeting } from './GreetingHero'
 import { fetchChapter } from '../api'
 import {
   useBookmarks,
@@ -57,7 +56,7 @@ function formatDate(at: number, isEn: boolean): string {
  * 4 pill tabs: Bookmarks (active purple) | Notes | Highlights | Collections
  * Clean white cards with purple bookmark icon, reference, note, date, and chevron ›
  */
-export default function SavedView({ books: _books, language = 'am', onOpen, onBack, onDaily }: Props) {
+export default function SavedView({ books: _books, language = 'am', onOpen, onBack, onDaily: _onDaily }: Props) {
   const bookmarks = useBookmarks()
   const highlights = useHighlights()
 
@@ -158,19 +157,6 @@ export default function SavedView({ books: _books, language = 'am', onOpen, onBa
           <h1 className="dailyScreen__title">{isEn ? 'Saved' : 'የተቀመጡ'}</h1>
 
           <div style={{ width: 38 }} />
-        </div>
-
-        <div className="homeScreen__heroText" style={{ marginTop: '16px', marginBottom: '8px' }}>
-          <h2 className="homeScreen__greeting">{getGreeting(isEn)}</h2>
-          <blockquote
-            className="homeScreen__quote"
-            style={{ cursor: onDaily ? 'pointer' : undefined }}
-            onClick={onDaily}
-            title={onDaily ? (isEn ? 'Go to Daily Devotional' : 'ወደ ዕለቱ ጥቅስ ይሂዱ') : undefined}
-          >
-            {isEn ? '“The Lord is my shepherd; I shall not want.”' : '“እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም።”'}
-            <cite className="homeScreen__quoteRef">{isEn ? 'Psalm 23:1' : 'መዝሙር 23:1'}</cite>
-          </blockquote>
         </div>
       </MountainHero>
 
