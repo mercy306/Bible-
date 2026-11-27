@@ -10787,7 +10787,76 @@ body {
 .read {
   max-width: 680px !important;
   margin: 0 auto !important;
-  padding: 48px 14px calc(118px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 16px 14px calc(118px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+@media (min-width: 720px) {
+  .read {
+    padding-top: 24px !important;
+  }
+}
+
+.reader__chapterHeader {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  margin: 0 auto 24px !important;
+  padding: 0 !important;
+}
+
+.reader__chapterTitleBtn {
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  cursor: pointer !important;
+  padding: 6px 18px !important;
+  border-radius: 14px !important;
+  transition: background 0.15s ease !important;
+  color: var(--ink) !important;
+  font-family: inherit !important;
+  text-align: center !important;
+}
+
+.reader__chapterTitleBtn:hover {
+  background: var(--panel-2) !important;
+}
+
+.reader__bookName {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: var(--ink) !important;
+  margin: 0 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.01em !important;
+  text-align: center !important;
+}
+
+.reader__chapNo {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--muted) !important;
+  margin-top: 4px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  text-align: center !important;
+}
+
+.reader__chev {
+  font-size: 11px !important;
+  color: var(--muted) !important;
+  transform: translateY(-0.5px) !important;
+}
+
+.topbar.topbar--compact .topbar__mainRow.topbar__mainRow--actionsOnly,
+.topbar__mainRow--actionsOnly {
+  justify-content: flex-end !important;
 }
 
 .verses {

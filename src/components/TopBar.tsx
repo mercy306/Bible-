@@ -125,6 +125,21 @@ export default function TopBar({
     }
   }, [versionOpen])
 
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    if (!isReadView) {
+      setScrolled(true)
+      return
+    }
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 60)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isReadView])
+
   const isEn = language === 'en'
   const isAm = language === 'am'
   const { am, en } = useBookNames(book)
@@ -315,21 +330,23 @@ export default function TopBar({
         </div>
       ) : (
         <>
-          <div className="topbar__mainRow">
-            <button
-              type="button"
-              className="topbar__titleBtn"
-              onClick={onBooks}
-              title={isEn ? "Choose Book or Chapter" : "መጽሐፍ ወይም ምዕራፍ ይምረጡ"}
-            >
-              <h1 className="topbar__chapterTitle">
-                <span className="topbar__bookName">{lead}</span>
-                <span className="topbar__chapNo">
-                  {isEn ? `Chapter ${chapter}` : `ምዕራፍ ${chapter}`}
-                  <span className="topbar__chev">▾</span>
-                </span>
-              </h1>
-            </button>
+          <div className={`topbar__mainRow ${isReadView && !scrolled ? 'topbar__mainRow--actionsOnly' : ''}`}>
+            {(!isReadView || scrolled) && (
+              <button
+                type="button"
+                className="topbar__titleBtn"
+                onClick={onBooks}
+                title={isEn ? "Choose Book or Chapter" : "መጽሐፍ ወይም ምዕራፍ ይምረጡ"}
+              >
+                <h1 className="topbar__chapterTitle">
+                  <span className="topbar__bookName">{lead}</span>
+                  <span className="topbar__chapNo">
+                    {isEn ? `Chapter ${chapter}` : `ምዕራፍ ${chapter}`}
+                    <span className="topbar__chev">▾</span>
+                  </span>
+                </h1>
+              </button>
+            )}
 
             <div className="topbar__rightActions">
               <button

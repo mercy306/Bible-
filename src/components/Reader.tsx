@@ -30,6 +30,7 @@ import { useChapterVoiceover } from '../voiceover'
 interface Props {
   chapter: ChapterResponse
   onOpen: (book: number, chapter: number, verse?: number, verseEnd?: number) => void
+  onBooks?: () => void
   onAppearance?: () => void
   /** Passage limits from the route, e.g. 16 to 20. */
   passage?: { from: number; to: number } | null
@@ -69,6 +70,7 @@ interface DisplayRow {
 export default function Reader({
   chapter,
   onOpen,
+  onBooks,
   onAppearance: _onAppearance,
   passage = null,
   targetVerse,
@@ -472,6 +474,22 @@ export default function Reader({
 
   return (
     <article className="read">
+      <header className="reader__chapterHeader">
+        <button
+          type="button"
+          className="reader__chapterTitleBtn"
+          onClick={() => (onBooks ? onBooks() : onOpen(chapter.book.nr, chapter.chapter))}
+          title={language === 'en' ? "Select book & chapter" : "መጽሐፍና ምዕራፍ ምረጥ"}
+          aria-label={language === 'en' ? "Select book & chapter" : "መጽሐፍና ምዕራፍ ምረጥ"}
+        >
+          <h1 className="reader__bookName">{displayBookName}</h1>
+          <div className="reader__chapNo">
+            {language === 'en' ? `Chapter ${chapter.chapter}` : `ምዕራፍ ${chapter.chapter}`}
+            <span className="reader__chev" aria-hidden="true">▾</span>
+          </div>
+        </button>
+      </header>
+
       {/* The numbers the 2009 text does not separate are folded into the verse
           that holds them and labelled with the whole range, so a chapter note
           about them would only repeat what the text already shows. */}

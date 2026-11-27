@@ -422,6 +422,7 @@ export default function App() {
             chapter={chapter}
             books={referenceBooks}
             onOpen={(b, c, v, vEnd) => goTo(b, c, v, vEnd)}
+            onBooks={() => setSheet((s) => (s === 'books' ? 'none' : 'books'))}
             onAppearance={() => setSheet('more')}
             language={prefs.language}
             compare={compare}
