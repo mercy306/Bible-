@@ -114,14 +114,22 @@ export default function MoreSheetBody({
                   role="radio"
                   aria-checked={isActive}
                   title={item.note}
+                  style={{
+                    backgroundColor: item.bg,
+                    color: item.ink,
+                  }}
                 >
                   <div
                     className="themePalettePreview"
-                    style={{ background: item.bg, color: item.ink }}
+                    style={{
+                      backgroundColor: item.bg,
+                      color: item.ink,
+                      borderColor: item.ink,
+                    }}
                   >
                     Aa
                   </div>
-                  <span className="themePaletteLabel">
+                  <span className="themePaletteLabel" style={{ color: item.ink }}>
                     {isEn ? item.label : item.am}
                   </span>
                 </button>

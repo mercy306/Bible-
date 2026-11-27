@@ -34,27 +34,27 @@ export const PARAGRAPH_RANGE = { min: 0, max: 20, step: 1 } as const
 export const THEMES = [
   // Row 1: Daylight Neutrals & Fresh Greens
   { id: 'paper', label: 'Paper', am: 'ንጹሕ ነጭ', note: 'Crisp White Daylight', bg: '#FFFFFF', ink: '#0F172A' },
-  { id: 'pearl', label: 'Pearl', am: 'ዕንቁ', note: 'Cool Silver Mist Gray', bg: '#E5E7EB', ink: '#1F2937' },
-  { id: 'light', label: 'Green', am: 'አረንጓዴ', note: 'Serene Sage Matcha', bg: '#CAD7C8', ink: '#142918' },
-  { id: 'mint', label: 'Mint', am: 'አዝሙድ', note: 'Refreshing Seafoam Mint', bg: '#C8EAD9', ink: '#0D3322' },
+  { id: 'pearl', label: 'Pearl', am: 'ዕንቁ', note: 'Cool Silver Mist Gray', bg: '#E2E8F0', ink: '#1E293B' },
+  { id: 'light', label: 'Green', am: 'አረንጓዴ', note: 'Serene Meadow Sage', bg: '#C6E7C9', ink: '#14532D' },
+  { id: 'mint', label: 'Mint', am: 'አዝሙድ', note: 'Refreshing Seafoam Mint', bg: '#A7F3D0', ink: '#064E3B' },
 
   // Row 2: Warm Daylight Parchment, Gold, Rose & Sky
-  { id: 'sepia', label: 'Sepia', am: 'ብራና', note: 'Ancient Parchment Tan', bg: '#E8D8BA', ink: '#3A230B' },
-  { id: 'gold', label: 'Gold', am: 'ወርቃማ', note: 'Sunny Honey Amber Gold', bg: '#F6DA86', ink: '#3D2702' },
-  { id: 'rose', label: 'Rose', am: 'ጽጌረዳ', note: 'Blush Petal Pink', bg: '#F9CBD5', ink: '#4A1024' },
-  { id: 'night', label: 'Sky', am: 'ሰማያዊ', note: 'Galilee Sky Blue', bg: '#C8E1F8', ink: '#0C2B4E' },
+  { id: 'sepia', label: 'Sepia', am: 'ብራና', note: 'Ancient Parchment Tan', bg: '#F5E8C7', ink: '#3A230B' },
+  { id: 'gold', label: 'Gold', am: 'ወርቃማ', note: 'Sunny Honey Amber Gold', bg: '#FDE68A', ink: '#451A03' },
+  { id: 'rose', label: 'Rose', am: 'ጽጌረዳ', note: 'Blush Petal Pink', bg: '#FBCFE8', ink: '#701A75' },
+  { id: 'night', label: 'Sky', am: 'ሰማያዊ', note: 'Galilee Sky Blue', bg: '#BAE6FD', ink: '#1E3A8A' },
 
-  // Row 3: Cool Dark & Night
-  { id: 'bw', label: 'Black', am: 'ጥቁር', note: 'Pure OLED Black', bg: '#000000', ink: '#FFFFFF' },
-  { id: 'charcoal', label: 'Charcoal', am: 'ከሰል', note: 'Matte Slate Charcoal', bg: '#22262B', ink: '#E2E8F0' },
-  { id: 'ocean', label: 'Ocean', am: 'ውቅያኖስ', note: 'Deep Galilee Navy Ocean', bg: '#0F2038', ink: '#E0EAFC' },
-  { id: 'olive', label: 'Olive', am: 'ወይራ', note: 'Deep Forest Olive', bg: '#14281B', ink: '#E2F2E6' },
+  // Row 3: Cool Dark & Nature Night
+  { id: 'bw', label: 'Black', am: 'ጥቁር', note: 'Pure OLED Pitch Black', bg: '#000000', ink: '#FFFFFF' },
+  { id: 'charcoal', label: 'Charcoal', am: 'ከሰል', note: 'Slate Charcoal Gray', bg: '#334155', ink: '#F8FAFC' },
+  { id: 'ocean', label: 'Ocean', am: 'ውቅያኖስ', note: 'Deep Galilee Navy Blue', bg: '#172554', ink: '#E0F2FE' },
+  { id: 'olive', label: 'Olive', am: 'ወይራ', note: 'Forest Evergreen Olive', bg: '#14532D', ink: '#ECFDF5' },
 
-  // Row 4: Rich Warm Jewel Dark
-  { id: 'burgundy', label: 'Burgundy', am: 'ወይን', note: 'Imperial Velvet Wine', bg: '#360D1A', ink: '#FDF2F4' },
-  { id: 'lavender', label: 'Lavender', am: 'ሐምራዊ', note: 'Royal Amethyst Purple', bg: '#26163B', ink: '#F3ECFB' },
-  { id: 'dark', label: 'Mocha', am: 'ቡናማ', note: 'Warm Roasted Mocha', bg: '#291B14', ink: '#F7EDE6' },
-  { id: 'clay', label: 'Clay', am: 'ሸክላ', note: 'Burnt Desert Clay', bg: '#381A16', ink: '#FBEAE5' },
+  // Row 4: Rich Warm Jewel Darks
+  { id: 'burgundy', label: 'Burgundy', am: 'ወይን', note: 'Imperial Velvet Wine Red', bg: '#580D23', ink: '#FDF2F4' },
+  { id: 'lavender', label: 'Lavender', am: 'ሐምራዊ', note: 'Royal Amethyst Violet Purple', bg: '#4C1D95', ink: '#FAF5FF' },
+  { id: 'dark', label: 'Mocha', am: 'ቡናማ', note: 'Warm Roasted Espresso Brown', bg: '#451A03', ink: '#FEF3C7' },
+  { id: 'clay', label: 'Clay', am: 'ሸክላ', note: 'Burnt Desert Terracotta Rust', bg: '#7C2D12', ink: '#FFEDD5' },
 ] as const
 
 export const ACCENTS = [

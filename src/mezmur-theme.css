@@ -19,30 +19,30 @@
 
 /* Burgundy Theme Dedicated Palette */
 :root[data-theme='burgundy'] {
-  --bg: #2E0811 !important;
-  --panel: #3D101C !important;
-  --panel-2: #4D1826 !important;
-  --panel-sage: #4D1826 !important;
-  --ink: #FDF6EC !important;
-  --ink-soft: #D4A7B2 !important;
-  --line: rgba(253, 246, 236, 0.12) !important;
+  --bg: #580D23 !important;
+  --panel: #6E132E !important;
+  --panel-2: #841B3B !important;
+  --panel-sage: #9C2649 !important;
+  --ink: #FDF2F4 !important;
+  --ink-soft: #F9A8D4 !important;
+  --line: rgba(253, 246, 236, 0.14) !important;
   --highlight: rgba(244, 63, 94, 0.25) !important;
-  --forest: #FDF6EC !important;
-  --sage: #D4A7B2 !important;
+  --forest: #FDF2F4 !important;
+  --sage: #F9A8D4 !important;
   --terracotta: #FB7185 !important;
-  --terracotta-soft: rgba(251, 113, 133, 0.15) !important;
+  --terracotta-soft: rgba(251, 113, 133, 0.2) !important;
   --accent: #FB7185 !important;
-  --accent-soft: rgba(251, 113, 133, 0.18) !important;
-  --accent-ink: #2E0811 !important;
+  --accent-soft: rgba(251, 113, 133, 0.22) !important;
+  --accent-ink: #580D23 !important;
   --primary-blue: #FB7185 !important;
-  --sand: #4D1826 !important;
-  --mz-cream: #2E0811;
-  --mz-card: #3D101C;
+  --sand: #841B3B !important;
+  --mz-cream: #580D23;
+  --mz-card: #6E132E;
   --mz-green: #FB7185;
   --mz-green-2: #FDA4AF;
-  --mz-mint: rgba(251, 113, 133, 0.18);
-  --mz-mint-soft: rgba(251, 113, 133, 0.1);
-  --mz-muted: #D4A7B2;
+  --mz-mint: rgba(251, 113, 133, 0.22);
+  --mz-mint-soft: rgba(251, 113, 133, 0.14);
+  --mz-muted: #F9A8D4;
   --mz-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   --mz-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.28);
   color-scheme: dark !important;
