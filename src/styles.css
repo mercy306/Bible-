@@ -10638,7 +10638,7 @@ body {
 .read {
   max-width: 680px !important;
   margin: 0 auto !important;
-  padding: 6px 14px calc(118px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 48px 14px calc(118px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
 .verses {
