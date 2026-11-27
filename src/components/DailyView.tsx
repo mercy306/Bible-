@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { fetchChapter } from '../api'
 import MountainHero from './MountainHero'
 import ReadingPlanView from './ReadingPlanView'
-import { isBookmarked, toggleBookmark, useBookmarks } from '../userdata'
 import { useReadingPlan, formatPlanChapterRange } from '../readingPlan'
 import type { BooksResponse } from '../types'
 import type { LanguageMode } from '../prefs'
@@ -46,7 +45,6 @@ export default function DailyView({
     if (initialTab) setTab(initialTab)
   }, [initialTab])
 
-  const bookmarks = useBookmarks()
   const planInfo = useReadingPlan()
   const [amharic, setAmharic] = useState<string | null>(null)
   const [english, setEnglish] = useState<string | null>(null)
@@ -86,14 +84,7 @@ export default function DailyView({
   const isEn = language === 'en'
   const isAm = language === 'am'
   const reference = isEn ? 'Psalm 46:10' : isAm ? 'መዝሙር 46:10' : 'መዝሙር 46:10 (Psalm 46:10)'
-  const verseRef = {
-    translation,
-    book: 19,
-    chapter: 46,
-    verse: 10,
-  }
 
-  const saved = isBookmarked(bookmarks, verseRef)
   const quoteText = english ?? 'Be still, and know that I am God.'
   const amharicText = amharic ?? 'ዕረፉ፥ እኔም አምላክ እንደ ሆንሁ እወቁ፤'
 
@@ -208,16 +199,7 @@ export default function DailyView({
 
               <cite className="dailyScreen__ref">{reference}</cite>
 
-              <button
-                type="button"
-                className={`dailyScreen__saveBtn ${saved ? 'is-saved' : ''}`}
-                onClick={() => toggleBookmark(bookmarks, verseRef)}
-              >
-                <svg viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" width="18" height="18">
-                  <path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                </svg>
-                <span>{isEn ? (saved ? 'Saved' : 'Save') : (saved ? 'ተቀምጧል' : 'አስቀምጥ')}</span>
-              </button>
+
             </div>
 
             {/* Read Chapter Button below card */}
