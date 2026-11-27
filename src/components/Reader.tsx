@@ -659,15 +659,6 @@ export default function Reader({
 
                     {/* Collections row */}
                     <div className="verse__inlineSection">
-                      <div className="verse__inlineSectionTitle">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                        </svg>
-                        <span>{language === 'en' ? 'Collections' : 'ስብስቦች'}</span>
-                        <span className="verse__inlineHint">
-                          {language === 'en' ? '(Tap to file)' : '(ለመመደብ ይንኩ)'}
-                        </span>
-                      </div>
                       <div className="verse__inlineChips">
                         {collectionNames.map((name) => {
                           const isFiled = verseCollection === name
@@ -761,11 +752,6 @@ export default function Reader({
                         }
                       >
                         <span className="verse__inlineActionIcon">{isSpeaking ? '⏹' : '🔊'}</span>
-                        <span>
-                          {language === 'en'
-                            ? (isSpeaking ? 'Stop' : 'Listen')
-                            : (isSpeaking ? 'አቁም' : 'አዳምጥ')}
-                        </span>
                       </button>
 
                       <button
@@ -775,7 +761,6 @@ export default function Reader({
                         title={language === 'en' ? 'Highlight' : 'አድምቅ'}
                       >
                         <span className="verse__inlineActionIcon">🎨</span>
-                        <span>{language === 'en' ? 'Highlight' : 'አድምቅ'}</span>
                       </button>
 
                       <button
@@ -785,7 +770,6 @@ export default function Reader({
                         title={language === 'en' ? 'Bookmark' : 'ዕልባት'}
                       >
                         <span className="verse__inlineActionIcon">🔖</span>
-                        <span>{language === 'en' ? 'Bookmark' : 'ዕልባት'}</span>
                       </button>
 
                       <button
@@ -795,7 +779,6 @@ export default function Reader({
                         title={language === 'en' ? 'Note' : 'ማስታወሻ'}
                       >
                         <span className="verse__inlineActionIcon">📝</span>
-                        <span>{language === 'en' ? 'Note' : 'ማስታወሻ'}</span>
                       </button>
 
                       <button
@@ -805,7 +788,6 @@ export default function Reader({
                         title={language === 'en' ? 'Commentary' : 'ማብራሪያ'}
                       >
                         <span className="verse__inlineActionIcon">💬</span>
-                        <span>{language === 'en' ? 'Commentary' : 'ማብራሪያ'}</span>
                       </button>
 
                       {(() => {
@@ -823,7 +805,6 @@ export default function Reader({
                             title={language === 'en' ? 'The Generation Time-Capsule' : 'የዘመኑ እውነታና የጥቅስ አውድ'}
                           >
                             <span className="verse__inlineActionIcon">⏳</span>
-                            <span style={{ fontWeight: 800 }}>{language === 'en' ? 'Context' : 'እውነታ'}</span>
                           </button>
                         )
                       })()}
@@ -843,7 +824,6 @@ export default function Reader({
                             title={language === 'en' ? 'Parallel Scripture Harmony' : 'የተዛማጅ ክፍሎች ማነጻጸሪያ'}
                           >
                             <span className="verse__inlineActionIcon">🔄</span>
-                            <span style={{ fontWeight: 800, color: '#6b8afd' }}>{language === 'en' ? 'Parallels' : 'ተዛማጅ'}</span>
                           </button>
                         )
                       })()}
@@ -855,7 +835,6 @@ export default function Reader({
                         title={language === 'en' ? 'Copy' : 'ገልብጥ'}
                       >
                         <span className="verse__inlineActionIcon">📋</span>
-                        <span>{language === 'en' ? 'Copy' : 'ገልብጥ'}</span>
                       </button>
 
                       <button
@@ -865,7 +844,6 @@ export default function Reader({
                         title={language === 'en' ? 'Share' : 'አጋራ'}
                       >
                         <span className="verse__inlineActionIcon">↗️</span>
-                        <span>{language === 'en' ? 'Share' : 'አጋራ'}</span>
                       </button>
                     </div>
                   </div>

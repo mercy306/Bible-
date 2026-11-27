@@ -9770,7 +9770,7 @@ body {
 .verse__inlineBox {
   margin-top: 4px;
   margin-bottom: 3px;
-  padding: 5px 8px;
+  padding: 5px 7px;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -9907,23 +9907,26 @@ body {
   gap: 3px;
   padding-top: 3px;
   border-top: 1px solid var(--line);
+  justify-content: center;
 }
 
 .verse__inlineActionBtn {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  justify-content: center;
   background: var(--panel-2);
   color: var(--ink);
   border: 1px solid var(--line);
-  padding: 2px 6px;
-  border-radius: 999px;
+  padding: 4px;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
   font-size: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
   font-family: inherit;
-  line-height: 1.15;
+  line-height: 1;
 }
 
 .verse__inlineActionBtn:hover {
@@ -9940,7 +9943,7 @@ body {
 }
 
 .verse__inlineActionIcon {
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1;
 }
 
