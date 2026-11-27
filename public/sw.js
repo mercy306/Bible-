@@ -1,6 +1,6 @@
 // Minimal offline cache. The reader is served from this machine, so the cache
 // only needs to keep the page working when the server is briefly unavailable.
-const CACHE = 'sixty-six-v63'
+const CACHE = 'sixty-six-v64'
 const CORE = ['/', '/manifest.webmanifest', '/icon-192.png?v=2', '/icon-512.png?v=2']
 
 self.addEventListener('install', (event) => {
