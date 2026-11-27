@@ -71,7 +71,7 @@ export default function Reader({
   chapter,
   onOpen,
   onBooks,
-  onAppearance: _onAppearance,
+  onAppearance,
   passage = null,
   targetVerse,
   language,
@@ -1088,6 +1088,18 @@ export default function Reader({
             </svg>
           )}
         </button>
+
+        {onAppearance && (
+          <button
+            type="button"
+            className="readerBar__fontBtn"
+            onClick={onAppearance}
+            title={language === 'en' ? 'Font & Appearance' : 'የፊደል ቅርጽና ገጽታ'}
+            aria-label={language === 'en' ? 'Font & Appearance' : 'የፊደል ቅርጽና ገጽታ'}
+          >
+            Aa
+          </button>
+        )}
       </div>
 
       <TimeCapsuleSheet

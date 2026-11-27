@@ -3,10 +3,19 @@ import { useSyncExternalStore } from 'react'
 /** Reading preferences: typeface, text size, theme and accent colour. */
 
 export const FONTS = [
-  { id: 'serif', label: 'Serif', am: 'ሴሪፍ', note: 'Easy on the eyes' },
-  { id: 'sans', label: 'Clean', am: 'ዘመናዊ', note: 'Plain and modern' },
-  { id: 'traditional', label: 'Traditional', am: 'ባሕላዊ', note: 'Ethiopic book style' },
+  { id: 'sans', label: 'Clean', am: 'ዘመናዊ', note: 'Plain and modern (Noto Sans)' },
+  { id: 'serif', label: 'Serif', am: 'ሴሪፍ', note: 'Classic book serif (Noto Serif)' },
+  { id: 'traditional', label: 'Traditional', am: 'ባሕላዊ', note: 'Ethiopic church book style (Abyssinica SIL)' },
+  { id: 'nyala', label: 'Nyala', am: 'ኒያላ', note: 'Familiar Ethiopian typeface (Nyala / Ge’ez)' },
 ] as const
+
+export const FONT_WEIGHTS = [
+  { id: 'normal', label: 'Regular', am: 'መደበኛ' },
+  { id: 'bold', label: 'Bold', am: 'ደማቅ' },
+] as const
+
+export type FontId = (typeof FONTS)[number]['id']
+export type FontWeightId = (typeof FONT_WEIGHTS)[number]['id']
 
 export const SIZES = [
   { id: 's', label: 'Small', px: 16 },
@@ -60,7 +69,6 @@ export const LANGUAGES = [
   { id: 'en', label: 'EN', note: 'English only' },
 ] as const
 
-export type FontId = 'serif' | 'sans' | 'traditional'
 export type ThemeId =
   | 'light'
   | 'bw'
@@ -93,7 +101,8 @@ export type AccentId =
 export type LanguageMode = 'am' | 'en' | 'both'
 
 export interface Prefs {
-  font: 'serif' | 'sans' | 'traditional'
+  font: FontId
+  fontWeight?: FontWeightId
   sizePx: number
   theme: ThemeId
   accent: AccentId
@@ -115,6 +124,7 @@ const KEY = 'bible:prefs'
 
 const DEFAULTS: Prefs = {
   font: 'sans',
+  fontWeight: 'normal',
   sizePx: 20,
   theme: 'light',
   accent: 'brown',
@@ -126,7 +136,7 @@ const DEFAULTS: Prefs = {
   showStudyTools: false,
 }
 
-const FONT_IDS = ['serif', 'sans', 'traditional'] as FontId[]
+const FONT_IDS = ['serif', 'sans', 'traditional', 'nyala'] as FontId[]
 const THEME_IDS = [
   'light',
   'bw',
@@ -274,8 +284,11 @@ export function applyPrefs(prefs: Prefs) {
     serif: '"Noto Serif Ethiopic", Georgia, "Times New Roman", serif',
     sans: '"Noto Sans Ethiopic", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
     traditional: '"Abyssinica SIL", "Noto Serif Ethiopic", Georgia, serif',
+    nyala: 'Nyala, Kefa, "Abyssinica SIL", "Noto Sans Ethiopic", sans-serif',
   }
   root.style.setProperty('--reader-font', fontMap[prefs.font] || fontMap.serif)
+  root.style.setProperty('--reader-weight', prefs.fontWeight === 'bold' ? '700' : '400')
+  root.style.setProperty('--reader-leading', String(prefs.leading || 1.85))
 
   if (prefs.accent === 'custom' && prefs.customColor) {
     root.style.setProperty('--accent', prefs.customColor)

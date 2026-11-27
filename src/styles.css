@@ -679,7 +679,9 @@ select {
 
 .verse__text {
   font-size:var(--reader-size);
-  line-height:1.65
+  font-family:var(--reader-font);
+  font-weight:var(--reader-weight, 400);
+  line-height:var(--reader-leading, 1.7);
 }
 
 .pager {
@@ -783,7 +785,7 @@ select {
 
 :root[data-lang=am] .verse__text,
 :root[data-lang=tig] .verse__text {
-  line-height:1.95
+  line-height:var(--reader-leading, 1.95)
 }
 
 :root[data-lang=am] .verse__n,
@@ -10886,7 +10888,10 @@ body {
 }
 
 .verse__text {
-  font-size: 1.1rem !important;
+  font-size: var(--reader-size, 1.1rem) !important;
+  font-family: var(--reader-font) !important;
+  font-weight: var(--reader-weight, 400) !important;
+  line-height: var(--reader-leading, 1.85) !important;
   letter-spacing: 0.01em !important;
 }
 
@@ -10962,6 +10967,75 @@ body {
 .readerBar__listenBtn svg {
   width: 11px !important;
   height: 11px !important;
+}
+
+.readerBar__fontBtn {
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  min-height: 25px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+  color: var(--ink) !important;
+  cursor: pointer !important;
+  transition: transform 0.1s ease !important;
+}
+
+.readerBar__fontBtn:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+.readerBar__fontBtn:active {
+  transform: scale(0.92) !important;
+}
+
+.fontPreviewCard {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+}
+
+.fontPreviewCard__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.fontPreviewCard__title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.fontPreviewCard__badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-subtle, rgba(0,0,0,0.06));
+  color: var(--accent);
+}
+
+.fontPreviewCard__sample {
+  margin: 0;
+  font-family: var(--reader-font) !important;
+  font-weight: var(--reader-weight, 400) !important;
+  line-height: var(--reader-leading, 1.85) !important;
+  font-size: var(--reader-size, 16px) !important;
+  color: var(--ink);
 }
 
 /* Feature pills inside readerBar (POV / Matrix, Dilemma, Lineage Web) */

@@ -652,8 +652,10 @@ h6,
 }
 
 .verse__text {
-  font-size: 1.08rem !important;
-  line-height: 1.85 !important;
+  font-family: var(--reader-font) !important;
+  font-weight: var(--reader-weight, 400) !important;
+  line-height: var(--reader-leading, 1.85) !important;
+  font-size: var(--reader-size, 1.08rem) !important;
 }
 
 /* Centered scripture text, like the lyrics on the reference player screen. */
@@ -750,6 +752,74 @@ h6,
 .readerBar__navBtn {
   border-radius: 50% !important;
   color: var(--mz-green) !important;
+}
+
+.readerBar__fontBtn {
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  min-height: 25px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(74, 16, 40, 0.12) !important;
+  background: var(--mz-card) !important;
+  color: var(--mz-green) !important;
+  cursor: pointer !important;
+  transition: transform 0.1s ease !important;
+}
+
+.readerBar__fontBtn:hover {
+  background: var(--mz-mint) !important;
+}
+
+.readerBar__fontBtn:active {
+  transform: scale(0.92) !important;
+}
+
+.fontPreviewCard {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--panel-2, #f5f0eb);
+  border: 1px solid var(--line, rgba(74, 16, 40, 0.12));
+}
+
+.fontPreviewCard__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.fontPreviewCard__title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted, #7c7267);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.fontPreviewCard__badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(74, 16, 40, 0.08);
+  color: var(--mz-green, #1e4a38);
+}
+
+.fontPreviewCard__sample {
+  margin: 0;
+  font-family: var(--reader-font) !important;
+  font-weight: var(--reader-weight, 400) !important;
+  line-height: var(--reader-leading, 1.85) !important;
+  font-size: var(--reader-size, 16px) !important;
+  color: var(--ink, #1f1d1a);
 }
 
 /* ---------- Bottom navigation ---------- */

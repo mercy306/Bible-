@@ -3,6 +3,8 @@ import { useReadingPlan } from '../readingPlan'
 import {
   ACCENTS,
   FONTS,
+  FONT_WEIGHTS,
+  LEADING_RANGE,
   PARAGRAPH_RANGE,
   SIZE_RANGE,
   THEMES,
@@ -232,7 +234,25 @@ export default function MoreSheetBody({
             </div>
           </div>
 
-          {/* 2-Column Toggles: Verse Numbers & Font Typeface */}
+          {/* Line Height Slider Card */}
+          <div className="compactSliderCard">
+            <span className="compactSliderCard__label">📏 {isEn ? 'Line Spacing' : 'የመስመር ክፍተት'}</span>
+            <div className="compactSliderCard__controls">
+              <input
+                type="range"
+                className="slider"
+                min={LEADING_RANGE.min}
+                max={LEADING_RANGE.max}
+                step={LEADING_RANGE.step}
+                value={prefs.leading || 1.85}
+                onChange={(e) => setPref('leading', Number(e.target.value))}
+                aria-label={isEn ? 'Line Spacing' : 'የመስመር ክፍተት'}
+              />
+              <span className="compactSliderCard__badge">{(prefs.leading || 1.85).toFixed(2)}</span>
+            </div>
+          </div>
+
+          {/* 2-Column Toggles: Verse Numbers & Font Weight */}
           <div className="toggleGrid">
             <div className="toggleCard">
               <span className="toggleCard__label">🔢 {isEn ? 'Verse Nrs' : 'የጥቅስ ቁጥሮች'}</span>
@@ -255,21 +275,52 @@ export default function MoreSheetBody({
             </div>
 
             <div className="toggleCard">
-              <span className="toggleCard__label">🖋️ {isEn ? 'Font' : 'ቅርጽ'}</span>
-              <div className="segbar segbar--tiny" role="group" aria-label={isEn ? 'Typeface' : 'የፊደል ቅርጽ'}>
-                {FONTS.map((item) => (
+              <span className="toggleCard__label">💪 {isEn ? 'Weight' : 'ውፍረት'}</span>
+              <div className="segbar segbar--tiny" role="group" aria-label={isEn ? 'Font Weight' : 'የፊደል ውፍረት'}>
+                {FONT_WEIGHTS.map((item) => (
                   <button
                     key={item.id}
                     type="button"
-                    className={`segbar__btn ${prefs.font === item.id ? 'is-active' : ''}`}
-                    onClick={() => setPref('font', item.id)}
-                    title={item.note}
+                    className={`segbar__btn ${(prefs.fontWeight || 'normal') === item.id ? 'is-active' : ''}`}
+                    onClick={() => setPref('fontWeight', item.id)}
                   >
                     {isEn ? item.label : item.am}
                   </button>
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* Typeface Selection Card */}
+          <div className="toggleCard" style={{ marginTop: '8px' }}>
+            <span className="toggleCard__label">🖋️ {isEn ? 'Typeface' : 'የፊደል ቅርጽ'}</span>
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? 'Typeface' : 'የፊደል ቅርጽ'}>
+              {FONTS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`segbar__btn ${prefs.font === item.id ? 'is-active' : ''}`}
+                  onClick={() => setPref('font', item.id)}
+                  title={item.note}
+                >
+                  {isEn ? item.label : item.am}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Live Scripture Font Preview Card */}
+          <div className="fontPreviewCard">
+            <div className="fontPreviewCard__meta">
+              <span className="fontPreviewCard__title">
+                {FONTS.find((f) => f.id === prefs.font)?.am || 'ቅርጽ'} · {prefs.sizePx}px · {prefs.fontWeight === 'bold' ? (isEn ? 'Bold' : 'ደማቅ') : (isEn ? 'Regular' : 'መደበኛ')}
+              </span>
+            </div>
+            <p className="fontPreviewCard__sample">
+              {isEn
+                ? "In the beginning was the Word, and the Word was with God, and the Word was God."
+                : "በመጀመሪያ ቃል ነበረ፥ ቃልም በእግዚአብሔር ዘንድ ነበረ፥ ቃልም እግዚአብሔር ነበረ።"}
+            </p>
           </div>
         </div>
       )}
