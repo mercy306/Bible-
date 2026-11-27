@@ -10575,8 +10575,8 @@ body {
 }
 
 :root[data-theme='light'] .topbar.topbar--compact .mountainHero {
-  background: #CAD5C8 !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  background: var(--bg) !important;
+  border-bottom: 1px solid var(--line) !important;
 }
 
 :root[data-theme='bw'] .topbar.topbar--compact .mountainHero,

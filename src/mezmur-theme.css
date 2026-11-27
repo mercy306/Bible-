@@ -124,15 +124,18 @@ h6,
   background: var(--mz-cream);
 }
 
-/* ---------- Top bar (reading screen) ---------- */
+/* ---------- Top bar (reading screen) — Clean, No Upper Color ---------- */
+:root[data-theme] .topbar.topbar--compact,
 :root[data-theme] .topbar.topbar--compact .mountainHero,
 :root[data-theme] .topbar.topbar--compact .topbar__hero,
-:root[data-theme] .topbar__hero.topbar__hero--compact {
-  background: linear-gradient(160deg, #3a0e1e 0%, #4a1028 55%, #1a0509 100%) !important;
-  border-radius: 0 0 26px 26px !important;
-  border-bottom: 0 !important;
-  padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 16px !important;
-  box-shadow: 0 12px 28px rgba(74, 16, 40, 0.18) !important;
+:root[data-theme] .topbar__hero.topbar__hero--compact,
+.topbar.topbar--compact,
+.topbar.topbar--compact .mountainHero {
+  background: var(--bg) !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
+  padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 10px !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03) !important;
   min-height: auto !important;
 }
 
@@ -164,14 +167,14 @@ h6,
   flex-direction: column !important;
   align-items: flex-start !important;
   gap: 2px !important;
-  color: #faf3ea !important;
+  color: var(--ink) !important;
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
   text-shadow: none !important;
   padding: 0 !important;
   border-radius: 0 !important;
-  font-size: 21px !important;
+  font-size: 20px !important;
   font-weight: 700 !important;
   letter-spacing: -0.01em !important;
   line-height: 1.2 !important;
@@ -186,6 +189,7 @@ h6,
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--ink) !important;
 }
 
 .topbar.topbar--compact .topbar__chapNo {
@@ -196,7 +200,7 @@ h6,
   font-weight: 500 !important;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(250, 243, 234, 0.62) !important;
+  color: var(--ink-soft) !important;
 }
 
 .topbar.topbar--compact .topbar__chev {
@@ -216,9 +220,15 @@ h6,
   min-height: 34px !important;
   padding: 0 !important;
   border-radius: 50% !important;
-  background: rgba(250, 243, 234, 0.12) !important;
-  border: 1px solid rgba(250, 243, 234, 0.16) !important;
-  color: #faf3ea !important;
+  background: var(--panel) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--ink) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+.topbar.topbar--compact .topbar__actionBtn:hover {
+  background: var(--panel-2) !important;
+  color: var(--forest) !important;
 }
 
 .topbar.topbar--compact .topbar__actionBtn svg {
@@ -227,7 +237,7 @@ h6,
   stroke-width: 2 !important;
 }
 
-/* Search row inside the green header */
+/* Search row inside clean topbar */
 .topbar.topbar--compact .topbar__searchRow {
   display: flex;
   align-items: center;
@@ -240,9 +250,9 @@ h6,
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: 1px solid rgba(250, 243, 234, 0.16);
-  background: rgba(250, 243, 234, 0.12);
-  color: #faf3ea;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
   flex-shrink: 0;
 }
 
@@ -251,70 +261,74 @@ h6,
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(250, 243, 234, 0.12);
-  border: 1px solid rgba(250, 243, 234, 0.16);
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 6px 10px;
-  color: #faf3ea;
+  padding: 6px 12px;
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .topbar.topbar--compact .topbar__versionSelect {
-  height: 30px !important;
-  padding: 0 8px !important;
+  height: 32px !important;
+  padding: 0 10px !important;
   border-radius: 999px !important;
-  border: 1px solid rgba(250, 243, 234, 0.35) !important;
-  background: rgba(250, 243, 234, 0.12) !important;
-  color: var(--mz-cream) !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+  color: var(--ink) !important;
   font-size: 12px !important;
   font-weight: 600 !important;
-  max-width: 150px !important;
+  max-width: 155px !important;
   outline: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
 }
 
-.topbar__langToggle {
+.topbar.topbar--compact .topbar__langToggle {
   display: inline-flex !important;
   gap: 2px !important;
   padding: 2px !important;
   border-radius: 999px !important;
-  border: 1px solid rgba(250, 243, 234, 0.35) !important;
-  background: rgba(250, 243, 234, 0.12) !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel-2) !important;
 }
 
-.topbar__langBtn {
+.topbar.topbar--compact .topbar__langBtn {
   height: 26px !important;
   min-width: 30px !important;
   padding: 0 8px !important;
   border: 0 !important;
   border-radius: 999px !important;
   background: transparent !important;
-  color: rgba(250, 243, 234, 0.75) !important;
+  color: var(--ink-soft) !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   cursor: pointer !important;
 }
 
-.topbar__langBtn.is-active {
-  background: var(--mz-cream) !important;
-  color: var(--mz-green) !important;
+.topbar.topbar--compact .topbar__langBtn.is-active {
+  background: var(--panel) !important;
+  color: var(--forest) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
 }
-.topbar__searchInput {
+
+.topbar.topbar--compact .topbar__searchInput {
   flex: 1;
   min-width: 0;
   background: transparent;
   border: 0;
   outline: 0;
-  color: #faf3ea;
+  color: var(--ink);
   font-size: 14px;
 }
 
 .topbar.topbar--compact .topbar__searchInput::placeholder {
-  color: rgba(250, 243, 234, 0.6);
+  color: var(--ink-soft);
 }
 
 .topbar.topbar--compact .topbar__kbToggleBtn {
-  border: 1px solid rgba(250, 243, 234, 0.2);
-  background: rgba(250, 243, 234, 0.1);
-  color: #faf3ea;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
   border-radius: 999px;
   padding: 3px 8px;
   font-size: 11px;
@@ -325,7 +339,7 @@ h6,
 .topbar.topbar--compact .topbar__clearBtn {
   border: 0;
   background: transparent;
-  color: rgba(250, 243, 234, 0.75);
+  color: var(--ink-soft);
   font-size: 14px;
   padding: 0 2px;
 }
