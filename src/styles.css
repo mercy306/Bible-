@@ -10565,15 +10565,20 @@ body {
   top: 0 !important;
   z-index: 60 !important;
   overflow: visible !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 .topbar.topbar--compact .mountainHero,
 .topbar.topbar--compact .topbar__hero,
 .topbar__hero.topbar__hero--compact {
   padding: calc(env(safe-area-inset-top, 0px) + 3px) 10px 4px !important;
-  border-radius: 0 0 12px 12px !important;
+  border-radius: 0 !important;
   min-height: auto !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-bottom: none !important;
   overflow: visible !important;
 }
 
@@ -10584,7 +10589,9 @@ body {
 
 :root[data-theme='light'] .topbar.topbar--compact .mountainHero {
   background: var(--bg) !important;
-  border-bottom: 1px solid var(--line) !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 :root[data-theme='bw'] .topbar.topbar--compact .mountainHero,
@@ -10592,7 +10599,9 @@ body {
   background: rgba(14, 16, 19, 0.96) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 .topbar.topbar--compact .topbar__mainRow {

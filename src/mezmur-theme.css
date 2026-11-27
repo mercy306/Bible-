@@ -143,7 +143,7 @@ h6,
   background: var(--mz-cream);
 }
 
-/* ---------- Top bar (reading screen) — Clean, No Upper Color ---------- */
+/* ---------- Top bar (reading screen) — Clean, No Upper Color, No Underline ---------- */
 :root[data-theme] .topbar.topbar--compact,
 :root[data-theme] .topbar.topbar--compact .mountainHero,
 :root[data-theme] .topbar.topbar--compact .topbar__hero,
@@ -152,9 +152,10 @@ h6,
 .topbar.topbar--compact .mountainHero {
   background: var(--bg) !important;
   border-radius: 0 !important;
-  border-bottom: 1px solid var(--line) !important;
+  border: none !important;
+  border-bottom: none !important;
   padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 10px !important;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03) !important;
+  box-shadow: none !important;
   min-height: auto !important;
   overflow: visible !important;
 }
