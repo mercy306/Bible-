@@ -156,6 +156,7 @@ h6,
   padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 10px !important;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.03) !important;
   min-height: auto !important;
+  overflow: visible !important;
 }
 
 :root[data-theme] .topbar.topbar--compact .mountainHero__bg,
@@ -288,6 +289,12 @@ h6,
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
+.topbar__versionWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .topbar__versionPill,
 .topbar.topbar--compact .topbar__versionPill {
   position: relative;
@@ -295,8 +302,8 @@ h6,
   align-items: center;
   justify-content: center;
   gap: 3px;
-  height: 32px;
-  padding: 0 10px;
+  height: 28px;
+  padding: 0 9px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--panel);
@@ -306,10 +313,13 @@ h6,
   transition: background 0.15s ease, border-color 0.15s ease;
   user-select: none;
   flex-shrink: 0;
+  font-family: inherit;
 }
 
 .topbar__versionPill:hover,
-.topbar.topbar--compact .topbar__versionPill:hover {
+.topbar__versionPill.is-open,
+.topbar.topbar--compact .topbar__versionPill:hover,
+.topbar.topbar--compact .topbar__versionPill.is-open {
   background: var(--panel-2);
   border-color: var(--line-strong, rgba(0, 0, 0, 0.18));
 }
@@ -331,22 +341,96 @@ h6,
   transform: translateY(-0.5px);
 }
 
-.topbar__versionPill .topbar__versionSelect,
-.topbar.topbar--compact .topbar__versionPill .topbar__versionSelect {
+.topbar__versionMenu {
   position: absolute;
-  inset: 0;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 155px;
+  max-width: 180px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: topbarVersionMenuFadeIn 0.14s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@keyframes topbarVersionMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.topbar__versionItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  -webkit-appearance: none;
-  appearance: none;
+  padding: 6px 8px;
+  border-radius: 8px;
   border: none;
   background: transparent;
-  color: transparent;
-  z-index: 2;
-  margin: 0;
-  padding: 0;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.topbar__versionItem:hover {
+  background: var(--panel-2);
+}
+
+.topbar__versionItem.is-selected {
+  background: rgba(184, 51, 42, 0.09);
+  color: var(--burgundy, #800020);
+  font-weight: 600;
+}
+
+:root[data-theme='dark'] .topbar__versionItem.is-selected,
+:root[data-theme='bw'] .topbar__versionItem.is-selected {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--ink);
+}
+
+.topbar__versionItemCode {
+  font-weight: 700;
+  font-size: 11px;
+  min-width: 32px;
+  letter-spacing: 0.2px;
+}
+
+.topbar__versionItemDesc {
+  flex: 1;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar__versionItem.is-selected .topbar__versionItemDesc {
+  color: currentColor;
+}
+
+.topbar__versionItemCheck {
+  font-size: 11px;
+  font-weight: 800;
+  color: currentColor;
+  margin-left: auto;
 }
 
 .topbar.topbar--compact .topbar__langToggle {

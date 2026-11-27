@@ -10,21 +10,25 @@ import { usePrefs, setPref, LANGUAGES, type LanguageMode } from '../prefs'
 import type { Route } from '../route'
 import type { CommentarySearchResponse, SearchResponse } from '../types'
 
-function getShortVersionCode(id: string): string {
+function getVersionInfo(id: string): { code: string; label: string } {
   switch (id) {
     case 'am':
-      return '1954'
+      return { code: '1954', label: 'የቀድሞው' }
     case 'am1962':
-      return '1962'
+      return { code: '1962', label: 'ኃይለ ሥላሴ' }
     case 'am2001':
-      return 'NASV'
+      return { code: 'NASV', label: 'አዲሱ መደበኛ' }
     case 'am2005':
-      return '2005'
+      return { code: '2005', label: 'አዲስ ትርጉም' }
     case 'kjv':
-      return 'KJV'
+      return { code: 'KJV', label: 'King James' }
     default:
-      return id ? id.toUpperCase() : '1954'
+      return { code: id ? id.toUpperCase() : '1954', label: '' }
   }
+}
+
+function getShortVersionCode(id: string): string {
+  return getVersionInfo(id).code
 }
 
 interface Props {
@@ -97,6 +101,29 @@ export default function TopBar({
   const [commentaryResults, setCommentaryResults] = useState<CommentarySearchResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const [versionOpen, setVersionOpen] = useState(false)
+  const versionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!versionOpen) return
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (versionRef.current && !versionRef.current.contains(e.target as Node)) {
+        setVersionOpen(false)
+      }
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setVersionOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [versionOpen])
 
   const isEn = language === 'en'
   const isAm = language === 'am'
@@ -341,24 +368,51 @@ export default function TopBar({
               )}
 
               {translations.length > 0 && onTranslation && (
-                <div
-                  className="topbar__versionPill"
-                  title={translations.find((t) => t.id === translation)?.name || (isEn ? "Bible version" : "የመጽሐፍ ቅዱስ እትም")}
-                >
-                  <span className="topbar__versionBadge">{getShortVersionCode(translation)}</span>
-                  <span className="topbar__versionChev" aria-hidden="true">▾</span>
-                  <select
-                    className="topbar__versionSelect"
-                    value={translation}
-                    onChange={(e) => onTranslation(e.target.value)}
+                <div className="topbar__versionWrapper" ref={versionRef}>
+                  <button
+                    type="button"
+                    className={`topbar__versionPill ${versionOpen ? 'is-open' : ''}`}
+                    onClick={() => setVersionOpen((prev) => !prev)}
+                    title={translations.find((t) => t.id === translation)?.name || (isEn ? "Bible version" : "የመጽሐፍ ቅዱስ እትም")}
                     aria-label={isEn ? "Bible version" : "የመጽሐፍ ቅዱስ እትም"}
+                    aria-expanded={versionOpen}
+                    aria-haspopup="listbox"
                   >
-                    {translations.map((t) => (
-                      <option key={t.id} value={t.id}>
-                        {t.name}
-                      </option>
-                    ))}
-                  </select>
+                    <span className="topbar__versionBadge">{getShortVersionCode(translation)}</span>
+                    <span className="topbar__versionChev" aria-hidden="true">{versionOpen ? '▴' : '▾'}</span>
+                  </button>
+
+                  {versionOpen && (
+                    <div
+                      className="topbar__versionMenu"
+                      role="listbox"
+                      aria-label={isEn ? "Bible versions" : "የትርጉም አማራጮች"}
+                    >
+                      {translations.map((t) => {
+                        const info = getVersionInfo(t.id)
+                        const isSelected = t.id === translation
+                        return (
+                          <button
+                            key={t.id}
+                            type="button"
+                            role="option"
+                            aria-selected={isSelected}
+                            className={`topbar__versionItem ${isSelected ? 'is-selected' : ''}`}
+                            onClick={() => {
+                              onTranslation(t.id)
+                              setVersionOpen(false)
+                            }}
+                          >
+                            <span className="topbar__versionItemCode">{info.code}</span>
+                            <span className="topbar__versionItemDesc">{info.label}</span>
+                            {isSelected && (
+                              <span className="topbar__versionItemCheck" aria-hidden="true">✓</span>
+                            )}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
 
