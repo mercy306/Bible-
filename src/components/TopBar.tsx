@@ -10,6 +10,23 @@ import { usePrefs, setPref, LANGUAGES, type LanguageMode } from '../prefs'
 import type { Route } from '../route'
 import type { CommentarySearchResponse, SearchResponse } from '../types'
 
+function getShortVersionCode(id: string): string {
+  switch (id) {
+    case 'am':
+      return '1954'
+    case 'am1962':
+      return '1962'
+    case 'am2001':
+      return 'NASV'
+    case 'am2005':
+      return '2005'
+    case 'kjv':
+      return 'KJV'
+    default:
+      return id ? id.toUpperCase() : '1954'
+  }
+}
+
 interface Props {
   book: number
   chapter: number
@@ -324,18 +341,25 @@ export default function TopBar({
               )}
 
               {translations.length > 0 && onTranslation && (
-                <select
-                  className="topbar__versionSelect"
-                  value={translation}
-                  onChange={(e) => onTranslation(e.target.value)}
-                  aria-label={isEn ? "Bible version" : "የመጽሐፍ ቅዱስ እትም"}
+                <div
+                  className="topbar__versionPill"
+                  title={translations.find((t) => t.id === translation)?.name || (isEn ? "Bible version" : "የመጽሐፍ ቅዱስ እትም")}
                 >
-                  {translations.map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.name}
-                    </option>
-                  ))}
-                </select>
+                  <span className="topbar__versionBadge">{getShortVersionCode(translation)}</span>
+                  <span className="topbar__versionChev" aria-hidden="true">▾</span>
+                  <select
+                    className="topbar__versionSelect"
+                    value={translation}
+                    onChange={(e) => onTranslation(e.target.value)}
+                    aria-label={isEn ? "Bible version" : "የመጽሐፍ ቅዱስ እትም"}
+                  >
+                    {translations.map((t) => (
+                      <option key={t.id} value={t.id}>
+                        {t.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               )}
 
               {onLineage && (
