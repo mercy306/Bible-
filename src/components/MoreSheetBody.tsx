@@ -252,42 +252,20 @@ export default function MoreSheetBody({
             </div>
           </div>
 
-          {/* 2-Column Toggles: Verse Numbers & Font Weight */}
-          <div className="toggleGrid">
-            <div className="toggleCard">
-              <span className="toggleCard__label">🔢 {isEn ? 'Verse Nrs' : 'የጥቅስ ቁጥሮች'}</span>
-              <div className="segbar segbar--tiny" role="group" aria-label={isEn ? 'Verse Numbers' : 'የጥቅስ ቁጥሮች'}>
+          {/* Font Weight Toggle */}
+          <div className="toggleCard" style={{ marginTop: '8px' }}>
+            <span className="toggleCard__label">💪 {isEn ? 'Weight' : 'ውፍረት'}</span>
+            <div className="segbar segbar--tiny" role="group" aria-label={isEn ? 'Font Weight' : 'የፊደል ውፍረት'}>
+              {FONT_WEIGHTS.map((item) => (
                 <button
+                  key={item.id}
                   type="button"
-                  className={`segbar__btn ${!prefs.verseNumbers ? 'is-active' : ''}`}
-                  onClick={() => setPref('verseNumbers', false)}
+                  className={`segbar__btn ${(prefs.fontWeight || 'normal') === item.id ? 'is-active' : ''}`}
+                  onClick={() => setPref('fontWeight', item.id)}
                 >
-                  {isEn ? 'Hide' : 'ደብቅ'}
+                  {isEn ? item.label : item.am}
                 </button>
-                <button
-                  type="button"
-                  className={`segbar__btn ${prefs.verseNumbers ? 'is-active' : ''}`}
-                  onClick={() => setPref('verseNumbers', true)}
-                >
-                  {isEn ? 'Show' : 'አሳይ'}
-                </button>
-              </div>
-            </div>
-
-            <div className="toggleCard">
-              <span className="toggleCard__label">💪 {isEn ? 'Weight' : 'ውፍረት'}</span>
-              <div className="segbar segbar--tiny" role="group" aria-label={isEn ? 'Font Weight' : 'የፊደል ውፍረት'}>
-                {FONT_WEIGHTS.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={`segbar__btn ${(prefs.fontWeight || 'normal') === item.id ? 'is-active' : ''}`}
-                    onClick={() => setPref('fontWeight', item.id)}
-                  >
-                    {isEn ? item.label : item.am}
-                  </button>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
 
