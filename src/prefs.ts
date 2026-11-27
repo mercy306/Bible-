@@ -32,29 +32,17 @@ export const LEADING_RANGE = { min: 1.5, max: 2.2, step: 0.05 } as const
 export const PARAGRAPH_RANGE = { min: 0, max: 20, step: 1 } as const
 
 export const THEMES = [
-  // Row 1: Daylight Neutrals & Fresh Greens
-  { id: 'paper', label: 'Paper', am: 'ንጹሕ ነጭ', note: 'Crisp White Daylight', bg: '#FFFFFF', ink: '#0F172A' },
-  { id: 'pearl', label: 'Pearl', am: 'ዕንቁ', note: 'Cool Silver Mist Gray', bg: '#E2E8F0', ink: '#1E293B' },
-  { id: 'light', label: 'Green', am: 'አረንጓዴ', note: 'Serene Meadow Sage', bg: '#C6E7C9', ink: '#14532D' },
-  { id: 'mint', label: 'Mint', am: 'አዝሙድ', note: 'Refreshing Seafoam Mint', bg: '#A7F3D0', ink: '#064E3B' },
+  // Row 1: Daylight & Ancient Sacred Manuscripts
+  { id: 'paper', label: 'Fine Paper', am: 'ንጹሕ ነጭ', note: 'Fine White Scripture Paper', bg: '#FFFFFF', ink: '#1A202C' },
+  { id: 'sepia', label: 'Parchment', am: 'ብራና', note: 'Warm Ancient Vellum Manuscript', bg: '#F5EEDB', ink: '#2C2016' },
+  { id: 'pearl', label: 'Ivory Linen', am: 'ክሬም', note: 'Soft Candlelight Cream', bg: '#FAF6ED', ink: '#262420' },
+  { id: 'light', label: 'Mount of Olives', am: 'ወይራ', note: 'Serene Olive Sage Earth', bg: '#E3E9E0', ink: '#1C261D' },
 
-  // Row 2: Warm Daylight Parchment, Gold, Rose & Sky
-  { id: 'sepia', label: 'Sepia', am: 'ብራና', note: 'Ancient Parchment Tan', bg: '#F5E8C7', ink: '#3A230B' },
-  { id: 'gold', label: 'Gold', am: 'ወርቃማ', note: 'Sunny Honey Amber Gold', bg: '#FDE68A', ink: '#451A03' },
-  { id: 'rose', label: 'Rose', am: 'ጽጌረዳ', note: 'Blush Petal Pink', bg: '#FBCFE8', ink: '#701A75' },
-  { id: 'night', label: 'Sky', am: 'ሰማያዊ', note: 'Galilee Sky Blue', bg: '#BAE6FD', ink: '#1E3A8A' },
-
-  // Row 3: Cool Dark & Nature Night
-  { id: 'bw', label: 'Black', am: 'ጥቁር', note: 'Pure OLED Pitch Black', bg: '#000000', ink: '#FFFFFF' },
-  { id: 'charcoal', label: 'Charcoal', am: 'ከሰል', note: 'Slate Charcoal Gray', bg: '#334155', ink: '#F8FAFC' },
-  { id: 'ocean', label: 'Ocean', am: 'ውቅያኖስ', note: 'Deep Galilee Navy Blue', bg: '#172554', ink: '#E0F2FE' },
-  { id: 'olive', label: 'Olive', am: 'ወይራ', note: 'Forest Evergreen Olive', bg: '#14532D', ink: '#ECFDF5' },
-
-  // Row 4: Rich Warm Jewel Darks
-  { id: 'burgundy', label: 'Burgundy', am: 'ወይን', note: 'Imperial Velvet Wine Red', bg: '#580D23', ink: '#FDF2F4' },
-  { id: 'lavender', label: 'Lavender', am: 'ሐምራዊ', note: 'Royal Amethyst Violet Purple', bg: '#4C1D95', ink: '#FAF5FF' },
-  { id: 'dark', label: 'Mocha', am: 'ቡናማ', note: 'Warm Roasted Espresso Brown', bg: '#451A03', ink: '#FEF3C7' },
-  { id: 'clay', label: 'Clay', am: 'ሸክላ', note: 'Burnt Desert Terracotta Rust', bg: '#7C2D12', ink: '#FFEDD5' },
+  // Row 2: Evening Devotion & Sacred Leather Bindings
+  { id: 'burgundy', label: 'Sacred Wine', am: 'ወይን', note: 'Communion Velvet Wine', bg: '#2B0B14', ink: '#F9EFF2' },
+  { id: 'dark', label: 'Leather Brown', am: 'ቆዳ ቡናማ', note: 'Antique Leather Bound Bible', bg: '#221711', ink: '#F5EEE6' },
+  { id: 'night', label: 'Galilee Night', am: 'ባሕረ ገሊላ', note: 'Midnight Sea of Galilee', bg: '#121A26', ink: '#EAF0F8' },
+  { id: 'bw', label: 'Midnight Vigil', am: 'ጥቁር', note: 'Pure OLED Night Prayer', bg: '#000000', ink: '#F3F4F6' },
 ] as const
 
 export const ACCENTS = [

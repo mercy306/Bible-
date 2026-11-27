@@ -27,23 +27,23 @@
 
 :root,
 :root[data-theme='light'] {
-  --bg: #C6E7C9;
-  --panel: #DCF2DE;
-  --panel-2: #BFE3C3;
-  --panel-sage: #A8D5AC;
-  --ink: #14532D;
-  --ink-soft: #166534;
-  --line: rgba(20, 83, 45, 0.2);
-  --highlight: rgba(168, 213, 172, 0.55);
-  --forest: #15803D;
-  --sage: #A8D5AC;
-  --terracotta: #15803D;
-  --terracotta-soft: rgba(22, 101, 52, 0.18);
-  --accent: #15803D;
-  --accent-soft: rgba(21, 128, 61, 0.18);
+  --bg: #E3E9E0;
+  --panel: #EEF3EC;
+  --panel-2: #D5DDD1;
+  --panel-sage: #CAD5C6;
+  --ink: #1C261D;
+  --ink-soft: #4A5B4C;
+  --line: #CAD5C6;
+  --highlight: rgba(45, 90, 56, 0.18);
+  --forest: #2D5A38;
+  --sage: #CAD5C6;
+  --terracotta: #2D5A38;
+  --terracotta-soft: rgba(45, 90, 56, 0.15);
+  --accent: #2D5A38;
+  --accent-soft: rgba(45, 90, 56, 0.15);
   --accent-ink: #FFFFFF;
-  --primary-blue: #15803D;
-  --sand: #BFE3C3;
+  --primary-blue: #2D5A38;
+  --sand: #D5DDD1;
   --reader-size: 20px;
   color-scheme: light;
 }
@@ -16646,80 +16646,80 @@ html, body {
   border: 1px solid #DFC79E !important;
 }
 
-/* --- 4. IMPERIAL VELVET BURGUNDY THEME --- */
+/* --- 4. SACRED COMMUNION WINE THEME --- */
 :root[data-theme='burgundy'] {
-  --bg: #580D23;
-  --panel: #6E132E;
-  --panel-2: #841B3B;
-  --panel-sage: #9C2649;
-  --ink: #FDF2F4;
-  --ink-soft: #F9A8D4;
-  --line: rgba(255, 255, 255, 0.14);
-  --highlight: rgba(244, 63, 94, 0.25);
-  --accent: #FB7185;
-  --accent-soft: rgba(251, 113, 133, 0.22);
-  --accent-ink: #FFFFFF;
+  --bg: #2B0B14;
+  --panel: #3A121E;
+  --panel-2: #4A1927;
+  --panel-sage: #5A2030;
+  --ink: #F9EFF2;
+  --ink-soft: #D6A4B2;
+  --line: rgba(255, 255, 255, 0.12);
+  --highlight: rgba(212, 175, 55, 0.25);
+  --accent: #D4AF37;
+  --accent-soft: rgba(212, 175, 55, 0.2);
+  --accent-ink: #1F070E;
   color-scheme: dark;
 }
 :root[data-theme='burgundy'] body {
-  background: #3B0715 !important;
+  background: #1C050D !important;
 }
 :root[data-theme='burgundy'] .app {
-  background: #580D23 !important;
+  background: #2B0B14 !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
 }
 :root[data-theme='burgundy'] .mountainHero {
-  background: #6E132E !important;
-  color: #FDF2F4 !important;
+  background: #3A121E !important;
+  color: #F9EFF2 !important;
   border-radius: 0 0 32px 32px !important;
-  border-bottom: 1px solid #841B3B !important;
+  border-bottom: 1px solid #4A1927 !important;
 }
 :root[data-theme='burgundy'] .mountainHero__bg,
 :root[data-theme='burgundy'] .mountainHero__overlay {
   display: none !important;
 }
 :root[data-theme='burgundy'] .topbar__chapterTitle {
-  color: #FDF2F4 !important;
-  background: #7A1734 !important;
-  border: 1px solid #9C2649 !important;
+  color: #F9EFF2 !important;
+  background: #4A1927 !important;
+  border: 1px solid #5A2030 !important;
 }
 :root[data-theme='burgundy'] .botbar {
-  background: rgba(110, 19, 46, 0.95) !important;
+  background: rgba(58, 18, 30, 0.95) !important;
   backdrop-filter: blur(28px) !important;
   -webkit-backdrop-filter: blur(28px) !important;
-  border: 1px solid #841B3B !important;
+  border: 1px solid #4A1927 !important;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7) !important;
 }
 :root[data-theme='burgundy'] .botbar__btn {
-  color: #F9A8D4 !important;
+  color: #D6A4B2 !important;
 }
 :root[data-theme='burgundy'] .botbar__btn.is-active {
-  background: #FB7185 !important;
-  color: #580D23 !important;
+  background: #D4AF37 !important;
+  color: #1F070E !important;
 }
 :root[data-theme='burgundy'] .botbar__btn.is-active .botbar__icon svg {
-  color: #580D23 !important;
-  stroke: #580D23 !important;
+  color: #1F070E !important;
+  stroke: #1F070E !important;
 }
 :root[data-theme='burgundy'] .botbar__btn.is-active .botbar__label {
-  color: #580D23 !important;
+  color: #1F070E !important;
 }
 :root[data-theme='burgundy'] .readerBar {
-  background: rgba(110, 19, 46, 0.95) !important;
-  border: 1px solid #841B3B !important;
-  color: #FDF2F4 !important;
+  background: rgba(58, 18, 30, 0.95) !important;
+  border: 1px solid #4A1927 !important;
+  color: #F9EFF2 !important;
 }
 :root[data-theme='burgundy'] .readerBar__chapterBtn {
-  background: #FB7185 !important;
-  color: #580D23 !important;
+  background: #D4AF37 !important;
+  color: #1F070E !important;
 }
 :root[data-theme='burgundy'] .readerBar__navBtn {
-  color: #FDF2F4 !important;
+  color: #F9EFF2 !important;
 }
 :root[data-theme='burgundy'] .readerBar__listenBtn {
   background: rgba(255, 255, 255, 0.12) !important;
-  color: #FDF2F4 !important;
-  border: 1px solid #841B3B !important;
+  color: #F9EFF2 !important;
+  border: 1px solid #4A1927 !important;
 }
 
 /* --- 5. ROYAL HONEY GOLD THEME --- */
@@ -16791,149 +16791,149 @@ html, body {
   border: 1px solid #FCD34D !important;
 }
 
-/* --- 6. CELESTIAL GALILEE SKY BLUE THEME --- */
+/* --- 6. SOLEMN SEA OF GALILEE NIGHT THEME --- */
 :root[data-theme='night'] {
-  --bg: #BAE6FD;
-  --panel: #E0F2FE;
-  --panel-2: #7DD3FC;
-  --panel-sage: #38BDF8;
-  --ink: #1E3A8A;
-  --ink-soft: #2563EB;
-  --line: #7DD3FC;
-  --highlight: rgba(2, 132, 199, 0.25);
-  --accent: #0284C7;
-  --accent-soft: rgba(2, 132, 199, 0.2);
-  --accent-ink: #FFFFFF;
-  color-scheme: light;
+  --bg: #121A26;
+  --panel: #1A2536;
+  --panel-2: #243247;
+  --panel-sage: #30415A;
+  --ink: #EAF0F8;
+  --ink-soft: #9DB2CA;
+  --line: rgba(255, 255, 255, 0.12);
+  --highlight: rgba(100, 181, 246, 0.2);
+  --accent: #64B5F6;
+  --accent-soft: rgba(100, 181, 246, 0.2);
+  --accent-ink: #0B121C;
+  color-scheme: dark;
 }
 :root[data-theme='night'] body {
-  background: #93C5FD !important;
+  background: #0B111A !important;
 }
 :root[data-theme='night'] .app {
-  background: #BAE6FD !important;
-  box-shadow: 0 16px 48px rgba(30, 58, 138, 0.12) !important;
+  background: #121A26 !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8) !important;
 }
 :root[data-theme='night'] .mountainHero {
-  background: #E0F2FE !important;
-  color: #1E3A8A !important;
+  background: #1A2536 !important;
+  color: #EAF0F8 !important;
   border-radius: 0 0 32px 32px !important;
-  border-bottom: 1px solid #7DD3FC !important;
+  border-bottom: 1px solid #243247 !important;
 }
 :root[data-theme='night'] .mountainHero__bg,
 :root[data-theme='night'] .mountainHero__overlay {
   display: none !important;
 }
 :root[data-theme='night'] .topbar__chapterTitle {
-  color: #1E3A8A !important;
-  background: #E0F2FE !important;
-  border: 1px solid #7DD3FC !important;
+  color: #EAF0F8 !important;
+  background: #1A2536 !important;
+  border: 1px solid #243247 !important;
 }
 :root[data-theme='night'] .botbar {
-  background: rgba(224, 242, 254, 0.95) !important;
-  border: 1px solid #7DD3FC !important;
-  box-shadow: 0 12px 32px rgba(30, 58, 138, 0.12) !important;
+  background: rgba(26, 37, 54, 0.95) !important;
+  border: 1px solid #243247 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
 }
 :root[data-theme='night'] .botbar__btn {
-  color: #2563EB !important;
+  color: #9DB2CA !important;
 }
 :root[data-theme='night'] .botbar__btn.is-active {
-  background: #0284C7 !important;
-  color: #FFFFFF !important;
+  background: #64B5F6 !important;
+  color: #0B121C !important;
 }
 :root[data-theme='night'] .botbar__btn.is-active .botbar__icon svg {
-  color: #FFFFFF !important;
-  stroke: #FFFFFF !important;
+  color: #0B121C !important;
+  stroke: #0B121C !important;
 }
 :root[data-theme='night'] .botbar__btn.is-active .botbar__label {
-  color: #FFFFFF !important;
+  color: #0B121C !important;
 }
 :root[data-theme='night'] .readerBar {
-  background: rgba(224, 242, 254, 0.95) !important;
-  border: 1px solid #7DD3FC !important;
+  background: rgba(26, 37, 54, 0.95) !important;
+  border: 1px solid #243247 !important;
 }
 :root[data-theme='night'] .readerBar__chapterBtn {
-  background: #0284C7 !important;
-  color: #FFFFFF !important;
+  background: #64B5F6 !important;
+  color: #0B121C !important;
 }
 :root[data-theme='night'] .readerBar__navBtn {
-  color: #1E3A8A !important;
+  color: #EAF0F8 !important;
 }
 :root[data-theme='night'] .readerBar__listenBtn {
-  background: #E0F2FE !important;
-  color: #1E3A8A !important;
-  border: 1px solid #7DD3FC !important;
+  background: #1A2536 !important;
+  color: #EAF0F8 !important;
+  border: 1px solid #243247 !important;
 }
 
-/* --- 7. WARM MOCHA / ESPRESSO THEME --- */
+/* --- 7. ANTIQUE LEATHER BOUND BIBLE THEME --- */
 :root[data-theme='dark'] {
-  --bg: #451A03;
-  --panel: #57240B;
-  --panel-2: #6A3013;
-  --panel-sage: #823E1D;
-  --ink: #FEF3C7;
-  --ink-soft: #FDE68A;
-  --line: rgba(255, 255, 255, 0.14);
-  --highlight: rgba(245, 158, 11, 0.25);
-  --accent: #F59E0B;
-  --accent-soft: rgba(245, 158, 11, 0.22);
-  --accent-ink: #451A03;
+  --bg: #221711;
+  --panel: #2F2119;
+  --panel-2: #3E2D23;
+  --panel-sage: #4E392C;
+  --ink: #F5EEE6;
+  --ink-soft: #CBB9A7;
+  --line: rgba(255, 255, 255, 0.12);
+  --highlight: rgba(212, 175, 55, 0.25);
+  --accent: #D4AF37;
+  --accent-soft: rgba(212, 175, 55, 0.2);
+  --accent-ink: #18100C;
   color-scheme: dark;
 }
 :root[data-theme='dark'] body {
-  background: #27140B !important;
+  background: #150E0A !important;
 }
 :root[data-theme='dark'] .app {
-  background: #451A03 !important;
+  background: #221711 !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
 }
 :root[data-theme='dark'] .mountainHero {
-  background: #57240B !important;
-  color: #FEF3C7 !important;
+  background: #2F2119 !important;
+  color: #F5EEE6 !important;
   border-radius: 0 0 32px 32px !important;
-  border-bottom: 1px solid #6A3013 !important;
+  border-bottom: 1px solid #3E2D23 !important;
 }
 :root[data-theme='dark'] .mountainHero__bg,
 :root[data-theme='dark'] .mountainHero__overlay {
   display: none !important;
 }
 :root[data-theme='dark'] .topbar__chapterTitle {
-  color: #FEF3C7 !important;
-  background: #662D11 !important;
-  border: 1px solid #823E1D !important;
+  color: #F5EEE6 !important;
+  background: #3E2D23 !important;
+  border: 1px solid #4E392C !important;
 }
 :root[data-theme='dark'] .botbar {
-  background: rgba(87, 36, 11, 0.95) !important;
-  border: 1px solid #6A3013 !important;
+  background: rgba(47, 33, 25, 0.95) !important;
+  border: 1px solid #3E2D23 !important;
 }
 :root[data-theme='dark'] .botbar__btn {
-  color: #FDE68A !important;
+  color: #CBB9A7 !important;
 }
 :root[data-theme='dark'] .botbar__btn.is-active {
-  background: #F59E0B !important;
-  color: #451A03 !important;
+  background: #D4AF37 !important;
+  color: #18100C !important;
 }
 :root[data-theme='dark'] .botbar__btn.is-active .botbar__icon svg {
-  color: #451A03 !important;
-  stroke: #451A03 !important;
+  color: #18100C !important;
+  stroke: #18100C !important;
 }
 :root[data-theme='dark'] .botbar__btn.is-active .botbar__label {
-  color: #451A03 !important;
+  color: #18100C !important;
 }
 :root[data-theme='dark'] .readerBar {
-  background: rgba(87, 36, 11, 0.95) !important;
-  border: 1px solid #6A3013 !important;
+  background: rgba(47, 33, 25, 0.95) !important;
+  border: 1px solid #3E2D23 !important;
 }
 :root[data-theme='dark'] .readerBar__chapterBtn {
-  background: #F59E0B !important;
-  color: #451A03 !important;
+  background: #D4AF37 !important;
+  color: #18100C !important;
 }
 :root[data-theme='dark'] .readerBar__navBtn {
-  color: #FEF3C7 !important;
+  color: #F5EEE6 !important;
 }
 :root[data-theme='dark'] .readerBar__listenBtn {
   background: rgba(255, 255, 255, 0.12) !important;
-  color: #FEF3C7 !important;
-  border: 1px solid #6A3013 !important;
+  color: #F5EEE6 !important;
+  border: 1px solid #3E2D23 !important;
 }
 
 /* --- 8. CRISP WHITE / DAYLIGHT THEME --- */
@@ -17401,39 +17401,39 @@ html, body {
 :root[data-theme='charcoal'] .readerBar__navBtn { color: #F8FAFC !important; }
 :root[data-theme='charcoal'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.14) !important; color: #F8FAFC !important; border: 1px solid #64748B !important; }
 
-/* --- 8. New Theme: Pearl (ዕንቁ / Cool Silver Mist) --- */
+/* --- 8. IVORY LINEN CANDLELIGHT THEME --- */
 :root[data-theme='pearl'],
 [data-theme='pearl'] {
-  --bg: #E2E8F0;
-  --panel: #F1F5F9;
-  --panel-2: #CBD5E1;
-  --panel-sage: #94A3B8;
-  --ink: #1E293B;
-  --ink-soft: #475569;
-  --line: #CBD5E1;
-  --highlight: rgba(71, 85, 105, 0.2);
-  --forest: #334155;
-  --sage: #475569;
-  --terracotta: #334155;
-  --terracotta-soft: rgba(71, 85, 105, 0.16);
-  --accent: #334155;
-  --accent-soft: rgba(51, 65, 85, 0.2);
+  --bg: #FAF6ED;
+  --panel: #FFFFFF;
+  --panel-2: #F0EAD9;
+  --panel-sage: #E5DEC9;
+  --ink: #262420;
+  --ink-soft: #68645C;
+  --line: #E5DEC9;
+  --highlight: rgba(212, 175, 55, 0.22);
+  --forest: #8B5E3C;
+  --sage: #68645C;
+  --terracotta: #8B5E3C;
+  --terracotta-soft: rgba(139, 94, 60, 0.15);
+  --accent: #8B5E3C;
+  --accent-soft: rgba(139, 94, 60, 0.15);
   --accent-ink: #FFFFFF;
   color-scheme: light;
 }
-:root[data-theme='pearl'] body { background: #CBD5E1 !important; }
-:root[data-theme='pearl'] .app { background: #E2E8F0 !important; }
-:root[data-theme='pearl'] .mountainHero { background: #F1F5F9 !important; color: #1E293B !important; border-bottom: 1px solid #CBD5E1 !important; }
-:root[data-theme='pearl'] .topbar__chapterTitle { color: #1E293B !important; background: #F1F5F9 !important; border: 1px solid #CBD5E1 !important; }
-:root[data-theme='pearl'] .botbar { background: rgba(241, 245, 249, 0.95) !important; border: 1px solid #CBD5E1 !important; }
-:root[data-theme='pearl'] .botbar__btn { color: #475569 !important; }
-:root[data-theme='pearl'] .botbar__btn.is-active { background: #334155 !important; color: #FFFFFF !important; }
+:root[data-theme='pearl'] body { background: #ECE5D6 !important; }
+:root[data-theme='pearl'] .app { background: #FAF6ED !important; }
+:root[data-theme='pearl'] .mountainHero { background: #FFFFFF !important; color: #262420 !important; border-bottom: 1px solid #E5DEC9 !important; }
+:root[data-theme='pearl'] .topbar__chapterTitle { color: #262420 !important; background: #FFFFFF !important; border: 1px solid #E5DEC9 !important; }
+:root[data-theme='pearl'] .botbar { background: rgba(255, 255, 255, 0.95) !important; border: 1px solid #E5DEC9 !important; }
+:root[data-theme='pearl'] .botbar__btn { color: #68645C !important; }
+:root[data-theme='pearl'] .botbar__btn.is-active { background: #8B5E3C !important; color: #FFFFFF !important; }
 :root[data-theme='pearl'] .botbar__btn.is-active .botbar__icon svg,
 :root[data-theme='pearl'] .botbar__btn.is-active .botbar__label { color: #FFFFFF !important; stroke: #FFFFFF !important; }
-:root[data-theme='pearl'] .readerBar { background: rgba(241, 245, 249, 0.95) !important; border: 1px solid #CBD5E1 !important; }
-:root[data-theme='pearl'] .readerBar__chapterBtn { background: #334155 !important; color: #FFFFFF !important; }
-:root[data-theme='pearl'] .readerBar__navBtn { color: #1E293B !important; }
-:root[data-theme='pearl'] .readerBar__listenBtn { background: #F1F5F9 !important; color: #1E293B !important; border: 1px solid #CBD5E1 !important; }
+:root[data-theme='pearl'] .readerBar { background: rgba(255, 255, 255, 0.95) !important; border: 1px solid #E5DEC9 !important; }
+:root[data-theme='pearl'] .readerBar__chapterBtn { background: #8B5E3C !important; color: #FFFFFF !important; }
+:root[data-theme='pearl'] .readerBar__navBtn { color: #262420 !important; }
+:root[data-theme='pearl'] .readerBar__listenBtn { background: #F0EAD9 !important; color: #262420 !important; border: 1px solid #E5DEC9 !important; }
 
 /* 5. New Accent Color Rules */
 [data-accent=crimson] {
