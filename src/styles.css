@@ -16746,6 +16746,19 @@ html, body {
    ========================================================================== */
 
 /* --- 3. WARM PARCHMENT SEPIA THEME --- */
+:root[data-theme='sepia'] {
+  --bg: #F5EEE2;
+  --panel: #EFE5D3;
+  --panel-2: #E5D9C2;
+  --ink: #2B1708;
+  --ink-soft: #7D634C;
+  --line: #DFD2BA;
+  --highlight: rgba(154, 91, 50, 0.18);
+  --accent: #9A5B32;
+  --accent-soft: rgba(154, 91, 50, 0.15);
+  --accent-ink: #FFFFFF;
+  color-scheme: light;
+}
 :root[data-theme='sepia'] body {
   background: #E8DFC8 !important;
 }
@@ -16871,6 +16884,20 @@ html, body {
 }
 
 /* --- 5. ROYAL HONEY GOLD THEME --- */
+:root[data-theme='gold'] {
+  --bg: #FAF2DC;
+  --panel: #F2E2BE;
+  --panel-2: #EFE0BD;
+  --panel-sage: #E8D5A9;
+  --ink: #2B1708;
+  --ink-soft: #8C6239;
+  --line: #DFC792;
+  --highlight: rgba(217, 119, 6, 0.22);
+  --accent: #D97706;
+  --accent-soft: rgba(217, 119, 6, 0.18);
+  --accent-ink: #FFFFFF;
+  color-scheme: light;
+}
 :root[data-theme='gold'] body {
   background: #EFE0BD !important;
 }
@@ -16926,6 +16953,20 @@ html, body {
 }
 
 /* --- 6. MIDNIGHT NAVY THEME (Deep OLED Ocean) --- */
+:root[data-theme='night'] {
+  --bg: #0B1320;
+  --panel: #111D30;
+  --panel-2: #192A44;
+  --panel-sage: #213554;
+  --ink: #EBF0EC;
+  --ink-soft: #8BA8DC;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(56, 189, 248, 0.18);
+  --accent: #38BDF8;
+  --accent-soft: rgba(56, 189, 248, 0.16);
+  --accent-ink: #0B1320;
+  color-scheme: dark;
+}
 :root[data-theme='night'] body {
   background: #050B14 !important;
 }

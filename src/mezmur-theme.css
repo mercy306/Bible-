@@ -4,74 +4,45 @@
    the reader's own typeface preference (--reader-font stays user-controlled).
    ========================================================================== */
 
-/* ---------- Palette (light) ---------- */
-:root,
-:root[data-theme='light'],
-:root[data-theme='paper'],
-:root[data-theme='sepia'],
-:root[data-theme='gold'] {
-  --bg: #faf3ea !important;
-  --panel: #ffffff !important;
-  --panel-2: #fbecea !important;
-  --panel-sage: #f5d9d8 !important;
-  --ink: #291a20 !important;
-  --ink-soft: #7a5a62 !important;
-  --line: rgba(74, 16, 40, 0.10) !important;
-  --highlight: #f5d9d8 !important;
-  --forest: #4a1028 !important;
-  --sage: #e9a6ad !important;
-  --terracotta: #e9a6ad !important;
-  --terracotta-soft: #fbecea !important;
-  --accent: #4a1028 !important;
-  --accent-soft: #f5d9d8 !important;
-  --accent-ink: #ffffff !important;
-  --primary-blue: #4a1028 !important;
-  --sand: #fbecea !important;
-  --mz-cream: #faf3ea;
-  --mz-card: #ffffff;
-  --mz-green: #4a1028;
-  --mz-green-2: #6b1d3a;
-  --mz-mint: #f5d9d8;
-  --mz-mint-soft: #fbecea;
-  --mz-muted: #7a5a62;
-  --mz-shadow: 0 10px 30px rgba(74, 16, 40, 0.09);
-  --mz-shadow-sm: 0 4px 14px rgba(74, 16, 40, 0.07);
-  color-scheme: light !important;
+/* ---------- Palette Fallbacks & Dynamic Aliases ---------- */
+:root {
+  --mz-cream: var(--bg);
+  --mz-card: var(--panel);
+  --mz-green: var(--accent);
+  --mz-green-2: var(--accent);
+  --mz-mint: var(--highlight);
+  --mz-mint-soft: var(--panel-2);
+  --mz-muted: var(--ink-soft);
+  --mz-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --mz-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.05);
 }
 
-/* ---------- Palette (dark) ---------- */
-:root[data-theme='bw'],
-:root[data-theme='dark'],
-:root[data-theme='night'],
-:root[data-theme='olive'],
-:root[data-theme='ocean'],
-:root[data-theme='lavender'],
-:root[data-theme='clay'],
+/* Burgundy Theme Dedicated Palette */
 :root[data-theme='burgundy'] {
-  --bg: #1a0a10 !important;
-  --panel: #2a1218 !important;
-  --panel-2: #3a1a22 !important;
-  --panel-sage: #3a1a22 !important;
-  --ink: #faf3ea !important;
-  --ink-soft: #c9a8ae !important;
-  --line: rgba(250, 243, 234, 0.10) !important;
-  --highlight: rgba(233, 166, 173, 0.14) !important;
-  --forest: #faf3ea !important;
-  --sage: #c9a8ae !important;
-  --terracotta: #e9a6ad !important;
-  --terracotta-soft: rgba(233, 166, 173, 0.12) !important;
-  --accent: #e9a6ad !important;
-  --accent-soft: rgba(233, 166, 173, 0.16) !important;
-  --accent-ink: #1a0a10 !important;
-  --primary-blue: #e9a6ad !important;
-  --sand: #3a1a22 !important;
-  --mz-cream: #1a0a10;
-  --mz-card: #2a1218;
-  --mz-green: #e9a6ad;
-  --mz-green-2: #f0b8be;
-  --mz-mint: rgba(233, 166, 173, 0.16);
-  --mz-mint-soft: rgba(233, 166, 173, 0.09);
-  --mz-muted: #c9a8ae;
+  --bg: #2E0811 !important;
+  --panel: #3D101C !important;
+  --panel-2: #4D1826 !important;
+  --panel-sage: #4D1826 !important;
+  --ink: #FDF6EC !important;
+  --ink-soft: #D4A7B2 !important;
+  --line: rgba(253, 246, 236, 0.12) !important;
+  --highlight: rgba(244, 63, 94, 0.25) !important;
+  --forest: #FDF6EC !important;
+  --sage: #D4A7B2 !important;
+  --terracotta: #FB7185 !important;
+  --terracotta-soft: rgba(251, 113, 133, 0.15) !important;
+  --accent: #FB7185 !important;
+  --accent-soft: rgba(251, 113, 133, 0.18) !important;
+  --accent-ink: #2E0811 !important;
+  --primary-blue: #FB7185 !important;
+  --sand: #4D1826 !important;
+  --mz-cream: #2E0811;
+  --mz-card: #3D101C;
+  --mz-green: #FB7185;
+  --mz-green-2: #FDA4AF;
+  --mz-mint: rgba(251, 113, 133, 0.18);
+  --mz-mint-soft: rgba(251, 113, 133, 0.1);
+  --mz-muted: #D4A7B2;
   --mz-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   --mz-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.28);
   color-scheme: dark !important;
@@ -98,7 +69,6 @@ body,
 
 /* ---------- Type ---------- */
 body {
-  background: var(--mz-cream) !important;
   font-family: 'Noto Sans Ethiopic', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   letter-spacing: 0.005em;
@@ -126,21 +96,7 @@ h6,
 }
 
 .app {
-  background: var(--mz-cream) !important;
   box-shadow: none !important;
-}
-
-:root[data-theme] body {
-  background: var(--mz-cream) !important;
-}
-
-:root[data-theme] .app {
-  background: var(--mz-cream) !important;
-  box-shadow: none !important;
-}
-
-.main {
-  background: var(--mz-cream);
 }
 
 /* ---------- Top bar (reading screen) — Clean, No Upper Color, No Underline ---------- */
@@ -516,8 +472,8 @@ h6,
   padding: 0 2px;
 }
 
-/* ---------- Big scenic heroes on other screens ---------- */
-:root[data-theme] .mountainHero {
+/* ---------- Big scenic heroes on burgundy screen ---------- */
+:root[data-theme='burgundy'] .mountainHero {
   background: linear-gradient(160deg, #3a0e1e 0%, #4a1028 55%, #1a0509 100%) !important;
   border-radius: 0 0 28px 28px !important;
   border-bottom: 0 !important;
@@ -525,8 +481,8 @@ h6,
   color: #faf3ea !important;
 }
 
-:root[data-theme] .mountainHero .mountainHero__bg,
-:root[data-theme] .mountainHero .mountainHero__overlay {
+:root[data-theme='burgundy'] .mountainHero .mountainHero__bg,
+:root[data-theme='burgundy'] .mountainHero .mountainHero__overlay {
   display: none !important;
 }
 
@@ -735,23 +691,23 @@ h6,
 
 /* Floating reader controls */
 .readerBar {
-  background: var(--mz-card) !important;
-  border: 1px solid var(--line) !important;
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 999px !important;
-  box-shadow: 0 12px 32px rgba(74, 16, 40, 0.16) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16) !important;
   padding: 6px 10px !important;
 }
 
 .readerBar__chapterBtn {
-  background: var(--mz-mint-soft) !important;
-  color: var(--mz-green-2) !important;
+  background: var(--panel-2);
+  color: var(--ink);
   border-radius: 999px !important;
   font-weight: 700 !important;
 }
 
 .readerBar__navBtn {
   border-radius: 50% !important;
-  color: var(--mz-green) !important;
+  color: var(--ink);
 }
 
 .readerBar__fontBtn {
@@ -766,27 +722,42 @@ h6,
   justify-content: center !important;
   font-size: 11px !important;
   font-weight: 700 !important;
-  border: 1px solid rgba(74, 16, 40, 0.12) !important;
-  background: var(--mz-card) !important;
-  color: var(--mz-green) !important;
+  border: 1px solid var(--line) !important;
+  background: var(--panel) !important;
+  color: var(--ink) !important;
   cursor: pointer !important;
   transition: transform 0.1s ease !important;
 }
 
 .readerBar__fontBtn:hover {
-  background: var(--mz-mint) !important;
+  background: var(--panel-2) !important;
 }
 
 .readerBar__fontBtn:active {
   transform: scale(0.92) !important;
 }
 
+:root[data-theme='burgundy'] .readerBar {
+  background: #3D101C !important;
+  border-color: rgba(253, 246, 236, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(74, 16, 40, 0.28) !important;
+}
+:root[data-theme='burgundy'] .readerBar__chapterBtn {
+  background: rgba(251, 113, 133, 0.18) !important;
+  color: #FDA4AF !important;
+}
+:root[data-theme='burgundy'] .readerBar__navBtn,
+:root[data-theme='burgundy'] .readerBar__fontBtn {
+  color: #FB7185 !important;
+  background: #3D101C !important;
+}
+
 .fontPreviewCard {
   margin-top: 12px;
   padding: 12px 14px;
   border-radius: 12px;
-  background: var(--panel-2, #f5f0eb);
-  border: 1px solid var(--line, rgba(74, 16, 40, 0.12));
+  background: var(--panel-2);
+  border: 1px solid var(--line);
 }
 
 .fontPreviewCard__meta {
@@ -799,7 +770,7 @@ h6,
 .fontPreviewCard__title {
   font-size: 11px;
   font-weight: 700;
-  color: var(--muted, #7c7267);
+  color: var(--ink-soft);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
@@ -809,8 +780,8 @@ h6,
   font-weight: 600;
   padding: 2px 8px;
   border-radius: 999px;
-  background: rgba(74, 16, 40, 0.08);
-  color: var(--mz-green, #1e4a38);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 .fontPreviewCard__sample {
@@ -819,28 +790,28 @@ h6,
   font-weight: var(--reader-weight, 400) !important;
   line-height: var(--reader-leading, 1.85) !important;
   font-size: var(--reader-size, 16px) !important;
-  color: var(--ink, #1f1d1a);
+  color: var(--ink);
 }
 
 /* ---------- Bottom navigation ---------- */
 .botbar {
-  background: var(--mz-card) !important;
-  border-top: 0 !important;
+  background: var(--panel);
+  border-top: 1px solid var(--line) !important;
   border-radius: 24px 24px 0 0 !important;
-  box-shadow: 0 -8px 28px rgba(74, 16, 40, 0.1) !important;
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.1) !important;
   padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) !important;
 }
 
 .botbar__btn {
   border-radius: 18px !important;
-  color: var(--mz-muted) !important;
+  color: var(--ink-soft) !important;
   gap: 4px;
   padding: 6px 2px !important;
 }
 
 .botbar__btn.is-active {
-  background: var(--mz-mint) !important;
-  color: var(--mz-green) !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
 }
 
 .botbar__label {
@@ -849,19 +820,24 @@ h6,
 }
 
 .botbar__badge {
-  background: var(--mz-green) !important;
-  color: var(--mz-cream) !important;
+  background: var(--accent) !important;
+  color: var(--accent-ink, #ffffff) !important;
   font-weight: 700;
 }
 
 /* ---------- Sheets ---------- */
-:root[data-theme] .sheet {
-  background: var(--mz-cream) !important;
+.sheet {
+  background: var(--panel) !important;
+  color: var(--ink) !important;
+}
+
+:root[data-theme='burgundy'] .sheet {
+  background: #3D101C !important;
 }
 
 .sheet--bottom {
   border-radius: 26px 26px 0 0 !important;
-  box-shadow: 0 -14px 44px rgba(74, 16, 40, 0.2) !important;
+  box-shadow: 0 -14px 44px rgba(0, 0, 0, 0.2) !important;
 }
 
 .sheet__head {
@@ -872,10 +848,12 @@ h6,
 .sheet__title {
   font-weight: 700 !important;
   letter-spacing: -0.01em;
+  color: var(--ink) !important;
 }
 
 .sheet__close {
-  background: var(--mz-mint-soft) !important;
+  background: var(--panel-2) !important;
+  color: var(--ink) !important;
   border-radius: 50% !important;
   color: var(--mz-green) !important;
 }
@@ -1152,31 +1130,31 @@ select {
   letter-spacing: -0.01em !important;
 }
 
-/* Greeting block on heroes */
-:root[data-theme] .mountainHero .homeScreen__greeting,
-:root[data-theme] .mountainHero .dailyScreen__title,
-:root[data-theme] .mountainHero .savedScreen__title {
+/* Greeting block on burgundy hero */
+:root[data-theme='burgundy'] .mountainHero .homeScreen__greeting,
+:root[data-theme='burgundy'] .mountainHero .dailyScreen__title,
+:root[data-theme='burgundy'] .mountainHero .savedScreen__title {
   color: #faf3ea !important;
   font-weight: 700 !important;
 }
 
-:root[data-theme] .mountainHero .homeScreen__quote {
+:root[data-theme='burgundy'] .mountainHero .homeScreen__quote {
   background: var(--mz-card) !important;
   border-radius: 22px !important;
   box-shadow: var(--mz-shadow-sm) !important;
 }
 
-:root[data-theme] .mountainHero .homeScreen__quoteText {
+:root[data-theme='burgundy'] .mountainHero .homeScreen__quoteText {
   color: var(--ink) !important;
 }
 
-:root[data-theme] .mountainHero .homeScreen__quoteRef {
+:root[data-theme='burgundy'] .mountainHero .homeScreen__quoteRef {
   color: var(--mz-muted) !important;
   opacity: 1 !important;
 }
 
-:root[data-theme] .mountainHero .dailyScreen__backBtn,
-:root[data-theme] .mountainHero .dailyScreen__calBtn {
+:root[data-theme='burgundy'] .mountainHero .dailyScreen__backBtn,
+:root[data-theme='burgundy'] .mountainHero .dailyScreen__calBtn {
   color: #faf3ea !important;
   background: rgba(250, 243, 234, 0.12) !important;
 }
