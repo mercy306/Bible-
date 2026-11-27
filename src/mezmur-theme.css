@@ -159,7 +159,7 @@ h6,
   border-radius: 0 !important;
   border: none !important;
   border-bottom: none !important;
-  padding: calc(env(safe-area-inset-top, 0px) + 8px) 14px 10px !important;
+  padding: calc(env(safe-area-inset-top, 0px) + 6px) 8px 6px !important;
   box-shadow: none !important;
   min-height: auto !important;
   overflow: visible !important;
@@ -235,15 +235,17 @@ h6,
 }
 
 .topbar.topbar--compact .topbar__rightActions {
-  gap: 6px !important;
+  gap: 3.5px !important;
   flex-shrink: 0;
+  margin-left: auto !important;
+  margin-right: 0 !important;
 }
 
 .topbar.topbar--compact .topbar__actionBtn {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
-  min-height: 34px !important;
+  width: 27px !important;
+  height: 27px !important;
+  min-width: 27px !important;
+  min-height: 27px !important;
   padding: 0 !important;
   border-radius: 50% !important;
   background: var(--panel) !important;
@@ -258,9 +260,13 @@ h6,
 }
 
 .topbar.topbar--compact .topbar__actionBtn svg {
-  width: 16px !important;
-  height: 16px !important;
+  width: 13px !important;
+  height: 13px !important;
   stroke-width: 2 !important;
+}
+
+.topbar.topbar--compact .topbar__lineageBtn span {
+  font-size: 0.95rem !important;
 }
 
 /* Search row inside clean topbar */
@@ -307,9 +313,9 @@ h6,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  height: 28px;
-  padding: 0 9px;
+  gap: 2.5px;
+  height: 25px;
+  padding: 0 7px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--panel);
@@ -331,16 +337,16 @@ h6,
 }
 
 .topbar__versionBadge {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   color: var(--ink);
   pointer-events: none;
   line-height: 1;
 }
 
 .topbar__versionChev {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--muted);
   pointer-events: none;
   line-height: 1;
@@ -441,22 +447,22 @@ h6,
 
 .topbar.topbar--compact .topbar__langToggle {
   display: inline-flex !important;
-  gap: 2px !important;
-  padding: 2px !important;
+  gap: 1.5px !important;
+  padding: 1.5px !important;
   border-radius: 999px !important;
   border: 1px solid var(--line) !important;
   background: var(--panel-2) !important;
 }
 
 .topbar.topbar--compact .topbar__langBtn {
-  height: 26px !important;
-  min-width: 30px !important;
-  padding: 0 8px !important;
+  height: 22px !important;
+  min-width: 24px !important;
+  padding: 0 5px !important;
   border: 0 !important;
   border-radius: 999px !important;
   background: transparent !important;
   color: var(--ink-soft) !important;
-  font-size: 12px !important;
+  font-size: 10px !important;
   font-weight: 700 !important;
   cursor: pointer !important;
 }
