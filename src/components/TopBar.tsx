@@ -6,7 +6,7 @@ import { getGreeting } from './GreetingHero'
 import { useBookNames } from './useBookNames'
 import { fetchCommentarySearch, fetchSearch } from '../api'
 import { parseReference } from '../route'
-import { usePrefs, setPref, LANGUAGES, type LanguageMode } from '../prefs'
+import { LANGUAGES, type LanguageMode } from '../prefs'
 import type { Route } from '../route'
 import type { CommentarySearchResponse, SearchResponse } from '../types'
 
@@ -86,7 +86,6 @@ export default function TopBar({
   initialQuery = '',
 }: Props) {
   const isReadView = !view || view === 'read'
-  const prefs = usePrefs()
   const [internalSearchOpen, setInternalSearchOpen] = useState(false)
   const isSearchOpen = searchOpen !== undefined ? searchOpen : internalSearchOpen
   const setIsSearchOpen = (open: boolean) => {
@@ -444,27 +443,6 @@ export default function TopBar({
                   <span style={{ fontSize: '1.1rem', lineHeight: 1 }}>🌳</span>
                 </button>
               )}
-
-              <button
-                type="button"
-                className="topbar__actionBtn topbar__themeToggleBtn"
-                onClick={() => setPref('theme', prefs.theme === 'bw' || prefs.theme === 'dark' ? 'light' : 'bw')}
-                title={prefs.theme === 'bw' || prefs.theme === 'dark' ? (isEn ? "Switch to Green theme" : "ወደ አረንጓዴ ገጽታ ቀይር") : (isEn ? "Switch to Black theme" : "ወደ ጥቁር ገጽታ ቀይር")}
-                aria-label={prefs.theme === 'bw' || prefs.theme === 'dark' ? "Switch to Green theme" : "Switch to Black theme"}
-              >
-                {prefs.theme === 'bw' || prefs.theme === 'dark' ? (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2v20" />
-                    <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" />
-                  </svg>
-                )}
-              </button>
             </div>
           </div>
 
