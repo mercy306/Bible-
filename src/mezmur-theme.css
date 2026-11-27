@@ -144,9 +144,18 @@ h6,
 }
 
 /* ---------- Top bar (reading screen) — Clean, No Upper Color, No Underline ---------- */
+.topbar.topbar--compact .mountainHero__content {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .topbar.topbar--compact .topbar__mainRow.topbar__mainRow--actionsOnly,
 .topbar__mainRow--actionsOnly {
   justify-content: flex-end !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 :root[data-theme] .topbar.topbar--compact,
@@ -159,10 +168,11 @@ h6,
   border-radius: 0 !important;
   border: none !important;
   border-bottom: none !important;
-  padding: calc(env(safe-area-inset-top, 0px) + 6px) 8px 6px !important;
+  padding: calc(env(safe-area-inset-top, 0px) + 6px) 4px 6px !important;
   box-shadow: none !important;
   min-height: auto !important;
   overflow: visible !important;
+  width: 100% !important;
 }
 
 :root[data-theme] .topbar.topbar--compact .mountainHero__bg,
@@ -235,17 +245,17 @@ h6,
 }
 
 .topbar.topbar--compact .topbar__rightActions {
-  gap: 3.5px !important;
+  gap: 2.5px !important;
   flex-shrink: 0;
   margin-left: auto !important;
   margin-right: 0 !important;
 }
 
 .topbar.topbar--compact .topbar__actionBtn {
-  width: 27px !important;
-  height: 27px !important;
-  min-width: 27px !important;
-  min-height: 27px !important;
+  width: 25px !important;
+  height: 25px !important;
+  min-width: 25px !important;
+  min-height: 25px !important;
   padding: 0 !important;
   border-radius: 50% !important;
   background: var(--panel) !important;
@@ -260,8 +270,8 @@ h6,
 }
 
 .topbar.topbar--compact .topbar__actionBtn svg {
-  width: 13px !important;
-  height: 13px !important;
+  width: 12px !important;
+  height: 12px !important;
   stroke-width: 2 !important;
 }
 
