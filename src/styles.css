@@ -17445,6 +17445,278 @@ html, body {
 :root[data-theme='clay'] .readerBar__navBtn { color: #FBEAEB !important; }
 :root[data-theme='clay'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #FBEAEB !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
 
+/* --- 5. New Theme: Rose (ጽጌረዳ / Blush Rose Petal) --- */
+:root[data-theme='rose'],
+[data-theme='rose'] {
+  --bg: #FFF0F3;
+  --panel: #FFF7F8;
+  --panel-2: #FFE4E8;
+  --panel-sage: #FCD5DC;
+  --ink: #4A1525;
+  --ink-soft: #8C4358;
+  --line: rgba(140, 67, 88, 0.15);
+  --highlight: rgba(244, 63, 94, 0.18);
+  --forest: #E11D48;
+  --sage: #8C4358;
+  --terracotta: #FB7185;
+  --terracotta-soft: rgba(225, 29, 72, 0.15);
+  --accent: #E11D48;
+  --accent-soft: rgba(225, 29, 72, 0.15);
+  --accent-ink: #FFFFFF;
+  color-scheme: light;
+}
+:root[data-theme='rose'] body { background: #FFE8ED !important; }
+:root[data-theme='rose'] .app { background: #FFF0F3 !important; }
+:root[data-theme='rose'] .mountainHero { background: #FFE4E8 !important; color: #4A1525 !important; border-bottom: 1px solid rgba(140, 67, 88, 0.15) !important; }
+:root[data-theme='rose'] .topbar__chapterTitle { color: #4A1525 !important; background: #FFF7F8 !important; border: 1px solid rgba(140, 67, 88, 0.15) !important; }
+:root[data-theme='rose'] .botbar { background: rgba(255, 240, 243, 0.95) !important; border: 1px solid rgba(140, 67, 88, 0.15) !important; }
+:root[data-theme='rose'] .botbar__btn { color: #8C4358 !important; }
+:root[data-theme='rose'] .botbar__btn.is-active { background: #E11D48 !important; color: #FFFFFF !important; }
+:root[data-theme='rose'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='rose'] .botbar__btn.is-active .botbar__label { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+:root[data-theme='rose'] .readerBar { background: rgba(255, 247, 248, 0.95) !important; border: 1px solid rgba(140, 67, 88, 0.15) !important; }
+:root[data-theme='rose'] .readerBar__chapterBtn { background: #E11D48 !important; color: #FFFFFF !important; }
+:root[data-theme='rose'] .readerBar__navBtn { color: #4A1525 !important; }
+:root[data-theme='rose'] .readerBar__listenBtn { background: #FFE4E8 !important; color: #4A1525 !important; border: 1px solid rgba(140, 67, 88, 0.15) !important; }
+
+/* --- 6. New Theme: Emerald (ኤመራልድ / Deep Imperial Emerald) --- */
+:root[data-theme='emerald'],
+[data-theme='emerald'] {
+  --bg: #0A1C16;
+  --panel: #112820;
+  --panel-2: #19362C;
+  --panel-sage: #214438;
+  --ink: #E6F4EA;
+  --ink-soft: #85BFA4;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(16, 185, 129, 0.2);
+  --forest: #10B981;
+  --sage: #85BFA4;
+  --terracotta: #34D399;
+  --terracotta-soft: rgba(16, 185, 129, 0.16);
+  --accent: #10B981;
+  --accent-soft: rgba(16, 185, 129, 0.18);
+  --accent-ink: #0A1C16;
+  color-scheme: dark;
+}
+:root[data-theme='emerald'] body { background: #06130E !important; }
+:root[data-theme='emerald'] .app { background: #0A1C16 !important; }
+:root[data-theme='emerald'] .mountainHero { background: #0A1C16 !important; color: #E6F4EA !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='emerald'] .topbar__chapterTitle { color: #E6F4EA !important; background: #112820 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='emerald'] .botbar { background: rgba(17, 40, 32, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='emerald'] .botbar__btn { color: #85BFA4 !important; }
+:root[data-theme='emerald'] .botbar__btn.is-active { background: #10B981 !important; color: #0A1C16 !important; }
+:root[data-theme='emerald'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='emerald'] .botbar__btn.is-active .botbar__label { color: #0A1C16 !important; stroke: #0A1C16 !important; }
+:root[data-theme='emerald'] .readerBar { background: rgba(17, 40, 32, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='emerald'] .readerBar__chapterBtn { background: #10B981 !important; color: #0A1C16 !important; }
+:root[data-theme='emerald'] .readerBar__navBtn { color: #E6F4EA !important; }
+:root[data-theme='emerald'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #E6F4EA !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
+/* --- 7. New Theme: Sapphire (ሰንፔር / Royal Celestial Sapphire) --- */
+:root[data-theme='sapphire'],
+[data-theme='sapphire'] {
+  --bg: #0B1528;
+  --panel: #12203A;
+  --panel-2: #1A2C4E;
+  --panel-sage: #233A64;
+  --ink: #E0E7FF;
+  --ink-soft: #93A5D4;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(99, 102, 241, 0.2);
+  --forest: #6366F1;
+  --sage: #93A5D4;
+  --terracotta: #818CF8;
+  --terracotta-soft: rgba(99, 102, 241, 0.16);
+  --accent: #6366F1;
+  --accent-soft: rgba(99, 102, 241, 0.18);
+  --accent-ink: #FFFFFF;
+  color-scheme: dark;
+}
+:root[data-theme='sapphire'] body { background: #070E1A !important; }
+:root[data-theme='sapphire'] .app { background: #0B1528 !important; }
+:root[data-theme='sapphire'] .mountainHero { background: #0B1528 !important; color: #E0E7FF !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='sapphire'] .topbar__chapterTitle { color: #E0E7FF !important; background: #12203A !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='sapphire'] .botbar { background: rgba(18, 32, 58, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='sapphire'] .botbar__btn { color: #93A5D4 !important; }
+:root[data-theme='sapphire'] .botbar__btn.is-active { background: #6366F1 !important; color: #FFFFFF !important; }
+:root[data-theme='sapphire'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='sapphire'] .botbar__btn.is-active .botbar__label { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+:root[data-theme='sapphire'] .readerBar { background: rgba(18, 32, 58, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='sapphire'] .readerBar__chapterBtn { background: #6366F1 !important; color: #FFFFFF !important; }
+:root[data-theme='sapphire'] .readerBar__navBtn { color: #E0E7FF !important; }
+:root[data-theme='sapphire'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #E0E7FF !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
+/* --- 8. New Theme: Amber (ማር / Warm Honey Amber) --- */
+:root[data-theme='amber'],
+[data-theme='amber'] {
+  --bg: #FEF7E8;
+  --panel: #FFFDF7;
+  --panel-2: #FDE8C7;
+  --panel-sage: #F7D8A4;
+  --ink: #3D2406;
+  --ink-soft: #7C531E;
+  --line: rgba(124, 83, 30, 0.15);
+  --highlight: rgba(245, 158, 11, 0.22);
+  --forest: #D97706;
+  --sage: #7C531E;
+  --terracotta: #F59E0B;
+  --terracotta-soft: rgba(217, 119, 6, 0.15);
+  --accent: #D97706;
+  --accent-soft: rgba(217, 119, 6, 0.15);
+  --accent-ink: #FFFFFF;
+  color-scheme: light;
+}
+:root[data-theme='amber'] body { background: #F8ECCD !important; }
+:root[data-theme='amber'] .app { background: #FEF7E8 !important; }
+:root[data-theme='amber'] .mountainHero { background: #FDE8C7 !important; color: #3D2406 !important; border-bottom: 1px solid rgba(124, 83, 30, 0.15) !important; }
+:root[data-theme='amber'] .topbar__chapterTitle { color: #3D2406 !important; background: #FFFDF7 !important; border: 1px solid rgba(124, 83, 30, 0.15) !important; }
+:root[data-theme='amber'] .botbar { background: rgba(254, 247, 232, 0.95) !important; border: 1px solid rgba(124, 83, 30, 0.15) !important; }
+:root[data-theme='amber'] .botbar__btn { color: #7C531E !important; }
+:root[data-theme='amber'] .botbar__btn.is-active { background: #D97706 !important; color: #FFFFFF !important; }
+:root[data-theme='amber'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='amber'] .botbar__btn.is-active .botbar__label { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+:root[data-theme='amber'] .readerBar { background: rgba(255, 253, 247, 0.95) !important; border: 1px solid rgba(124, 83, 30, 0.15) !important; }
+:root[data-theme='amber'] .readerBar__chapterBtn { background: #D97706 !important; color: #FFFFFF !important; }
+:root[data-theme='amber'] .readerBar__navBtn { color: #3D2406 !important; }
+:root[data-theme='amber'] .readerBar__listenBtn { background: #FDE8C7 !important; color: #3D2406 !important; border: 1px solid rgba(124, 83, 30, 0.15) !important; }
+
+/* --- 9. New Theme: Mint (አዝሙድ / Eucalyptus Mint) --- */
+:root[data-theme='mint'],
+[data-theme='mint'] {
+  --bg: #EDF7F2;
+  --panel: #F7FCF9;
+  --panel-2: #D8EFE4;
+  --panel-sage: #C4E5D4;
+  --ink: #133926;
+  --ink-soft: #386E52;
+  --line: rgba(56, 110, 82, 0.15);
+  --highlight: rgba(13, 148, 136, 0.18);
+  --forest: #0D9488;
+  --sage: #386E52;
+  --terracotta: #14B8A6;
+  --terracotta-soft: rgba(13, 148, 136, 0.15);
+  --accent: #0D9488;
+  --accent-soft: rgba(13, 148, 136, 0.15);
+  --accent-ink: #FFFFFF;
+  color-scheme: light;
+}
+:root[data-theme='mint'] body { background: #DFF0E7 !important; }
+:root[data-theme='mint'] .app { background: #EDF7F2 !important; }
+:root[data-theme='mint'] .mountainHero { background: #D8EFE4 !important; color: #133926 !important; border-bottom: 1px solid rgba(56, 110, 82, 0.15) !important; }
+:root[data-theme='mint'] .topbar__chapterTitle { color: #133926 !important; background: #F7FCF9 !important; border: 1px solid rgba(56, 110, 82, 0.15) !important; }
+:root[data-theme='mint'] .botbar { background: rgba(237, 247, 242, 0.95) !important; border: 1px solid rgba(56, 110, 82, 0.15) !important; }
+:root[data-theme='mint'] .botbar__btn { color: #386E52 !important; }
+:root[data-theme='mint'] .botbar__btn.is-active { background: #0D9488 !important; color: #FFFFFF !important; }
+:root[data-theme='mint'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='mint'] .botbar__btn.is-active .botbar__label { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+:root[data-theme='mint'] .readerBar { background: rgba(247, 252, 249, 0.95) !important; border: 1px solid rgba(56, 110, 82, 0.15) !important; }
+:root[data-theme='mint'] .readerBar__chapterBtn { background: #0D9488 !important; color: #FFFFFF !important; }
+:root[data-theme='mint'] .readerBar__navBtn { color: #133926 !important; }
+:root[data-theme='mint'] .readerBar__listenBtn { background: #D8EFE4 !important; color: #133926 !important; border: 1px solid rgba(56, 110, 82, 0.15) !important; }
+
+/* --- 10. New Theme: Charcoal (ከሰል / Matte Graphite Slate) --- */
+:root[data-theme='charcoal'],
+[data-theme='charcoal'] {
+  --bg: #1A1C1E;
+  --panel: #232629;
+  --panel-2: #2E3135;
+  --panel-sage: #3A3D42;
+  --ink: #E2E2E6;
+  --ink-soft: #9A9EA5;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(255, 255, 255, 0.1);
+  --forest: #E2E2E6;
+  --sage: #9A9EA5;
+  --terracotta: #CBD5E1;
+  --terracotta-soft: rgba(255, 255, 255, 0.12);
+  --accent: #E2E2E6;
+  --accent-soft: rgba(255, 255, 255, 0.12);
+  --accent-ink: #1A1C1E;
+  color-scheme: dark;
+}
+:root[data-theme='charcoal'] body { background: #121415 !important; }
+:root[data-theme='charcoal'] .app { background: #1A1C1E !important; }
+:root[data-theme='charcoal'] .mountainHero { background: #1A1C1E !important; color: #E2E2E6 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='charcoal'] .topbar__chapterTitle { color: #E2E2E6 !important; background: #232629 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='charcoal'] .botbar { background: rgba(35, 38, 41, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='charcoal'] .botbar__btn { color: #9A9EA5 !important; }
+:root[data-theme='charcoal'] .botbar__btn.is-active { background: #E2E2E6 !important; color: #1A1C1E !important; }
+:root[data-theme='charcoal'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='charcoal'] .botbar__btn.is-active .botbar__label { color: #1A1C1E !important; stroke: #1A1C1E !important; }
+:root[data-theme='charcoal'] .readerBar { background: rgba(35, 38, 41, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='charcoal'] .readerBar__chapterBtn { background: #E2E2E6 !important; color: #1A1C1E !important; }
+:root[data-theme='charcoal'] .readerBar__navBtn { color: #E2E2E6 !important; }
+:root[data-theme='charcoal'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #E2E2E6 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
+/* --- 11. New Theme: Pearl (ዕንቁ / Modern Alabaster Daylight) --- */
+:root[data-theme='pearl'],
+[data-theme='pearl'] {
+  --bg: #F5F5F7;
+  --panel: #FFFFFF;
+  --panel-2: #EAEAEE;
+  --panel-sage: #DFDFE5;
+  --ink: #1D1D20;
+  --ink-soft: #5E5E66;
+  --line: rgba(0, 0, 0, 0.08);
+  --highlight: rgba(0, 0, 0, 0.06);
+  --forest: #1D1D20;
+  --sage: #5E5E66;
+  --terracotta: #374151;
+  --terracotta-soft: rgba(0, 0, 0, 0.08);
+  --accent: #1D1D20;
+  --accent-soft: rgba(0, 0, 0, 0.08);
+  --accent-ink: #FFFFFF;
+  color-scheme: light;
+}
+:root[data-theme='pearl'] body { background: #ECECF0 !important; }
+:root[data-theme='pearl'] .app { background: #F5F5F7 !important; }
+:root[data-theme='pearl'] .mountainHero { background: #FFFFFF !important; color: #1D1D20 !important; border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important; }
+:root[data-theme='pearl'] .topbar__chapterTitle { color: #1D1D20 !important; background: #EAEAEE !important; border: 1px solid rgba(0, 0, 0, 0.08) !important; }
+:root[data-theme='pearl'] .botbar { background: rgba(245, 245, 247, 0.95) !important; border: 1px solid rgba(0, 0, 0, 0.08) !important; }
+:root[data-theme='pearl'] .botbar__btn { color: #5E5E66 !important; }
+:root[data-theme='pearl'] .botbar__btn.is-active { background: #1D1D20 !important; color: #FFFFFF !important; }
+:root[data-theme='pearl'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='pearl'] .botbar__btn.is-active .botbar__label { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+:root[data-theme='pearl'] .readerBar { background: rgba(255, 255, 255, 0.95) !important; border: 1px solid rgba(0, 0, 0, 0.08) !important; }
+:root[data-theme='pearl'] .readerBar__chapterBtn { background: #1D1D20 !important; color: #FFFFFF !important; }
+:root[data-theme='pearl'] .readerBar__navBtn { color: #1D1D20 !important; }
+:root[data-theme='pearl'] .readerBar__listenBtn { background: #EAEAEE !important; color: #1D1D20 !important; border: 1px solid rgba(0, 0, 0, 0.08) !important; }
+
+/* --- 12. New Theme: Plum (ወይንጠጅ / Imperial Byzantine Plum) --- */
+:root[data-theme='plum'],
+[data-theme='plum'] {
+  --bg: #1C0D24;
+  --panel: #291435;
+  --panel-2: #381C48;
+  --panel-sage: #47255B;
+  --ink: #F8EEFC;
+  --ink-soft: #BA94CA;
+  --line: rgba(255, 255, 255, 0.08);
+  --highlight: rgba(168, 85, 247, 0.2);
+  --forest: #A855F7;
+  --sage: #BA94CA;
+  --terracotta: #C084FC;
+  --terracotta-soft: rgba(168, 85, 247, 0.16);
+  --accent: #A855F7;
+  --accent-soft: rgba(168, 85, 247, 0.18);
+  --accent-ink: #FFFFFF;
+  color-scheme: dark;
+}
+:root[data-theme='plum'] body { background: #120818 !important; }
+:root[data-theme='plum'] .app { background: #1C0D24 !important; }
+:root[data-theme='plum'] .mountainHero { background: #1C0D24 !important; color: #F8EEFC !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+:root[data-theme='plum'] .topbar__chapterTitle { color: #F8EEFC !important; background: #291435 !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='plum'] .botbar { background: rgba(41, 20, 53, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='plum'] .botbar__btn { color: #BA94CA !important; }
+:root[data-theme='plum'] .botbar__btn.is-active { background: #A855F7 !important; color: #FFFFFF !important; }
+:root[data-theme='plum'] .botbar__btn.is-active .botbar__icon svg,
+:root[data-theme='plum'] .botbar__btn.is-active .botbar__label { color: #FFFFFF !important; stroke: #FFFFFF !important; }
+:root[data-theme='plum'] .readerBar { background: rgba(41, 20, 53, 0.95) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+:root[data-theme='plum'] .readerBar__chapterBtn { background: #A855F7 !important; color: #FFFFFF !important; }
+:root[data-theme='plum'] .readerBar__navBtn { color: #F8EEFC !important; }
+:root[data-theme='plum'] .readerBar__listenBtn { background: rgba(255, 255, 255, 0.1) !important; color: #F8EEFC !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
+
 /* 5. New Accent Color Rules */
 [data-accent=crimson] {
   --accent: #dc2626;

@@ -44,6 +44,14 @@ export const THEMES = [
   { id: 'ocean', label: 'Ocean', am: 'ውቅያኖስ', note: 'Deep Galilee Sapphire', bg: '#091224', ink: '#E2EAFC' },
   { id: 'lavender', label: 'Lavender', am: 'ሐምራዊ', note: 'Royal Amethyst Twilight', bg: '#161224', ink: '#F0EBF8' },
   { id: 'clay', label: 'Clay', am: 'ሸክላ', note: 'Sinai Desert Terracotta', bg: '#221217', ink: '#FBEAEB' },
+  { id: 'rose', label: 'Rose', am: 'ጽጌረዳ', note: 'Blush Rose & Blossom', bg: '#FFF0F3', ink: '#4A1525' },
+  { id: 'emerald', label: 'Emerald', am: 'ኤመራልድ', note: 'Deep Imperial Emerald', bg: '#0A1C16', ink: '#E6F4EA' },
+  { id: 'sapphire', label: 'Sapphire', am: 'ሰንፔር', note: 'Royal Lapis Sapphire', bg: '#0B1528', ink: '#E0E7FF' },
+  { id: 'amber', label: 'Honey', am: 'ማር', note: 'Warm Wild Honey Amber', bg: '#FEF7E8', ink: '#3D2406' },
+  { id: 'mint', label: 'Mint', am: 'አዝሙድ', note: 'Cool Eucalyptus Mint', bg: '#EDF7F2', ink: '#133926' },
+  { id: 'charcoal', label: 'Charcoal', am: 'ከሰል', note: 'Matte Graphite Slate', bg: '#1A1C1E', ink: '#E2E2E6' },
+  { id: 'pearl', label: 'Pearl', am: 'ዕንቁ', note: 'Alabaster Silver Pearl', bg: '#F5F5F7', ink: '#1D1D20' },
+  { id: 'plum', label: 'Plum', am: 'ወይንጠጅ', note: 'Imperial Byzantine Plum', bg: '#1C0D24', ink: '#F8EEFC' },
 ] as const
 
 export const ACCENTS = [
@@ -82,6 +90,14 @@ export type ThemeId =
   | 'ocean'
   | 'lavender'
   | 'clay'
+  | 'rose'
+  | 'emerald'
+  | 'sapphire'
+  | 'amber'
+  | 'mint'
+  | 'charcoal'
+  | 'pearl'
+  | 'plum'
 export type AccentId =
   | 'gold'
   | 'burgundy'
@@ -150,6 +166,14 @@ const THEME_IDS = [
   'ocean',
   'lavender',
   'clay',
+  'rose',
+  'emerald',
+  'sapphire',
+  'amber',
+  'mint',
+  'charcoal',
+  'pearl',
+  'plum',
 ] as ThemeId[]
 const ACCENT_IDS = [
   'gold',
